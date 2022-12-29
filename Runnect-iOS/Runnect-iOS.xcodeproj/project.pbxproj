@@ -50,6 +50,7 @@
 		CE66560E295D92A500C64E12 /* setStatusBarBackgroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE66560D295D92A500C64E12 /* setStatusBarBackgroundColor.swift */; };
 		CE665610295D92C200C64E12 /* setTextLineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE66560F295D92C200C64E12 /* setTextLineHeight.swift */; };
 		CE665612295D92E400C64E12 /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE665611295D92E400C64E12 /* UserDefaultWrapper.swift */; };
+		CE665615295D989A00C64E12 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = CE665614295D989A00C64E12 /* .swiftlint.yml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -106,6 +107,7 @@
 		CE66560D295D92A500C64E12 /* setStatusBarBackgroundColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setStatusBarBackgroundColor.swift; sourceTree = "<group>"; };
 		CE66560F295D92C200C64E12 /* setTextLineHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setTextLineHeight.swift; sourceTree = "<group>"; };
 		CE665611295D92E400C64E12 /* UserDefaultWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultWrapper.swift; sourceTree = "<group>"; };
+		CE665614295D989A00C64E12 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		E837271A78E1C0A0C30789BF /* Pods-Runnect-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runnect-iOS.release.xcconfig"; path = "Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -141,6 +143,7 @@
 		CE4545BC295D7AF4003201E1 = {
 			isa = PBXGroup;
 			children = (
+				CE665614295D989A00C64E12 /* .swiftlint.yml */,
 				CE4545C7295D7AF4003201E1 /* Runnect-iOS */,
 				CE4545C6295D7AF4003201E1 /* Products */,
 				3F7098551CF7A77F3FE7EB2B /* Pods */,
@@ -397,6 +400,7 @@
 			buildConfigurationList = CE4545D9295D7AF5003201E1 /* Build configuration list for PBXNativeTarget "Runnect-iOS" */;
 			buildPhases = (
 				5E54A0A4C236151ED373DD47 /* [CP] Check Pods Manifest.lock */,
+				CE665613295D980700C64E12 /* ShellScript */,
 				CE4545C1295D7AF4003201E1 /* Sources */,
 				CE4545C2295D7AF4003201E1 /* Frameworks */,
 				CE4545C3295D7AF4003201E1 /* Resources */,
@@ -449,6 +453,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE665615295D989A00C64E12 /* .swiftlint.yml in Resources */,
 				CE6655BF295D82E200C64E12 /* .gitkeep in Resources */,
 				CE4545D5295D7AF5003201E1 /* LaunchScreen.storyboard in Resources */,
 				CE4545D2295D7AF5003201E1 /* Assets.xcassets in Resources */,
@@ -479,6 +484,24 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		CE665613295D980700C64E12 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		CF0A7C4CF1329EF14A755C46 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

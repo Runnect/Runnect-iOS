@@ -15,7 +15,7 @@ extension UIView {
     }
     
     func addSubviewFromNib(view: UIView) {
-        let view = Bundle.main.loadNibNamed(view.className, owner: self, options: nil)?.first as! UIView
+        guard let view = Bundle.main.loadNibNamed(view.className, owner: self, options: nil)?.first as? UIView else { return }
         view.frame = bounds
         view.clipsToBounds = true
         addSubview(view)

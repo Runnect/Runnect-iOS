@@ -31,7 +31,7 @@ public func calculatePastTime(date: String) -> String {
   
   let articleDate = format.string(from: tempDate)
   var useTime = Int(krTime!.timeIntervalSince(tempDate))
-  useTime = useTime - 32400
+  useTime -= 32400
   
   if useTime < minute {
     message = "방금 전"
