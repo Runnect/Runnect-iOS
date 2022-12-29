@@ -1,0 +1,38 @@
+PODS:
+  - Alamofire (5.6.4)
+  - Kingfisher (7.4.1)
+  - Moya (15.0.0):
+    - Moya/Core (= 15.0.0)
+  - Moya/Core (15.0.0):
+    - Alamofire (~> 5.0)
+  - NMapsGeometry (1.0.1)
+  - NMapsMap (3.16.1):
+    - NMapsGeometry
+  - SnapKit (5.6.0)
+
+DEPENDENCIES:
+  - Kingfisher (~> 7.0)
+  - Moya (~> 15.0)
+  - NMapsMap
+  - SnapKit (~> 5.6.0)
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - Kingfisher
+    - Moya
+    - NMapsGeometry
+    - NMapsMap
+    - SnapKit
+
+SPEC CHECKSUMS:
+  Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
+  Kingfisher: cd762a593a61b2fbecf7645c00f9a801a3ebfc9c
+  Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
+  NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
+  NMapsMap: 926c3a303d381a24bec8da3cd6e198f50af93ae9
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+
+PODFILE CHECKSUM: f23513cb80e72754bbf29355e1160abe4b35c783
+
+COCOAPODS: 1.11.3

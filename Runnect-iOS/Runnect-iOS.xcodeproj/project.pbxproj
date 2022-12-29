@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0AEBD608F3973389E8E1C6D6 /* Pods_Runnect_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */; };
 		CE4545C9295D7AF4003201E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545C8295D7AF4003201E1 /* AppDelegate.swift */; };
 		CE4545CB295D7AF4003201E1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CA295D7AF4003201E1 /* SceneDelegate.swift */; };
 		CE4545CD295D7AF4003201E1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CC295D7AF4003201E1 /* ViewController.swift */; };
@@ -16,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runnect_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C3033C911343B5C57EB68E7 /* Pods-Runnect-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runnect-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		CE4545C5295D7AF4003201E1 /* Runnect-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Runnect-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4545C8295D7AF4003201E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE4545CA295D7AF4003201E1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +27,7 @@
 		CE4545D1295D7AF5003201E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE4545D4295D7AF5003201E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CE4545D6295D7AF5003201E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E837271A78E1C0A0C30789BF /* Pods-Runnect-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runnect-iOS.release.xcconfig"; path = "Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +35,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AEBD608F3973389E8E1C6D6 /* Pods_Runnect_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3F7098551CF7A77F3FE7EB2B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3C3033C911343B5C57EB68E7 /* Pods-Runnect-iOS.debug.xcconfig */,
+				E837271A78E1C0A0C30789BF /* Pods-Runnect-iOS.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		4BAB0487E0060209ADC1C28C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CE4545BC295D7AF4003201E1 = {
 			isa = PBXGroup;
 			children = (
 				CE4545C7295D7AF4003201E1 /* Runnect-iOS */,
 				CE4545C6295D7AF4003201E1 /* Products */,
+				3F7098551CF7A77F3FE7EB2B /* Pods */,
+				4BAB0487E0060209ADC1C28C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,9 +99,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CE4545D9295D7AF5003201E1 /* Build configuration list for PBXNativeTarget "Runnect-iOS" */;
 			buildPhases = (
+				5E54A0A4C236151ED373DD47 /* [CP] Check Pods Manifest.lock */,
 				CE4545C1295D7AF4003201E1 /* Sources */,
 				CE4545C2295D7AF4003201E1 /* Frameworks */,
 				CE4545C3295D7AF4003201E1 /* Resources */,
+				CF0A7C4CF1329EF14A755C46 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -132,6 +159,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5E54A0A4C236151ED373DD47 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Runnect-iOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CF0A7C4CF1329EF14A755C46 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CE4545C1295D7AF4003201E1 /* Sources */ = {
@@ -282,6 +351,7 @@
 		};
 		CE4545DA295D7AF5003201E1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C3033C911343B5C57EB68E7 /* Pods-Runnect-iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -309,6 +379,7 @@
 		};
 		CE4545DB295D7AF5003201E1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E837271A78E1C0A0C30789BF /* Pods-Runnect-iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
