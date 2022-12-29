@@ -11,9 +11,9 @@
 		CE4545C9295D7AF4003201E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545C8295D7AF4003201E1 /* AppDelegate.swift */; };
 		CE4545CB295D7AF4003201E1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CA295D7AF4003201E1 /* SceneDelegate.swift */; };
 		CE4545CD295D7AF4003201E1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CC295D7AF4003201E1 /* ViewController.swift */; };
-		CE4545D0295D7AF4003201E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE4545CE295D7AF4003201E1 /* Main.storyboard */; };
 		CE4545D2295D7AF5003201E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE4545D1295D7AF5003201E1 /* Assets.xcassets */; };
 		CE4545D5295D7AF5003201E1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE4545D3295D7AF5003201E1 /* LaunchScreen.storyboard */; };
+		CE6655BF295D82E200C64E12 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = CE6655BE295D82E200C64E12 /* .gitkeep */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,10 +23,20 @@
 		CE4545C8295D7AF4003201E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE4545CA295D7AF4003201E1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		CE4545CC295D7AF4003201E1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		CE4545CF295D7AF4003201E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CE4545D1295D7AF5003201E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE4545D4295D7AF5003201E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CE4545D6295D7AF5003201E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE6655B8295D81C900C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE6655B9295D82A100C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE6655BA295D82BF00C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE6655BB295D82C600C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE6655BC295D82CF00C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE6655BD295D82D800C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE6655BE295D82E200C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE6655C0295D82F000C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE6655C1295D82F700C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE6655C5295D83B700C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE6655C6295D83BD00C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		E837271A78E1C0A0C30789BF /* Pods-Runnect-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runnect-iOS.release.xcconfig"; path = "Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -48,7 +58,6 @@
 				3C3033C911343B5C57EB68E7 /* Pods-Runnect-iOS.debug.xcconfig */,
 				E837271A78E1C0A0C30789BF /* Pods-Runnect-iOS.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -81,15 +90,169 @@
 		CE4545C7295D7AF4003201E1 /* Runnect-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				CE4545C8295D7AF4003201E1 /* AppDelegate.swift */,
-				CE4545CA295D7AF4003201E1 /* SceneDelegate.swift */,
-				CE4545CC295D7AF4003201E1 /* ViewController.swift */,
-				CE4545CE295D7AF4003201E1 /* Main.storyboard */,
-				CE4545D1295D7AF5003201E1 /* Assets.xcassets */,
-				CE4545D3295D7AF5003201E1 /* LaunchScreen.storyboard */,
+				CE6655AA295D7FAE00C64E12 /* Global */,
+				CE6655A9295D7FAA00C64E12 /* Network */,
+				CE6655A8295D7F7D00C64E12 /* Presentation */,
 				CE4545D6295D7AF5003201E1 /* Info.plist */,
 			);
 			path = "Runnect-iOS";
+			sourceTree = "<group>";
+		};
+		CE6655A8295D7F7D00C64E12 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				CE6655AB295D7FBC00C64E12 /* TabBar */,
+				CE6655C2295D836D00C64E12 /* SignIn */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		CE6655A9295D7FAA00C64E12 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				CE6655B0295D800700C64E12 /* Dto */,
+				CE6655AF295D7FF600C64E12 /* Foundation */,
+				CE6655AE295D7FF000C64E12 /* Service */,
+				CE6655AD295D7FEA00C64E12 /* Router */,
+				CE6655AC295D7FE400C64E12 /* Model */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		CE6655AA295D7FAE00C64E12 /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				CE6655B6295D803C00C64E12 /* UIComponents */,
+				CE6655B5295D803800C64E12 /* Literal */,
+				CE6655B4295D803400C64E12 /* Resource */,
+				CE6655B3295D802800C64E12 /* Supports */,
+				CE6655B2295D801A00C64E12 /* Extension */,
+				CE6655B1295D801700C64E12 /* Utils */,
+			);
+			path = Global;
+			sourceTree = "<group>";
+		};
+		CE6655AB295D7FBC00C64E12 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				CE4545CC295D7AF4003201E1 /* ViewController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		CE6655AC295D7FE400C64E12 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CE6655C1295D82F700C64E12 /* .gitkeep */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		CE6655AD295D7FEA00C64E12 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				CE6655C0295D82F000C64E12 /* .gitkeep */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		CE6655AE295D7FF000C64E12 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				CE6655BE295D82E200C64E12 /* .gitkeep */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		CE6655AF295D7FF600C64E12 /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				CE6655BD295D82D800C64E12 /* .gitkeep */,
+			);
+			path = Foundation;
+			sourceTree = "<group>";
+		};
+		CE6655B0295D800700C64E12 /* Dto */ = {
+			isa = PBXGroup;
+			children = (
+				CE6655BC295D82CF00C64E12 /* .gitkeep */,
+			);
+			path = Dto;
+			sourceTree = "<group>";
+		};
+		CE6655B1295D801700C64E12 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				CE6655BB295D82C600C64E12 /* .gitkeep */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		CE6655B2295D801A00C64E12 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				CE6655BA295D82BF00C64E12 /* .gitkeep */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		CE6655B3295D802800C64E12 /* Supports */ = {
+			isa = PBXGroup;
+			children = (
+				CE4545D3295D7AF5003201E1 /* LaunchScreen.storyboard */,
+				CE4545C8295D7AF4003201E1 /* AppDelegate.swift */,
+				CE4545CA295D7AF4003201E1 /* SceneDelegate.swift */,
+			);
+			path = Supports;
+			sourceTree = "<group>";
+		};
+		CE6655B4295D803400C64E12 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				CE4545D1295D7AF5003201E1 /* Assets.xcassets */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		CE6655B5295D803800C64E12 /* Literal */ = {
+			isa = PBXGroup;
+			children = (
+				CE6655B9295D82A100C64E12 /* .gitkeep */,
+			);
+			path = Literal;
+			sourceTree = "<group>";
+		};
+		CE6655B6295D803C00C64E12 /* UIComponents */ = {
+			isa = PBXGroup;
+			children = (
+				CE6655B8295D81C900C64E12 /* .gitkeep */,
+			);
+			path = UIComponents;
+			sourceTree = "<group>";
+		};
+		CE6655C2295D836D00C64E12 /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				CE6655C4295D838100C64E12 /* Views */,
+				CE6655C3295D837800C64E12 /* VC */,
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
+		CE6655C3295D837800C64E12 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				CE6655C6295D83BD00C64E12 /* .gitkeep */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		CE6655C4295D838100C64E12 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CE6655C5295D83B700C64E12 /* .gitkeep */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -152,9 +315,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE6655BF295D82E200C64E12 /* .gitkeep in Resources */,
 				CE4545D5295D7AF5003201E1 /* LaunchScreen.storyboard in Resources */,
 				CE4545D2295D7AF5003201E1 /* Assets.xcassets in Resources */,
-				CE4545D0295D7AF4003201E1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,14 +379,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		CE4545CE295D7AF4003201E1 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE4545CF295D7AF4003201E1 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		CE4545D3295D7AF5003201E1 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -361,7 +516,6 @@
 				INFOPLIST_FILE = "Runnect-iOS/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -389,7 +543,6 @@
 				INFOPLIST_FILE = "Runnect-iOS/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
