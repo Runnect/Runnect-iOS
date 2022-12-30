@@ -1,0 +1,16 @@
+disabled_rules:
+  - trailing_whitespace
+  - identifier_name
+  - line_length
+  - type_name
+  - legacy_constructor
+  - unused_setter_value
+
+included:
+  - Runnect-iOS
+excluded:
+  # AppDelegate, SceneDelegate file 무시
+  - Runnect-iOS/Global/Supports/AppDelegate.swift
+  - Runnect-iOS/Global/Supports/SceneDelegate.swift
+
+force_cast: warning
