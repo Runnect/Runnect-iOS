@@ -18,24 +18,24 @@ import UIKit
 
 extension CGFloat {
     var adjusted: CGFloat {
-        let ratio: CGFloat = UIScreen.main.bounds.width / 375
+        let ratio: CGFloat = UIScreen.main.bounds.width / 390
         return self * ratio
     }
     
     var adjustedH: CGFloat {
-        let ratio: CGFloat = UIScreen.main.bounds.height / 812
+        let ratio: CGFloat = UIScreen.main.bounds.height / 844
         return self * ratio
     }
 }
 
 extension Double {
     var adjusted: Double {
-        let ratio: Double = Double(UIScreen.main.bounds.width / 375)
+        let ratio: Double = Double(UIScreen.main.bounds.width / 390)
         return self * ratio
     }
     
     var adjustedH: Double {
-        let ratio: Double = Double(UIScreen.main.bounds.height / 812)
+        let ratio: Double = Double(UIScreen.main.bounds.height / 844)
         return self * ratio
     }
 }

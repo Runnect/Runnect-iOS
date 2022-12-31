@@ -9,12 +9,14 @@ PODS:
   - NMapsMap (3.16.1):
     - NMapsGeometry
   - SnapKit (5.6.0)
+  - Then (3.0.0)
 
 DEPENDENCIES:
   - Kingfisher (~> 7.0)
   - Moya (~> 15.0)
   - NMapsMap
   - SnapKit (~> 5.6.0)
+  - Then
 
 SPEC REPOS:
   trunk:
@@ -24,6 +26,7 @@ SPEC REPOS:
     - NMapsGeometry
     - NMapsMap
     - SnapKit
+    - Then
 
 SPEC CHECKSUMS:
   Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
@@ -32,7 +35,8 @@ SPEC CHECKSUMS:
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
   NMapsMap: 926c3a303d381a24bec8da3cd6e198f50af93ae9
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
-PODFILE CHECKSUM: f23513cb80e72754bbf29355e1160abe4b35c783
+PODFILE CHECKSUM: bec9bfadf42d34524a80ccc0e46829d1fe943ddb
 
 COCOAPODS: 1.11.3
