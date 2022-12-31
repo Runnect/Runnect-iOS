@@ -13,6 +13,10 @@
 		CE4545CD295D7AF4003201E1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CC295D7AF4003201E1 /* ViewController.swift */; };
 		CE4545D2295D7AF5003201E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE4545D1295D7AF5003201E1 /* Assets.xcassets */; };
 		CE4545D5295D7AF5003201E1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE4545D3295D7AF5003201E1 /* LaunchScreen.storyboard */; };
+		CE58759E29601476005D967E /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE58759D29601476005D967E /* LoadingIndicator.swift */; };
+		CE5875A029601500005D967E /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE58759F29601500005D967E /* Toast.swift */; };
+		CE5875A2296015A2005D967E /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5875A1296015A2005D967E /* NetworkLoggerPlugin.swift */; };
+		CE5875A4296015D2005D967E /* Encodable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5875A3296015D2005D967E /* Encodable+.swift */; };
 		CE6655BF295D82E200C64E12 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = CE6655BE295D82E200C64E12 /* .gitkeep */; };
 		CE6655C8295D849F00C64E12 /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6655C7295D849F00C64E12 /* StringLiterals.swift */; };
 		CE6655CA295D84DD00C64E12 /* UserDefaultKeyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6655C9295D84DD00C64E12 /* UserDefaultKeyList.swift */; };
@@ -63,6 +67,10 @@
 		CE4545D1295D7AF5003201E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE4545D4295D7AF5003201E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CE4545D6295D7AF5003201E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE58759D29601476005D967E /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
+		CE58759F29601500005D967E /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		CE5875A1296015A2005D967E /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
+		CE5875A3296015D2005D967E /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
 		CE6655B8295D81C900C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE6655BC295D82CF00C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE6655BD295D82D800C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
@@ -241,6 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				CE6655BD295D82D800C64E12 /* .gitkeep */,
+				CE5875A1296015A2005D967E /* NetworkLoggerPlugin.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -270,6 +279,8 @@
 				CE66560D295D92A500C64E12 /* setStatusBarBackgroundColor.swift */,
 				CE66560F295D92C200C64E12 /* setTextLineHeight.swift */,
 				CE665611295D92E400C64E12 /* UserDefaultWrapper.swift */,
+				CE58759D29601476005D967E /* LoadingIndicator.swift */,
+				CE58759F29601500005D967E /* Toast.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -368,6 +379,7 @@
 				CE6655D6295D86F900C64E12 /* String+.swift */,
 				CE6655D8295D871B00C64E12 /* URL+.swift */,
 				CE665609295D924A00C64E12 /* Result+.swift */,
+				CE5875A3296015D2005D967E /* Encodable+.swift */,
 			);
 			path = "Foundation+";
 			sourceTree = "<group>";
@@ -539,10 +551,13 @@
 				CE66560A295D924A00C64E12 /* Result+.swift in Sources */,
 				CE66560E295D92A500C64E12 /* setStatusBarBackgroundColor.swift in Sources */,
 				CE6655D7295D86F900C64E12 /* String+.swift in Sources */,
+				CE58759E29601476005D967E /* LoadingIndicator.swift in Sources */,
+				CE5875A2296015A2005D967E /* NetworkLoggerPlugin.swift in Sources */,
 				CE4545C9295D7AF4003201E1 /* AppDelegate.swift in Sources */,
 				CE6655C8295D849F00C64E12 /* StringLiterals.swift in Sources */,
 				CE6655E0295D87D200C64E12 /* UIDevice+.swift in Sources */,
 				CE6655E8295D889600C64E12 /* UISwitch+.swift in Sources */,
+				CE5875A029601500005D967E /* Toast.swift in Sources */,
 				CE6655F6295D90B600C64E12 /* addToolBar.swift in Sources */,
 				CE6655F0295D891B00C64E12 /* UITextView+.swift in Sources */,
 				CE6655EE295D88E600C64E12 /* UITextField+.swift in Sources */,
@@ -560,6 +575,7 @@
 				CE665612295D92E400C64E12 /* UserDefaultWrapper.swift in Sources */,
 				CE665610295D92C200C64E12 /* setTextLineHeight.swift in Sources */,
 				CE6655E2295D87EB00C64E12 /* UIImage+.swift in Sources */,
+				CE5875A4296015D2005D967E /* Encodable+.swift in Sources */,
 				CE6655D2295D862A00C64E12 /* Publisher+Driver.swift in Sources */,
 				CE6655E6295D887F00C64E12 /* UIStackView+.swift in Sources */,
 				CE6655CA295D84DD00C64E12 /* UserDefaultKeyList.swift in Sources */,
