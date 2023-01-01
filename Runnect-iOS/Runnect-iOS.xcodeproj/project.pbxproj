@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0AEBD608F3973389E8E1C6D6 /* Pods_Runnect_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */; };
+		CE17F02D2961BBA100E1DED0 /* ColorLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17F02C2961BBA100E1DED0 /* ColorLiterals.swift */; };
 		CE4545C9295D7AF4003201E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545C8295D7AF4003201E1 /* AppDelegate.swift */; };
 		CE4545CB295D7AF4003201E1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CA295D7AF4003201E1 /* SceneDelegate.swift */; };
 		CE4545CD295D7AF4003201E1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CC295D7AF4003201E1 /* ViewController.swift */; };
@@ -61,6 +62,7 @@
 /* Begin PBXFileReference section */
 		015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runnect_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C3033C911343B5C57EB68E7 /* Pods-Runnect-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runnect-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		CE17F02C2961BBA100E1DED0 /* ColorLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorLiterals.swift; sourceTree = "<group>"; };
 		CE4545C5295D7AF4003201E1 /* Runnect-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Runnect-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4545C8295D7AF4003201E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE4545CA295D7AF4003201E1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				CE665611295D92E400C64E12 /* UserDefaultWrapper.swift */,
 				CE58759D29601476005D967E /* LoadingIndicator.swift */,
 				CE58759F29601500005D967E /* Toast.swift */,
+				CE6655C9295D84DD00C64E12 /* UserDefaultKeyList.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -319,7 +322,7 @@
 			isa = PBXGroup;
 			children = (
 				CE6655C7295D849F00C64E12 /* StringLiterals.swift */,
-				CE6655C9295D84DD00C64E12 /* UserDefaultKeyList.swift */,
+				CE17F02C2961BBA100E1DED0 /* ColorLiterals.swift */,
 				CE5645152961B72E000A2856 /* ImageLiterals.swift */,
 			);
 			path = Literal;
@@ -580,6 +583,7 @@
 				CE665610295D92C200C64E12 /* setTextLineHeight.swift in Sources */,
 				CE6655E2295D87EB00C64E12 /* UIImage+.swift in Sources */,
 				CE5875A4296015D2005D967E /* Encodable+.swift in Sources */,
+				CE17F02D2961BBA100E1DED0 /* ColorLiterals.swift in Sources */,
 				CE6655D2295D862A00C64E12 /* Publisher+Driver.swift in Sources */,
 				CE6655E6295D887F00C64E12 /* UIStackView+.swift in Sources */,
 				CE6655CA295D84DD00C64E12 /* UserDefaultKeyList.swift in Sources */,
