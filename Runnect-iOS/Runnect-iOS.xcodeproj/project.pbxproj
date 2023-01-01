@@ -13,6 +13,7 @@
 		CE4545CD295D7AF4003201E1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CC295D7AF4003201E1 /* ViewController.swift */; };
 		CE4545D2295D7AF5003201E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE4545D1295D7AF5003201E1 /* Assets.xcassets */; };
 		CE4545D5295D7AF5003201E1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE4545D3295D7AF5003201E1 /* LaunchScreen.storyboard */; };
+		CE5645162961B72E000A2856 /* ImageLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5645152961B72E000A2856 /* ImageLiterals.swift */; };
 		CE58759E29601476005D967E /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE58759D29601476005D967E /* LoadingIndicator.swift */; };
 		CE5875A029601500005D967E /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE58759F29601500005D967E /* Toast.swift */; };
 		CE5875A2296015A2005D967E /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5875A1296015A2005D967E /* NetworkLoggerPlugin.swift */; };
@@ -67,6 +68,7 @@
 		CE4545D1295D7AF5003201E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE4545D4295D7AF5003201E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CE4545D6295D7AF5003201E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE5645152961B72E000A2856 /* ImageLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLiterals.swift; sourceTree = "<group>"; };
 		CE58759D29601476005D967E /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		CE58759F29601500005D967E /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		CE5875A1296015A2005D967E /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 			children = (
 				CE6655C7295D849F00C64E12 /* StringLiterals.swift */,
 				CE6655C9295D84DD00C64E12 /* UserDefaultKeyList.swift */,
+				CE5645152961B72E000A2856 /* ImageLiterals.swift */,
 			);
 			path = Literal;
 			sourceTree = "<group>";
@@ -544,6 +547,7 @@
 				CE665602295D918000C64E12 /* JsonCoder.swift in Sources */,
 				CE4545CD295D7AF4003201E1 /* ViewController.swift in Sources */,
 				CE6655F4295D898400C64E12 /* UIViewController+.swift in Sources */,
+				CE5645162961B72E000A2856 /* ImageLiterals.swift in Sources */,
 				CE6655CD295D856300C64E12 /* KeyPathFindable.swift in Sources */,
 				CE6655E4295D884600C64E12 /* UILabel+.swift in Sources */,
 				CE6655FA295D90E000C64E12 /* applyShadow.swift in Sources */,
