@@ -8,24 +8,36 @@
 import UIKit
 
 extension UIColor {
-    static var korailPrimaryColor: UIColor {
-        return UIColor(hex: "#2C80FF")
+    static var g1: UIColor {
+        return UIColor(hex: "#171717")
     }
     
-    static var korailSubColor: UIColor {
-        return UIColor(hex: "#FF842C")
+    static var g2: UIColor {
+        return UIColor(hex: "#8B8B8B")
     }
     
-    static var korailGray1: UIColor {
-        return UIColor(hex: "#F2F6FF")
+    static var g3: UIColor {
+        return UIColor(hex: "#C1C1C1")
     }
     
-    static var korailGray2: UIColor {
-        return UIColor(hex: "#8A8A8A")
+    static var g4: UIColor {
+        return UIColor(hex: "#ECECEC")
     }
     
-    static var korailBlack: UIColor {
-        return UIColor(hex: "#000000")
+    static var m1: UIColor {
+        return UIColor(hex: "#593EEC")
+    }
+    
+    static var m2: UIColor {
+        return UIColor(hex: "#7E71FF")
+    }
+    
+    static var m3: UIColor {
+        return UIColor(hex: "#F2F3FF")
+    }
+    
+    static var m4: UIColor {
+        return UIColor(hex: "#FFFFFF")
     }
 }
 
