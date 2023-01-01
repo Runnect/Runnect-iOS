@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  TabBarController.swift
 //  Runnect-iOS
 //
 //  Created by sejin on 2022/12/29.
@@ -25,13 +25,16 @@ extension TabBarController {
         tabBar.backgroundColor = .white
         tabBar.unselectedItemTintColor = .g3
         tabBar.tintColor = .m1
+        tabBar.layer.cornerRadius = 20
+        tabBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        tabBar.layer.applyShadow(alpha: 0.03, y: -4, blur: 5)
     }
     
     private func setTabBarControllers() {
         let courseDrawingNVC = templateNavigationController(title: "코스 그리기",
                                                            unselectedImage: ImageLiterals.icCourseDraw,
                                                            selectedImage: ImageLiterals.icCourseDrawFill,
-                                                           rootViewController: CourseDrawingVC())
+                                                           rootViewController: CourseDrawingHomeVC())
         let courseStorageNVC = templateNavigationController(title: "보관함",
                                                          unselectedImage: ImageLiterals.icStorage,
                                                          selectedImage: ImageLiterals.icStorageFill,
@@ -48,14 +51,12 @@ extension TabBarController {
         viewControllers = [courseDrawingNVC, courseStorageNVC, courseDiscoveryNVC, myPageNVC]
     }
     
-    func templateNavigationController(title: String, unselectedImage: UIImage?, selectedImage: UIImage?, rootViewController: UIViewController) -> UINavigationController {
+    private func templateNavigationController(title: String, unselectedImage: UIImage?, selectedImage: UIImage?, rootViewController: UIViewController) -> UINavigationController {
         let nav = UINavigationController(rootViewController: rootViewController)
         nav.title = title
         nav.tabBarItem.image = unselectedImage
         nav.tabBarItem.selectedImage = selectedImage
-        nav.navigationBar.tintColor = UIColor.m1
-        nav.navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: self, action: nil)
-        nav.navigationItem.backBarButtonItem?.tintColor = .black
+        nav.navigationBar.isHidden = true
         return nav
     }
 }

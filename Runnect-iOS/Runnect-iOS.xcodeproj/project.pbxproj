@@ -62,7 +62,7 @@
 		CE665610295D92C200C64E12 /* setTextLineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE66560F295D92C200C64E12 /* setTextLineHeight.swift */; };
 		CE665612295D92E400C64E12 /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE665611295D92E400C64E12 /* UserDefaultWrapper.swift */; };
 		CE665615295D989A00C64E12 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = CE665614295D989A00C64E12 /* .swiftlint.yml */; };
-		CEEC6B3A2961C4F300D00E1E /* CourseDrawingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B392961C4F300D00E1E /* CourseDrawingVC.swift */; };
+		CEEC6B3A2961C4F300D00E1E /* CourseDrawingHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B392961C4F300D00E1E /* CourseDrawingHomeVC.swift */; };
 		CEEC6B3C2961C51A00D00E1E /* CourseStorageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B3B2961C51A00D00E1E /* CourseStorageVC.swift */; };
 		CEEC6B3E2961C53700D00E1E /* CourseDiscoveryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B3D2961C53700D00E1E /* CourseDiscoveryVC.swift */; };
 		CEEC6B402961C55000D00E1E /* MyPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B3F2961C55000D00E1E /* MyPageVC.swift */; };
@@ -135,7 +135,7 @@
 		CE66560F295D92C200C64E12 /* setTextLineHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setTextLineHeight.swift; sourceTree = "<group>"; };
 		CE665611295D92E400C64E12 /* UserDefaultWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultWrapper.swift; sourceTree = "<group>"; };
 		CE665614295D989A00C64E12 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		CEEC6B392961C4F300D00E1E /* CourseDrawingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDrawingVC.swift; sourceTree = "<group>"; };
+		CEEC6B392961C4F300D00E1E /* CourseDrawingHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDrawingHomeVC.swift; sourceTree = "<group>"; };
 		CEEC6B3B2961C51A00D00E1E /* CourseStorageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseStorageVC.swift; sourceTree = "<group>"; };
 		CEEC6B3D2961C53700D00E1E /* CourseDiscoveryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDiscoveryVC.swift; sourceTree = "<group>"; };
 		CEEC6B3F2961C55000D00E1E /* MyPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageVC.swift; sourceTree = "<group>"; };
@@ -245,7 +245,7 @@
 		CE17F03F2961C3C900E1DED0 /* VC */ = {
 			isa = PBXGroup;
 			children = (
-				CEEC6B392961C4F300D00E1E /* CourseDrawingVC.swift */,
+				CEEC6B392961C4F300D00E1E /* CourseDrawingHomeVC.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -769,7 +769,7 @@
 				CE6655DC295D873500C64E12 /* UIButton+.swift in Sources */,
 				CE6655D4295D865B00C64E12 /* Publisher+UIControl.swift in Sources */,
 				CE6655EC295D88D000C64E12 /* UITableView+.swift in Sources */,
-				CEEC6B3A2961C4F300D00E1E /* CourseDrawingVC.swift in Sources */,
+				CEEC6B3A2961C4F300D00E1E /* CourseDrawingHomeVC.swift in Sources */,
 				CE66560C295D928300C64E12 /* setRootViewController.swift in Sources */,
 				CE6655D9295D871B00C64E12 /* URL+.swift in Sources */,
 				CE6655DE295D877F00C64E12 /* UIColor+.swift in Sources */,
