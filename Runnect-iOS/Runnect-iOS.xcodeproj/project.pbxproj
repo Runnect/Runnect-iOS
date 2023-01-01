@@ -16,7 +16,7 @@
 		CE17F0382961BF8B00E1DED0 /* FontLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17F0372961BF8B00E1DED0 /* FontLiterals.swift */; };
 		CE4545C9295D7AF4003201E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545C8295D7AF4003201E1 /* AppDelegate.swift */; };
 		CE4545CB295D7AF4003201E1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CA295D7AF4003201E1 /* SceneDelegate.swift */; };
-		CE4545CD295D7AF4003201E1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CC295D7AF4003201E1 /* ViewController.swift */; };
+		CE4545CD295D7AF4003201E1 /* TaBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CC295D7AF4003201E1 /* TaBarController.swift */; };
 		CE4545D2295D7AF5003201E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE4545D1295D7AF5003201E1 /* Assets.xcassets */; };
 		CE4545D5295D7AF5003201E1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE4545D3295D7AF5003201E1 /* LaunchScreen.storyboard */; };
 		CE5645162961B72E000A2856 /* ImageLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5645152961B72E000A2856 /* ImageLiterals.swift */; };
@@ -81,7 +81,7 @@
 		CE4545C5295D7AF4003201E1 /* Runnect-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Runnect-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4545C8295D7AF4003201E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE4545CA295D7AF4003201E1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		CE4545CC295D7AF4003201E1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CE4545CC295D7AF4003201E1 /* TaBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaBarController.swift; sourceTree = "<group>"; };
 		CE4545D1295D7AF5003201E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE4545D4295D7AF5003201E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CE4545D6295D7AF5003201E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -396,7 +396,7 @@
 		CE6655AB295D7FBC00C64E12 /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
-				CE4545CC295D7AF4003201E1 /* ViewController.swift */,
+				CE4545CC295D7AF4003201E1 /* TaBarController.swift */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -738,7 +738,7 @@
 				CE665604295D91B100C64E12 /* makeAlert.swift in Sources */,
 				CE6655EA295D88B200C64E12 /* UITabBar+.swift in Sources */,
 				CE665602295D918000C64E12 /* JsonCoder.swift in Sources */,
-				CE4545CD295D7AF4003201E1 /* ViewController.swift in Sources */,
+				CE4545CD295D7AF4003201E1 /* TaBarController.swift in Sources */,
 				CE6655F4295D898400C64E12 /* UIViewController+.swift in Sources */,
 				CE5645162961B72E000A2856 /* ImageLiterals.swift in Sources */,
 				CE6655CD295D856300C64E12 /* KeyPathFindable.swift in Sources */,

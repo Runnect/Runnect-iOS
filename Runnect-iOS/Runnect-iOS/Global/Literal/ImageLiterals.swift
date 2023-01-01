@@ -14,7 +14,7 @@ enum ImageLiterals {
     static var icArrowPageback: UIImage { .load(named: "ic_arrow_pageback") }
     static var icArrowRight: UIImage { .load(named: "ic_arrow_right") }
     static var icCancel: UIImage { .load(named: "ic_cancel") }
-    static var icCourseDiscoveFill: UIImage { .load(named: "ic_course_discove_fill") }
+    static var icCourseDiscoverFill: UIImage { .load(named: "ic_course_discove_fill") }
     static var icCourseDiscover: UIImage { .load(named: "ic_course_discover") }
     static var icCourseDrawFill: UIImage { .load(named: "ic_course_draw_fill") }
     static var icCourseDraw: UIImage { .load(named: "ic_course_draw") }
