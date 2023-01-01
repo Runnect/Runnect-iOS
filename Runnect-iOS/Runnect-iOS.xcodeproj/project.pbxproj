@@ -67,6 +67,7 @@
 		CEEC6B3E2961C53700D00E1E /* CourseDiscoveryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B3D2961C53700D00E1E /* CourseDiscoveryVC.swift */; };
 		CEEC6B402961C55000D00E1E /* MyPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B3F2961C55000D00E1E /* MyPageVC.swift */; };
 		CEEC6B492961C5E200D00E1E /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B482961C5E200D00E1E /* SplashVC.swift */; };
+		CEEC6B4B2961D89700D00E1E /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B4A2961D89700D00E1E /* CustomNavigationBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,7 +91,6 @@
 		CE58759F29601500005D967E /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		CE5875A1296015A2005D967E /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
 		CE5875A3296015D2005D967E /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
-		CE6655B8295D81C900C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE6655BC295D82CF00C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE6655BD295D82D800C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE6655BE295D82E200C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
@@ -146,6 +146,7 @@
 		CEEC6B452961C5B200D00E1E /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CEEC6B462961C5BB00D00E1E /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CEEC6B482961C5E200D00E1E /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
+		CEEC6B4A2961D89700D00E1E /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		E837271A78E1C0A0C30789BF /* Pods-Runnect-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runnect-iOS.release.xcconfig"; path = "Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -509,7 +510,7 @@
 		CE6655B6295D803C00C64E12 /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
-				CE6655B8295D81C900C64E12 /* .gitkeep */,
+				CEEC6B4A2961D89700D00E1E /* CustomNavigationBar.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -779,6 +780,7 @@
 				CE665610295D92C200C64E12 /* setTextLineHeight.swift in Sources */,
 				CE6655E2295D87EB00C64E12 /* UIImage+.swift in Sources */,
 				CE5875A4296015D2005D967E /* Encodable+.swift in Sources */,
+				CEEC6B4B2961D89700D00E1E /* CustomNavigationBar.swift in Sources */,
 				CE17F02D2961BBA100E1DED0 /* ColorLiterals.swift in Sources */,
 				CE6655D2295D862A00C64E12 /* Publisher+Driver.swift in Sources */,
 				CE6655E6295D887F00C64E12 /* UIStackView+.swift in Sources */,
