@@ -156,7 +156,7 @@ extension CustomNavigationBar {
             leftButton.setImage(ImageLiterals.icArrowBack, for: .normal)
         case .search:
             leftButton.setImage(ImageLiterals.icArrowBack, for: .normal)
-            textField.attributedPlaceholder = NSAttributedString(string: "테스트", attributes: [NSAttributedString.Key.foregroundColor: UIColor.g3, NSAttributedString.Key.font: UIFont.b1])
+            textField.attributedPlaceholder = NSAttributedString(string: "출발지 검색", attributes: [NSAttributedString.Key.foregroundColor: UIColor.g3, NSAttributedString.Key.font: UIFont.b1])
             textField.font = .b1
             textField.textColor = .g1
             textField.addLeftPadding(width: 2)
