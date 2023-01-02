@@ -99,7 +99,6 @@
 		CE6655C0295D82F000C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE6655C1295D82F700C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE6655C5295D83B700C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		CE6655C6295D83BD00C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE6655C7295D849F00C64E12 /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
 		CE6655C9295D84DD00C64E12 /* UserDefaultKeyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKeyList.swift; sourceTree = "<group>"; };
 		CE6655CC295D856300C64E12 /* KeyPathFindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathFindable.swift; sourceTree = "<group>"; };
@@ -532,7 +531,6 @@
 		CE6655C3295D837800C64E12 /* VC */ = {
 			isa = PBXGroup;
 			children = (
-				CE6655C6295D83BD00C64E12 /* .gitkeep */,
 				CEC2A68629629B9B00160BF7 /* SignInVC.swift */,
 			);
 			path = VC;
