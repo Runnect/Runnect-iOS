@@ -12,6 +12,7 @@
 		A3BC2F2D2962C3F200198261 /* ActivityRecordInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F2C2962C3F200198261 /* ActivityRecordInfoVC.swift */; };
 		A3BC2F2F2962C40A00198261 /* UploadedCourseInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F2E2962C40A00198261 /* UploadedCourseInfoVC.swift */; };
 		A3BC2F322962E0DB00198261 /* GoalRewardInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F312962E0DB00198261 /* GoalRewardInfoModel.swift */; };
+		A3BC2F34296303A600198261 /* GoalRewardInfoCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F33296303A600198261 /* GoalRewardInfoCVC.swift */; };
 		CE17F02D2961BBA100E1DED0 /* ColorLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17F02C2961BBA100E1DED0 /* ColorLiterals.swift */; };
 		CE17F0332961BEF800E1DED0 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = CE17F02F2961BEF800E1DED0 /* Pretendard-Medium.otf */; };
 		CE17F0342961BEF800E1DED0 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = CE17F0302961BEF800E1DED0 /* Pretendard-Bold.otf */; };
@@ -83,6 +84,7 @@
 		A3BC2F2C2962C3F200198261 /* ActivityRecordInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRecordInfoVC.swift; sourceTree = "<group>"; };
 		A3BC2F2E2962C40A00198261 /* UploadedCourseInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedCourseInfoVC.swift; sourceTree = "<group>"; };
 		A3BC2F312962E0DB00198261 /* GoalRewardInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardInfoModel.swift; sourceTree = "<group>"; };
+		A3BC2F33296303A600198261 /* GoalRewardInfoCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardInfoCVC.swift; sourceTree = "<group>"; };
 		CE17F02C2961BBA100E1DED0 /* ColorLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorLiterals.swift; sourceTree = "<group>"; };
 		CE17F02F2961BEF800E1DED0 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		CE17F0302961BEF800E1DED0 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				A3BC2F312962E0DB00198261 /* GoalRewardInfoModel.swift */,
+				A3BC2F33296303A600198261 /* GoalRewardInfoCVC.swift */,
 			);
 			path = GoalRewardInfoCollectionView;
 			sourceTree = "<group>";
@@ -821,6 +824,7 @@
 				CE17F02D2961BBA100E1DED0 /* ColorLiterals.swift in Sources */,
 				CE6655D2295D862A00C64E12 /* Publisher+Driver.swift in Sources */,
 				CE6655E6295D887F00C64E12 /* UIStackView+.swift in Sources */,
+				A3BC2F34296303A600198261 /* GoalRewardInfoCVC.swift in Sources */,
 				CE6655CA295D84DD00C64E12 /* UserDefaultKeyList.swift in Sources */,
 				CE6655F2295D894D00C64E12 /* UIView+.swift in Sources */,
 				CE665600295D915D00C64E12 /* getClassName.swift in Sources */,

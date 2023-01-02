@@ -5,9 +5,9 @@
 //  Created by 몽이 누나 on 2023/01/02.
 //
 
-import Foundation
+import UIKit
 
 struct GoalRewardInfoModel {
-    let stampImg: String
+    let stampImg: UIImage
     let stampStandard: String
 }

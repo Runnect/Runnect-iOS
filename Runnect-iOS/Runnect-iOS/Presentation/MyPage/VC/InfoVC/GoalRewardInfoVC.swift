@@ -27,7 +27,7 @@ final class GoalRewardInfoVC: UIViewController {
         $0.font = .b4
     }
     
-    private let stampCollectionView: UICollectionView = {
+    private lazy var stampCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         
@@ -35,6 +35,8 @@ final class GoalRewardInfoVC: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.isScrollEnabled = true
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
         return collectionView
     }()
@@ -42,36 +44,49 @@ final class GoalRewardInfoVC: UIViewController {
     // MARK: - Variables
     
     var stampList: [GoalRewardInfoModel] = [
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampC1.className, stampStandard: "그리기 스타터"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampC2.className, stampStandard: "그리기 중수"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampC3.className, stampStandard: "그리기 마스터"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS1.className, stampStandard: "스크랩 베이비"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS2.className, stampStandard: "스크랩 어린이"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS3.className, stampStandard: "스크랩 어른이"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS3.className, stampStandard: "스크랩 어른이"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampP1.className, stampStandard: "새싹 업로더"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampP2.className, stampStandard: "중수 업로더"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampP3.className, stampStandard: "인플루언서"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampR1.className, stampStandard: "달리기 유망주"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampR2.className, stampStandard: "아마추어 선수"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampR2.className, stampStandard: "마라톤 선수")
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampC1, stampStandard: "그리기 스타터"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampC2, stampStandard: "그리기 중수"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampC3, stampStandard: "그리기 마스터"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS1, stampStandard: "스크랩 베이비"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS2, stampStandard: "스크랩 어린이"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS3, stampStandard: "스크랩 어른이"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampP1, stampStandard: "새싹 업로더"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampP2, stampStandard: "중수 업로더"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampP3, stampStandard: "인플루언서"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampR1, stampStandard: "달리기 유망주"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampR2, stampStandard: "아마추어 선수"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampR2, stampStandard: "마라톤 선수")
     ]
+    
+    // MARK: - Constants
+    
+    final let stampInset: UIEdgeInsets = UIEdgeInsets(top: 32, left: 34, bottom: 10, right: 34)
+    final let stampLineSpacing: CGFloat = 20
+    final let stampItemSpacing: CGFloat = 26
+    final let stampCellHeight: CGFloat = 112
+    
+    // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
         setUI()
         setLayout()
-        // Do any additional setup after loading the view.
+        register()
     }
+    
 }
 
 // MARK: - Methods
+
 // MARK: - @objc Function
 
 // MARK: - UI & Layout
 
 extension GoalRewardInfoVC {
+    
+    // MARK: - Layout Helpers
+    
     private func setNavigationBar() {
         view.addSubview(navibar)
         
@@ -84,6 +99,7 @@ extension GoalRewardInfoVC {
     private func setUI() {
         view.backgroundColor = .w1
         stampBottomView.backgroundColor = .m3
+        stampCollectionView.backgroundColor = .m3
     }
     
     private func setLayout() {
@@ -114,5 +130,63 @@ extension GoalRewardInfoVC {
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(view.safeAreaLayoutGuide).inset(80)
         }
+        
+        stampBottomView.addSubview(stampCollectionView)
+        
+        stampCollectionView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(calculateCellHeight())
+        }
     }
+    
+    // MARK: - General Helpers
+
+    private func register() {
+        stampCollectionView.register(GoalRewardInfoCVC.self,
+                                     forCellWithReuseIdentifier: GoalRewardInfoCVC.identifier)
+    }
+    
+    func calculateCellHeight() -> CGFloat {
+        let count = CGFloat(stampList.count)
+        let heightCount = count / 3 + count.truncatingRemainder(dividingBy: 3)
+        return heightCount * stampCellHeight + (heightCount - 1) * stampLineSpacing + stampInset.top + stampInset.bottom
+     }
+    
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension GoalRewardInfoVC: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let screenWidth = UIScreen.main.bounds.width
+        let tripleCellWidth = screenWidth - stampInset.left - stampInset.right - stampItemSpacing * 2
+        return CGSize(width: tripleCellWidth / 3, height: 112)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return stampLineSpacing
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return stampLineSpacing
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return stampInset
+    }
+}
+
+// MARK: - UICollectionViewDataSource
+
+extension GoalRewardInfoVC: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return stampList.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let stampCell = collectionView.dequeueReusableCell(withReuseIdentifier: GoalRewardInfoCVC.identifier, for: indexPath) as? GoalRewardInfoCVC else { return UICollectionViewCell()}
+        stampCell.dataBind(model: stampList[indexPath.item])
+        return stampCell
+    }
+
 }
