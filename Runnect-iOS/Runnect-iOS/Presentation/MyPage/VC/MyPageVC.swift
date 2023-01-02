@@ -15,6 +15,8 @@ final class MyPageVC: UIViewController, CustomNavigationBarDelegate {
     
     private lazy var navibar = CustomNavigationBar(self, type: .title).setTitle("마이페이지")
     private let myProfileView = UIView()
+    private let myRunningProgressView = UIView()
+    
     private let myProfileImage = UIImageView().then {
         $0.image = ImageLiterals.imgStampR2
     }
@@ -35,6 +37,29 @@ final class MyPageVC: UIViewController, CustomNavigationBarDelegate {
         $0.layer.borderColor = UIColor.m2.cgColor
         $0.layer.cornerRadius = 14
         $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4)
+    }
+    
+    private let myRunningLevelLavel = UILabel().then {
+        $0.text = "LV 3"
+        $0.textColor = .g1
+        $0.font = .h5
+    }
+    
+    private let myRunningProgressBar = UIProgressView(progressViewStyle: .bar).then {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.setProgress(0.25, animated: false)
+        $0.progressTintColor = .m1
+        $0.trackTintColor = .m3
+        $0.layer.cornerRadius = 6
+        $0.clipsToBounds = true
+        $0.layer.sublayers![1].cornerRadius = 6
+        $0.subviews[1].clipsToBounds = true
+    }
+    
+    private let myRunnigProgressPercentLabel = UILabel().then {
+        let attributedString = NSMutableAttributedString(string: "25", attributes: [.font: UIFont.b5, .foregroundColor: UIColor.g1])
+        attributedString.append(NSAttributedString(string: " /100", attributes: [.font: UIFont.b5, .foregroundColor: UIColor.g2]))
+        $0.attributedText = attributedString
     }
 
     override func viewDidLoad() {
@@ -70,7 +95,7 @@ extension MyPageVC {
     }
     
     private func setLayout() {
-        view.addSubviews(myProfileView)
+        view.addSubviews(myProfileView, myRunningProgressView)
         
         myProfileView.snp.makeConstraints { make in
             make.top.equalTo(navibar.snp.bottom).offset(6)
@@ -98,6 +123,30 @@ extension MyPageVC {
             make.width.equalTo(78)
             make.height.equalTo(28)
         }
-
+        
+        myRunningProgressView.snp.makeConstraints { make in
+            make.top.equalTo(myProfileView.snp.bottom).offset(18)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(55)
+        }
+        
+        myRunningProgressView.addSubviews(myRunningLevelLavel, myRunningProgressBar,
+                                          myRunnigProgressPercentLabel)
+        
+        myRunningLevelLavel.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview().offset(1)
+        }
+        
+        myRunningProgressBar.snp.makeConstraints { make in
+            make.top.equalTo(myRunningLevelLavel.snp.bottom).offset(6)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(11)
+        }
+        
+        myRunnigProgressPercentLabel.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.trailing.equalToSuperview()
+        }
     }
 }
