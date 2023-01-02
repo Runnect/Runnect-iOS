@@ -7,34 +7,50 @@
 
 import UIKit
 
-final class CourseDrawingHomeVC: UIViewController, CustomNavigationBarDelegate {
-    lazy var naviBar = CustomNavigationBar(self, type: .title).setTitle("보관함")
-//     lazy var naviBar = CustomNavigationBar(self, type: .titleWithLeftButton)
-//    lazy var naviBar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("목표 보상")
-//    lazy var naviBar = CustomNavigationBar(self, type: .search).showKeyboard().setTextFieldPlaceholder(placeholder: "출발지 검색")
+final class CourseDrawingHomeVC: UIViewController {
     
-    let button = CustomButton(title: "코스 그리기")
+    // MARK: - Properties
+
+    private lazy var tabBarHeight = self.tabBarController?.tabBar.frame.size.height ?? 49
+    
+    // MARK: - UI Components
+    
+    private lazy var mapView = RNMapView()
+        .setPositionMode(mode: .normal)
+        .makeContentPadding(padding: UIEdgeInsets(top: -calculateTopInset(), left: 0, bottom: tabBarHeight, right: 0))
+        .moveToUserLocation()
+        .showLocationButton(toShow: true)
+    
+    private let drawCourseButton = CustomButton(title: "코스 그리기")
+    
+    // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        
-        naviBar.delegate = self
-        
-        view.addSubviews(naviBar, button)
-        
-        naviBar.snp.makeConstraints { make in
-            make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
-        }
-        
-        button.snp.makeConstraints { make in
-            make.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
-            make.height.equalTo(44)
-        }
+        self.setUI()
+        self.setLayout()
+    }
+}
+
+// MARK: - UI & Layout
+
+extension CourseDrawingHomeVC {
+    private func setUI() {
+        view.backgroundColor = .w1
     }
     
-    func searchButtonDidTap(text: String) {
-        print(text)
+    private func setLayout() {
+        view.addSubviews(mapView, drawCourseButton)
+        
+        mapView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        drawCourseButton.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(75)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(24)
+            make.height.equalTo(44)
+        }
     }
 }
