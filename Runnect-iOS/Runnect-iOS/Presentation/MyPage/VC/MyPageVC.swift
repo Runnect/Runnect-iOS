@@ -11,16 +11,20 @@ import Then
 
 final class MyPageVC: UIViewController, CustomNavigationBarDelegate {
     
+    // MARK: - UI Components
+    
     private lazy var navibar = CustomNavigationBar(self, type: .title).setTitle("마이페이지")
     private let myProfileView = UIView()
     private let myProfileImage = UIImageView().then {
         $0.image = ImageLiterals.imgStampR2
     }
+    
     private let myProfileNameLabel = UILabel().then {
         $0.text = "말랑콩떡"
         $0.textColor = .m1
         $0.font = .h4
     }
+    
     private let myProfileEditButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icEdit, for: .normal)
         $0.setTitle("수정하기", for: .normal)
@@ -29,8 +33,8 @@ final class MyPageVC: UIViewController, CustomNavigationBarDelegate {
         $0.tintColor = .m2
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.m2.cgColor
-        $0.layer.cornerRadius = 15
-        $0.configuration?.imagePadding = 3
+        $0.layer.cornerRadius = 14
+        $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4)
     }
 
     override func viewDidLoad() {
@@ -44,6 +48,8 @@ final class MyPageVC: UIViewController, CustomNavigationBarDelegate {
         print(text)
     }
 }
+
+// MARK: - UI & Layout
 
 extension MyPageVC {
     
