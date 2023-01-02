@@ -29,6 +29,23 @@ final class CourseDrawingHomeVC: UIViewController {
         super.viewDidLoad()
         self.setUI()
         self.setLayout()
+        self.setAddTarget()
+    }
+}
+
+// MARK: - Methods
+
+extension CourseDrawingHomeVC {
+    private func setAddTarget() {
+        drawCourseButton.addTarget(self, action: #selector(pushToDepartureSearchVC), for: .touchUpInside)
+    }
+}
+
+// MARK: - @objc Function
+extension CourseDrawingHomeVC {
+    @objc private func pushToDepartureSearchVC() {
+        let departureSearchVC = DepartureSearchVC()
+        self.navigationController?.pushViewController(departureSearchVC, animated: true)
     }
 }
 

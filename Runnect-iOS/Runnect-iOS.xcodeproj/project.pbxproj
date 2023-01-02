@@ -68,6 +68,7 @@
 		CEC2A68C2962AE1B00160BF7 /* RNStartMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A68B2962AE1B00160BF7 /* RNStartMarker.swift */; };
 		CEC2A68E2962AF2C00160BF7 /* RNMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A68D2962AF2C00160BF7 /* RNMarker.swift */; };
 		CEC2A6902962B06C00160BF7 /* convertLocationObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A68F2962B06C00160BF7 /* convertLocationObject.swift */; };
+		CEC2A6922962BE2900160BF7 /* DepartureSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A6912962BE2900160BF7 /* DepartureSearchVC.swift */; };
 		CEEC6B3A2961C4F300D00E1E /* CourseDrawingHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B392961C4F300D00E1E /* CourseDrawingHomeVC.swift */; };
 		CEEC6B3C2961C51A00D00E1E /* CourseStorageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B3B2961C51A00D00E1E /* CourseStorageVC.swift */; };
 		CEEC6B3E2961C53700D00E1E /* CourseDiscoveryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B3D2961C53700D00E1E /* CourseDiscoveryVC.swift */; };
@@ -146,6 +147,7 @@
 		CEC2A68B2962AE1B00160BF7 /* RNStartMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNStartMarker.swift; sourceTree = "<group>"; };
 		CEC2A68D2962AF2C00160BF7 /* RNMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNMarker.swift; sourceTree = "<group>"; };
 		CEC2A68F2962B06C00160BF7 /* convertLocationObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = convertLocationObject.swift; sourceTree = "<group>"; };
+		CEC2A6912962BE2900160BF7 /* DepartureSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureSearchVC.swift; sourceTree = "<group>"; };
 		CEEC6B392961C4F300D00E1E /* CourseDrawingHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDrawingHomeVC.swift; sourceTree = "<group>"; };
 		CEEC6B3B2961C51A00D00E1E /* CourseStorageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseStorageVC.swift; sourceTree = "<group>"; };
 		CEEC6B3D2961C53700D00E1E /* CourseDiscoveryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDiscoveryVC.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				CEEC6B392961C4F300D00E1E /* CourseDrawingHomeVC.swift */,
+				CEC2A6912962BE2900160BF7 /* DepartureSearchVC.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -787,6 +790,7 @@
 				CE6655F6295D90B600C64E12 /* addToolBar.swift in Sources */,
 				CEC2A68A2962ADCD00160BF7 /* RNMapView.swift in Sources */,
 				CE6655F0295D891B00C64E12 /* UITextView+.swift in Sources */,
+				CEC2A6922962BE2900160BF7 /* DepartureSearchVC.swift in Sources */,
 				CE6655EE295D88E600C64E12 /* UITextField+.swift in Sources */,
 				CE6655F8295D90CF00C64E12 /* adjusted+.swift in Sources */,
 				CE4545CB295D7AF4003201E1 /* SceneDelegate.swift in Sources */,
