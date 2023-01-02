@@ -16,6 +16,9 @@ final class MyPageVC: UIViewController, CustomNavigationBarDelegate {
     private lazy var navibar = CustomNavigationBar(self, type: .title).setTitle("마이페이지")
     private let myProfileView = UIView()
     private let myRunningProgressView = UIView()
+    private let firstDivideView = UIView()
+    private let secondDivideView = UIView()
+    private let thirdDivideView = UIView()
     
     private let myProfileImage = UIImageView().then {
         $0.image = ImageLiterals.imgStampR2
@@ -61,7 +64,13 @@ final class MyPageVC: UIViewController, CustomNavigationBarDelegate {
         attributedString.append(NSAttributedString(string: " /100", attributes: [.font: UIFont.b5, .foregroundColor: UIColor.g2]))
         $0.attributedText = attributedString
     }
+    
+    private lazy var goalRewardInfoView = makeInfoView(title: "목표 보상")
+    private lazy var activityRecordInfoView = makeInfoView(title: "활동 기록")
+    private lazy var uploadedCourseInfoView = makeInfoView(title: "업로드한 코스")
 
+    // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
@@ -71,6 +80,47 @@ final class MyPageVC: UIViewController, CustomNavigationBarDelegate {
     
     func searchButtonDidTap(text: String) {
         print(text)
+    }
+}
+
+// MARK: - Methods
+extension MyPageVC {
+    private func makeInfoView(title: String) -> UIView {
+        let containerView = UIView()
+        let icStar = UIImageView().then {
+            $0.image = ImageLiterals.icStar
+        }
+        
+        let label = UILabel().then {
+            $0.text = title
+            $0.textColor = .g1
+            $0.font = .b2
+        }
+        
+        let icArrowRight = UIImageView().then {
+            $0.image = ImageLiterals.icArrowRight
+        }
+        
+        containerView.addSubviews(icStar, label, icArrowRight)
+        
+        icStar.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(22)
+            make.leading.equalToSuperview().offset(17)
+            make.width.equalTo(14)
+            make.height.equalTo(14)
+        }
+        
+        label.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(21)
+            make.leading.equalTo(icStar.snp.trailing).offset(8)
+        }
+        
+        icArrowRight.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(18)
+            make.trailing.equalToSuperview().inset(8)
+        }
+        
+        return containerView
     }
 }
 
@@ -92,10 +142,15 @@ extension MyPageVC {
     private func setUI() {
         view.backgroundColor = .white
         myProfileView.backgroundColor = .m3
+        firstDivideView.backgroundColor = .g5
+        secondDivideView.backgroundColor = .g4
+        thirdDivideView.backgroundColor = .g4
     }
     
     private func setLayout() {
-        view.addSubviews(myProfileView, myRunningProgressView)
+        view.addSubviews(myProfileView, myRunningProgressView, firstDivideView,
+            goalRewardInfoView, secondDivideView, activityRecordInfoView,
+            thirdDivideView, uploadedCourseInfoView)
         
         myProfileView.snp.makeConstraints { make in
             make.top.equalTo(navibar.snp.bottom).offset(6)
@@ -147,6 +202,42 @@ extension MyPageVC {
         myRunnigProgressPercentLabel.snp.makeConstraints { make in
             make.bottom.equalToSuperview()
             make.trailing.equalToSuperview()
+        }
+        
+        firstDivideView.snp.makeConstraints { make in
+            make.top.equalTo(myRunningProgressView.snp.bottom).offset(34)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(10)
+        }
+        
+        goalRewardInfoView.snp.makeConstraints { make in
+            make.top.equalTo(firstDivideView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(60)
+        }
+        
+        secondDivideView.snp.makeConstraints { make in
+            make.top.equalTo(goalRewardInfoView.snp.bottom).offset(1)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(0.5)
+        }
+        
+        activityRecordInfoView.snp.makeConstraints { make in
+            make.top.equalTo(secondDivideView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(60)
+        }
+        
+        thirdDivideView.snp.makeConstraints { make in
+            make.top.equalTo(activityRecordInfoView.snp.bottom).offset(1)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(0.5)
+        }
+        
+        uploadedCourseInfoView.snp.makeConstraints { make in
+            make.top.equalTo(thirdDivideView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(60)
         }
     }
 }

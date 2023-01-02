@@ -28,6 +28,10 @@ extension UIColor {
         return UIColor(hex: "#ECECEC")
     }
     
+    static var g5: UIColor {
+        return UIColor(hex: "#F3F3F3")
+    }
+    
     static var m1: UIColor {
         return UIColor(hex: "#593EEC")
     }
