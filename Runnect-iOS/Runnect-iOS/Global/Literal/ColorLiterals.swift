@@ -8,6 +8,10 @@
 import UIKit
 
 extension UIColor {
+    static var w1: UIColor {
+        return UIColor(hex: "#ffffff")
+    }
+    
     static var g1: UIColor {
         return UIColor(hex: "#171717")
     }

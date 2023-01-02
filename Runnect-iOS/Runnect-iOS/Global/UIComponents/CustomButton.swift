@@ -60,7 +60,7 @@ extension CustomButton {
         self.layer.cornerRadius = 10
         
         self.setBackgroundColor(.m1, for: .normal)
-        self.setBackgroundColor(.g2, for: .disabled)
+        self.setBackgroundColor(.g3, for: .disabled)
         self.setAttributedTitle(
             NSAttributedString(
                 string: title,
