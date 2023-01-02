@@ -65,9 +65,20 @@ final class MyPageVC: UIViewController, CustomNavigationBarDelegate {
         $0.attributedText = attributedString
     }
     
-    private lazy var goalRewardInfoView = makeInfoView(title: "목표 보상")
-    private lazy var activityRecordInfoView = makeInfoView(title: "활동 기록")
-    private lazy var uploadedCourseInfoView = makeInfoView(title: "업로드한 코스")
+    private lazy var goalRewardInfoView = makeInfoView(title: "목표 보상").then {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpGoalRewardInfoView))
+        $0.addGestureRecognizer(tap)
+    }
+    
+    private lazy var activityRecordInfoView = makeInfoView(title: "활동 기록").then {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpActivityRecordInfoView))
+        $0.addGestureRecognizer(tap)
+    }
+    
+    private lazy var uploadedCourseInfoView = makeInfoView(title: "업로드한 코스").then {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.uploadedCourseRecordInfoView))
+        $0.addGestureRecognizer(tap)
+    }
 
     // MARK: - View Life Cycle
     
@@ -76,6 +87,36 @@ final class MyPageVC: UIViewController, CustomNavigationBarDelegate {
         setNavigationBar()
         setUI()
         setLayout()
+    }
+    
+    private func pushtoGoalRewardInfoVC() {
+        let goalRewardInfoVC = GoalRewardInfoVC()
+        self.navigationController?.pushViewController(goalRewardInfoVC, animated: true)
+    }
+    
+    private func pushtoActivityRecordInfoVC() {
+        let activityRecordInfoVC = ActivityRecordInfoVC()
+        self.navigationController?.pushViewController(activityRecordInfoVC, animated: true)
+    }
+    
+    private func pushtoUploadedCourseInfoVC() {
+        let uploadedCourseInfoVC = ActivityRecordInfoVC()
+        self.navigationController?.pushViewController(uploadedCourseInfoVC, animated: true)
+    }
+    
+    @objc
+    private func touchUpGoalRewardInfoView() {
+        pushtoGoalRewardInfoVC()
+    }
+    
+    @objc
+    private func touchUpActivityRecordInfoView() {
+        pushtoActivityRecordInfoVC()
+    }
+    
+    @objc
+    private func uploadedCourseRecordInfoView() {
+        pushtoActivityRecordInfoVC()
     }
     
     func searchButtonDidTap(text: String) {
@@ -140,7 +181,7 @@ extension MyPageVC {
     }
     
     private func setUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .w1
         myProfileView.backgroundColor = .m3
         firstDivideView.backgroundColor = .g5
         secondDivideView.backgroundColor = .g4
