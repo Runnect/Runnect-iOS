@@ -46,7 +46,7 @@ extension TabBarController {
         let myPageNVC = templateNavigationController(title: "마이페이지",
                                                          unselectedImage: ImageLiterals.icMypage,
                                                          selectedImage: ImageLiterals.icMypageFill,
-                                                         rootViewController: CourseStorageVC())
+                                                         rootViewController: MyPageVC())
         
         viewControllers = [courseDrawingNVC, courseStorageNVC, courseDiscoveryNVC, myPageNVC]
     }

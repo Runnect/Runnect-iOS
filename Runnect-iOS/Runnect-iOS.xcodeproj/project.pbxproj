@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0AEBD608F3973389E8E1C6D6 /* Pods_Runnect_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */; };
+		A3BC2F2B2962C3D500198261 /* GoalRewardInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */; };
+		A3BC2F2D2962C3F200198261 /* ActivityRecordInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F2C2962C3F200198261 /* ActivityRecordInfoVC.swift */; };
+		A3BC2F2F2962C40A00198261 /* UploadedCourseInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F2E2962C40A00198261 /* UploadedCourseInfoVC.swift */; };
 		CE17F02D2961BBA100E1DED0 /* ColorLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17F02C2961BBA100E1DED0 /* ColorLiterals.swift */; };
 		CE17F0332961BEF800E1DED0 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = CE17F02F2961BEF800E1DED0 /* Pretendard-Medium.otf */; };
 		CE17F0342961BEF800E1DED0 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = CE17F0302961BEF800E1DED0 /* Pretendard-Bold.otf */; };
@@ -75,6 +78,9 @@
 /* Begin PBXFileReference section */
 		015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runnect_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C3033C911343B5C57EB68E7 /* Pods-Runnect-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runnect-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardInfoVC.swift; sourceTree = "<group>"; };
+		A3BC2F2C2962C3F200198261 /* ActivityRecordInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRecordInfoVC.swift; sourceTree = "<group>"; };
+		A3BC2F2E2962C40A00198261 /* UploadedCourseInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedCourseInfoVC.swift; sourceTree = "<group>"; };
 		CE17F02C2961BBA100E1DED0 /* ColorLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorLiterals.swift; sourceTree = "<group>"; };
 		CE17F02F2961BEF800E1DED0 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		CE17F0302961BEF800E1DED0 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
@@ -180,6 +186,16 @@
 				015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A3BC2F292962C39F00198261 /* InfoVC */ = {
+			isa = PBXGroup;
+			children = (
+				A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */,
+				A3BC2F2C2962C3F200198261 /* ActivityRecordInfoVC.swift */,
+				A3BC2F2E2962C40A00198261 /* UploadedCourseInfoVC.swift */,
+			);
+			path = InfoVC;
 			sourceTree = "<group>";
 		};
 		CE17F02E2961BEAE00E1DED0 /* Fonts */ = {
@@ -297,6 +313,7 @@
 		CE17F0452961C3DD00E1DED0 /* VC */ = {
 			isa = PBXGroup;
 			children = (
+				A3BC2F292962C39F00198261 /* InfoVC */,
 				CEEC6B3F2961C55000D00E1E /* MyPageVC.swift */,
 			);
 			path = VC;
@@ -741,6 +758,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE665604295D91B100C64E12 /* makeAlert.swift in Sources */,
+				A3BC2F2F2962C40A00198261 /* UploadedCourseInfoVC.swift in Sources */,
 				CE6655EA295D88B200C64E12 /* UITabBar+.swift in Sources */,
 				CEC2A68729629B9B00160BF7 /* SignInVC.swift in Sources */,
 				CE665602295D918000C64E12 /* JsonCoder.swift in Sources */,
@@ -750,6 +768,7 @@
 				CE6655CD295D856300C64E12 /* KeyPathFindable.swift in Sources */,
 				CE6655E4295D884600C64E12 /* UILabel+.swift in Sources */,
 				CE6655FA295D90E000C64E12 /* applyShadow.swift in Sources */,
+				A3BC2F2B2962C3D500198261 /* GoalRewardInfoVC.swift in Sources */,
 				CE665606295D91C500C64E12 /* makeVibrate.swift in Sources */,
 				CE66560A295D924A00C64E12 /* Result+.swift in Sources */,
 				CE66560E295D92A500C64E12 /* setStatusBarBackgroundColor.swift in Sources */,
@@ -793,6 +812,7 @@
 				CE6655CA295D84DD00C64E12 /* UserDefaultKeyList.swift in Sources */,
 				CE6655F2295D894D00C64E12 /* UIView+.swift in Sources */,
 				CE665600295D915D00C64E12 /* getClassName.swift in Sources */,
+				A3BC2F2D2962C3F200198261 /* ActivityRecordInfoVC.swift in Sources */,
 				CE6655FC295D90F500C64E12 /* calculatePastTime.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
