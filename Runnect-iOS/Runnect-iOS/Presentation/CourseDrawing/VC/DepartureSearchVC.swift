@@ -22,9 +22,23 @@ final class DepartureSearchVC: UIViewController {
         $0.separatorStyle = .none
     }
     
-    private let emptyDataView = UIView().then {
-        let alertImageView = UIImageView()
-        alertImageView.image = ImageLiterals.icAlert
+    private let alertImageView = UIImageView().then {
+        $0.image = ImageLiterals.icAlert
+        $0.tintColor = .g3
+    }
+    
+    private let descriptionLabel = UILabel().then {
+        $0.text = "검색결과가 없습니다\n검색어를 다시 확인해주세요"
+        $0.font = .b4
+        $0.textColor = .g3
+        $0.numberOfLines = 2
+        $0.textAlignment = .center
+    }
+    
+    private lazy var emptyDataView = UIStackView(arrangedSubviews: [alertImageView, descriptionLabel]).then {
+        $0.axis = .vertical
+        $0.spacing = 22
+        $0.alignment = .center
     }
     
     // MARK: - View Life Cycle
@@ -58,6 +72,7 @@ extension DepartureSearchVC {
 extension DepartureSearchVC {
     private func setUI() {
         view.backgroundColor = .w1
+        emptyDataView.isHidden = true // 데이터가 없으면 false로 설정
     }
     
     private func setLayout() {
@@ -77,6 +92,11 @@ extension DepartureSearchVC {
         locationTableView.snp.makeConstraints { make in
             make.top.equalTo(dividerView.snp.bottom)
             make.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        locationTableView.addSubview(emptyDataView)
+        emptyDataView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
         }
     }
 }
