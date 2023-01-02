@@ -22,6 +22,11 @@ final class DepartureSearchVC: UIViewController {
         $0.separatorStyle = .none
     }
     
+    private let emptyDataView = UIView().then {
+        let alertImageView = UIImageView()
+        alertImageView.image = ImageLiterals.icAlert
+    }
+    
     // MARK: - View Life Cycle
  
     override func viewDidLoad() {
@@ -29,6 +34,7 @@ final class DepartureSearchVC: UIViewController {
         self.setUI()
         self.setLayout()
         self.setDelegate()
+        self.registerCell()
     }
 }
 
@@ -39,6 +45,11 @@ extension DepartureSearchVC {
         self.naviBar.delegate = self
         self.locationTableView.delegate = self
         self.locationTableView.dataSource = self
+    }
+    
+    private func registerCell() {
+        self.locationTableView.register(LocationSearchResultTVC.self,
+                                        forCellReuseIdentifier: LocationSearchResultTVC.className)
     }
 }
 
@@ -78,7 +89,11 @@ extension DepartureSearchVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: LocationSearchResultTVC.className, for: indexPath)
+                as? LocationSearchResultTVC
+        else { return UITableViewCell() }
+        cell.selectionStyle = .none
+        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
