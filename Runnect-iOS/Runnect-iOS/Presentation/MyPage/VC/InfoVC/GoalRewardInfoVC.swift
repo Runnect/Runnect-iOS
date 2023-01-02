@@ -27,6 +27,36 @@ final class GoalRewardInfoVC: UIViewController {
         $0.font = .b4
     }
     
+    private let stampCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.isScrollEnabled = true
+        collectionView.showsVerticalScrollIndicator = false
+        
+        return collectionView
+    }()
+    
+    // MARK: - Variables
+    
+    var stampList: [GoalRewardInfoModel] = [
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampC1.className, stampStandard: "그리기 스타터"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampC2.className, stampStandard: "그리기 중수"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampC3.className, stampStandard: "그리기 마스터"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS1.className, stampStandard: "스크랩 베이비"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS2.className, stampStandard: "스크랩 어린이"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS3.className, stampStandard: "스크랩 어른이"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS3.className, stampStandard: "스크랩 어른이"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampP1.className, stampStandard: "새싹 업로더"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampP2.className, stampStandard: "중수 업로더"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampP3.className, stampStandard: "인플루언서"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampR1.className, stampStandard: "달리기 유망주"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampR2.className, stampStandard: "아마추어 선수"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampR2.className, stampStandard: "마라톤 선수")
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
