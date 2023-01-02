@@ -66,6 +66,7 @@
 		CE665612295D92E400C64E12 /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE665611295D92E400C64E12 /* UserDefaultWrapper.swift */; };
 		CE665615295D989A00C64E12 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = CE665614295D989A00C64E12 /* .swiftlint.yml */; };
 		CEB8416E2962C45300BF8080 /* LocationSearchResultTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB8416D2962C45300BF8080 /* LocationSearchResultTVC.swift */; };
+		CEB841702963360800BF8080 /* CountDownVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB8416F2963360800BF8080 /* CountDownVC.swift */; };
 		CEC2A6852961F92C00160BF7 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A6842961F92C00160BF7 /* CustomButton.swift */; };
 		CEC2A68729629B9B00160BF7 /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A68629629B9B00160BF7 /* SignInVC.swift */; };
 		CEC2A68A2962ADCD00160BF7 /* RNMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A6892962ADCD00160BF7 /* RNMapView.swift */; };
@@ -149,6 +150,7 @@
 		CE665611295D92E400C64E12 /* UserDefaultWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultWrapper.swift; sourceTree = "<group>"; };
 		CE665614295D989A00C64E12 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		CEB8416D2962C45300BF8080 /* LocationSearchResultTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchResultTVC.swift; sourceTree = "<group>"; };
+		CEB8416F2963360800BF8080 /* CountDownVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownVC.swift; sourceTree = "<group>"; };
 		CEC2A6842961F92C00160BF7 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		CEC2A68629629B9B00160BF7 /* SignInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInVC.swift; sourceTree = "<group>"; };
 		CEC2A6892962ADCD00160BF7 /* RNMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNMapView.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 			children = (
 				CEEC6B392961C4F300D00E1E /* CourseDrawingHomeVC.swift */,
 				CEC2A6912962BE2900160BF7 /* DepartureSearchVC.swift */,
+				CEB8416F2963360800BF8080 /* CountDownVC.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -819,6 +822,7 @@
 				CE6655D0295D85FF00C64E12 /* CancelBag.swift in Sources */,
 				CE6655DC295D873500C64E12 /* UIButton+.swift in Sources */,
 				CE6655D4295D865B00C64E12 /* Publisher+UIControl.swift in Sources */,
+				CEB841702963360800BF8080 /* CountDownVC.swift in Sources */,
 				CE6655EC295D88D000C64E12 /* UITableView+.swift in Sources */,
 				CEEC6B3A2961C4F300D00E1E /* CourseDrawingHomeVC.swift in Sources */,
 				CEC2A6902962B06C00160BF7 /* convertLocationObject.swift in Sources */,
