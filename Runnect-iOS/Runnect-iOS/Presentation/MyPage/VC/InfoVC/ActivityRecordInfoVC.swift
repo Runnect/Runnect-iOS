@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ActivityRecordInfoVC: UIViewController {
+final class ActivityRecordInfoVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

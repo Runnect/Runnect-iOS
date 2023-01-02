@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GoalRewardInfoVC: UIViewController {
+final class GoalRewardInfoVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

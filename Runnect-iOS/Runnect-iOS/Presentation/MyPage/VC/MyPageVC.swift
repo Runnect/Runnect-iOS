@@ -131,17 +131,17 @@ extension MyPageVC {
         return containerView
     }
     
-    private func pushtoGoalRewardInfoVC() {
+    private func pushToGoalRewardInfoVC() {
         let goalRewardInfoVC = GoalRewardInfoVC()
         self.navigationController?.pushViewController(goalRewardInfoVC, animated: true)
     }
     
-    private func pushtoActivityRecordInfoVC() {
+    private func pushToActivityRecordInfoVC() {
         let activityRecordInfoVC = ActivityRecordInfoVC()
         self.navigationController?.pushViewController(activityRecordInfoVC, animated: true)
     }
     
-    private func pushtoUploadedCourseInfoVC() {
+    private func pushToUploadedCourseInfoVC() {
         let uploadedCourseInfoVC = ActivityRecordInfoVC()
         self.navigationController?.pushViewController(uploadedCourseInfoVC, animated: true)
     }
@@ -152,24 +152,24 @@ extension MyPageVC {
 extension MyPageVC {
     @objc
     private func touchUpGoalRewardInfoView() {
-        pushtoGoalRewardInfoVC()
+        pushToGoalRewardInfoVC()
     }
     
     @objc
     private func touchUpActivityRecordInfoView() {
-        pushtoActivityRecordInfoVC()
+        pushToActivityRecordInfoVC()
     }
     
     @objc
     private func uploadedCourseRecordInfoView() {
-        pushtoActivityRecordInfoVC()
+        pushToActivityRecordInfoVC()
     }
 }
 
 // MARK: - UI & Layout
 
 extension MyPageVC {
-    private func setNavigationBar() {        
+    private func setNavigationBar() {
         view.addSubview(navibar)
         
         navibar.snp.makeConstraints { make in

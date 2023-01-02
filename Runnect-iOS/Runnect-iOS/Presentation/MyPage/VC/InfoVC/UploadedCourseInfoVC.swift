@@ -7,7 +7,7 @@
 
 import UIKit
 
-class UploadedCourseInfoVC: UIViewController {
+final class UploadedCourseInfoVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
