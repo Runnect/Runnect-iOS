@@ -12,6 +12,8 @@ import Then
 
 final class SplashVC: UIViewController {
 
+    // MARK: - UI Components
+    
     private let backgroundImageView = UIImageView().then {
         $0.image = ImageLiterals.imgBackground
         $0.contentMode = .scaleAspectFill
@@ -37,7 +39,7 @@ final class SplashVC: UIViewController {
 
 extension SplashVC {
     private func pushToSignInView() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             let signInVC = SignInVC()
             self.navigationController?.pushViewController(signInVC, animated: true)
         }
