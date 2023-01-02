@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class MyPageVC: UIViewController, CustomNavigationBarDelegate {
+final class MyPageVC: UIViewController {
     
     // MARK: - UI Components
     
@@ -88,43 +88,10 @@ final class MyPageVC: UIViewController, CustomNavigationBarDelegate {
         setUI()
         setLayout()
     }
-    
-    private func pushtoGoalRewardInfoVC() {
-        let goalRewardInfoVC = GoalRewardInfoVC()
-        self.navigationController?.pushViewController(goalRewardInfoVC, animated: true)
-    }
-    
-    private func pushtoActivityRecordInfoVC() {
-        let activityRecordInfoVC = ActivityRecordInfoVC()
-        self.navigationController?.pushViewController(activityRecordInfoVC, animated: true)
-    }
-    
-    private func pushtoUploadedCourseInfoVC() {
-        let uploadedCourseInfoVC = ActivityRecordInfoVC()
-        self.navigationController?.pushViewController(uploadedCourseInfoVC, animated: true)
-    }
-    
-    @objc
-    private func touchUpGoalRewardInfoView() {
-        pushtoGoalRewardInfoVC()
-    }
-    
-    @objc
-    private func touchUpActivityRecordInfoView() {
-        pushtoActivityRecordInfoVC()
-    }
-    
-    @objc
-    private func uploadedCourseRecordInfoView() {
-        pushtoActivityRecordInfoVC()
-    }
-    
-    func searchButtonDidTap(text: String) {
-        print(text)
-    }
 }
 
 // MARK: - Methods
+
 extension MyPageVC {
     private func makeInfoView(title: String) -> UIView {
         let containerView = UIView()
@@ -163,15 +130,46 @@ extension MyPageVC {
         
         return containerView
     }
+    
+    private func pushtoGoalRewardInfoVC() {
+        let goalRewardInfoVC = GoalRewardInfoVC()
+        self.navigationController?.pushViewController(goalRewardInfoVC, animated: true)
+    }
+    
+    private func pushtoActivityRecordInfoVC() {
+        let activityRecordInfoVC = ActivityRecordInfoVC()
+        self.navigationController?.pushViewController(activityRecordInfoVC, animated: true)
+    }
+    
+    private func pushtoUploadedCourseInfoVC() {
+        let uploadedCourseInfoVC = ActivityRecordInfoVC()
+        self.navigationController?.pushViewController(uploadedCourseInfoVC, animated: true)
+    }
+}
+
+// MARK: - @objc Function
+
+extension MyPageVC {
+    @objc
+    private func touchUpGoalRewardInfoView() {
+        pushtoGoalRewardInfoVC()
+    }
+    
+    @objc
+    private func touchUpActivityRecordInfoView() {
+        pushtoActivityRecordInfoVC()
+    }
+    
+    @objc
+    private func uploadedCourseRecordInfoView() {
+        pushtoActivityRecordInfoVC()
+    }
 }
 
 // MARK: - UI & Layout
 
 extension MyPageVC {
-    
-    private func setNavigationBar() {
-        navibar.delegate = self
-        
+    private func setNavigationBar() {        
         view.addSubview(navibar)
         
         navibar.snp.makeConstraints { make in
@@ -199,6 +197,19 @@ extension MyPageVC {
             make.height.equalTo(84)
         }
         
+        setMyProfileLayout()
+        setRunningProgressLayout()
+        
+        firstDivideView.snp.makeConstraints { make in
+            make.top.equalTo(myRunningProgressView.snp.bottom).offset(34)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(10)
+        }
+        
+        setInfoButtonLayout()
+    }
+    
+    private func setMyProfileLayout() {
         myProfileView.addSubviews(myProfileImage, myProfileNameLabel, myProfileEditButton)
         
         myProfileImage.snp.makeConstraints { make in
@@ -225,7 +236,9 @@ extension MyPageVC {
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(55)
         }
-        
+    }
+    
+    private func setRunningProgressLayout() {
         myRunningProgressView.addSubviews(myRunningLevelLavel, myRunningProgressBar,
                                           myRunnigProgressPercentLabel)
         
@@ -244,13 +257,9 @@ extension MyPageVC {
             make.bottom.equalToSuperview()
             make.trailing.equalToSuperview()
         }
-        
-        firstDivideView.snp.makeConstraints { make in
-            make.top.equalTo(myRunningProgressView.snp.bottom).offset(34)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(10)
-        }
-        
+    }
+    
+    private func setInfoButtonLayout() {
         goalRewardInfoView.snp.makeConstraints { make in
             make.top.equalTo(firstDivideView.snp.bottom)
             make.leading.trailing.equalToSuperview()
