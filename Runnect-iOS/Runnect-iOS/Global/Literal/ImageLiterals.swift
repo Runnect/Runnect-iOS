@@ -35,6 +35,8 @@ enum ImageLiterals {
     static var icStorageFill: UIImage { .load(named: "ic_storage_fill") }
     static var icStorage: UIImage { .load(named: "ic_storage") }
     static var icTime: UIImage { .load(named: "ic_time") }
+    static var icLocationPoint: UIImage { .load(named: "ic_location_point") }
+    static var icAlert: UIImage { .load(named: "ic_alert") }
     // img
     static var imgBackground: UIImage { .load(named: "img_background") }
     static var imgLogo: UIImage { .load(named: "img_logo") }

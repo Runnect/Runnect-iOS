@@ -67,8 +67,14 @@
 		CE665610295D92C200C64E12 /* setTextLineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE66560F295D92C200C64E12 /* setTextLineHeight.swift */; };
 		CE665612295D92E400C64E12 /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE665611295D92E400C64E12 /* UserDefaultWrapper.swift */; };
 		CE665615295D989A00C64E12 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = CE665614295D989A00C64E12 /* .swiftlint.yml */; };
+		CEB8416E2962C45300BF8080 /* LocationSearchResultTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB8416D2962C45300BF8080 /* LocationSearchResultTVC.swift */; };
 		CEC2A6852961F92C00160BF7 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A6842961F92C00160BF7 /* CustomButton.swift */; };
 		CEC2A68729629B9B00160BF7 /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A68629629B9B00160BF7 /* SignInVC.swift */; };
+		CEC2A68A2962ADCD00160BF7 /* RNMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A6892962ADCD00160BF7 /* RNMapView.swift */; };
+		CEC2A68C2962AE1B00160BF7 /* RNStartMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A68B2962AE1B00160BF7 /* RNStartMarker.swift */; };
+		CEC2A68E2962AF2C00160BF7 /* RNMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A68D2962AF2C00160BF7 /* RNMarker.swift */; };
+		CEC2A6902962B06C00160BF7 /* convertLocationObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A68F2962B06C00160BF7 /* convertLocationObject.swift */; };
+		CEC2A6922962BE2900160BF7 /* DepartureSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A6912962BE2900160BF7 /* DepartureSearchVC.swift */; };
 		CEEC6B3A2961C4F300D00E1E /* CourseDrawingHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B392961C4F300D00E1E /* CourseDrawingHomeVC.swift */; };
 		CEEC6B3C2961C51A00D00E1E /* CourseStorageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B3B2961C51A00D00E1E /* CourseStorageVC.swift */; };
 		CEEC6B3E2961C53700D00E1E /* CourseDiscoveryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B3D2961C53700D00E1E /* CourseDiscoveryVC.swift */; };
@@ -146,13 +152,18 @@
 		CE66560F295D92C200C64E12 /* setTextLineHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setTextLineHeight.swift; sourceTree = "<group>"; };
 		CE665611295D92E400C64E12 /* UserDefaultWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultWrapper.swift; sourceTree = "<group>"; };
 		CE665614295D989A00C64E12 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		CEB8416D2962C45300BF8080 /* LocationSearchResultTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchResultTVC.swift; sourceTree = "<group>"; };
 		CEC2A6842961F92C00160BF7 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		CEC2A68629629B9B00160BF7 /* SignInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInVC.swift; sourceTree = "<group>"; };
+		CEC2A6892962ADCD00160BF7 /* RNMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNMapView.swift; sourceTree = "<group>"; };
+		CEC2A68B2962AE1B00160BF7 /* RNStartMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNStartMarker.swift; sourceTree = "<group>"; };
+		CEC2A68D2962AF2C00160BF7 /* RNMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNMarker.swift; sourceTree = "<group>"; };
+		CEC2A68F2962B06C00160BF7 /* convertLocationObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = convertLocationObject.swift; sourceTree = "<group>"; };
+		CEC2A6912962BE2900160BF7 /* DepartureSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureSearchVC.swift; sourceTree = "<group>"; };
 		CEEC6B392961C4F300D00E1E /* CourseDrawingHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDrawingHomeVC.swift; sourceTree = "<group>"; };
 		CEEC6B3B2961C51A00D00E1E /* CourseStorageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseStorageVC.swift; sourceTree = "<group>"; };
 		CEEC6B3D2961C53700D00E1E /* CourseDiscoveryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDiscoveryVC.swift; sourceTree = "<group>"; };
 		CEEC6B3F2961C55000D00E1E /* MyPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageVC.swift; sourceTree = "<group>"; };
-		CEEC6B412961C58B00D00E1E /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CEEC6B422961C59600D00E1E /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CEEC6B432961C59F00D00E1E /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CEEC6B442961C5A800D00E1E /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
@@ -280,6 +291,7 @@
 			isa = PBXGroup;
 			children = (
 				CEEC6B392961C4F300D00E1E /* CourseDrawingHomeVC.swift */,
+				CEC2A6912962BE2900160BF7 /* DepartureSearchVC.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -287,7 +299,7 @@
 		CE17F0402961C3CD00E1DED0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				CEEC6B412961C58B00D00E1E /* .gitkeep */,
+				CEB8416D2962C45300BF8080 /* LocationSearchResultTVC.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -497,6 +509,7 @@
 				CE58759D29601476005D967E /* LoadingIndicator.swift */,
 				CE58759F29601500005D967E /* Toast.swift */,
 				CE6655C9295D84DD00C64E12 /* UserDefaultKeyList.swift */,
+				CEC2A68F2962B06C00160BF7 /* convertLocationObject.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -544,6 +557,7 @@
 		CE6655B6295D803C00C64E12 /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
+				CEC2A6882962ADB900160BF7 /* MapView */,
 				CEEC6B4A2961D89700D00E1E /* CustomNavigationBar.swift */,
 				CEC2A6842961F92C00160BF7 /* CustomButton.swift */,
 			);
@@ -622,6 +636,16 @@
 				CE6655F3295D898400C64E12 /* UIViewController+.swift */,
 			);
 			path = "UIKit+";
+			sourceTree = "<group>";
+		};
+		CEC2A6882962ADB900160BF7 /* MapView */ = {
+			isa = PBXGroup;
+			children = (
+				CEC2A6892962ADCD00160BF7 /* RNMapView.swift */,
+				CEC2A68B2962AE1B00160BF7 /* RNStartMarker.swift */,
+				CEC2A68D2962AF2C00160BF7 /* RNMarker.swift */,
+			);
+			path = MapView;
 			sourceTree = "<group>";
 		};
 		CEEC6B472961C5CA00D00E1E /* VC */ = {
@@ -798,7 +822,9 @@
 				CE6655E8295D889600C64E12 /* UISwitch+.swift in Sources */,
 				CE5875A029601500005D967E /* Toast.swift in Sources */,
 				CE6655F6295D90B600C64E12 /* addToolBar.swift in Sources */,
+				CEC2A68A2962ADCD00160BF7 /* RNMapView.swift in Sources */,
 				CE6655F0295D891B00C64E12 /* UITextView+.swift in Sources */,
+				CEC2A6922962BE2900160BF7 /* DepartureSearchVC.swift in Sources */,
 				CE6655EE295D88E600C64E12 /* UITextField+.swift in Sources */,
 				CE6655F8295D90CF00C64E12 /* adjusted+.swift in Sources */,
 				CE4545CB295D7AF4003201E1 /* SceneDelegate.swift in Sources */,
@@ -809,6 +835,7 @@
 				CE6655D4295D865B00C64E12 /* Publisher+UIControl.swift in Sources */,
 				CE6655EC295D88D000C64E12 /* UITableView+.swift in Sources */,
 				CEEC6B3A2961C4F300D00E1E /* CourseDrawingHomeVC.swift in Sources */,
+				CEC2A6902962B06C00160BF7 /* convertLocationObject.swift in Sources */,
 				CEC2A6852961F92C00160BF7 /* CustomButton.swift in Sources */,
 				CE66560C295D928300C64E12 /* setRootViewController.swift in Sources */,
 				CE6655D9295D871B00C64E12 /* URL+.swift in Sources */,
@@ -819,12 +846,15 @@
 				CE665610295D92C200C64E12 /* setTextLineHeight.swift in Sources */,
 				CE6655E2295D87EB00C64E12 /* UIImage+.swift in Sources */,
 				A3BC2F322962E0DB00198261 /* GoalRewardInfoModel.swift in Sources */,
+				CEC2A68C2962AE1B00160BF7 /* RNStartMarker.swift in Sources */,
 				CE5875A4296015D2005D967E /* Encodable+.swift in Sources */,
 				CEEC6B4B2961D89700D00E1E /* CustomNavigationBar.swift in Sources */,
 				CE17F02D2961BBA100E1DED0 /* ColorLiterals.swift in Sources */,
+				CEC2A68E2962AF2C00160BF7 /* RNMarker.swift in Sources */,
 				CE6655D2295D862A00C64E12 /* Publisher+Driver.swift in Sources */,
 				CE6655E6295D887F00C64E12 /* UIStackView+.swift in Sources */,
 				A3BC2F34296303A600198261 /* GoalRewardInfoCVC.swift in Sources */,
+				CEB8416E2962C45300BF8080 /* LocationSearchResultTVC.swift in Sources */,
 				CE6655CA295D84DD00C64E12 /* UserDefaultKeyList.swift in Sources */,
 				CE6655F2295D894D00C64E12 /* UIView+.swift in Sources */,
 				CE665600295D915D00C64E12 /* getClassName.swift in Sources */,
