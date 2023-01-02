@@ -54,6 +54,7 @@ enum ImageLiterals {
     static var imgStampS3: UIImage { .load(named: "img_stamp_s3") }
     static var imgStamp: UIImage { .load(named: "img_stamp") }
     static var imgStorage: UIImage { .load(named: "img_storage") }
+    static var imgLock: UIImage { .load(named: "img_lock") }
 }
 
 extension UIImage {
