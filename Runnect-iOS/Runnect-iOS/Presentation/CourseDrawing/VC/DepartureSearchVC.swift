@@ -119,6 +119,12 @@ extension DepartureSearchVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 68
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let courseDrawingVC = CourseDrawingVC()
+        courseDrawingVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(courseDrawingVC, animated: true)
+    }
 }
 
 // MARK: - CustomNavigationBarDelegate

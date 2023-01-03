@@ -108,8 +108,21 @@ extension CustomNavigationBar {
     }
     
     @discardableResult
+    func setTextFieldText(text: String) -> Self {
+        self.textField.text = text
+        self.textField.isUserInteractionEnabled = false
+        return self
+    }
+    
+    @discardableResult
     func showKeyboard() -> Self {
         self.textField.becomeFirstResponder()
+        return self
+    }
+    
+    @discardableResult
+    func hideRightButton() -> Self {
+        self.rightButton.isHidden = true
         return self
     }
 }

@@ -21,6 +21,8 @@
 		CE17F0352961BEF800E1DED0 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = CE17F0312961BEF800E1DED0 /* Pretendard-SemiBold.otf */; };
 		CE17F0362961BEF800E1DED0 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = CE17F0322961BEF800E1DED0 /* Pretendard-Regular.otf */; };
 		CE17F0382961BF8B00E1DED0 /* FontLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17F0372961BF8B00E1DED0 /* FontLiterals.swift */; };
+		CE29D582296402B500F47542 /* CourseDrawingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE29D581296402B500F47542 /* CourseDrawingVC.swift */; };
+		CE29D584296416D800F47542 /* caculateStatusBarHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE29D583296416D800F47542 /* caculateStatusBarHeight.swift */; };
 		CE4545C9295D7AF4003201E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545C8295D7AF4003201E1 /* AppDelegate.swift */; };
 		CE4545CB295D7AF4003201E1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CA295D7AF4003201E1 /* SceneDelegate.swift */; };
 		CE4545CD295D7AF4003201E1 /* TaBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CC295D7AF4003201E1 /* TaBarController.swift */; };
@@ -102,6 +104,8 @@
 		CE17F0312961BEF800E1DED0 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		CE17F0322961BEF800E1DED0 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		CE17F0372961BF8B00E1DED0 /* FontLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontLiterals.swift; sourceTree = "<group>"; };
+		CE29D581296402B500F47542 /* CourseDrawingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDrawingVC.swift; sourceTree = "<group>"; };
+		CE29D583296416D800F47542 /* caculateStatusBarHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = caculateStatusBarHeight.swift; sourceTree = "<group>"; };
 		CE4545C5295D7AF4003201E1 /* Runnect-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Runnect-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4545C8295D7AF4003201E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE4545CA295D7AF4003201E1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -308,6 +312,7 @@
 			children = (
 				CEEC6B392961C4F300D00E1E /* CourseDrawingHomeVC.swift */,
 				CEC2A6912962BE2900160BF7 /* DepartureSearchVC.swift */,
+				CE29D581296402B500F47542 /* CourseDrawingVC.swift */,
 				CEB8416F2963360800BF8080 /* CountDownVC.swift */,
 			);
 			path = VC;
@@ -527,6 +532,7 @@
 				CE58759F29601500005D967E /* Toast.swift */,
 				CE6655C9295D84DD00C64E12 /* UserDefaultKeyList.swift */,
 				CEC2A68F2962B06C00160BF7 /* convertLocationObject.swift */,
+				CE29D583296416D800F47542 /* caculateStatusBarHeight.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -821,6 +827,7 @@
 				CE6655F4295D898400C64E12 /* UIViewController+.swift in Sources */,
 				CE5645162961B72E000A2856 /* ImageLiterals.swift in Sources */,
 				CE6655CD295D856300C64E12 /* KeyPathFindable.swift in Sources */,
+				CE29D582296402B500F47542 /* CourseDrawingVC.swift in Sources */,
 				CE6655E4295D884600C64E12 /* UILabel+.swift in Sources */,
 				CE6655FA295D90E000C64E12 /* applyShadow.swift in Sources */,
 				A3BC2F2B2962C3D500198261 /* GoalRewardInfoVC.swift in Sources */,
@@ -855,6 +862,7 @@
 				CEEC6B3A2961C4F300D00E1E /* CourseDrawingHomeVC.swift in Sources */,
 				CEC2A6902962B06C00160BF7 /* convertLocationObject.swift in Sources */,
 				CEC2A6852961F92C00160BF7 /* CustomButton.swift in Sources */,
+				CE29D584296416D800F47542 /* caculateStatusBarHeight.swift in Sources */,
 				CE66560C295D928300C64E12 /* setRootViewController.swift in Sources */,
 				CE6655D9295D871B00C64E12 /* URL+.swift in Sources */,
 				CE6655DE295D877F00C64E12 /* UIColor+.swift in Sources */,
