@@ -17,6 +17,8 @@ final class RNMapView: UIView {
     // MARK: - Properties
     
     @Published var pathDistance: Double = 0
+    @Published var markerCount = 0
+    
     let pathImage = PassthroughSubject<UIImage, Never>()
     var cancelBag = Set<AnyCancellable>()
     
@@ -24,6 +26,7 @@ final class RNMapView: UIView {
     private var isDrawMode: Bool = false
     private var markers = [RNMarker]() {
         didSet {
+            markerCount = markers.count + 1
             self.makePath()
             self.setUndoButton()
         }
@@ -96,6 +99,7 @@ extension RNMapView {
         if withCameraMove {
             moveToLocation(location: location)
         }
+        markerCount = 1
         return self
     }
     
@@ -106,6 +110,7 @@ extension RNMapView {
         self.startMarker.mapView = self.map.mapView
         self.startMarker.showInfoWindow()
         moveToUserLocation()
+        markerCount = 1
         return self
     }
     

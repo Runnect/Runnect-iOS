@@ -84,7 +84,7 @@ final class CourseDrawingVC: UIViewController {
         $0.layer.cornerRadius = 22
     }
     
-    private let completeButton = CustomButton(title: "완성하기")
+    private let completeButton = CustomButton(title: "완성하기").setEnabled(false)
     
     // MARK: - View Life Cycle
     
@@ -108,6 +108,11 @@ extension CourseDrawingVC {
         mapView.$pathDistance.sink { distance in
             let kilometers = String(format: "%.1f", distance/1000)
             self.distanceLabel.text = kilometers
+        }.store(in: cancelBag)
+        
+        mapView.$markerCount.sink { [weak self] count in
+            print(count)
+            self?.completeButton.setEnabled(count >= 2)
         }.store(in: cancelBag)
     }
 }
