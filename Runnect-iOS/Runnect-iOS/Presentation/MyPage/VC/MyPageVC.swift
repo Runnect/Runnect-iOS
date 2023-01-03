@@ -142,7 +142,7 @@ extension MyPageVC {
     }
     
     private func pushToUploadedCourseInfoVC() {
-        let uploadedCourseInfoVC = ActivityRecordInfoVC()
+        let uploadedCourseInfoVC = UploadedCourseInfoVC()
         self.navigationController?.pushViewController(uploadedCourseInfoVC, animated: true)
     }
 }
@@ -162,7 +162,7 @@ extension MyPageVC {
     
     @objc
     private func uploadedCourseRecordInfoView() {
-        pushToActivityRecordInfoVC()
+        pushToUploadedCourseInfoVC()
     }
 }
 
