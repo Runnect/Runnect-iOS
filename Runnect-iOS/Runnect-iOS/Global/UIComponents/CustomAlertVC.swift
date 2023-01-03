@@ -6,8 +6,23 @@
 //
 
 import UIKit
+import Combine
 
 final class CustomAlertVC: UIViewController {
+    
+    // MARK: - Properties
+    
+    var leftButtonTapped: Driver<Void> {
+        leftButton.publisher(for: .touchUpInside)
+            .map { _ in }
+            .asDriver()
+    }
+    
+    var rightButtonTapped: Driver<Void> {
+        rightButton.publisher(for: .touchUpInside)
+            .map { _ in }
+            .asDriver()
+    }
     
     // MARK: - UI Components
     
@@ -45,7 +60,26 @@ final class CustomAlertVC: UIViewController {
 // MARK: - Methods
 
 extension CustomAlertVC {
+    /// conentsLabel의 텍스트 변경
+    @discardableResult
+    public func setTitle(_ title: String) -> Self {
+        self.contentsLabel.text = title
+        return self
+    }
     
+    /// 좌측 버튼의 텍스트 변경
+    @discardableResult
+    public func setLeftButtonTitle(_ title: NSAttributedString) -> Self {
+        self.leftButton.changeTitle(attributedString: title)
+        return self
+    }
+    
+    /// 우측 버튼의 텍스트 변경
+    @discardableResult
+    public func setRightButtonTitle(_ title: NSAttributedString) -> Self {
+        self.rightButton.changeTitle(attributedString: title)
+        return self
+    }
 }
 
 // MARK: - UI & Layout

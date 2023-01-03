@@ -146,6 +146,15 @@ extension CourseDrawingVC {
     @objc private func completeButtonDidTap() {
         let alertVC = CustomAlertVC()
         alertVC.modalPresentationStyle = .overFullScreen
+        
+        alertVC.leftButtonTapped.sink { _ in
+            print("left Tap")
+        }.store(in: cancelBag)
+        
+        alertVC.rightButtonTapped.sink { _ in
+            print("right Tap")
+        }.store(in: cancelBag)
+        
         self.present(alertVC, animated: false)
     }
 }
