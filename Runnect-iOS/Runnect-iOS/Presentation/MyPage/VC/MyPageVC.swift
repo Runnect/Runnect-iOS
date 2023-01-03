@@ -80,7 +80,7 @@ final class MyPageVC: UIViewController {
         $0.addGestureRecognizer(tap)
     }
 
-    // MARK: -
+    // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()

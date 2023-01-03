@@ -212,6 +212,7 @@
 		A3BC2F292962C39F00198261 /* InfoVC */ = {
 			isa = PBXGroup;
 			children = (
+				A3BC2F3B2964671D00198261 /* UploadedCourseInfoCollectionView */,
 				A3BC2F362963CD2100198261 /* ActivityRecordInfoTableView */,
 				A3BC2F302962E08400198261 /* GoalRewardInfoCollectionView */,
 				A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */,
@@ -237,6 +238,13 @@
 				A3BC2F392963D0ED00198261 /* ActivityRecordInfoTVC.swift */,
 			);
 			path = ActivityRecordInfoTableView;
+			sourceTree = "<group>";
+		};
+		A3BC2F3B2964671D00198261 /* UploadedCourseInfoCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UploadedCourseInfoCollectionView;
 			sourceTree = "<group>";
 		};
 		CE17F02E2961BEAE00E1DED0 /* Fonts */ = {
