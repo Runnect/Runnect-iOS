@@ -6,17 +6,37 @@
 //
 
 import UIKit
+import SnapKit
+import Then
 
 final class ActivityRecordInfoVC: UIViewController {
+    
+    // MARK: - UI Components
+    
+    private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("활동 기록")
 
+    // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setNavigationBar()
         setUI()
-        // Do any additional setup after loading the view.
     }
 }
 
 extension ActivityRecordInfoVC {
+    
+    // MARK: - Layout Helpers
+    
+    private func setNavigationBar() {
+        view.addSubview(navibar)
+        
+        navibar.snp.makeConstraints { make in
+            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(48)
+        }
+    }
+    
     private func setUI() {
         view.backgroundColor = .w1
     }
