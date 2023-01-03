@@ -273,7 +273,7 @@ extension RNMapView {
         map.showLocationButton = false
         map.showScaleBar = false
         
-        map.mapView.logoAlign = .leftTop
+        map.mapView.logoAlign = .rightTop
     }
     
     private func getLocationAuth() {

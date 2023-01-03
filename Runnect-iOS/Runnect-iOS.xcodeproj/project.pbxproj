@@ -298,8 +298,8 @@
 			children = (
 				CEEC6B392961C4F300D00E1E /* CourseDrawingHomeVC.swift */,
 				CEC2A6912962BE2900160BF7 /* DepartureSearchVC.swift */,
-				CEB8416F2963360800BF8080 /* CountDownVC.swift */,
 				CE29D581296402B500F47542 /* CourseDrawingVC.swift */,
+				CEB8416F2963360800BF8080 /* CountDownVC.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
