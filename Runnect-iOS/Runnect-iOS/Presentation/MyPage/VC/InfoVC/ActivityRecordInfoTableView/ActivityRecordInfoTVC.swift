@@ -142,10 +142,10 @@ extension ActivityRecordInfoTVC {
         )
         
         activityRecordMapImage.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(12.72)
+            make.top.equalToSuperview().offset(13)
             make.leading.equalToSuperview().offset(15)
             make.width.equalTo(86)
-            make.height.equalTo(84.57)
+            make.height.equalTo(85)
         }
         
         activityRecordMainInfoStackView.snp.makeConstraints { make in
@@ -154,7 +154,7 @@ extension ActivityRecordInfoTVC {
         }
         
         horizontalDivideLine.snp.makeConstraints { make in
-            make.top.equalTo(activityRecordMapImage.snp.bottom).offset(7.87)
+            make.top.equalTo(activityRecordMapImage.snp.bottom).offset(8)
             make.leading.trailing.equalToSuperview().inset(10)
             make.height.equalTo(1)
         }
@@ -168,7 +168,7 @@ extension ActivityRecordInfoTVC {
         }
         
         activityRecordSubInfoStackView.snp.makeConstraints { make in
-            make.top.equalTo(horizontalDivideLine.snp.bottom).offset(14.82)
+            make.top.equalTo(horizontalDivideLine.snp.bottom).offset(15)
             make.width.equalToSuperview()
             make.centerX.equalToSuperview()
         }

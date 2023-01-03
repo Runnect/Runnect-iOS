@@ -11,7 +11,7 @@ import Then
 
 final class ActivityRecordInfoVC: UIViewController {
     
-    // MARK: - Variables
+    // MARK: - Properties
     
     var activityRecordList: [ActivityRecordInfoModel] = [
         ActivityRecordInfoModel(title: "석촌 호수 한 바퀴", place: "서울시 강동구", date: "2022.12.28", distance: "4.01 km", runningTime: "0:27:36", averagePace: "6'45\""),
@@ -27,7 +27,6 @@ final class ActivityRecordInfoVC: UIViewController {
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("활동 기록")
     
     private lazy var activityRecordTableView = UITableView().then {
-        $0.translatesAutoresizingMaskIntoConstraints = false
         $0.showsVerticalScrollIndicator = false
         $0.separatorStyle = .none
         $0.delegate = self
