@@ -11,11 +11,7 @@ import Then
 
 // MARK: - GoalRewardInfoCVC
 
-class GoalRewardInfoCVC: UICollectionViewCell {
-    
-    // MARK: - Identifier
-    
-    static let identifier = "GoalRewardInfoCVC"
+final class GoalRewardInfoCVC: UICollectionViewCell {
     
     // MARK: - UI Components
     
