@@ -300,9 +300,9 @@ extension RNMapView {
     }
     
     private func setPathOverlay() {
-        pathOverlay.width = 3
+        pathOverlay.width = 4
         pathOverlay.outlineWidth = 0
-        pathOverlay.color = .purple
+        pathOverlay.color = .m1
     }
     
     private func setUndoButton() {
@@ -335,10 +335,10 @@ extension RNMapView {
             make.bottom.equalToSuperview().inset(98+bottomPadding)
             make.trailing.equalToSuperview().inset(24)
         }
-        
+
         undoButton.snp.makeConstraints { make in
             make.top.equalTo(self.snp.bottom)
-            make.trailing.equalToSuperview().inset(16)
+            make.trailing.equalToSuperview()
         }
     }
     
@@ -370,7 +370,7 @@ extension RNMapView {
 extension RNMapView: NMFMapViewCameraDelegate, NMFMapViewTouchDelegate {
     // 지도 탭 이벤트
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        guard isDrawMode else { return }
+        guard isDrawMode && markers.count < 19 else { return }
         self.makeMarker(at: latlng)
     }
 }

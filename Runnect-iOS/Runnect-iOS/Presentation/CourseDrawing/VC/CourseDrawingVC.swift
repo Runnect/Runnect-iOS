@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import Combine
 
 final class CourseDrawingVC: UIViewController {
+    
+    // MARK: - Properties
+    
+    private var cancelBag = CancelBag()
     
     // MARK: - UI Components
     
@@ -79,6 +84,8 @@ final class CourseDrawingVC: UIViewController {
         $0.layer.cornerRadius = 22
     }
     
+    private let completeButton = CustomButton(title: "완성하기")
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -86,6 +93,7 @@ final class CourseDrawingVC: UIViewController {
         self.setUI()
         self.setLayout()
         self.setAddTarget()
+        self.bindMapView()
     }
 }
 
@@ -94,6 +102,13 @@ final class CourseDrawingVC: UIViewController {
 extension CourseDrawingVC {
     private func setAddTarget() {
         self.decideDepartureButton.addTarget(self, action: #selector(decideDepartureButtonDidTap), for: .touchUpInside)
+    }
+    
+    private func bindMapView() {
+        mapView.$pathDistance.sink { distance in
+            let kilometers = String(format: "%.1f", distance/1000)
+            self.distanceLabel.text = kilometers
+        }.store(in: cancelBag)
     }
 }
 
@@ -104,6 +119,7 @@ extension CourseDrawingVC {
         showHiddenViews()
         
         mapView.showUndoButton(toShow: true)
+        mapView.setDrawMode(to: true)
         
         UIView.animate(withDuration: 0.7) {
             let naviBarContainerStackViewHeight = self.naviBarContainerStackView.frame.height
@@ -173,7 +189,7 @@ extension CourseDrawingVC {
     }
     
     private func setHiddenViewsLayout() {
-        view.addSubviews(naviBarForEditing, distanceContainerView)
+        view.addSubviews(naviBarForEditing, distanceContainerView, completeButton)
         view.sendSubviewToBack(naviBarForEditing)
         naviBarForEditing.snp.makeConstraints { make in
             make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -192,16 +208,23 @@ extension CourseDrawingVC {
         distanceStackView.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
+        
+        completeButton.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            make.height.equalTo(44)
+            make.top.equalTo(view.snp.bottom).offset(34)
+        }
     }
     
     private func showHiddenViews() {
-        [naviBarForEditing, distanceContainerView].forEach { subView in
+        [naviBarForEditing, distanceContainerView, completeButton].forEach { subView in
             view.bringSubviewToFront(subView)
         }
         
         UIView.animate(withDuration: 0.7) {
             self.naviBarForEditing.alpha = 1
             self.distanceContainerView.transform = CGAffineTransform(translationX: 0, y: -151)
+            self.completeButton.transform = CGAffineTransform(translationX: 0, y: -112)
         }
     }
 }
