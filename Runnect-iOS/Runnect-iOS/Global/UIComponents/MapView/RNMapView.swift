@@ -188,6 +188,12 @@ extension RNMapView {
     @discardableResult
     func showUndoButton(toShow: Bool) -> Self {
         self.undoButton.isHidden = !toShow
+        if toShow {
+            UIView.animate(withDuration: 0.7) {
+                self.undoButton.transform = CGAffineTransform(translationX: 0, y: -(self.undoButton.frame.height + 100))
+            }
+        }
+        setUndoButton()
         return self
     }
     
@@ -331,8 +337,8 @@ extension RNMapView {
         }
         
         undoButton.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(98+bottomPadding)
-            make.trailing.equalToSuperview().inset(24)
+            make.top.equalTo(self.snp.bottom)
+            make.trailing.equalToSuperview().inset(16)
         }
     }
     
