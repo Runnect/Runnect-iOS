@@ -2,7 +2,7 @@
 ![소개](https://user-images.githubusercontent.com/77267404/210302977-b0c11a10-e695-4614-bf03-a0ee1c57823b.png)
 
 # 한줄 소개
-Runnect는 Run과 connect의 합성어로 직접 코스를 그리고 공유하며  서로를 연결해주고 함께 달릴 수 있는 서비스입니다.
+🏃Runnect는 Run과 connect의 합성어로 직접 코스를 그리고 공유하며  서로를 연결해주고 함께 달릴 수 있는 서비스입니다.
 
 
 > 31th IN SOPT APP JAM <br>
@@ -53,7 +53,7 @@ Runnect는 Run과 connect의 합성어로 직접 코스를 그리고 공유하�
 
 ## Coding Convention
 <details>
- <summary> ✨ Git Branch Convention </summary>
+ <summary> ⭐️ Git Branch Convention </summary>
  <div markdown="1">       
 
  ---
@@ -72,7 +72,7 @@ Runnect는 Run과 connect의 합성어로 직접 코스를 그리고 공유하�
  </details>
 
  <details>
- <summary> ✨ Git Flow </summary>
+ <summary> ⭐️ Git Flow </summary>
  <div markdown="1">       
 
  ---
@@ -113,7 +113,7 @@ Runnect는 Run과 connect의 합성어로 직접 코스를 그리고 공유하�
  </details>
 
 <details>
- <summary> ✨ Naming & Code Convention </summary>
+ <summary> ⭐️ Naming & Code Convention </summary>
  <div markdown="1">       
 
  ---
@@ -141,11 +141,53 @@ Runnect는 Run과 connect의 합성어로 직접 코스를 그리고 공유하�
  </details>
 
 <details>
- <summary> ✨ Project Foldering </summary>
+ <summary> ⭐️ Project Foldering </summary>
  <div markdown="1">       
 
  ---
 ```
+📦Runnect-iOS
+ ┣ 📂Base.lproj
+ ┣ 📂Global
+ ┃ ┣ 📂Extension
+ ┃ ┃ ┣ 📂Combine+
+ ┃ ┃ ┣ 📂Foundation+
+ ┃ ┃ ┗ 📂UIKit+
+ ┃ ┣ 📂Literal
+ ┃ ┣ 📂Protocols
+ ┃ ┣ 📂Resource
+ ┃ ┣ 📂Supports
+ ┃ ┣ 📂UIComponents
+ ┃ ┗ 📂Utils
+ ┣ 📂Network
+ ┃ ┣ 📂Dto
+ ┃ ┣ 📂Foundation
+ ┃ ┣ 📂Model
+ ┃ ┣ 📂Router
+ ┃ ┗ 📂Service
+ ┣ 📂Presentation
+ ┃ ┣ 📂CourseDetail
+ ┃ ┃ ┣ 📂VC
+ ┃ ┃ ┗ 📂Views
+ ┃ ┣ 📂CourseDiscovery
+ ┃ ┃ ┣ 📂VC
+ ┃ ┃ ┗ 📂Views
+ ┃ ┣ 📂CourseDrawing
+ ┃ ┃ ┣ 📂VC
+ ┃ ┃ ┗ 📂Views
+ ┃ ┣ 📂CourseStorage
+ ┃ ┃ ┣ 📂VC
+ ┃ ┃ ┗ 📂Views
+ ┃ ┣ 📂MyPage
+ ┃ ┃ ┣ 📂VC
+ ┃ ┃ ┗ 📂Views
+ ┃ ┣ 📂SignIn
+ ┃ ┃ ┣ 📂VC
+ ┃ ┃ ┗ 📂Views
+ ┃ ┣ 📂Splash
+ ┃ ┃ ┗ 📂VC
+ ┃ ┗ 📂TabBar
+ ┗ 📜Info.plist
 ```
    
  <br>
@@ -158,10 +200,6 @@ Runnect는 Run과 connect의 합성어로 직접 코스를 그리고 공유하�
 <br>
 <br>
 
-
-
-<br>
-<br>
 
 ---
   
