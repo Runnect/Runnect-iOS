@@ -108,6 +108,7 @@ extension CourseDrawingVC {
     private func setAddTarget() {
         self.decideDepartureButton.addTarget(self, action: #selector(decideDepartureButtonDidTap), for: .touchUpInside)
         self.undoButton.addTarget(self, action: #selector(undoButtonDidTap), for: .touchUpInside)
+        self.completeButton.addTarget(self, action: #selector(completeButtonDidTap), for: .touchUpInside)
     }
     
     private func bindMapView() {
@@ -140,6 +141,12 @@ extension CourseDrawingVC {
     
     @objc private func undoButtonDidTap() {
         mapView.undo()
+    }
+    
+    @objc private func completeButtonDidTap() {
+        let alertVC = CustomAlertVC()
+        alertVC.modalPresentationStyle = .overFullScreen
+        self.present(alertVC, animated: false)
     }
 }
 

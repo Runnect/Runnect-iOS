@@ -14,7 +14,7 @@ final class DepartureSearchVC: UIViewController {
     private lazy var naviBar = CustomNavigationBar(self, type: .search).setTextFieldPlaceholder(placeholder: "지역과 키워드 위주로 검색해보세요")
     
     private let dividerView = UIView().then {
-        $0.backgroundColor = .g4
+        $0.backgroundColor = .g5
     }
     
     private let locationTableView = UITableView(frame: .zero, style: .plain).then {
