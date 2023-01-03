@@ -191,6 +191,7 @@ extension CourseDrawingVC {
     private func setHiddenViewsLayout() {
         view.addSubviews(naviBarForEditing, distanceContainerView, completeButton)
         view.sendSubviewToBack(naviBarForEditing)
+        
         naviBarForEditing.snp.makeConstraints { make in
             make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(48)
@@ -217,7 +218,7 @@ extension CourseDrawingVC {
     }
     
     private func showHiddenViews() {
-        [naviBarForEditing, distanceContainerView, completeButton].forEach { subView in
+        [naviBarForEditing, distanceContainerView].forEach { subView in
             view.bringSubviewToFront(subView)
         }
         
