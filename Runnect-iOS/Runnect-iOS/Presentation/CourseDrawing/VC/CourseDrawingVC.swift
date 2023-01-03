@@ -18,6 +18,11 @@ final class CourseDrawingVC: UIViewController {
         .setTextFieldText(text: "검색 결과")
         .hideRightButton()
     
+    private lazy var naviBarForEditing = CustomNavigationBar(self, type: .titleWithLeftButton)
+        .then {
+            $0.alpha = 0
+        }
+    
     private lazy var naviBarContainerStackView = UIStackView(
         arrangedSubviews: [notchCoverView, naviBar]
     ).then {
@@ -72,6 +77,8 @@ extension CourseDrawingVC {
 
 extension CourseDrawingVC {
     @objc private func decideDepartureButtonDidTap() {
+        
+        showHiddenViews()
         UIView.animate(withDuration: 1.0) {
             let naviBarContainerStackViewHeight = self.naviBarContainerStackView.frame.height
             self.naviBarContainerStackView.transform = CGAffineTransform(translationX: 0, y: -naviBarContainerStackViewHeight)
@@ -86,12 +93,13 @@ extension CourseDrawingVC {
     private func setUI() {
         self.view.backgroundColor = .w1
         self.departureInfoContainerView.layer.applyShadow(alpha: 0.35, x: 0, y: 3, blur: 10)
+        self.naviBarForEditing.backgroundColor = .clear
     }
     
     private func setLayout() {
         self.view.addSubviews(naviBarContainerStackView, mapView, departureInfoContainerView)
         self.departureInfoContainerView.addSubviews(departureLocationLabel, departureDetailLocationLabel, decideDepartureButton)
-        
+        setHiddenViewsLayout()
         view.bringSubviewToFront(naviBarContainerStackView)
         
         notchCoverView.snp.makeConstraints { make in
@@ -119,7 +127,7 @@ extension CourseDrawingVC {
             make.leading.bottom.trailing.equalToSuperview()
             make.height.equalTo(172)
         }
-            
+        
         departureLocationLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(28)
             make.leading.trailing.equalToSuperview().inset(16)
@@ -134,6 +142,22 @@ extension CourseDrawingVC {
             make.top.equalTo(departureDetailLocationLabel.snp.bottom).offset(24)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(44)
+        }
+    }
+    
+    private func setHiddenViewsLayout() {
+        view.addSubviews(naviBarForEditing)
+        view.sendSubviewToBack(naviBarForEditing)
+        naviBarForEditing.snp.makeConstraints { make in
+            make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(48)
+        }
+    }
+    
+    private func showHiddenViews() {
+        view.bringSubviewToFront(naviBarForEditing)
+        UIView.animate(withDuration: 1.0) {
+            self.naviBarForEditing.alpha = 1
         }
     }
 }
