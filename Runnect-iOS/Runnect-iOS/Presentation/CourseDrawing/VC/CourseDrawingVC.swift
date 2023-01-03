@@ -18,6 +18,12 @@ final class CourseDrawingVC: UIViewController {
         .setTextFieldText(text: "검색 결과")
         .hideRightButton()
     
+    private lazy var naviBarContainerStackView = UIStackView(
+        arrangedSubviews: [notchCoverView, naviBar]
+    ).then {
+        $0.axis = .vertical
+    }
+    
     private let mapView = RNMapView().makeStartMarkerAtUserLocation()
     
     private let departureLocationLabel = UILabel().then {
@@ -50,13 +56,28 @@ final class CourseDrawingVC: UIViewController {
         super.viewDidLoad()
         self.setUI()
         self.setLayout()
+        self.setAddTarget()
     }
 }
 
 // MARK: - Methods
 
 extension CourseDrawingVC {
-    
+    private func setAddTarget() {
+        self.decideDepartureButton.addTarget(self, action: #selector(decideDepartureButtonDidTap), for: .touchUpInside)
+    }
+}
+
+// MARK: - @objc Function
+
+extension CourseDrawingVC {
+    @objc private func decideDepartureButtonDidTap() {
+        UIView.animate(withDuration: 1.0) {
+            let naviBarContainerStackViewHeight = self.naviBarContainerStackView.frame.height
+            self.naviBarContainerStackView.transform = CGAffineTransform(translationX: 0, y: -naviBarContainerStackViewHeight)
+            self.departureInfoContainerView.transform = CGAffineTransform(translationX: 0, y: 172)
+        }
+    }
 }
 
 // MARK: - UI & Layout
@@ -68,20 +89,26 @@ extension CourseDrawingVC {
     }
     
     private func setLayout() {
-        self.view.addSubviews(notchCoverView, naviBar, mapView, departureInfoContainerView)
+        self.view.addSubviews(naviBarContainerStackView, mapView, departureInfoContainerView)
         self.departureInfoContainerView.addSubviews(departureLocationLabel, departureDetailLocationLabel, decideDepartureButton)
         
-        view.bringSubviewToFront(notchCoverView)
-        view.bringSubviewToFront(naviBar)
+        view.bringSubviewToFront(naviBarContainerStackView)
         
         notchCoverView.snp.makeConstraints { make in
-            make.leading.top.trailing.equalToSuperview()
-            make.height.equalTo(-calculateTopInset())
+            var notchHeight = calculateTopInset()
+            if notchHeight == -44 {
+                let statusBarHeight = UIApplication.shared.statusBarHeight
+                notchHeight = -statusBarHeight
+            }
+            make.height.equalTo(-notchHeight)
         }
         
         naviBar.snp.makeConstraints { make in
-            make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(48)
+        }
+        
+        naviBarContainerStackView.snp.makeConstraints { make in
+            make.leading.top.trailing.equalToSuperview()
         }
         
         mapView.snp.makeConstraints { make in
