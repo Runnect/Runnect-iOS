@@ -99,6 +99,7 @@ final class CourseDrawingVC: UIViewController {
         self.setLayout()
         self.setAddTarget()
         self.bindMapView()
+        self.setNavigationGesture(false)
     }
 }
 
@@ -121,6 +122,10 @@ extension CourseDrawingVC {
             self?.completeButton.setEnabled(count >= 2)
             self?.undoButton.isEnabled = (count >= 2)
         }.store(in: cancelBag)
+    }
+    
+    private func setNavigationGesture(_ enabled: Bool) {
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = enabled
     }
 }
 
@@ -147,12 +152,18 @@ extension CourseDrawingVC {
         let alertVC = CustomAlertVC()
         alertVC.modalPresentationStyle = .overFullScreen
         
-        alertVC.leftButtonTapped.sink { _ in
-            print("left Tap")
+        alertVC.leftButtonTapped.sink { [weak self] _ in
+            guard let self = self else { return }
+            self.tabBarController?.selectedIndex = 1
+            self.navigationController?.popToRootViewController(animated: true)
+            alertVC.dismiss(animated: true)
         }.store(in: cancelBag)
         
-        alertVC.rightButtonTapped.sink { _ in
-            print("right Tap")
+        alertVC.rightButtonTapped.sink { [weak self] _ in
+            guard let self = self else { return }
+            let countDownVC = CountDownVC()
+            self.navigationController?.pushViewController(countDownVC, animated: true)
+            alertVC.dismiss(animated: true)
         }.store(in: cancelBag)
         
         self.present(alertVC, animated: false)
