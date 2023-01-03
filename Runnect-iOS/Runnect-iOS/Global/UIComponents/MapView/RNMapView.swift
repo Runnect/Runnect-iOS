@@ -89,19 +89,23 @@ extension RNMapView {
     
     /// 지정 위치에 startMarker와 출발 infoWindow 생성 (기존의 startMarker는 제거)
     @discardableResult
-    func makeStartMarker(at location: NMGLatLng) -> Self {
+    func makeStartMarker(at location: NMGLatLng, withCameraMove: Bool = false) -> Self {
         self.startMarker.position = location
         self.startMarker.mapView = self.map.mapView
         self.startMarker.showInfoWindow()
+        if withCameraMove {
+            moveToLocation(location: location)
+        }
         return self
     }
     
     /// 사용자 위치에 startMarker와 출발 infoWindow 생성 (기존의 startMarker는 제거)
     @discardableResult
-    func makeStartMarkerAtUserLocation() -> Self {
+    func makeStartMarkerAtUserLocation(withCameraMove: Bool = false) -> Self {
         self.startMarker.position = getUserLocation()
         self.startMarker.mapView = self.map.mapView
         self.startMarker.showInfoWindow()
+        moveToUserLocation()
         return self
     }
     
@@ -141,6 +145,18 @@ extension RNMapView {
     func moveToUserLocation() -> Self {
         let userLatLng = getUserLocation()
         let cameraUpdate = NMFCameraUpdate(scrollTo: userLatLng)
+        
+        DispatchQueue.main.async { [self] in
+            cameraUpdate.animation = .easeIn
+            self.map.mapView.moveCamera(cameraUpdate)
+        }
+        return self
+    }
+    
+    /// 지정 위치로 카메라 이동
+    @discardableResult
+    func moveToLocation(location: NMGLatLng) -> Self {
+        let cameraUpdate = NMFCameraUpdate(scrollTo: location)
         
         DispatchQueue.main.async { [self] in
             cameraUpdate.animation = .easeIn
