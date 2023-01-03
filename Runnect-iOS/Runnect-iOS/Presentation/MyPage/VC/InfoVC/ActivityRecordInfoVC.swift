@@ -28,8 +28,8 @@ final class ActivityRecordInfoVC: UIViewController {
     
     private let activityRecordTableView = UITableView().then {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        //$0.delegate = self
-        //$0.dataSource = self
+        $0.delegate = self
+        $0.dataSource = self
     }
 
     // MARK: - View Life Cycle
@@ -39,6 +39,7 @@ final class ActivityRecordInfoVC: UIViewController {
         setNavigationBar()
         setUI()
         setLayout()
+        register()
     }
 }
 
@@ -68,5 +69,34 @@ extension ActivityRecordInfoVC {
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalToSuperview()
         }
+    }
+    
+    // MARK: - General Helpers
+
+    private func register() {
+        activityRecordTableView.register(ActivityRecordInfoTVC.self,
+                                     forCellWithReuseIdentifier: ActivityRecordInfoTVC.className)
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension ActivityRecordInfoVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 177
+    }
+}
+
+// MARK: - UITableViewDataSource
+
+extension ActivityRecordInfoVC: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return activityRecordList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let activityRecordCell = tableView.dequeueReusableCell(withIdentifier: ActivityRecordInfoTVC.className, for: indexPath) as? ActivityRecordInfoTVC else { return UITableViewCell()}
+        activityRecordCell.dataBind(model: activityRecordList[indexPath.item])
+        return activityRecordCell
     }
 }
