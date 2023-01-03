@@ -28,7 +28,6 @@ final class RNMapView: UIView {
         didSet {
             markerCount = markers.count + 1
             self.makePath()
-            self.setUndoButton()
         }
     }
     /// startMarker를 포함한 모든 마커들의 위치 정보
@@ -43,7 +42,6 @@ final class RNMapView: UIView {
     private var startMarker = RNStartMarker()
     private let pathOverlay = NMFPath()
     private let locationButton = UIButton(type: .custom)
-    private let undoButton = UIButton(type: .custom)
 
     // MARK: - initialization
     
@@ -189,19 +187,6 @@ extension RNMapView {
         return self
     }
     
-    /// undoButton 설정
-    @discardableResult
-    func showUndoButton(toShow: Bool) -> Self {
-        self.undoButton.isHidden = !toShow
-        if toShow {
-            UIView.animate(withDuration: 0.7) {
-                self.undoButton.transform = CGAffineTransform(translationX: 0, y: -(self.undoButton.frame.height + 100))
-            }
-        }
-        setUndoButton()
-        return self
-    }
-    
     /// 지도에 ContentPadding을 지정하여 중심 위치가 변경되게 설정
     @discardableResult
     func makeContentPadding(padding: UIEdgeInsets) -> Self {
@@ -244,7 +229,7 @@ extension RNMapView {
         }
     }
     
-    // 바운더리(MBR) 생성
+    /// 바운더리(MBR) 생성
     func makeMBR() -> NMGLatLngBounds {
         var latitudes = [Double]()
         var longitudes = [Double]()
@@ -256,6 +241,13 @@ extension RNMapView {
         let southWest = NMGLatLng(lat: latitudes.min() ?? 0, lng: longitudes.min() ?? 0)
         let northEast = NMGLatLng(lat: latitudes.max() ?? 0, lng: longitudes.max() ?? 0)
         return NMGLatLngBounds(southWest: southWest, northEast: northEast)
+    }
+    
+    /// 직전의 마커 생성을 취소하고 경로선도 제거
+    func undo() {
+        guard let lastMarker = self.markers.popLast() else { return }
+        substractDistance(with: lastMarker.position)
+        lastMarker.mapView = nil
     }
     
     // 두 지점 사이의 거리(m) 추가
@@ -309,10 +301,6 @@ extension RNMapView {
         pathOverlay.outlineWidth = 0
         pathOverlay.color = .m1
     }
-    
-    private func setUndoButton() {
-        self.undoButton.isEnabled = (markers.count >= 1)
-    }
 }
 
 // MARK: - UI & Layout
@@ -323,14 +311,10 @@ extension RNMapView {
         self.locationButton.setImage(ImageLiterals.icMapLocation, for: .normal)
         self.locationButton.isHidden = true
         self.locationButton.addTarget(self, action: #selector(locationButtonDidTap), for: .touchUpInside)
-        
-        self.undoButton.setImage(ImageLiterals.icCancel, for: .normal)
-        self.undoButton.isHidden = true
-        self.undoButton.addTarget(self, action: #selector(undoButtonDidTap), for: .touchUpInside)
     }
     
     private func setLayout() {
-        addSubviews(map, locationButton, undoButton)
+        addSubviews(map, locationButton)
         
         map.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -339,11 +323,6 @@ extension RNMapView {
         locationButton.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(98+bottomPadding)
             make.trailing.equalToSuperview().inset(24)
-        }
-        
-        undoButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview()
-            make.top.equalTo(self.snp.bottom)
         }
     }
     
@@ -361,12 +340,6 @@ extension RNMapView {
 extension RNMapView {
     @objc func locationButtonDidTap() {
         self.setPositionMode(mode: .direction)
-    }
-    
-    @objc func undoButtonDidTap() {
-        guard let lastMarker = self.markers.popLast() else { return }
-        substractDistance(with: lastMarker.position)
-        lastMarker.mapView = nil
     }
 }
 

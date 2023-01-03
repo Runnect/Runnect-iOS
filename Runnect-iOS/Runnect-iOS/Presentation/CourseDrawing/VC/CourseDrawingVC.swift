@@ -19,6 +19,7 @@ final class CourseDrawingVC: UIViewController {
     private let notchCoverView = UIView().then {
         $0.backgroundColor = .w1
     }
+    
     private lazy var naviBar = CustomNavigationBar(self, type: .search)
         .setTextFieldText(text: "검색 결과")
         .hideRightButton()
@@ -84,6 +85,10 @@ final class CourseDrawingVC: UIViewController {
         $0.layer.cornerRadius = 22
     }
     
+    private let undoButton = UIButton(type: .custom).then {
+        $0.setImage(ImageLiterals.icCancel, for: .normal)
+    }
+    
     private let completeButton = CustomButton(title: "완성하기").setEnabled(false)
     
     // MARK: - View Life Cycle
@@ -102,6 +107,7 @@ final class CourseDrawingVC: UIViewController {
 extension CourseDrawingVC {
     private func setAddTarget() {
         self.decideDepartureButton.addTarget(self, action: #selector(decideDepartureButtonDidTap), for: .touchUpInside)
+        self.undoButton.addTarget(self, action: #selector(undoButtonDidTap), for: .touchUpInside)
     }
     
     private func bindMapView() {
@@ -111,8 +117,8 @@ extension CourseDrawingVC {
         }.store(in: cancelBag)
         
         mapView.$markerCount.sink { [weak self] count in
-            print(count)
             self?.completeButton.setEnabled(count >= 2)
+            self?.undoButton.isEnabled = (count >= 2)
         }.store(in: cancelBag)
     }
 }
@@ -122,8 +128,7 @@ extension CourseDrawingVC {
 extension CourseDrawingVC {
     @objc private func decideDepartureButtonDidTap() {
         showHiddenViews()
-        
-        mapView.showUndoButton(toShow: true)
+
         mapView.setDrawMode(to: true)
         
         UIView.animate(withDuration: 0.7) {
@@ -131,6 +136,10 @@ extension CourseDrawingVC {
             self.naviBarContainerStackView.transform = CGAffineTransform(translationX: 0, y: -naviBarContainerStackViewHeight)
             self.departureInfoContainerView.transform = CGAffineTransform(translationX: 0, y: 172)
         }
+    }
+    
+    @objc private func undoButtonDidTap() {
+        mapView.undo()
     }
 }
 
@@ -194,7 +203,7 @@ extension CourseDrawingVC {
     }
     
     private func setHiddenViewsLayout() {
-        view.addSubviews(naviBarForEditing, distanceContainerView, completeButton)
+        view.addSubviews(naviBarForEditing, distanceContainerView, completeButton, undoButton)
         view.sendSubviewToBack(naviBarForEditing)
         
         naviBarForEditing.snp.makeConstraints { make in
@@ -215,6 +224,11 @@ extension CourseDrawingVC {
             make.center.equalToSuperview()
         }
         
+        undoButton.snp.makeConstraints { make in
+            make.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.snp.bottom)
+        }
+
         completeButton.snp.makeConstraints { make in
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
             make.height.equalTo(44)
@@ -223,7 +237,7 @@ extension CourseDrawingVC {
     }
     
     private func showHiddenViews() {
-        [naviBarForEditing, distanceContainerView, completeButton].forEach { subView in
+        [naviBarForEditing, distanceContainerView, completeButton, undoButton].forEach { subView in
             view.bringSubviewToFront(subView)
         }
         
@@ -231,6 +245,7 @@ extension CourseDrawingVC {
             self.naviBarForEditing.alpha = 1
             self.distanceContainerView.transform = CGAffineTransform(translationX: 0, y: -151)
             self.completeButton.transform = CGAffineTransform(translationX: 0, y: -112)
+            self.undoButton.transform = CGAffineTransform(translationX: 0, y: -(self.undoButton.frame.height+95))
         }
     }
 }
