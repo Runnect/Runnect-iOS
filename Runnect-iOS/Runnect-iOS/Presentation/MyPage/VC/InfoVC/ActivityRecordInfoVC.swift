@@ -15,9 +15,9 @@ final class ActivityRecordInfoVC: UIViewController {
     
     var activityRecordList: [ActivityRecordInfoModel] = [
         ActivityRecordInfoModel(title: "석촌 호수 한 바퀴", place: "서울시 강동구", date: "2022.12.28", distance: "4.01 km", runningTime: "0:27:36", averagePace: "6'45\""),
-        ActivityRecordInfoModel(title: "석촌 호수 한 바퀴", place: "서울시 강동구", date: "2022.12.28", distance: "4.01 km", runningTime: "0:27:36", averagePace: "6'45\""),
-        ActivityRecordInfoModel(title: "석촌 호수 한 바퀴", place: "서울시 강동구", date: "2022.12.28", distance: "4.01 km", runningTime: "0:27:36", averagePace: "6'45\""),
-        ActivityRecordInfoModel(title: "석촌 호수 한 바퀴", place: "서울시 강동구", date: "2022.12.28", distance: "4.01 km", runningTime: "0:27:36", averagePace: "6'45\""),
+        ActivityRecordInfoModel(title: "석촌 호수 한 바퀴", place: "서울시 강동구", date: "2022.12.29", distance: "4.01 km", runningTime: "0:27:36", averagePace: "6'45\""),
+        ActivityRecordInfoModel(title: "석촌 호수 한 바퀴", place: "서울시 강동구", date: "2022.12.30", distance: "4.01 km", runningTime: "0:27:36", averagePace: "6'45\""),
+        ActivityRecordInfoModel(title: "석촌 호수 한 바퀴", place: "서울시 강동구", date: "2022.12.31", distance: "4.01 km", runningTime: "0:27:36", averagePace: "6'45\""),
         ActivityRecordInfoModel(title: "석촌 호수 한 바퀴", place: "서울시 강동구", date: "2022.12.28", distance: "4.01 km", runningTime: "0:27:36", averagePace: "6'45\""),
         ActivityRecordInfoModel(title: "석촌 호수 한 바퀴", place: "서울시 강동구", date: "2022.12.28", distance: "4.01 km", runningTime: "0:27:36", averagePace: "6'45\"")
     ]
@@ -26,8 +26,10 @@ final class ActivityRecordInfoVC: UIViewController {
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("활동 기록")
     
-    private let activityRecordTableView = UITableView().then {
+    private lazy var activityRecordTableView = UITableView().then {
         $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.showsVerticalScrollIndicator = false
+        $0.separatorStyle = .none
         $0.delegate = self
         $0.dataSource = self
     }
@@ -65,7 +67,7 @@ extension ActivityRecordInfoVC {
         view.addSubview(activityRecordTableView)
         
         activityRecordTableView.snp.makeConstraints { make in
-            make.top.equalTo(navibar.snp.bottom)
+            make.top.equalTo(navibar.snp.bottom).offset(16)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalToSuperview()
         }
@@ -74,8 +76,7 @@ extension ActivityRecordInfoVC {
     // MARK: - General Helpers
 
     private func register() {
-        activityRecordTableView.register(ActivityRecordInfoTVC.self,
-                                     forCellWithReuseIdentifier: ActivityRecordInfoTVC.className)
+        activityRecordTableView.register(ActivityRecordInfoTVC.self, forCellReuseIdentifier: ActivityRecordInfoTVC.className)
     }
 }
 
@@ -83,7 +84,7 @@ extension ActivityRecordInfoVC {
 
 extension ActivityRecordInfoVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 177
+        return 193
     }
 }
 
@@ -96,6 +97,7 @@ extension ActivityRecordInfoVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let activityRecordCell = tableView.dequeueReusableCell(withIdentifier: ActivityRecordInfoTVC.className, for: indexPath) as? ActivityRecordInfoTVC else { return UITableViewCell()}
+        activityRecordCell.selectionStyle = .none
         activityRecordCell.dataBind(model: activityRecordList[indexPath.item])
         return activityRecordCell
     }
