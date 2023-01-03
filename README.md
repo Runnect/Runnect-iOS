@@ -200,7 +200,6 @@
 <br>
 <br>
 
-
----
-  
-<br>
+<p align = "center">
+<img width = 700 alt="스크린샷 2023-01-03 오후 2 54 40" src="https://user-images.githubusercontent.com/77267404/210306409-1ecebc5d-2fdd-4bb9-b367-bf4df4165083.png">
+</p?
