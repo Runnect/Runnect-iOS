@@ -47,6 +47,10 @@ extension UIColor {
     static var m4: UIColor {
         return UIColor(hex: "#FFFFFF")
     }
+    
+    static var m5: UIColor {
+        return UIColor(hex: "#D5D4FF")
+    }
 }
 
 extension UIColor {
