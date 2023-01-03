@@ -335,15 +335,15 @@ extension RNMapView {
             make.bottom.equalToSuperview().inset(98+bottomPadding)
             make.trailing.equalToSuperview().inset(24)
         }
-
+        
         undoButton.snp.makeConstraints { make in
-            make.top.equalTo(self.snp.bottom)
             make.trailing.equalToSuperview()
+            make.top.equalTo(self.snp.bottom)
         }
     }
     
     private func updateSubviewsConstraints() {
-        [locationButton, undoButton].forEach { view in
+        [locationButton].forEach { view in
             view.snp.updateConstraints { make in
                 make.bottom.equalToSuperview().inset(98+bottomPadding)
             }

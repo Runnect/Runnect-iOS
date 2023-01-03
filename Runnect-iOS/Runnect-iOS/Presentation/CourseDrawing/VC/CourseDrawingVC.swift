@@ -218,7 +218,7 @@ extension CourseDrawingVC {
     }
     
     private func showHiddenViews() {
-        [naviBarForEditing, distanceContainerView].forEach { subView in
+        [naviBarForEditing, distanceContainerView, completeButton].forEach { subView in
             view.bringSubviewToFront(subView)
         }
         
