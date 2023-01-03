@@ -55,6 +55,30 @@ final class CourseDrawingVC: UIViewController {
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
     
+    private let distanceLabel = UILabel().then {
+        $0.font = .h1
+        $0.textColor = .g1
+        $0.text = "0.0"
+    }
+    
+    private let kilometerLabel = UILabel().then {
+        $0.font = .b4
+        $0.textColor = .g2
+        $0.text = "km"
+    }
+    
+    private lazy var distanceStackView = UIStackView(
+        arrangedSubviews: [distanceLabel, kilometerLabel]
+    ).then {
+        $0.spacing = 3
+        $0.alignment = .bottom
+    }
+    
+    private let distanceContainerView = UIView().then {
+        $0.backgroundColor = .w1
+        $0.layer.cornerRadius = 22
+    }
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -77,9 +101,11 @@ extension CourseDrawingVC {
 
 extension CourseDrawingVC {
     @objc private func decideDepartureButtonDidTap() {
-        
         showHiddenViews()
-        UIView.animate(withDuration: 1.0) {
+        
+        mapView.showUndoButton(toShow: true)
+        
+        UIView.animate(withDuration: 0.7) {
             let naviBarContainerStackViewHeight = self.naviBarContainerStackView.frame.height
             self.naviBarContainerStackView.transform = CGAffineTransform(translationX: 0, y: -naviBarContainerStackViewHeight)
             self.departureInfoContainerView.transform = CGAffineTransform(translationX: 0, y: 172)
@@ -92,14 +118,15 @@ extension CourseDrawingVC {
 extension CourseDrawingVC {
     private func setUI() {
         self.view.backgroundColor = .w1
-        self.departureInfoContainerView.layer.applyShadow(alpha: 0.35, x: 0, y: 3, blur: 10)
         self.naviBarForEditing.backgroundColor = .clear
+        self.departureInfoContainerView.layer.applyShadow(alpha: 0.35, x: 0, y: 3, blur: 10)
+        self.distanceContainerView.layer.applyShadow(alpha: 0.2, x: 2, y: 4, blur: 9)
     }
     
     private func setLayout() {
+        setHiddenViewsLayout()
         self.view.addSubviews(naviBarContainerStackView, mapView, departureInfoContainerView)
         self.departureInfoContainerView.addSubviews(departureLocationLabel, departureDetailLocationLabel, decideDepartureButton)
-        setHiddenViewsLayout()
         view.bringSubviewToFront(naviBarContainerStackView)
         
         notchCoverView.snp.makeConstraints { make in
@@ -146,18 +173,35 @@ extension CourseDrawingVC {
     }
     
     private func setHiddenViewsLayout() {
-        view.addSubviews(naviBarForEditing)
+        view.addSubviews(naviBarForEditing, distanceContainerView)
         view.sendSubviewToBack(naviBarForEditing)
         naviBarForEditing.snp.makeConstraints { make in
             make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(48)
         }
+        
+        distanceContainerView.snp.makeConstraints { make in
+            make.width.equalTo(96)
+            make.height.equalTo(44)
+            make.leading.equalTo(view.safeAreaLayoutGuide).inset(16)
+            make.top.equalTo(view.snp.bottom)
+        }
+        
+        distanceContainerView.addSubviews(distanceStackView)
+        
+        distanceStackView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
     }
     
     private func showHiddenViews() {
-        view.bringSubviewToFront(naviBarForEditing)
-        UIView.animate(withDuration: 1.0) {
+        [naviBarForEditing, distanceContainerView].forEach { subView in
+            view.bringSubviewToFront(subView)
+        }
+        
+        UIView.animate(withDuration: 0.7) {
             self.naviBarForEditing.alpha = 1
+            self.distanceContainerView.transform = CGAffineTransform(translationX: 0, y: -151)
         }
     }
 }
