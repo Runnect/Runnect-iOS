@@ -24,7 +24,7 @@ final class RunningRecordVC: UIViewController {
     
     private let courseImageView = UIImageView().then {
         $0.backgroundColor = .gray
-        $0.contentMode = .scaleAspectFill
+        $0.contentMode = .scaleToFill
     }
     
     private let courseTitleTextField = UITextField().then {

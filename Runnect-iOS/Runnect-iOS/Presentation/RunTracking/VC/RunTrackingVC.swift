@@ -136,10 +136,9 @@ final class RunTrackingVC: UIViewController {
 
 extension RunTrackingVC {
     func makePath(locations: [NMGLatLng], distance: String) {
-        self.mapView.makeMarkersWithStartMarker(at: locations)
+        self.mapView.makeMarkersWithStartMarker(at: locations, willCapture: true)
         self.totalDistanceLabel.attributedText = makeAttributedLabelForDistance(distance: distance)
         self.distance = distance
-        self.mapView.getPathImage()
     }
     
     private func setAddTarget() {
@@ -177,7 +176,7 @@ extension RunTrackingVC {
         mapView.pathImage.sink { [weak self] image in
             guard let self = self else { return }
             self.pathImage = image
-            print(image)
+            LoadingIndicator.hideLoading()
         }.store(in: cancelBag)
     }
     
@@ -208,6 +207,8 @@ extension RunTrackingVC {
     }
     
     @objc private func runningCompleteButtonDidTap() {
+        LoadingIndicator.showLoading()
+        self.mapView.getPathImage()
         stopwatch.isRunning.toggle()
         let bottomSheetVC = CustomBottomSheetVC()
         bottomSheetVC.modalPresentationStyle = .overFullScreen
