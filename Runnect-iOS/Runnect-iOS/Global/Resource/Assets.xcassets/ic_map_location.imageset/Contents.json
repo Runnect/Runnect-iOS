@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "map_location.png",
+      "filename" : "btn.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "map_location@2x.png",
+      "filename" : "btn@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "map_location@3x.png",
+      "filename" : "btn@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -139,7 +139,7 @@ extension RNMapView {
     @discardableResult
     func makeMarkersWithStartMarker(at locations: [NMGLatLng]) -> Self {
         if locations.count < 2 { return self }
-        makeStartMarker(at: locations[0])
+        makeStartMarker(at: locations[0], withCameraMove: true)
         locations[1...].forEach { location in
             makeMarker(at: location)
         }
@@ -329,8 +329,8 @@ extension RNMapView {
         }
         
         locationButton.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(98+bottomPadding)
-            make.trailing.equalToSuperview().inset(24)
+            make.bottom.equalToSuperview().inset(88+bottomPadding)
+            make.trailing.equalToSuperview().inset(12)
         }
     }
     

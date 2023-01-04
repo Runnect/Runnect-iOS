@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import NMapsMap
 
 final class CountDownVC: UIViewController {
     
     // MARK: - Properties
     
     private var count = 3
+    var locations = [NMGLatLng]()
+    var distance: String?
     
     // MARK: - UI Components
     
@@ -55,7 +58,14 @@ extension CountDownVC {
             if self.count > 0 {
                 self.animateTimeLabel()
             } else {
-                print("Done")
+                let runTrackingVC = RunTrackingVC()
+                runTrackingVC.makePath(locations: self.locations, distance: self.distance ?? "0:0")
+                self.navigationController?.pushViewController(runTrackingVC, animated: true)
+                
+                // CountDownVC를 navigationController 스택에서 제거하여 pop 하였을 때 더 이전 뷰로 넘어가지도록 함
+                self.navigationController?.viewControllers.removeAll { vc in
+                    vc.isKind(of: CountDownVC.self)
+                }
             }
         })
     }

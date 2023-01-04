@@ -133,15 +133,9 @@ extension CourseDrawingVC {
 
 extension CourseDrawingVC {
     @objc private func decideDepartureButtonDidTap() {
-        showHiddenViews()
+        showHiddenViews(withDuration: 0.7)
 
         mapView.setDrawMode(to: true)
-        
-        UIView.animate(withDuration: 0.7) {
-            let naviBarContainerStackViewHeight = self.naviBarContainerStackView.frame.height
-            self.naviBarContainerStackView.transform = CGAffineTransform(translationX: 0, y: -naviBarContainerStackViewHeight)
-            self.departureInfoContainerView.transform = CGAffineTransform(translationX: 0, y: 172)
-        }
     }
     
     @objc private func undoButtonDidTap() {
@@ -162,6 +156,8 @@ extension CourseDrawingVC {
         alertVC.rightButtonTapped.sink { [weak self] _ in
             guard let self = self else { return }
             let countDownVC = CountDownVC()
+            countDownVC.locations = self.mapView.getMarkersLatLng()
+            countDownVC.distance = self.distanceLabel.text
             self.navigationController?.pushViewController(countDownVC, animated: true)
             alertVC.dismiss(animated: true)
         }.store(in: cancelBag)
@@ -263,12 +259,18 @@ extension CourseDrawingVC {
         }
     }
     
-    private func showHiddenViews() {
+    private func showHiddenViews(withDuration: TimeInterval = 0) {
         [naviBarForEditing, distanceContainerView, completeButton, undoButton].forEach { subView in
             view.bringSubviewToFront(subView)
         }
         
-        UIView.animate(withDuration: 0.7) {
+        UIView.animate(withDuration: withDuration) {
+            let naviBarContainerStackViewHeight = self.naviBarContainerStackView.frame.height
+            self.naviBarContainerStackView.transform = CGAffineTransform(translationX: 0, y: -naviBarContainerStackViewHeight)
+            self.departureInfoContainerView.transform = CGAffineTransform(translationX: 0, y: 172)
+        }
+        
+        UIView.animate(withDuration: withDuration) {
             self.naviBarForEditing.alpha = 1
             self.distanceContainerView.transform = CGAffineTransform(translationX: 0, y: -151)
             self.completeButton.transform = CGAffineTransform(translationX: 0, y: -112)
