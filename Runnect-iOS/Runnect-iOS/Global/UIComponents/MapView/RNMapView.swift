@@ -329,8 +329,8 @@ extension RNMapView {
         }
         
         locationButton.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(98+bottomPadding)
-            make.trailing.equalToSuperview().inset(24)
+            make.bottom.equalToSuperview().inset(88+bottomPadding)
+            make.trailing.equalToSuperview().inset(12)
         }
     }
     
