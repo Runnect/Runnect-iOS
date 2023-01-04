@@ -60,7 +60,7 @@ extension RNStartMarker: NMFOverlayImageDataSource {
     func view(with overlay: NMFOverlay) -> UIView {
         // 마커 위에 보여줄 InfoView 이미지 리턴
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 58, height: 34))
-        imageView.image = ImageLiterals.icMapDeparture
+        imageView.image = ImageLiterals.icMapStart
         return imageView
     }
 }

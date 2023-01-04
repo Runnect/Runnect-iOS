@@ -17,6 +17,8 @@ final class RNMapView: UIView {
     // MARK: - Properties
     
     @Published var pathDistance: Double = 0
+    @Published var markerCount = 0
+    
     let pathImage = PassthroughSubject<UIImage, Never>()
     var cancelBag = Set<AnyCancellable>()
     
@@ -24,8 +26,8 @@ final class RNMapView: UIView {
     private var isDrawMode: Bool = false
     private var markers = [RNMarker]() {
         didSet {
+            markerCount = markers.count + 1
             self.makePath()
-            self.setUndoButton()
         }
     }
     /// startMarker를 포함한 모든 마커들의 위치 정보
@@ -33,6 +35,7 @@ final class RNMapView: UIView {
         [self.startMarker.position] + self.markers.map { $0.position }
     }
     private var bottomPadding: CGFloat = 0
+    private let locationOverlayIcon = NMFOverlayImage(image: ImageLiterals.icLocationOverlay)
     
     // MARK: - UI Components
     
@@ -40,7 +43,6 @@ final class RNMapView: UIView {
     private var startMarker = RNStartMarker()
     private let pathOverlay = NMFPath()
     private let locationButton = UIButton(type: .custom)
-    private let undoButton = UIButton(type: .custom)
 
     // MARK: - initialization
     
@@ -62,6 +64,7 @@ final class RNMapView: UIView {
         setMap()
         getLocationAuth()
         setPathOverlay()
+        setLocationOverlay()
     }
     
     required init?(coder: NSCoder) {
@@ -84,24 +87,31 @@ extension RNMapView {
     @discardableResult
     func setPositionMode(mode: NMFMyPositionMode) -> Self {
         map.mapView.positionMode = mode
+        setLocationOverlay()
         return self
     }
     
     /// 지정 위치에 startMarker와 출발 infoWindow 생성 (기존의 startMarker는 제거)
     @discardableResult
-    func makeStartMarker(at location: NMGLatLng) -> Self {
+    func makeStartMarker(at location: NMGLatLng, withCameraMove: Bool = false) -> Self {
         self.startMarker.position = location
         self.startMarker.mapView = self.map.mapView
         self.startMarker.showInfoWindow()
+        if withCameraMove {
+            moveToLocation(location: location)
+        }
+        markerCount = 1
         return self
     }
     
     /// 사용자 위치에 startMarker와 출발 infoWindow 생성 (기존의 startMarker는 제거)
     @discardableResult
-    func makeStartMarkerAtUserLocation() -> Self {
+    func makeStartMarkerAtUserLocation(withCameraMove: Bool = false) -> Self {
         self.startMarker.position = getUserLocation()
         self.startMarker.mapView = self.map.mapView
         self.startMarker.showInfoWindow()
+        moveToUserLocation()
+        markerCount = 1
         return self
     }
     
@@ -149,6 +159,18 @@ extension RNMapView {
         return self
     }
     
+    /// 지정 위치로 카메라 이동
+    @discardableResult
+    func moveToLocation(location: NMGLatLng) -> Self {
+        let cameraUpdate = NMFCameraUpdate(scrollTo: location)
+        
+        DispatchQueue.main.async { [self] in
+            cameraUpdate.animation = .easeIn
+            self.map.mapView.moveCamera(cameraUpdate)
+        }
+        return self
+    }
+    
     /// 저장된 위치들로 경로선 그리기
     @discardableResult
     func makePath() -> Self {
@@ -165,13 +187,6 @@ extension RNMapView {
     @discardableResult
     func showLocationButton(toShow: Bool) -> Self {
         self.locationButton.isHidden = !toShow
-        return self
-    }
-    
-    /// undoButton 설정
-    @discardableResult
-    func showUndoButton(toShow: Bool) -> Self {
-        self.undoButton.isHidden = !toShow
         return self
     }
     
@@ -217,7 +232,7 @@ extension RNMapView {
         }
     }
     
-    // 바운더리(MBR) 생성
+    /// 바운더리(MBR) 생성
     func makeMBR() -> NMGLatLngBounds {
         var latitudes = [Double]()
         var longitudes = [Double]()
@@ -229,6 +244,13 @@ extension RNMapView {
         let southWest = NMGLatLng(lat: latitudes.min() ?? 0, lng: longitudes.min() ?? 0)
         let northEast = NMGLatLng(lat: latitudes.max() ?? 0, lng: longitudes.max() ?? 0)
         return NMGLatLngBounds(southWest: southWest, northEast: northEast)
+    }
+    
+    /// 직전의 마커 생성을 취소하고 경로선도 제거
+    func undo() {
+        guard let lastMarker = self.markers.popLast() else { return }
+        substractDistance(with: lastMarker.position)
+        lastMarker.mapView = nil
     }
     
     // 두 지점 사이의 거리(m) 추가
@@ -254,7 +276,7 @@ extension RNMapView {
         map.showLocationButton = false
         map.showScaleBar = false
         
-        map.mapView.logoAlign = .leftTop
+        map.mapView.logoAlign = .rightTop
     }
     
     private func getLocationAuth() {
@@ -278,13 +300,14 @@ extension RNMapView {
     }
     
     private func setPathOverlay() {
-        pathOverlay.width = 3
+        pathOverlay.width = 4
         pathOverlay.outlineWidth = 0
-        pathOverlay.color = .purple
+        pathOverlay.color = .m1
     }
     
-    private func setUndoButton() {
-        self.undoButton.isEnabled = (markers.count >= 1)
+    private func setLocationOverlay() {
+        let locationOverlay = map.mapView.locationOverlay
+        locationOverlay.icon = locationOverlayIcon
     }
 }
 
@@ -296,14 +319,10 @@ extension RNMapView {
         self.locationButton.setImage(ImageLiterals.icMapLocation, for: .normal)
         self.locationButton.isHidden = true
         self.locationButton.addTarget(self, action: #selector(locationButtonDidTap), for: .touchUpInside)
-        
-        self.undoButton.setImage(ImageLiterals.icCancel, for: .normal)
-        self.undoButton.isHidden = true
-        self.undoButton.addTarget(self, action: #selector(undoButtonDidTap), for: .touchUpInside)
     }
     
     private func setLayout() {
-        addSubviews(map, locationButton, undoButton)
+        addSubviews(map, locationButton)
         
         map.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -313,15 +332,10 @@ extension RNMapView {
             make.bottom.equalToSuperview().inset(98+bottomPadding)
             make.trailing.equalToSuperview().inset(24)
         }
-        
-        undoButton.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(98+bottomPadding)
-            make.trailing.equalToSuperview().inset(24)
-        }
     }
     
     private func updateSubviewsConstraints() {
-        [locationButton, undoButton].forEach { view in
+        [locationButton].forEach { view in
             view.snp.updateConstraints { make in
                 make.bottom.equalToSuperview().inset(98+bottomPadding)
             }
@@ -335,12 +349,6 @@ extension RNMapView {
     @objc func locationButtonDidTap() {
         self.setPositionMode(mode: .direction)
     }
-    
-    @objc func undoButtonDidTap() {
-        guard let lastMarker = self.markers.popLast() else { return }
-        substractDistance(with: lastMarker.position)
-        lastMarker.mapView = nil
-    }
 }
 
 // MARK: - NMFMapViewCameraDelegate, NMFMapViewTouchDelegate
@@ -348,8 +356,15 @@ extension RNMapView {
 extension RNMapView: NMFMapViewCameraDelegate, NMFMapViewTouchDelegate {
     // 지도 탭 이벤트
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        guard isDrawMode else { return }
+        guard isDrawMode && markers.count < 19 else { return }
         self.makeMarker(at: latlng)
+    }
+
+    func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
+        let locationOverlay = map.mapView.locationOverlay
+        if locationOverlay.icon != locationOverlayIcon {
+            setLocationOverlay()
+        }
     }
 }
 
