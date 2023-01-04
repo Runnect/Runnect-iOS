@@ -21,6 +21,7 @@
 		CE146770296568DC00DCEA1B /* RunTrackingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14676F296568DC00DCEA1B /* RunTrackingVC.swift */; };
 		CE14677829658C7200DCEA1B /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14677729658C7200DCEA1B /* Stopwatch.swift */; };
 		CE14677A2965A80700DCEA1B /* CustomBottomSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1467792965A80700DCEA1B /* CustomBottomSheetVC.swift */; };
+		CE14677C2965C1B100DCEA1B /* RunningRecordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14677B2965C1B100DCEA1B /* RunningRecordVC.swift */; };
 		CE17F02D2961BBA100E1DED0 /* ColorLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17F02C2961BBA100E1DED0 /* ColorLiterals.swift */; };
 		CE17F0332961BEF800E1DED0 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = CE17F02F2961BEF800E1DED0 /* Pretendard-Medium.otf */; };
 		CE17F0342961BEF800E1DED0 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = CE17F0302961BEF800E1DED0 /* Pretendard-Bold.otf */; };
@@ -77,6 +78,8 @@
 		CE665610295D92C200C64E12 /* setTextLineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE66560F295D92C200C64E12 /* setTextLineHeight.swift */; };
 		CE665612295D92E400C64E12 /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE665611295D92E400C64E12 /* UserDefaultWrapper.swift */; };
 		CE665615295D989A00C64E12 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = CE665614295D989A00C64E12 /* .swiftlint.yml */; };
+		CE9291252965C9FB0010959C /* CourseDetailInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9291242965C9FB0010959C /* CourseDetailInfoView.swift */; };
+		CE9291272965D0ED0010959C /* StatsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9291262965D0ED0010959C /* StatsInfoView.swift */; };
 		CEB8416E2962C45300BF8080 /* LocationSearchResultTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB8416D2962C45300BF8080 /* LocationSearchResultTVC.swift */; };
 		CEB841702963360800BF8080 /* CountDownVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB8416F2963360800BF8080 /* CountDownVC.swift */; };
 		CEC2A6852961F92C00160BF7 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A6842961F92C00160BF7 /* CustomButton.swift */; };
@@ -110,6 +113,7 @@
 		CE14676F296568DC00DCEA1B /* RunTrackingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunTrackingVC.swift; sourceTree = "<group>"; };
 		CE14677729658C7200DCEA1B /* Stopwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
 		CE1467792965A80700DCEA1B /* CustomBottomSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheetVC.swift; sourceTree = "<group>"; };
+		CE14677B2965C1B100DCEA1B /* RunningRecordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningRecordVC.swift; sourceTree = "<group>"; };
 		CE17F02C2961BBA100E1DED0 /* ColorLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorLiterals.swift; sourceTree = "<group>"; };
 		CE17F02F2961BEF800E1DED0 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		CE17F0302961BEF800E1DED0 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
@@ -173,6 +177,8 @@
 		CE66560F295D92C200C64E12 /* setTextLineHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setTextLineHeight.swift; sourceTree = "<group>"; };
 		CE665611295D92E400C64E12 /* UserDefaultWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultWrapper.swift; sourceTree = "<group>"; };
 		CE665614295D989A00C64E12 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		CE9291242965C9FB0010959C /* CourseDetailInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailInfoView.swift; sourceTree = "<group>"; };
+		CE9291262965D0ED0010959C /* StatsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsInfoView.swift; sourceTree = "<group>"; };
 		CEB8416D2962C45300BF8080 /* LocationSearchResultTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchResultTVC.swift; sourceTree = "<group>"; };
 		CEB8416F2963360800BF8080 /* CountDownVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownVC.swift; sourceTree = "<group>"; };
 		CEC2A6842961F92C00160BF7 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -360,6 +366,7 @@
 				CEC2A6912962BE2900160BF7 /* DepartureSearchVC.swift */,
 				CE29D581296402B500F47542 /* CourseDrawingVC.swift */,
 				CEB8416F2963360800BF8080 /* CountDownVC.swift */,
+				CE14677B2965C1B100DCEA1B /* RunningRecordVC.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -633,6 +640,8 @@
 				CEC2A6842961F92C00160BF7 /* CustomButton.swift */,
 				CE0D9FD229648DA300CEB5CD /* CustomAlertVC.swift */,
 				CE1467792965A80700DCEA1B /* CustomBottomSheetVC.swift */,
+				CE9291242965C9FB0010959C /* CourseDetailInfoView.swift */,
+				CE9291262965D0ED0010959C /* StatsInfoView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -871,6 +880,7 @@
 				CE665604295D91B100C64E12 /* makeAlert.swift in Sources */,
 				A3BC2F2F2962C40A00198261 /* UploadedCourseInfoVC.swift in Sources */,
 				CE6655EA295D88B200C64E12 /* UITabBar+.swift in Sources */,
+				CE9291272965D0ED0010959C /* StatsInfoView.swift in Sources */,
 				CEC2A68729629B9B00160BF7 /* SignInVC.swift in Sources */,
 				CE665602295D918000C64E12 /* JsonCoder.swift in Sources */,
 				CE4545CD295D7AF4003201E1 /* TaBarController.swift in Sources */,
@@ -896,6 +906,7 @@
 				CE17F0382961BF8B00E1DED0 /* FontLiterals.swift in Sources */,
 				CE6655E8295D889600C64E12 /* UISwitch+.swift in Sources */,
 				CE5875A029601500005D967E /* Toast.swift in Sources */,
+				CE14677C2965C1B100DCEA1B /* RunningRecordVC.swift in Sources */,
 				CE6655F6295D90B600C64E12 /* addToolBar.swift in Sources */,
 				CEC2A68A2962ADCD00160BF7 /* RNMapView.swift in Sources */,
 				CE6655F0295D891B00C64E12 /* UITextView+.swift in Sources */,
@@ -941,6 +952,7 @@
 				CEB8416E2962C45300BF8080 /* LocationSearchResultTVC.swift in Sources */,
 				CE6655CA295D84DD00C64E12 /* UserDefaultKeyList.swift in Sources */,
 				CE6655F2295D894D00C64E12 /* UIView+.swift in Sources */,
+				CE9291252965C9FB0010959C /* CourseDetailInfoView.swift in Sources */,
 				CE665600295D915D00C64E12 /* getClassName.swift in Sources */,
 				A3BC2F2D2962C3F200198261 /* ActivityRecordInfoVC.swift in Sources */,
 				CE6655FC295D90F500C64E12 /* calculatePastTime.swift in Sources */,
