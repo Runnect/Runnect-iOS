@@ -13,7 +13,7 @@ final class UploadedCourseInfoCVC: UICollectionViewCell {
     
     // MARK: - UI Components
     
-    private let uploadedCourseMapImage = UIView().then {
+    private let uploadedCourseMapImage = UIImageView().then {
         $0.layer.cornerRadius = 5
     }
     
