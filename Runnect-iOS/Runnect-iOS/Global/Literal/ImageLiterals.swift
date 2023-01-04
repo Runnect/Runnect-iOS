@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import NMapsMap
 
 enum ImageLiterals {
     // icon
@@ -37,6 +38,8 @@ enum ImageLiterals {
     static var icTime: UIImage { .load(named: "ic_time") }
     static var icLocationPoint: UIImage { .load(named: "ic_location_point") }
     static var icAlert: UIImage { .load(named: "ic_alert") }
+    static var icLocationOverlay: UIImage { .load(named: "ic_location_overlay") }
+
     // img
     static var imgBackground: UIImage { .load(named: "img_background") }
     static var imgLogo: UIImage { .load(named: "img_logo") }
@@ -57,6 +60,7 @@ enum ImageLiterals {
     static var imgStamp: UIImage { .load(named: "img_stamp") }
     static var imgStorage: UIImage { .load(named: "img_storage") }
     static var imgLock: UIImage { .load(named: "img_lock") }
+    static var imgTelescope: UIImage { .load(named: "img_telescope") }
 }
 
 extension UIImage {

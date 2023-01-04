@@ -35,6 +35,7 @@ final class RNMapView: UIView {
         [self.startMarker.position] + self.markers.map { $0.position }
     }
     private var bottomPadding: CGFloat = 0
+    private let locationOverlayIcon = NMFOverlayImage(image: ImageLiterals.icLocationOverlay)
     
     // MARK: - UI Components
     
@@ -63,6 +64,7 @@ final class RNMapView: UIView {
         setMap()
         getLocationAuth()
         setPathOverlay()
+        setLocationOverlay()
     }
     
     required init?(coder: NSCoder) {
@@ -85,6 +87,7 @@ extension RNMapView {
     @discardableResult
     func setPositionMode(mode: NMFMyPositionMode) -> Self {
         map.mapView.positionMode = mode
+        setLocationOverlay()
         return self
     }
     
@@ -301,6 +304,11 @@ extension RNMapView {
         pathOverlay.outlineWidth = 0
         pathOverlay.color = .m1
     }
+    
+    private func setLocationOverlay() {
+        let locationOverlay = map.mapView.locationOverlay
+        locationOverlay.icon = locationOverlayIcon
+    }
 }
 
 // MARK: - UI & Layout
@@ -350,6 +358,13 @@ extension RNMapView: NMFMapViewCameraDelegate, NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         guard isDrawMode && markers.count < 19 else { return }
         self.makeMarker(at: latlng)
+    }
+
+    func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
+        let locationOverlay = map.mapView.locationOverlay
+        if locationOverlay.icon != locationOverlayIcon {
+            setLocationOverlay()
+        }
     }
 }
 
