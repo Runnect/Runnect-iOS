@@ -143,10 +143,6 @@ extension GoalRewardInfoVC: UICollectionViewDelegateFlowLayout {
         return stampLineSpacing
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return stampLineSpacing
-    }
-
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return stampInset
     }

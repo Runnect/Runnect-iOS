@@ -15,7 +15,6 @@ final class GoalRewardInfoCVC: UICollectionViewCell {
     
     // MARK: - UI Components
     
-    private let containerView = UIView()
     private let stampImageView = UIImageView()
     private let stampStandardLabel = UILabel().then {
         $0.textColor = .g1

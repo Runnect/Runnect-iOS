@@ -43,8 +43,8 @@ final class UploadedCourseInfoVC: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.isScrollEnabled = true
         collectionView.showsVerticalScrollIndicator = false
-        //collectionView.delegate = self
-        //collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
         return collectionView
     }()
@@ -56,6 +56,7 @@ final class UploadedCourseInfoVC: UIViewController {
         setNavigationBar()
         setUI()
         setLayout()
+        register()
     }
 }
 
@@ -74,9 +75,55 @@ extension UploadedCourseInfoVC {
     
     private func setUI() {
         view.backgroundColor = .w1
+        UploadedCourseInfoCollectionView.backgroundColor = .w1
     }
     
-    private setLayout() {
+    private func setLayout() {
+        view.addSubview(UploadedCourseInfoCollectionView)
         
+        UploadedCourseInfoCollectionView.snp.makeConstraints {  make in
+            make.top.equalTo(navibar.snp.bottom)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalToSuperview()
+        }
+    }
+    
+    // MARK: - General Helpers
+
+    private func register() {
+        UploadedCourseInfoCollectionView.register(UploadedCourseInfoCVC.self,
+                                     forCellWithReuseIdentifier: UploadedCourseInfoCVC.className)
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension UploadedCourseInfoVC: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let screenWidth = UIScreen.main.bounds.width
+        let doubleCellWidth = screenWidth - uploadedCourseInset.left - uploadedCourseInset.right - uploadedCourseItemSpacing
+        return CGSize(width: doubleCellWidth / 2, height: 164)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return uploadedCourseLineSpacing
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return uploadedCourseInset
+    }
+}
+
+// MARK: - UICollectionViewDataSource
+
+extension UploadedCourseInfoVC: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return UploadedCourseList.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let uploadedCourseCell = collectionView.dequeueReusableCell(withReuseIdentifier: UploadedCourseInfoCVC.className, for: indexPath) as? UploadedCourseInfoCVC else { return UICollectionViewCell()}
+        uploadedCourseCell.dataBind(model: UploadedCourseList[indexPath.item])
+        return uploadedCourseCell
     }
 }
