@@ -15,6 +15,8 @@
 		A3BC2F34296303A600198261 /* GoalRewardInfoCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F33296303A600198261 /* GoalRewardInfoCVC.swift */; };
 		A3BC2F382963CE3700198261 /* ActivityRecordInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F372963CE3700198261 /* ActivityRecordInfoModel.swift */; };
 		A3BC2F3A2963D0ED00198261 /* ActivityRecordInfoTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F392963D0ED00198261 /* ActivityRecordInfoTVC.swift */; };
+		A3BC2F3D296468E500198261 /* UploadedCourseInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F3C296468E500198261 /* UploadedCourseInfoModel.swift */; };
+		A3BC2F3F2964706100198261 /* UploadedCourseInfoCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F3E2964706100198261 /* UploadedCourseInfoCVC.swift */; };
 		CE0D9FD329648DA300CEB5CD /* CustomAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0D9FD229648DA300CEB5CD /* CustomAlertVC.swift */; };
 		CE17F02D2961BBA100E1DED0 /* ColorLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17F02C2961BBA100E1DED0 /* ColorLiterals.swift */; };
 		CE17F0332961BEF800E1DED0 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = CE17F02F2961BEF800E1DED0 /* Pretendard-Medium.otf */; };
@@ -99,6 +101,8 @@
 		A3BC2F33296303A600198261 /* GoalRewardInfoCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardInfoCVC.swift; sourceTree = "<group>"; };
 		A3BC2F372963CE3700198261 /* ActivityRecordInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRecordInfoModel.swift; sourceTree = "<group>"; };
 		A3BC2F392963D0ED00198261 /* ActivityRecordInfoTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRecordInfoTVC.swift; sourceTree = "<group>"; };
+		A3BC2F3C296468E500198261 /* UploadedCourseInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedCourseInfoModel.swift; sourceTree = "<group>"; };
+		A3BC2F3E2964706100198261 /* UploadedCourseInfoCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedCourseInfoCVC.swift; sourceTree = "<group>"; };
 		CE0D9FD229648DA300CEB5CD /* CustomAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertVC.swift; sourceTree = "<group>"; };
 		CE17F02C2961BBA100E1DED0 /* ColorLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorLiterals.swift; sourceTree = "<group>"; };
 		CE17F02F2961BEF800E1DED0 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
@@ -218,6 +222,7 @@
 		A3BC2F292962C39F00198261 /* InfoVC */ = {
 			isa = PBXGroup;
 			children = (
+				A3BC2F3B2964671D00198261 /* UploadedCourseInfoCollectionView */,
 				A3BC2F362963CD2100198261 /* ActivityRecordInfoTableView */,
 				A3BC2F302962E08400198261 /* GoalRewardInfoCollectionView */,
 				A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */,
@@ -243,6 +248,15 @@
 				A3BC2F392963D0ED00198261 /* ActivityRecordInfoTVC.swift */,
 			);
 			path = ActivityRecordInfoTableView;
+			sourceTree = "<group>";
+		};
+		A3BC2F3B2964671D00198261 /* UploadedCourseInfoCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				A3BC2F3C296468E500198261 /* UploadedCourseInfoModel.swift */,
+				A3BC2F3E2964706100198261 /* UploadedCourseInfoCVC.swift */,
+			);
+			path = UploadedCourseInfoCollectionView;
 			sourceTree = "<group>";
 		};
 		CE17F02E2961BEAE00E1DED0 /* Fonts */ = {
@@ -855,9 +869,11 @@
 				CE6655EE295D88E600C64E12 /* UITextField+.swift in Sources */,
 				CE6655F8295D90CF00C64E12 /* adjusted+.swift in Sources */,
 				CE4545CB295D7AF4003201E1 /* SceneDelegate.swift in Sources */,
+				A3BC2F3F2964706100198261 /* UploadedCourseInfoCVC.swift in Sources */,
 				CE6655FE295D912300C64E12 /* calculateTopInset.swift in Sources */,
 				CEEC6B492961C5E200D00E1E /* SplashVC.swift in Sources */,
 				CE6655D0295D85FF00C64E12 /* CancelBag.swift in Sources */,
+				A3BC2F3D296468E500198261 /* UploadedCourseInfoModel.swift in Sources */,
 				CE6655DC295D873500C64E12 /* UIButton+.swift in Sources */,
 				CE6655D4295D865B00C64E12 /* Publisher+UIControl.swift in Sources */,
 				CE0D9FD329648DA300CEB5CD /* CustomAlertVC.swift in Sources */,

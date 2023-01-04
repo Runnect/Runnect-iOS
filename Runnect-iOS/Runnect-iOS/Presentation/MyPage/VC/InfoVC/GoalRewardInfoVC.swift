@@ -11,7 +11,7 @@ import Then
 
 final class GoalRewardInfoVC: UIViewController {
     
-    // MARK: - Variables
+    // MARK: - Properties
     
     var stampList: [GoalRewardInfoModel] = [
         GoalRewardInfoModel(stampImg: ImageLiterals.imgStampC1, stampStandard: "그리기 스타터"),
@@ -55,7 +55,6 @@ final class GoalRewardInfoVC: UIViewController {
         layout.scrollDirection = .vertical
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.isScrollEnabled = true
         collectionView.showsVerticalScrollIndicator = false
         collectionView.delegate = self
@@ -141,10 +140,6 @@ extension GoalRewardInfoVC: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return stampLineSpacing
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return stampLineSpacing
     }
 
