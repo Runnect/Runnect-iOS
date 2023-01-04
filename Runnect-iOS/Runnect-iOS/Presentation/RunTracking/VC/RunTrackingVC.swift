@@ -6,9 +6,17 @@
 //
 
 import UIKit
+import Combine
+
 import NMapsMap
 
 final class RunTrackingVC: UIViewController {
+    
+    // MARK: - Properties
+    
+    private let stopwatch = Stopwatch()
+    private var cancelBag = CancelBag()
+    var totalTime: Int = 0
     
     // MARK: - UI Components
     
@@ -89,7 +97,6 @@ final class RunTrackingVC: UIViewController {
         arrangedSubviews: [distanceStatsStackView, timeStatsStackView]
     ).then {
         $0.spacing = 38
-        $0.distribution = .fillEqually
     }
     
     private let bigStarImageView = UIImageView().then {
@@ -114,6 +121,7 @@ final class RunTrackingVC: UIViewController {
         self.setUI()
         self.setLayout()
         self.setAddTarget()
+        self.bindStopwatch()
     }
 }
 
@@ -142,6 +150,31 @@ extension RunTrackingVC {
         )
         
         return attributedString
+    }
+    
+    private func bindStopwatch() {
+        stopwatch.isRunning.toggle()
+        
+        stopwatch.$elapsedTime.sink { [weak self] time in
+            guard let self = self else { return }
+            let time = Int(time)
+            self.totalTime = time
+            self.setTimeLabel(with: time)
+        }.store(in: cancelBag)
+    }
+    
+    private func setTimeLabel(with totalSeconds: Int) {
+        var minutes: String = "\(totalSeconds / 60)"
+        if minutes.count == 1 {
+            minutes = "0\(minutes)"
+        }
+        
+        var seconds: String = "\(totalSeconds % 60)"
+        if seconds.count == 1 {
+            seconds = "0\(seconds)"
+        }
+        
+        timeStatsLabel.text = "\(minutes):\(seconds)"
     }
 }
 
