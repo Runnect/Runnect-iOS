@@ -37,7 +37,7 @@ final class RunningRecordVC: UIViewController {
         $0.addLeftPadding(width: 2)
     }
     
-    private let dateInfoView = CourseDetailInfoView(title: "날짜", description: "출발 날짜")
+    private let dateInfoView = CourseDetailInfoView(title: "날짜", description: RNTimeFormatter.getCurrentTimeToString(date: Date()))
     
     private let departureInfoView = CourseDetailInfoView(title: "출발지", description: "출발지 주소")
     
@@ -115,7 +115,7 @@ extension RunningRecordVC {
     }
     
     func setData(distance: String, totalTime: String, averagePace: String) {
-        self.distanceStatsView.setStats(stats: distance)
+        self.distanceStatsView.setAttributedStats(stats: distance)
         self.totalTimeStatsView.setStats(stats: totalTime)
         self.averagePaceStatsView.setStats(stats: averagePace)
     }

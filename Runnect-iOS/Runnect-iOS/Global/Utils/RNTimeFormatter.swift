@@ -19,4 +19,15 @@ class RNTimeFormatter {
         let formattedString = formatter.string(from: TimeInterval(interval))!
         return formattedString
     }
+    
+    static func getCurrentTimeToString(date: Date) -> String {
+        let formatter = DateFormatter()
+        
+        formatter.locale = Locale(identifier: "ko_kr")
+        formatter.timeZone = TimeZone(abbreviation: "KST")
+        
+        formatter.dateFormat = "yyyy.MM.dd HH:mm"
+        
+        return formatter.string(from: date)
+    }
 }
