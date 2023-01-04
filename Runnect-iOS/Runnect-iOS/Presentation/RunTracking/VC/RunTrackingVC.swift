@@ -135,6 +135,7 @@ extension RunTrackingVC {
     
     private func setAddTarget() {
         self.backButton.addTarget(self, action: #selector(popToPreviousVC), for: .touchUpInside)
+        self.runningCompleteButton.addTarget(self, action: #selector(runningCompleteButtonDidTap), for: .touchUpInside)
     }
     
     private func makeAttributedLabelForDistance(distance: String) -> NSMutableAttributedString {
@@ -183,6 +184,13 @@ extension RunTrackingVC {
 extension RunTrackingVC {
     @objc private func popToPreviousVC() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc private func runningCompleteButtonDidTap() {
+        stopwatch.isRunning.toggle()
+        let bottomSheetVC = CustomBottomSheetVC()
+        bottomSheetVC.modalPresentationStyle = .overFullScreen
+        self.present(bottomSheetVC, animated: true)
     }
 }
 

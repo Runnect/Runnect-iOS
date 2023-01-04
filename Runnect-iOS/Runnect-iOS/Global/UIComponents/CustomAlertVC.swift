@@ -28,7 +28,7 @@ final class CustomAlertVC: UIViewController {
     
     private let alertView = UIView()
     private let alertImageView = UIImageView().then {
-        $0.image = ImageLiterals.imgTelescope
+        $0.image = ImageLiterals.imgPaper
     }
     private let contentsLabel = UILabel().then {
         $0.text = "코스를 만들었어요!"
