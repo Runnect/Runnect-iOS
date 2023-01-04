@@ -139,7 +139,7 @@ extension RNMapView {
     @discardableResult
     func makeMarkersWithStartMarker(at locations: [NMGLatLng]) -> Self {
         if locations.count < 2 { return self }
-        makeStartMarker(at: locations[0])
+        makeStartMarker(at: locations[0], withCameraMove: true)
         locations[1...].forEach { location in
             makeMarker(at: location)
         }

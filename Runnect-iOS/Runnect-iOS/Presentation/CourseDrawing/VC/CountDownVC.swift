@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import NMapsMap
 
 final class CountDownVC: UIViewController {
     
     // MARK: - Properties
     
     private var count = 3
+    var locations = [NMGLatLng]()
     
     // MARK: - UI Components
     
@@ -55,7 +57,9 @@ extension CountDownVC {
             if self.count > 0 {
                 self.animateTimeLabel()
             } else {
-                print("Done")
+                let runTrackingVC = RunTrackingVC()
+                runTrackingVC.makePath(locations: self.locations)
+                self.navigationController?.pushViewController(runTrackingVC, animated: true)
             }
         })
     }

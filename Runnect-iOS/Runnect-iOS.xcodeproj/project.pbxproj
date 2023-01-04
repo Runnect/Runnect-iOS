@@ -18,6 +18,7 @@
 		A3BC2F3D296468E500198261 /* UploadedCourseInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F3C296468E500198261 /* UploadedCourseInfoModel.swift */; };
 		A3BC2F3F2964706100198261 /* UploadedCourseInfoCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F3E2964706100198261 /* UploadedCourseInfoCVC.swift */; };
 		CE0D9FD329648DA300CEB5CD /* CustomAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0D9FD229648DA300CEB5CD /* CustomAlertVC.swift */; };
+		CE146770296568DC00DCEA1B /* RunTrackingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14676F296568DC00DCEA1B /* RunTrackingVC.swift */; };
 		CE17F02D2961BBA100E1DED0 /* ColorLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17F02C2961BBA100E1DED0 /* ColorLiterals.swift */; };
 		CE17F0332961BEF800E1DED0 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = CE17F02F2961BEF800E1DED0 /* Pretendard-Medium.otf */; };
 		CE17F0342961BEF800E1DED0 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = CE17F0302961BEF800E1DED0 /* Pretendard-Bold.otf */; };
@@ -104,6 +105,7 @@
 		A3BC2F3C296468E500198261 /* UploadedCourseInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedCourseInfoModel.swift; sourceTree = "<group>"; };
 		A3BC2F3E2964706100198261 /* UploadedCourseInfoCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedCourseInfoCVC.swift; sourceTree = "<group>"; };
 		CE0D9FD229648DA300CEB5CD /* CustomAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertVC.swift; sourceTree = "<group>"; };
+		CE14676F296568DC00DCEA1B /* RunTrackingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunTrackingVC.swift; sourceTree = "<group>"; };
 		CE17F02C2961BBA100E1DED0 /* ColorLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorLiterals.swift; sourceTree = "<group>"; };
 		CE17F02F2961BEF800E1DED0 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		CE17F0302961BEF800E1DED0 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
@@ -257,6 +259,30 @@
 				A3BC2F3E2964706100198261 /* UploadedCourseInfoCVC.swift */,
 			);
 			path = UploadedCourseInfoCollectionView;
+			sourceTree = "<group>";
+		};
+		CE14676C296568C000DCEA1B /* RunTracking */ = {
+			isa = PBXGroup;
+			children = (
+				CE14676E296568CD00DCEA1B /* Views */,
+				CE14676D296568CA00DCEA1B /* VC */,
+			);
+			path = RunTracking;
+			sourceTree = "<group>";
+		};
+		CE14676D296568CA00DCEA1B /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				CE14676F296568DC00DCEA1B /* RunTrackingVC.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		CE14676E296568CD00DCEA1B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		CE17F02E2961BEAE00E1DED0 /* Fonts */ = {
@@ -448,6 +474,7 @@
 				CE17F03C2961C32C00E1DED0 /* CourseDiscovery */,
 				CE17F03B2961C2F700E1DED0 /* MyPage */,
 				CE17F03E2961C38100E1DED0 /* CourseDetail */,
+				CE14676C296568C000DCEA1B /* RunTracking */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -888,6 +915,7 @@
 				CE6655DE295D877F00C64E12 /* UIColor+.swift in Sources */,
 				CEEC6B402961C55000D00E1E /* MyPageVC.swift in Sources */,
 				CE665608295D921500C64E12 /* setImage.swift in Sources */,
+				CE146770296568DC00DCEA1B /* RunTrackingVC.swift in Sources */,
 				CE665612295D92E400C64E12 /* UserDefaultWrapper.swift in Sources */,
 				A3BC2F3A2963D0ED00198261 /* ActivityRecordInfoTVC.swift in Sources */,
 				CE665610295D92C200C64E12 /* setTextLineHeight.swift in Sources */,
