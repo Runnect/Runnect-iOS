@@ -122,6 +122,10 @@ final class RunTrackingVC: UIViewController {
         self.setUI()
         self.setLayout()
         self.setAddTarget()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.bindStopwatch()
     }
 }
