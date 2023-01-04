@@ -161,10 +161,15 @@ extension RNMapView {
         sendSubviewToBack(dummyMap)
         dummyMap.makeMarkersWithStartMarker(at: locations, willCapture: false)
         let bounds = makeMBR(at: locations)
-        let cameraUpdate = NMFCameraUpdate(fit: bounds, padding: 0)
+        let cameraUpdate = NMFCameraUpdate(fit: bounds, padding: 100)
         cameraUpdate.animation = .none
-        dummyMap.map.mapView.moveCamera(cameraUpdate)
-        dummyMap.map.mapView.zoomLevel -= 1
+        dummyMap.map.mapView.moveCamera(cameraUpdate) { isCancelled in
+            if isCancelled {
+                print("카메라 이동 취소")
+            } else {
+                self.dummyMap.map.mapView.zoomLevel -= 1
+            }
+        }
     }
     
     /// 사용자 위치로 카메라 이동
@@ -239,7 +244,6 @@ extension RNMapView {
     
     /// 경로 뷰를 UIImage로 변환하여 pathImage에 send
     func getPathImage() {
-        bringSubviewToFront(dummyMap)
         self.pathImage.send(UIImage(view: dummyMap.map.mapView))
     }
     
