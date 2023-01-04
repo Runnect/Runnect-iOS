@@ -114,10 +114,11 @@ extension RunningRecordVC {
         view.addGestureRecognizer(tap)
     }
     
-    func setData(distance: String, totalTime: String, averagePace: String) {
+    func setData(distance: String, totalTime: String, averagePace: String, pathImage: UIImage?) {
         self.distanceStatsView.setAttributedStats(stats: distance)
         self.totalTimeStatsView.setStats(stats: totalTime)
         self.averagePaceStatsView.setStats(stats: averagePace)
+        self.courseImageView.image = pathImage
     }
 }
 

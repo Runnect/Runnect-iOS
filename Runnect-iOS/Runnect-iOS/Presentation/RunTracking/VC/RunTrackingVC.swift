@@ -18,6 +18,7 @@ final class RunTrackingVC: UIViewController {
     private var cancelBag = CancelBag()
     var totalTime: Int = 0
     var distance: String = "0.0"
+    var pathImage: UIImage?
     
     // MARK: - UI Components
     
@@ -122,6 +123,7 @@ final class RunTrackingVC: UIViewController {
         self.setUI()
         self.setLayout()
         self.setAddTarget()
+        self.bindMapView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -137,6 +139,7 @@ extension RunTrackingVC {
         self.mapView.makeMarkersWithStartMarker(at: locations)
         self.totalDistanceLabel.attributedText = makeAttributedLabelForDistance(distance: distance)
         self.distance = distance
+        self.mapView.getPathImage()
     }
     
     private func setAddTarget() {
@@ -170,6 +173,14 @@ extension RunTrackingVC {
         }.store(in: cancelBag)
     }
     
+    private func bindMapView() {
+        mapView.pathImage.sink { [weak self] image in
+            guard let self = self else { return }
+            self.pathImage = image
+            print(image)
+        }.store(in: cancelBag)
+    }
+    
     private func setTimeLabel(with totalSeconds: Int) {
         let formattedString = RNTimeFormatter.secondsToHHMMSS(seconds: totalSeconds)
         
@@ -184,7 +195,7 @@ extension RunTrackingVC {
         let runningRecordVC = RunningRecordVC()
         runningRecordVC.setData(distance: self.distance,
                                 totalTime: RNTimeFormatter.secondsToHHMMSS(seconds: self.totalTime),
-                                averagePace: formatedAveragePace)
+                                averagePace: formatedAveragePace, pathImage: pathImage)
         self.navigationController?.pushViewController(runningRecordVC, animated: true)
     }
 }
