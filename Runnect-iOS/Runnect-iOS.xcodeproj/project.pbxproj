@@ -92,6 +92,9 @@
 		CEEC6B402961C55000D00E1E /* MyPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B3F2961C55000D00E1E /* MyPageVC.swift */; };
 		CEEC6B492961C5E200D00E1E /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B482961C5E200D00E1E /* SplashVC.swift */; };
 		CEEC6B4B2961D89700D00E1E /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B4A2961D89700D00E1E /* CustomNavigationBar.swift */; };
+		DA20D82E2965C54900F1581F /* MapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D82D2965C54900F1581F /* MapModel.swift */; };
+		DA20D8302965C56C00F1581F /* MapCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D82F2965C56C00F1581F /* MapCollectionViewCell.swift */; };
+		DA20D8322965C58D00F1581F /* MapCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D8312965C58D00F1581F /* MapCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -193,6 +196,9 @@
 		CEEC6B462961C5BB00D00E1E /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CEEC6B482961C5E200D00E1E /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		CEEC6B4A2961D89700D00E1E /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
+		DA20D82D2965C54900F1581F /* MapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModel.swift; sourceTree = "<group>"; };
+		DA20D82F2965C56C00F1581F /* MapCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCollectionViewCell.swift; sourceTree = "<group>"; };
+		DA20D8312965C58D00F1581F /* MapCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCollectionViewController.swift; sourceTree = "<group>"; };
 		E837271A78E1C0A0C30789BF /* Pods-Runnect-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runnect-iOS.release.xcconfig"; path = "Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -329,6 +335,7 @@
 		CE17F03C2961C32C00E1DED0 /* CourseDiscovery */ = {
 			isa = PBXGroup;
 			children = (
+				DA20D82C2965C53000F1581F /* Model */,
 				CE17F0442961C3D900E1DED0 /* Views */,
 				CE17F0432961C3D600E1DED0 /* VC */,
 			);
@@ -400,6 +407,8 @@
 			isa = PBXGroup;
 			children = (
 				CEEC6B432961C59F00D00E1E /* .gitkeep */,
+				DA20D82F2965C56C00F1581F /* MapCollectionViewCell.swift */,
+				DA20D8312965C58D00F1581F /* MapCollectionViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -729,6 +738,14 @@
 			path = VC;
 			sourceTree = "<group>";
 		};
+		DA20D82C2965C53000F1581F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DA20D82D2965C54900F1581F /* MapModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -887,6 +904,7 @@
 				CE66560E295D92A500C64E12 /* setStatusBarBackgroundColor.swift in Sources */,
 				CE6655D7295D86F900C64E12 /* String+.swift in Sources */,
 				CE58759E29601476005D967E /* LoadingIndicator.swift in Sources */,
+				DA20D8322965C58D00F1581F /* MapCollectionViewController.swift in Sources */,
 				CE5875A2296015A2005D967E /* NetworkLoggerPlugin.swift in Sources */,
 				CEEC6B3C2961C51A00D00E1E /* CourseStorageVC.swift in Sources */,
 				CE4545C9295D7AF4003201E1 /* AppDelegate.swift in Sources */,
@@ -901,12 +919,14 @@
 				CE6655F0295D891B00C64E12 /* UITextView+.swift in Sources */,
 				CEC2A6922962BE2900160BF7 /* DepartureSearchVC.swift in Sources */,
 				CE6655EE295D88E600C64E12 /* UITextField+.swift in Sources */,
+				DA20D8302965C56C00F1581F /* MapCollectionViewCell.swift in Sources */,
 				CE6655F8295D90CF00C64E12 /* adjusted+.swift in Sources */,
 				CE4545CB295D7AF4003201E1 /* SceneDelegate.swift in Sources */,
 				A3BC2F3F2964706100198261 /* UploadedCourseInfoCVC.swift in Sources */,
 				CE6655FE295D912300C64E12 /* calculateTopInset.swift in Sources */,
 				CEEC6B492961C5E200D00E1E /* SplashVC.swift in Sources */,
 				CE6655D0295D85FF00C64E12 /* CancelBag.swift in Sources */,
+				DA20D82E2965C54900F1581F /* MapModel.swift in Sources */,
 				A3BC2F3D296468E500198261 /* UploadedCourseInfoModel.swift in Sources */,
 				CE6655DC295D873500C64E12 /* UIButton+.swift in Sources */,
 				CE6655D4295D865B00C64E12 /* Publisher+UIControl.swift in Sources */,
