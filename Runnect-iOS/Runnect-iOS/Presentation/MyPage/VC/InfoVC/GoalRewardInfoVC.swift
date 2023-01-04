@@ -136,7 +136,8 @@ extension GoalRewardInfoVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenWidth = UIScreen.main.bounds.width
         let tripleCellWidth = screenWidth - stampInset.left - stampInset.right - stampItemSpacing * 2
-        return CGSize(width: tripleCellWidth / 3, height: 112)
+        let cellHeight = tripleCellWidth / 3 + 22
+        return CGSize(width: tripleCellWidth / 3, height: cellHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
