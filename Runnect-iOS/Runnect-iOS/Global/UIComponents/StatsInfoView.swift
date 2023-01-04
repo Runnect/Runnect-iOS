@@ -47,7 +47,7 @@ final class StatsInfoView: UIView {
 extension StatsInfoView {
     /// statsLabel의 text를 attributedString으로 변경 (기본 값은 Km)
     @discardableResult
-    public func setAttributedStats(stats: String, unit: String = " Km") -> Self {
+    func setAttributedStats(stats: String, unit: String = " Km") -> Self {
         let attributedString = NSMutableAttributedString(
             string: stats,
             attributes: [.font: UIFont.h3, .foregroundColor: UIColor.g1]
@@ -61,6 +61,12 @@ extension StatsInfoView {
         )
         
         self.statsLabel.attributedText = attributedString
+        return self
+    }
+    
+    @discardableResult
+    func setStats(stats: String) -> Self {
+        self.statsLabel.text = stats
         return self
     }
 }

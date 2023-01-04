@@ -9,6 +9,10 @@ import UIKit
 
 final class RunningRecordVC: UIViewController {
     
+    // MARK: - Properties
+    
+    private let courseTitleMaxLength = 20
+    
     // MARK: - UI Components
     
     private lazy var naviBar = CustomNavigationBar(self, type: .titleWithLeftButton)
@@ -62,6 +66,7 @@ final class RunningRecordVC: UIViewController {
     }
 
     private let saveButton = CustomButton(title: "저장하기")
+        .setEnabled(false)
     
     // MARK: - View Life Cycle
     
@@ -69,6 +74,9 @@ final class RunningRecordVC: UIViewController {
         super.viewDidLoad()
         self.setUI()
         self.setLayout()
+        self.setAddTarget()
+        self.setKeyboardNotification()
+        self.setTapGesture()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -80,7 +88,74 @@ final class RunningRecordVC: UIViewController {
 // MARK: - Methods
 
 extension RunningRecordVC {
+    private func setAddTarget() {
+        self.courseTitleTextField.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
+    }
     
+    // 키보드가 올라오면 scrollView 위치 조정
+    private func setKeyboardNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil)
+    }
+    
+    // 화면 터치 시 키보드 내리기
+    private func setTapGesture() {
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    func setData(distance: String, totalTime: String, averagePace: String) {
+        self.distanceStatsView.setStats(stats: distance)
+        self.totalTimeStatsView.setStats(stats: totalTime)
+        self.averagePaceStatsView.setStats(stats: averagePace)
+    }
+}
+
+// MARK: - @objc Function
+
+extension RunningRecordVC {
+    @objc private func textFieldTextDidChange() {
+        guard let text = courseTitleTextField.text else { return }
+        
+        saveButton.isEnabled = !text.isEmpty
+        
+        if text.count > courseTitleMaxLength {
+            let index = text.index(text.startIndex, offsetBy: courseTitleMaxLength)
+            let newString = text[text.startIndex..<index]
+            self.courseTitleTextField.text = String(newString)
+        }
+    }
+    
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+                return
+        }
+
+        let contentInset = UIEdgeInsets(
+            top: 0.0,
+            left: 0.0,
+            bottom: keyboardFrame.size.height,
+            right: 0.0)
+        scrollView.contentInset = contentInset
+        scrollView.scrollIndicatorInsets = contentInset
+    }
+    
+    @objc private func keyboardWillHide() {
+        let contentInset = UIEdgeInsets.zero
+        scrollView.contentInset = contentInset
+        scrollView.scrollIndicatorInsets = contentInset
+    }
 }
 
 // MARK: - UI & Layout
