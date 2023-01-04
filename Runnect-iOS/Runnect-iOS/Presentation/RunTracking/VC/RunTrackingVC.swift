@@ -41,18 +41,8 @@ final class RunTrackingVC: UIViewController {
         $0.alignment = .leading
     }
     
-    private let totalDistanceLabel = UILabel().then {
-        let attributedString = NSMutableAttributedString(
-            string: "0:0",
-            attributes: [.font: UIFont.h1, .foregroundColor: UIColor.g1]
-        )
-        attributedString.append(
-            NSAttributedString(
-                string: " Km",
-                attributes: [.font: UIFont.b4, .foregroundColor: UIColor.g2]
-            )
-        )
-        $0.attributedText = attributedString
+    private lazy var totalDistanceLabel = UILabel().then {
+        $0.attributedText = makeAttributedLabelForDistance(distance: "0.0")
     }
     
     private lazy var distanceStatsStackView = UIStackView(
@@ -130,12 +120,28 @@ final class RunTrackingVC: UIViewController {
 // MARK: - Methods
 
 extension RunTrackingVC {
-    func makePath(locations: [NMGLatLng]) {
+    func makePath(locations: [NMGLatLng], distance: String) {
         self.mapView.makeMarkersWithStartMarker(at: locations)
+        self.totalDistanceLabel.attributedText = makeAttributedLabelForDistance(distance: distance)
     }
     
     private func setAddTarget() {
         self.backButton.addTarget(self, action: #selector(popToPreviousVC), for: .touchUpInside)
+    }
+    
+    private func makeAttributedLabelForDistance(distance: String) -> NSMutableAttributedString {
+        let attributedString = NSMutableAttributedString(
+            string: distance,
+            attributes: [.font: UIFont.h1, .foregroundColor: UIColor.g1]
+        )
+        attributedString.append(
+            NSAttributedString(
+                string: " Km",
+                attributes: [.font: UIFont.b4, .foregroundColor: UIColor.g2]
+            )
+        )
+        
+        return attributedString
     }
 }
 

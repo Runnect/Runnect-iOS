@@ -14,6 +14,7 @@ final class CountDownVC: UIViewController {
     
     private var count = 3
     var locations = [NMGLatLng]()
+    var distance: String?
     
     // MARK: - UI Components
     
@@ -58,7 +59,7 @@ extension CountDownVC {
                 self.animateTimeLabel()
             } else {
                 let runTrackingVC = RunTrackingVC()
-                runTrackingVC.makePath(locations: self.locations)
+                runTrackingVC.makePath(locations: self.locations, distance: self.distance ?? "0:0")
                 self.navigationController?.pushViewController(runTrackingVC, animated: true)
                 
                 // CountDownVC를 navigationController 스택에서 제거하여 pop 하였을 때 더 이전 뷰로 넘어가지도록 함
