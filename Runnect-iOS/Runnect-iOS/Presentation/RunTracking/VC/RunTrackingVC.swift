@@ -176,7 +176,7 @@ extension RunTrackingVC {
         mapView.pathImage.sink { [weak self] image in
             guard let self = self else { return }
             self.pathImage = image
-            LoadingIndicator.hideLoading()
+            print("이미지 수신 완료")
         }.store(in: cancelBag)
     }
     
@@ -187,6 +187,7 @@ extension RunTrackingVC {
     }
     
     private func pushToRunningRecordVC() {
+        guard let pathImage = pathImage else { return }
         guard let distance = Float(self.distance) else { return }
         let averagePaceSeconds = Int(Float(self.totalTime) / distance)
         let formatedAveragePace = "\(averagePaceSeconds / 60)'\(averagePaceSeconds % 60)''"
@@ -207,8 +208,6 @@ extension RunTrackingVC {
     }
     
     @objc private func runningCompleteButtonDidTap() {
-        LoadingIndicator.showLoading()
-        self.mapView.getPathImage()
         stopwatch.isRunning.toggle()
         let bottomSheetVC = CustomBottomSheetVC()
         bottomSheetVC.modalPresentationStyle = .overFullScreen

@@ -19,7 +19,7 @@ final class RNMapView: UIView {
     @Published var pathDistance: Double = 0
     @Published var markerCount = 0
     
-    let pathImage = PassthroughSubject<UIImage, Never>()
+    let pathImage = PassthroughSubject<UIImage?, Never>()
     var cancelBag = Set<AnyCancellable>()
     
     let locationManager = CLLocationManager()
@@ -168,6 +168,9 @@ extension RNMapView {
                 print("카메라 이동 취소")
             } else {
                 self.dummyMap.map.mapView.zoomLevel -= 1
+                DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                    self.makePathImage()
+                }
             }
         }
     }
@@ -242,9 +245,14 @@ extension RNMapView {
         return pathDistance
     }
     
-    /// 경로 뷰를 UIImage로 변환하여 pathImage에 send
-    func getPathImage() {
+    /// 더미 뷰를 UIImage로 변환하여 pathImage에 send
+    func makePathImage() {
         self.pathImage.send(UIImage(view: dummyMap.map.mapView))
+    }
+    
+    /// 현재 시점까지의 마커들을 캡쳐하여 pahImage에 send
+    func capturePathImage() {
+         makeDummyMarkerAndCameraMove(at: self.markersLatLngs)
     }
     
     /// 바운더리(MBR) 생성
