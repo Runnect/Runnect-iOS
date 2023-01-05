@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PlusDetailViewController: UIViewController {
+class PlusDetailVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
