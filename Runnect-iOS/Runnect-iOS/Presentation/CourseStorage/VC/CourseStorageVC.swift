@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import Combine
 
 final class CourseStorageVC: UIViewController {
+    
+    // MARK: - Properties
+    
+    private let cancelBag = CancelBag()
     
     // MARK: - UI Components
     
@@ -26,13 +31,18 @@ final class CourseStorageVC: UIViewController {
         super.viewDidLoad()
         self.setUI()
         self.setLayout()
+        self.bindUI()
     }
 }
 
 // MARK: - Methods
 
 extension CourseStorageVC {
-    
+    private func bindUI() {
+        privateCourseListView.courseDrawButtonTapped.sink {
+            self.tabBarController?.selectedIndex = 0
+        }.store(in: cancelBag)
+    }
 }
 
 // MARK: - UI & Layout

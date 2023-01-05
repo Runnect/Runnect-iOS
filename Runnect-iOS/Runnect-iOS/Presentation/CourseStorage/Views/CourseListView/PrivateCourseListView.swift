@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import Combine
 
 final class PrivateCourseListView: UIView {
     
     // MARK: - Properties
+    
+    var courseDrawButtonTapped = PassthroughSubject<Void, Never>()
     
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
     final let itemSpacing: CGFloat = 10
@@ -27,6 +30,9 @@ final class PrivateCourseListView: UIView {
     ).then {
         $0.backgroundColor = .clear
     }
+    
+    private let emptyView = ListEmptyView(description: "아직 내가 그린코스가 없어요\n직접 코스를 그려주세요",
+                                          buttonTitle: "코스 그리기")
     
     // MARK: - initialization
     
@@ -49,6 +55,8 @@ extension PrivateCourseListView {
     private func setDelegate() {
         courseListCollectionView.delegate = self
         courseListCollectionView.dataSource = self
+        
+        emptyView.delegate = self
     }
     
     private func register() {
@@ -66,16 +74,25 @@ extension PrivateCourseListView {
     
     private func setLayout() {
         self.addSubviews(courseListCollectionView)
+        courseListCollectionView.addSubviews(emptyView)
+
         courseListCollectionView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.bottom.trailing.equalToSuperview()
         }
+        
+        emptyView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(80)
+        }
     }
 }
 
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+
 extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -86,6 +103,8 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
         return cell
     }
 }
+
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension PrivateCourseListView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -105,5 +124,13 @@ extension PrivateCourseListView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return self.lineSpacing
+    }
+}
+
+// MARK: - Section Heading
+
+extension PrivateCourseListView: ListEmptyViewDelegate {
+    func emptyViewButtonTapped() {
+        self.courseDrawButtonTapped.send()
     }
 }

@@ -73,6 +73,8 @@ extension ScrapCourseListView {
     }
 }
 
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+
 extension ScrapCourseListView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 15
@@ -86,6 +88,8 @@ extension ScrapCourseListView: UICollectionViewDelegate, UICollectionViewDataSou
         return cell
     }
 }
+
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension ScrapCourseListView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
