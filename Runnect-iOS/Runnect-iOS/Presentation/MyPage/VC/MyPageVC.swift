@@ -150,7 +150,8 @@ extension MyPageVC {
     
     private func pushToNicknameEditorVC() {
         let nicknameEditorVC = NicknameEditorVC()
-        self.navigationController?.pushViewController(nicknameEditorVC, animated: false)
+        nicknameEditorVC.modalPresentationStyle = .overFullScreen
+        self.present(nicknameEditorVC, animated: false)
     }
 }
 
