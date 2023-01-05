@@ -51,14 +51,9 @@ extension UploadedCourseInfoCVC {
     private func setLayout() {
         contentView.addSubviews(uploadedCourseMapImage, uploadedCourseTitleLabel, uploadedCoursePlaceLabel)
         
-        contentView.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview()
-        }
-        
         uploadedCourseMapImage.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview()
-            make.width.equalTo(174)
-            make.height.equalTo(124)
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(contentView.snp.width).multipliedBy(0.7)
         }
         
         uploadedCourseTitleLabel.snp.makeConstraints { make in

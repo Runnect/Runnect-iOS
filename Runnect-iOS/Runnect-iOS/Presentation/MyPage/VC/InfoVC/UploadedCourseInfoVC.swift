@@ -102,7 +102,8 @@ extension UploadedCourseInfoVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenWidth = UIScreen.main.bounds.width
         let doubleCellWidth = screenWidth - uploadedCourseInset.left - uploadedCourseInset.right - uploadedCourseItemSpacing
-        return CGSize(width: doubleCellWidth / 2, height: 164)
+        let cellHeight = (doubleCellWidth / 2) * 0.7 + 36
+        return CGSize(width: doubleCellWidth / 2, height: cellHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

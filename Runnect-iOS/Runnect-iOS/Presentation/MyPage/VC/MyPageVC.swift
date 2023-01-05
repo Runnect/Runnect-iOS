@@ -30,7 +30,7 @@ final class MyPageVC: UIViewController {
         $0.font = .h4
     }
     
-    private let myProfileEditButton = UIButton(type: .system).then {
+    private lazy var myProfileEditButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icEdit, for: .normal)
         $0.setTitle("수정하기", for: .normal)
         $0.titleLabel?.font = .b7
@@ -40,6 +40,8 @@ final class MyPageVC: UIViewController {
         $0.layer.borderColor = UIColor.m2.cgColor
         $0.layer.cornerRadius = 14
         $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpNicknameEditorView))
+        $0.addGestureRecognizer(tap)
     }
     
     private let myRunningLevelLavel = UILabel().then {
@@ -76,7 +78,7 @@ final class MyPageVC: UIViewController {
     }
     
     private lazy var uploadedCourseInfoView = makeInfoView(title: "업로드한 코스").then {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.uploadedCourseRecordInfoView))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpUploadedCourseRecordInfoView))
         $0.addGestureRecognizer(tap)
     }
 
@@ -145,6 +147,12 @@ extension MyPageVC {
         let uploadedCourseInfoVC = UploadedCourseInfoVC()
         self.navigationController?.pushViewController(uploadedCourseInfoVC, animated: true)
     }
+    
+    private func pushToNicknameEditorVC() {
+        let nicknameEditorVC = NicknameEditorVC()
+        nicknameEditorVC.modalPresentationStyle = .overFullScreen
+        self.present(nicknameEditorVC, animated: false)
+    }
 }
 
 // MARK: - @objc Function
@@ -161,8 +169,13 @@ extension MyPageVC {
     }
     
     @objc
-    private func uploadedCourseRecordInfoView() {
+    private func touchUpUploadedCourseRecordInfoView() {
         pushToUploadedCourseInfoVC()
+    }
+    
+    @objc
+    private func touchUpNicknameEditorView() {
+        pushToNicknameEditorVC()
     }
 }
 
