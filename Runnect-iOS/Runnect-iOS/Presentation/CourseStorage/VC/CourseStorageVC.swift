@@ -13,16 +13,12 @@ final class CourseStorageVC: UIViewController {
     
     private lazy var naviBar = CustomNavigationBar(self, type: .title).setTitle("보관함")
     
-    private let myCourseView = UIView().then {
-        $0.backgroundColor = .w1
-    }
+    private let privateCourseListView = PrivateCourseListView()
     
-    private let scrapCourseView = UIView().then {
-        $0.backgroundColor = .w1
-    }
+    private let scrapCourseListView = ScrapCourseListView()
     
     private lazy var viewPager = ViewPager(pageTitles: ["내가 그린 코스", "스크랩 코스"])
-        .addPagedView(pagedView: [myCourseView, scrapCourseView])
+        .addPagedView(pagedView: [privateCourseListView, scrapCourseListView])
     
     // MARK: - View Life Cycle
     
