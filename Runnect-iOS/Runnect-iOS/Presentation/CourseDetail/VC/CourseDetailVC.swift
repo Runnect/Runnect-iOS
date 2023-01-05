@@ -16,7 +16,12 @@ final class CourseDetailVC: UIViewController {
     private let middleScorollView = UIScrollView()
     private let bottomView = UIView()
     
-    private let likeButton = UIButton()
+    private let likeButton = UIButton(type: .system).then {
+        $0.setImage(ImageLiterals.icHeart, for: .normal)
+        $0.tintColor = .g2
+    }
+    
+    private let startButton = CustomButton(title: "시작하기")
 
     // MARK: - View Life Cycle
 
@@ -52,6 +57,22 @@ extension CourseDetailVC {
         bottomView.snp.makeConstraints { make in
             make.bottom.leading.trailing.equalToSuperview()
             make.height.equalTo(84)
+        }
+        
+        bottomView.addSubviews(likeButton, startButton)
+        
+        likeButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(18)
+            make.leading.equalToSuperview().offset(26)
+            make.width.equalTo(24)
+            make.height.equalTo(22)
+        }
+        
+        startButton.snp.makeConstraints { make in
+            make.leading.equalTo(likeButton.snp.trailing).offset(20)
+            make.top.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(40)
         }
         
         middleScorollView.snp.makeConstraints { make in
