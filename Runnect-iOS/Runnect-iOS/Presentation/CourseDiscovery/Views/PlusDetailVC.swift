@@ -124,6 +124,15 @@ extension PlusDetailVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return inset
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! MapCollectionViewCell
+        if cell.clickCount == 1 {
+            cell.clickCount = 0
+        }
+        else {
+            cell.clickCount += 1
+        }
+    }
 }
 // MARK: - UICollectionViewDataSource
 
