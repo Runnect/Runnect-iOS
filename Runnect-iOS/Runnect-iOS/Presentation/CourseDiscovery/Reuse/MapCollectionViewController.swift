@@ -11,7 +11,6 @@ private let reuseIdentifier = "MapCollectionViewCell"
 
 class MapCollectionViewController: UICollectionViewController {
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.backgroundColor = .w1

@@ -58,11 +58,6 @@ class PlusDetailVC: UIViewController {
 //        setAddTarget()
     }
 }
-// MARK: - Methods
-
-
-
-
     // MARK: - naviVar Layout
 
 extension PlusDetailVC {
@@ -77,19 +72,22 @@ extension PlusDetailVC {
     private func setUI() {
         view.backgroundColor = .w1
         containerView.backgroundColor = .clear
+        self.tabBarController?.tabBar.isHidden = true
     }
     // MARK: - Layout Helpers
     private func setLayout() {
-        view.addSubviews(containerView,selectButton)
-        [mapCollectionView].forEach {
-            containerView.addSubview($0)
-        }
+        view.addSubview(containerView)
+        view.addSubview(selectButton)
+        self.view.bringSubviewToFront(selectButton)
+        containerView.addSubview(mapCollectionView)
+
         containerView.snp.makeConstraints {
             $0.top.equalTo(self.navibar.snp.bottom)
             $0.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
         mapCollectionView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalToSuperview()
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalToSuperview()
             make.height.equalTo(1000)
         }
@@ -137,4 +135,3 @@ extension PlusDetailVC: UICollectionViewDataSource {
         return mapCell
     }
 }
-
