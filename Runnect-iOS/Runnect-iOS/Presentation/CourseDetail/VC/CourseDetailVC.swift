@@ -13,6 +13,10 @@ final class CourseDetailVC: UIViewController {
     
     // MARK: - UI Components
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton)
+    private let middleScorollView = UIScrollView()
+    private let bottomView = UIView()
+    
+    private let likeButton = UIButton()
 
     // MARK: - View Life Cycle
 
@@ -37,10 +41,23 @@ extension CourseDetailVC {
     }
     
     private func setUI() {
-        
+        view.backgroundColor = .w1
+        bottomView.backgroundColor = .blue
+        middleScorollView.backgroundColor = .brown
     }
     
     private func setLayout() {
+        view.addSubviews(middleScorollView, bottomView)
         
+        bottomView.snp.makeConstraints { make in
+            make.bottom.leading.trailing.equalToSuperview()
+            make.height.equalTo(84)
+        }
+        
+        middleScorollView.snp.makeConstraints { make in
+            make.top.equalTo(navibar.snp.bottom)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalToSuperview()
+        }
     }
 }
