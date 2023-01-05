@@ -19,7 +19,7 @@ final class RNMapView: UIView {
     @Published var pathDistance: Double = 0
     @Published var markerCount = 0
     
-    let pathImage = PassthroughSubject<UIImage, Never>()
+    let pathImage = PassthroughSubject<UIImage?, Never>()
     var cancelBag = Set<AnyCancellable>()
     
     let locationManager = CLLocationManager()
@@ -36,6 +36,10 @@ final class RNMapView: UIView {
     }
     private var bottomPadding: CGFloat = 0
     private let locationOverlayIcon = NMFOverlayImage(image: ImageLiterals.icLocationOverlay)
+    
+    private lazy var dummyMap = RNMapView(frame: CGRect(x: 0, y: 0, width: 300, height: 300)).then {
+        $0.isUserInteractionEnabled = false
+    }
     
     // MARK: - UI Components
     
@@ -137,13 +141,37 @@ extension RNMapView {
     
     /// NMGLatLng 어레이를 받아서 첫 위치를 startMarker로 설정하고 나머지를 일반 마커로 생성
     @discardableResult
-    func makeMarkersWithStartMarker(at locations: [NMGLatLng]) -> Self {
+    func makeMarkersWithStartMarker(at locations: [NMGLatLng], moveCameraToStartMarker: Bool) -> Self {
+        removeMarkers()
         if locations.count < 2 { return self }
-        makeStartMarker(at: locations[0], withCameraMove: true)
+        makeStartMarker(at: locations[0], withCameraMove: moveCameraToStartMarker)
         locations[1...].forEach { location in
             makeMarker(at: location)
         }
+        
         return self
+    }
+    
+    /// 캡처를 위한 좌표 설정 및 카메라 이동
+    func makeDummyMarkerAndCameraMove(at locations: [NMGLatLng]) {
+        addSubview(dummyMap)
+        sendSubviewToBack(dummyMap)
+        dummyMap.makeMarkersWithStartMarker(at: locations, moveCameraToStartMarker: false)
+        let bounds = makeMBR(at: locations)
+        let cameraUpdate = NMFCameraUpdate(fit: bounds, padding: 100)
+        cameraUpdate.animation = .none
+        dummyMap.map.mapView.moveCamera(cameraUpdate) { isCancelled in
+            if isCancelled {
+                print("카메라 이동 취소")
+            } else {
+                LoadingIndicator.showLoading()
+                DispatchQueue.main.asyncAfter(deadline: .now()+2) {
+                    self.dummyMap.map.mapView.zoomLevel -= 1
+                    self.makePathImage()
+                    LoadingIndicator.hideLoading()
+                }
+            }
+        }
     }
     
     /// 사용자 위치로 카메라 이동
@@ -216,27 +244,21 @@ extension RNMapView {
         return pathDistance
     }
     
-    /// 경로 뷰를 UIImage로 변환하여 pathImage에 send
-    func getPathImage() {
-        let bounds = makeMBR()
-        let dummyMap = RNMapView(frame: CGRect(x: 50, y: 50, width: 300, height: 250))
-            .makeMarkersWithStartMarker(at: self.markersLatLngs)
-        addSubview(dummyMap)
-        sendSubviewToBack(dummyMap)
-        let cameraUpdate = NMFCameraUpdate(fit: bounds, padding: 150)
-        cameraUpdate.animation = .none
-        dummyMap.map.mapView.moveCamera(cameraUpdate)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
-            self.pathImage.send(UIImage(view: dummyMap.map.mapView))
-        }
+    /// 더미 뷰를 UIImage로 변환하여 pathImage에 send
+    func makePathImage() {
+        self.pathImage.send(UIImage(view: dummyMap.map.mapView))
+    }
+    
+    /// 현재 시점까지의 마커들을 캡쳐하여 pahImage에 send
+    func capturePathImage() {
+         makeDummyMarkerAndCameraMove(at: self.markersLatLngs)
     }
     
     /// 바운더리(MBR) 생성
-    func makeMBR() -> NMGLatLngBounds {
+    func makeMBR(at locations: [NMGLatLng]) -> NMGLatLngBounds {
         var latitudes = [Double]()
         var longitudes = [Double]()
-        self.markersLatLngs.forEach { latLng in
+        locations.forEach { latLng in
             latitudes.append(latLng.lat)
             longitudes.append(latLng.lng)
         }
@@ -251,6 +273,13 @@ extension RNMapView {
         guard let lastMarker = self.markers.popLast() else { return }
         substractDistance(with: lastMarker.position)
         lastMarker.mapView = nil
+    }
+    
+    /// 출발지 마커를 제외한 모든 마커 제거
+    func removeMarkers() {
+        while self.markers.count != 0 {
+            undo()
+        }
     }
     
     // 두 지점 사이의 거리(m) 추가
