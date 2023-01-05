@@ -28,8 +28,7 @@ class NicknameEditorVC: UIViewController {
         $0.textColor = .g1
         $0.font = .b6
         $0.attributedPlaceholder = NSAttributedString(
-            string: "닉네임을 입력하세요",
-            attributes: [NSAttributedString.Key.foregroundColor = .g2, NSAttributedString.Key.font = .b6]
+            string: "닉네임을 입력하세요"
         )
     }
     
@@ -50,7 +49,7 @@ extension NicknameEditorVC {
     // MARK: - Layout Helpers
     
     private func setUI() {
-        editorContentView.backgroundColor = .blue
+        editorContentView.backgroundColor = .w1
         horizontalDivideLine.backgroundColor = .g3
     }
     
@@ -76,6 +75,7 @@ extension NicknameEditorVC {
         
         horizontalDivideLine.snp.makeConstraints { make in
             make.top.equalTo(nickNameTextField.snp.bottom).offset(10)
+            make.centerX.equalToSuperview()
             make.width.equalTo(nickNameTextField.snp.width)
             make.height.equalTo(0.5)
         }
