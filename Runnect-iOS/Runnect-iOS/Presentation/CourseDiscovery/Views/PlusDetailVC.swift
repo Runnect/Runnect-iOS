@@ -61,7 +61,8 @@ class PlusDetailVC: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
-    }
+ }
+ 
 }
     // MARK: - naviVar Layout
 
@@ -128,12 +129,10 @@ extension PlusDetailVC: UICollectionViewDelegateFlowLayout {
         let cell = collectionView.cellForItem(at: indexPath) as! MapCollectionViewCell
         if cell.clickCount == 1 {
             cell.clickCount = 0
-//            selectButton.setBackgroundColor(UIColor.m1, for: UIControl.State)
         } else {
             cell.clickCount += 1
         }
     }
-   
 }
 // MARK: - UICollectionViewDataSource
 
@@ -147,6 +146,7 @@ extension PlusDetailVC: UICollectionViewDataSource {
                 as? MapCollectionViewCell else { return UICollectionViewCell() }
         mapCell.dataBind(model: mapList[indexPath.item])
         mapCell.heartButton.isHidden = true
+
         return mapCell
     }
 }

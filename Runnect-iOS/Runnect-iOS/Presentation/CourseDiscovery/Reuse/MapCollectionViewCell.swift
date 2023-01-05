@@ -40,9 +40,7 @@ class MapCollectionViewCell: UICollectionViewCell {
                     mapImageView.backgroundColor = UIColor.systemGray4
                     mapImageView.alpha = 1
                     mapImageView.layer.borderColor = UIColor.w1.cgColor
-                    mapImageView.layer.borderWidth = 0
-                }
-                else {
+                    mapImageView.layer.borderWidth = 0 } else {
                     mapImageView.backgroundColor = UIColor.m1
                     mapImageView.alpha = 0.15
                     mapImageView.layer.borderColor = UIColor.purple.cgColor
