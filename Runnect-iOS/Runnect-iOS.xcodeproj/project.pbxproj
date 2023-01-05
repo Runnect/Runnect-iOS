@@ -85,6 +85,7 @@
 		CE6B63D02967230D003F900F /* PrivateCourseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6B63CF2967230D003F900F /* PrivateCourseListView.swift */; };
 		CE6B63D3296725E6003F900F /* CourseListCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6B63D2296725E6003F900F /* CourseListCVC.swift */; };
 		CE6B63D6296731F9003F900F /* ScrapCourseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6B63D5296731F9003F900F /* ScrapCourseListView.swift */; };
+		CE6B63D829673450003F900F /* ListEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6B63D729673450003F900F /* ListEmptyView.swift */; };
 		CE9291252965C9FB0010959C /* CourseDetailInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9291242965C9FB0010959C /* CourseDetailInfoView.swift */; };
 		CE9291272965D0ED0010959C /* StatsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9291262965D0ED0010959C /* StatsInfoView.swift */; };
 		CE9291292965E01D0010959C /* RNTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9291282965E01D0010959C /* RNTimeFormatter.swift */; };
@@ -199,6 +200,7 @@
 		CE6B63CF2967230D003F900F /* PrivateCourseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateCourseListView.swift; sourceTree = "<group>"; };
 		CE6B63D2296725E6003F900F /* CourseListCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListCVC.swift; sourceTree = "<group>"; };
 		CE6B63D5296731F9003F900F /* ScrapCourseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapCourseListView.swift; sourceTree = "<group>"; };
+		CE6B63D729673450003F900F /* ListEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListEmptyView.swift; sourceTree = "<group>"; };
 		CE9291242965C9FB0010959C /* CourseDetailInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailInfoView.swift; sourceTree = "<group>"; };
 		CE9291262965D0ED0010959C /* StatsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsInfoView.swift; sourceTree = "<group>"; };
 		CE9291282965E01D0010959C /* RNTimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNTimeFormatter.swift; sourceTree = "<group>"; };
@@ -707,6 +709,7 @@
 				CE1467792965A80700DCEA1B /* CustomBottomSheetVC.swift */,
 				CE9291242965C9FB0010959C /* CourseDetailInfoView.swift */,
 				CE9291262965D0ED0010959C /* StatsInfoView.swift */,
+				CE6B63D729673450003F900F /* ListEmptyView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -1004,6 +1007,7 @@
 				CE0C23772966D64D00B45063 /* PageCVC.swift in Sources */,
 				CE5875A029601500005D967E /* Toast.swift in Sources */,
 				CE14677C2965C1B100DCEA1B /* RunningRecordVC.swift in Sources */,
+				CE6B63D829673450003F900F /* ListEmptyView.swift in Sources */,
 				CE6655F6295D90B600C64E12 /* addToolBar.swift in Sources */,
 				CEC2A68A2962ADCD00160BF7 /* RNMapView.swift in Sources */,
 				CE6655F0295D891B00C64E12 /* UITextView+.swift in Sources */,
