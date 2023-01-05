@@ -11,6 +11,7 @@ import Combine
 final class CourseDrawingVC: UIViewController {
     
     // MARK: - Properties
+    var pathImage: UIImage?
     
     private var cancelBag = CancelBag()
     
@@ -113,36 +114,30 @@ extension CourseDrawingVC {
     }
     
     private func bindMapView() {
-        mapView.$pathDistance.sink { distance in
+        mapView.$pathDistance.sink { [weak self] distance in
+            guard let self = self else { return }
             let kilometers = String(format: "%.1f", distance/1000)
             self.distanceLabel.text = kilometers
         }.store(in: cancelBag)
         
         mapView.$markerCount.sink { [weak self] count in
-            self?.completeButton.setEnabled(count >= 2)
-            self?.undoButton.isEnabled = (count >= 2)
+            guard let self = self else { return }
+            self.completeButton.setEnabled(count >= 2)
+            self.undoButton.isEnabled = (count >= 2)
+        }.store(in: cancelBag)
+        
+        mapView.pathImage.sink { [weak self] image in
+            guard let self = self else { return }
+            self.pathImage = image
+            self.presentAlertVC()
         }.store(in: cancelBag)
     }
     
     private func setNavigationGesture(_ enabled: Bool) {
         navigationController?.interactivePopGestureRecognizer?.isEnabled = enabled
     }
-}
-
-// MARK: - @objc Function
-
-extension CourseDrawingVC {
-    @objc private func decideDepartureButtonDidTap() {
-        showHiddenViews(withDuration: 0.7)
-
-        mapView.setDrawMode(to: true)
-    }
     
-    @objc private func undoButtonDidTap() {
-        mapView.undo()
-    }
-    
-    @objc private func completeButtonDidTap() {
+    private func presentAlertVC() {
         let alertVC = CustomAlertVC()
         alertVC.modalPresentationStyle = .overFullScreen
         
@@ -163,6 +158,24 @@ extension CourseDrawingVC {
         }.store(in: cancelBag)
         
         self.present(alertVC, animated: false)
+    }
+}
+
+// MARK: - @objc Function
+
+extension CourseDrawingVC {
+    @objc private func decideDepartureButtonDidTap() {
+        showHiddenViews(withDuration: 0.7)
+
+        mapView.setDrawMode(to: true)
+    }
+    
+    @objc private func undoButtonDidTap() {
+        mapView.undo()
+    }
+    
+    @objc private func completeButtonDidTap() {
+        mapView.capturePathImage()
     }
 }
 

@@ -168,8 +168,10 @@ extension RNMapView {
                 print("카메라 이동 취소")
             } else {
                 self.dummyMap.map.mapView.zoomLevel -= 1
-                DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                LoadingIndicator.showLoading()
+                DispatchQueue.main.asyncAfter(deadline: .now()+3) {
                     self.makePathImage()
+                    LoadingIndicator.hideLoading()
                 }
             }
         }

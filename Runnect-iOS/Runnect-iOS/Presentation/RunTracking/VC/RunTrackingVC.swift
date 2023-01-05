@@ -176,7 +176,7 @@ extension RunTrackingVC {
         mapView.pathImage.sink { [weak self] image in
             guard let self = self else { return }
             self.pathImage = image
-            print("이미지 수신 완료")
+            print("이미지 수신 완료2")
         }.store(in: cancelBag)
     }
     
