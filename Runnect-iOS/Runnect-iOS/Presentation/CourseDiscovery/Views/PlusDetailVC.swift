@@ -57,6 +57,11 @@ class PlusDetailVC: UIViewController {
         setLayout()
 //        setAddTarget()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isHidden = false
+    }
 }
     // MARK: - naviVar Layout
 

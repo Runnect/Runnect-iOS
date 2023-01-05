@@ -123,6 +123,7 @@ extension CourseDiscoveryVC {
     private func layout() {
         view.backgroundColor = .w1
         containerView.backgroundColor = .clear
+        self.tabBarController?.tabBar.isHidden = false
         view.addSubview(containerView)
         view.addSubview(plusButton)
         self.view.bringSubviewToFront(plusButton)
