@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import Combine
 
 final class ScrapCourseListView: UIView {
     
     // MARK: - Properties
+    
+    var scrapButtonTapped = PassthroughSubject<Void, Never>()
     
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
     final let itemSpacing: CGFloat = 10
@@ -27,6 +30,9 @@ final class ScrapCourseListView: UIView {
     ).then {
         $0.backgroundColor = .clear
     }
+    
+    private let emptyView = ListEmptyView(description: "아직 스크랩한 코스가 없어요\n코스를 스크랩 해주세요",
+                                          buttonTitle: "스크랩 하기")
     
     // MARK: - initialization
     
@@ -49,6 +55,8 @@ extension ScrapCourseListView {
     private func setDelegate() {
         courseListCollectionView.delegate = self
         courseListCollectionView.dataSource = self
+        
+        emptyView.delegate = self
     }
     
     private func register() {
@@ -66,9 +74,16 @@ extension ScrapCourseListView {
     
     private func setLayout() {
         self.addSubviews(courseListCollectionView)
+        courseListCollectionView.addSubviews(emptyView)
+        
         courseListCollectionView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.bottom.trailing.equalToSuperview()
+        }
+        
+        emptyView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(80)
         }
     }
 }
@@ -77,7 +92,7 @@ extension ScrapCourseListView {
 
 extension ScrapCourseListView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -109,5 +124,13 @@ extension ScrapCourseListView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return self.lineSpacing
+    }
+}
+
+// MARK: - Section Heading
+
+extension ScrapCourseListView: ListEmptyViewDelegate {
+    func emptyViewButtonTapped() {
+        self.scrapButtonTapped.send()
     }
 }

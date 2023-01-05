@@ -42,6 +42,10 @@ extension CourseStorageVC {
         privateCourseListView.courseDrawButtonTapped.sink {
             self.tabBarController?.selectedIndex = 0
         }.store(in: cancelBag)
+        
+        scrapCourseListView.scrapButtonTapped.sink {
+            self.tabBarController?.selectedIndex = 2
+        }.store(in: cancelBag)
     }
 }
 

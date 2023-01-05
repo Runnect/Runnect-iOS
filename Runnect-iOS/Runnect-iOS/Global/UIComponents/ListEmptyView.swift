@@ -28,6 +28,7 @@ final class ListEmptyView: UIView {
         $0.font = .b4
         $0.textColor = .g2
         $0.numberOfLines = 0
+        $0.textAlignment = .center
     }
     
     private let bottomButton = CustomButton(title: "코스 그리기")

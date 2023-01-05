@@ -70,6 +70,7 @@ extension PrivateCourseListView {
 extension PrivateCourseListView {
     private func setUI() {
         self.backgroundColor = .w1
+        self.emptyView.isHidden = true
     }
     
     private func setLayout() {
@@ -92,7 +93,7 @@ extension PrivateCourseListView {
 
 extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        return 15
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
