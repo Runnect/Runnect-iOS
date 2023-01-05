@@ -18,6 +18,7 @@ class MapCollectionViewCell: UICollectionViewCell {
     private let mapContainerView = UIView()
     private let mapImageView = UIImageView().then {
         $0.image = ImageLiterals.imgLogo
+        $0.layer.cornerRadius = 5
     }
     private let titleLabel = UILabel().then {
         $0.text = "제목제목제목제목제목"

@@ -41,7 +41,7 @@ final class CourseDiscoveryVC: UIViewController {
         return label
     }()
    
-    // MARK: - Reusable Components
+    // MARK: - collectionview
     private lazy var mapCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -81,8 +81,9 @@ final class CourseDiscoveryVC: UIViewController {
         setAddTarget()
     }
 }
+// MARK: - Methods
+
 extension CourseDiscoveryVC {
-    // MARK: - Methods
     private func setAddTarget() {
         self.searchButton.addTarget(self, action: #selector(presentToSearchVC), for: .touchUpInside)
         self.plusButton.addTarget(self, action: #selector(presentToDiscoveryVC), for: .touchUpInside)
@@ -99,8 +100,7 @@ extension CourseDiscoveryVC {
         }
         @objc private func presentToDiscoveryVC() {
             let nextVC = PlusDetailVC()
-            nextVC.modalPresentationStyle = .overFullScreen
-            self.present(nextVC, animated: true)
+            self.navigationController?.pushViewController(nextVC, animated: true)
         }
     }
 
@@ -172,6 +172,7 @@ extension CourseDiscoveryVC {
 }
 
     // MARK: - UICollectionViewDelegateFlowLayout
+
     extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
         func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
             let screenWidth = UIScreen.main.bounds.width

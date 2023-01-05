@@ -100,6 +100,7 @@
 		DA20D849296697B400F1581F /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D848296697B400F1581F /* UploadViewController.swift */; };
 		DA20D84B296697C600F1581F /* UploadResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D84A296697C600F1581F /* UploadResultViewController.swift */; };
 		DA20D84E2966A9B300F1581F /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D84D2966A9B300F1581F /* SearchVC.swift */; };
+		DA20D8502966C0D500F1581F /* MapCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D84F2966C0D500F1581F /* MapCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -209,6 +210,7 @@
 		DA20D848296697B400F1581F /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 		DA20D84A296697C600F1581F /* UploadResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadResultViewController.swift; sourceTree = "<group>"; };
 		DA20D84D2966A9B300F1581F /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
+		DA20D84F2966C0D500F1581F /* MapCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCollectionViewController.swift; sourceTree = "<group>"; };
 		E837271A78E1C0A0C30789BF /* Pods-Runnect-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runnect-iOS.release.xcconfig"; path = "Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -757,6 +759,7 @@
 			children = (
 				DA20D83E296696A000F1581F /* MapModel.swift */,
 				DA20D840296696C300F1581F /* MapCollectionViewCell.swift */,
+				DA20D84F2966C0D500F1581F /* MapCollectionViewController.swift */,
 			);
 			path = Reuse;
 			sourceTree = "<group>";
@@ -944,6 +947,7 @@
 				CE6655D0295D85FF00C64E12 /* CancelBag.swift in Sources */,
 				DA20D83F296696A000F1581F /* MapModel.swift in Sources */,
 				A3BC2F3D296468E500198261 /* UploadedCourseInfoModel.swift in Sources */,
+				DA20D8502966C0D500F1581F /* MapCollectionViewController.swift in Sources */,
 				CE6655DC295D873500C64E12 /* UIButton+.swift in Sources */,
 				CE6655D4295D865B00C64E12 /* Publisher+UIControl.swift in Sources */,
 				CE0D9FD329648DA300CEB5CD /* CustomAlertVC.swift in Sources */,
