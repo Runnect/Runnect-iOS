@@ -17,6 +17,8 @@ final class RunTrackingVC: UIViewController {
     private let stopwatch = Stopwatch()
     private var cancelBag = CancelBag()
     var totalTime: Int = 0
+    var distance: String = "0.0"
+    var pathImage: UIImage?
     
     // MARK: - UI Components
     
@@ -80,7 +82,7 @@ final class RunTrackingVC: UIViewController {
     }
     
     private let timeStatsLabel = UILabel().then {
-        $0.text = "00:00"
+        $0.text = "00:00:00"
         $0.font = .h1
         $0.textColor = .g1
     }
@@ -121,6 +123,10 @@ final class RunTrackingVC: UIViewController {
         self.setUI()
         self.setLayout()
         self.setAddTarget()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.bindStopwatch()
     }
 }
@@ -129,8 +135,9 @@ final class RunTrackingVC: UIViewController {
 
 extension RunTrackingVC {
     func makePath(locations: [NMGLatLng], distance: String) {
-        self.mapView.makeMarkersWithStartMarker(at: locations)
+        self.mapView.makeMarkersWithStartMarker(at: locations, moveCameraToStartMarker: true)
         self.totalDistanceLabel.attributedText = makeAttributedLabelForDistance(distance: distance)
+        self.distance = distance
     }
     
     private func setAddTarget() {
@@ -165,17 +172,22 @@ extension RunTrackingVC {
     }
     
     private func setTimeLabel(with totalSeconds: Int) {
-        var minutes: String = "\(totalSeconds / 60)"
-        if minutes.count == 1 {
-            minutes = "0\(minutes)"
-        }
+        let formattedString = RNTimeFormatter.secondsToHHMMSS(seconds: totalSeconds)
         
-        var seconds: String = "\(totalSeconds % 60)"
-        if seconds.count == 1 {
-            seconds = "0\(seconds)"
-        }
+        timeStatsLabel.text = formattedString
+    }
+    
+    private func pushToRunningRecordVC() {
+        guard let pathImage = pathImage else { return }
+        guard let distance = Float(self.distance) else { return }
+        let averagePaceSeconds = Int(Float(self.totalTime) / distance)
+        let formatedAveragePace = "\(averagePaceSeconds / 60)'\(averagePaceSeconds % 60)''"
         
-        timeStatsLabel.text = "\(minutes):\(seconds)"
+        let runningRecordVC = RunningRecordVC()
+        runningRecordVC.setData(distance: self.distance,
+                                totalTime: RNTimeFormatter.secondsToHHMMSS(seconds: self.totalTime),
+                                averagePace: formatedAveragePace, pathImage: pathImage)
+        self.navigationController?.pushViewController(runningRecordVC, animated: true)
     }
 }
 
@@ -190,6 +202,13 @@ extension RunTrackingVC {
         stopwatch.isRunning.toggle()
         let bottomSheetVC = CustomBottomSheetVC()
         bottomSheetVC.modalPresentationStyle = .overFullScreen
+        
+        bottomSheetVC.completeButtonTapped.sink { [weak self] _ in
+            guard let self = self else { return }
+            self.pushToRunningRecordVC()
+            bottomSheetVC.dismiss(animated: true)
+        }.store(in: cancelBag)
+        
         self.present(bottomSheetVC, animated: true)
     }
 }
