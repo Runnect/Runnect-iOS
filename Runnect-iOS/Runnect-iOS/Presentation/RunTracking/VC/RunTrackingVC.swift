@@ -123,7 +123,6 @@ final class RunTrackingVC: UIViewController {
         self.setUI()
         self.setLayout()
         self.setAddTarget()
-        self.bindMapView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -136,7 +135,7 @@ final class RunTrackingVC: UIViewController {
 
 extension RunTrackingVC {
     func makePath(locations: [NMGLatLng], distance: String) {
-        self.mapView.makeMarkersWithStartMarker(at: locations, willCapture: true)
+        self.mapView.makeMarkersWithStartMarker(at: locations, moveCameraToStartMarker: true)
         self.totalDistanceLabel.attributedText = makeAttributedLabelForDistance(distance: distance)
         self.distance = distance
     }
@@ -169,14 +168,6 @@ extension RunTrackingVC {
             let time = Int(time)
             self.totalTime = time
             self.setTimeLabel(with: time)
-        }.store(in: cancelBag)
-    }
-    
-    private func bindMapView() {
-        mapView.pathImage.sink { [weak self] image in
-            guard let self = self else { return }
-            self.pathImage = image
-            print("이미지 수신 완료2")
         }.store(in: cancelBag)
     }
     

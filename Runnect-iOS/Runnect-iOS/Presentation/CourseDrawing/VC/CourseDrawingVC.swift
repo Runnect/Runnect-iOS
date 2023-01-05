@@ -151,8 +151,9 @@ extension CourseDrawingVC {
         alertVC.rightButtonTapped.sink { [weak self] _ in
             guard let self = self else { return }
             let countDownVC = CountDownVC()
-            countDownVC.locations = self.mapView.getMarkersLatLng()
-            countDownVC.distance = self.distanceLabel.text
+            countDownVC.setData(locations: self.mapView.getMarkersLatLng(),
+                                distance: self.distanceLabel.text,
+                                pathImage: self.pathImage)
             self.navigationController?.pushViewController(countDownVC, animated: true)
             alertVC.dismiss(animated: true)
         }.store(in: cancelBag)

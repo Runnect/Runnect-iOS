@@ -141,15 +141,11 @@ extension RNMapView {
     
     /// NMGLatLng 어레이를 받아서 첫 위치를 startMarker로 설정하고 나머지를 일반 마커로 생성
     @discardableResult
-    func makeMarkersWithStartMarker(at locations: [NMGLatLng], willCapture: Bool) -> Self {
+    func makeMarkersWithStartMarker(at locations: [NMGLatLng], moveCameraToStartMarker: Bool) -> Self {
         if locations.count < 2 { return self }
-        makeStartMarker(at: locations[0], withCameraMove: willCapture)
+        makeStartMarker(at: locations[0], withCameraMove: moveCameraToStartMarker)
         locations[1...].forEach { location in
             makeMarker(at: location)
-        }
-        
-        if willCapture {
-            makeDummyMarkerAndCameraMove(at: locations)
         }
         
         return self
@@ -159,7 +155,7 @@ extension RNMapView {
     func makeDummyMarkerAndCameraMove(at locations: [NMGLatLng]) {
         addSubview(dummyMap)
         sendSubviewToBack(dummyMap)
-        dummyMap.makeMarkersWithStartMarker(at: locations, willCapture: false)
+        dummyMap.makeMarkersWithStartMarker(at: locations, moveCameraToStartMarker: false)
         let bounds = makeMBR(at: locations)
         let cameraUpdate = NMFCameraUpdate(fit: bounds, padding: 100)
         cameraUpdate.animation = .none
