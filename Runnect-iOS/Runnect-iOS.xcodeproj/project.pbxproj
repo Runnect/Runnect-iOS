@@ -17,6 +17,7 @@
 		A3BC2F3A2963D0ED00198261 /* ActivityRecordInfoTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F392963D0ED00198261 /* ActivityRecordInfoTVC.swift */; };
 		A3BC2F3D296468E500198261 /* UploadedCourseInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F3C296468E500198261 /* UploadedCourseInfoModel.swift */; };
 		A3BC2F3F2964706100198261 /* UploadedCourseInfoCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F3E2964706100198261 /* UploadedCourseInfoCVC.swift */; };
+		A3BC2F4129667A0D00198261 /* NicknameEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F4029667A0D00198261 /* NicknameEditorVC.swift */; };
 		CE0D9FD329648DA300CEB5CD /* CustomAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0D9FD229648DA300CEB5CD /* CustomAlertVC.swift */; };
 		CE146770296568DC00DCEA1B /* RunTrackingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14676F296568DC00DCEA1B /* RunTrackingVC.swift */; };
 		CE14677829658C7200DCEA1B /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14677729658C7200DCEA1B /* Stopwatch.swift */; };
@@ -113,6 +114,7 @@
 		A3BC2F392963D0ED00198261 /* ActivityRecordInfoTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRecordInfoTVC.swift; sourceTree = "<group>"; };
 		A3BC2F3C296468E500198261 /* UploadedCourseInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedCourseInfoModel.swift; sourceTree = "<group>"; };
 		A3BC2F3E2964706100198261 /* UploadedCourseInfoCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedCourseInfoCVC.swift; sourceTree = "<group>"; };
+		A3BC2F4029667A0D00198261 /* NicknameEditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditorVC.swift; sourceTree = "<group>"; };
 		CE0D9FD229648DA300CEB5CD /* CustomAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertVC.swift; sourceTree = "<group>"; };
 		CE14676F296568DC00DCEA1B /* RunTrackingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunTrackingVC.swift; sourceTree = "<group>"; };
 		CE14677729658C7200DCEA1B /* Stopwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
@@ -429,6 +431,7 @@
 			children = (
 				A3BC2F292962C39F00198261 /* InfoVC */,
 				CEEC6B3F2961C55000D00E1E /* MyPageVC.swift */,
+				A3BC2F4029667A0D00198261 /* NicknameEditorVC.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -966,6 +969,7 @@
 				DA20D84B296697C600F1581F /* UploadResultViewController.swift in Sources */,
 				DA20D8432966977D00F1581F /* SearchResultViewController.swift in Sources */,
 				CE5875A4296015D2005D967E /* Encodable+.swift in Sources */,
+				A3BC2F4129667A0D00198261 /* NicknameEditorVC.swift in Sources */,
 				CE14677A2965A80700DCEA1B /* CustomBottomSheetVC.swift in Sources */,
 				CEEC6B4B2961D89700D00E1E /* CustomNavigationBar.swift in Sources */,
 				CE17F02D2961BBA100E1DED0 /* ColorLiterals.swift in Sources */,
