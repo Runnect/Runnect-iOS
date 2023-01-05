@@ -97,7 +97,7 @@
 		DA20D8432966977D00F1581F /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D8422966977D00F1581F /* SearchResultViewController.swift */; };
 		DA20D8452966979100F1581F /* DiscoveryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D8442966979100F1581F /* DiscoveryDetailViewController.swift */; };
 		DA20D847296697A600F1581F /* PlusDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D846296697A600F1581F /* PlusDetailVC.swift */; };
-		DA20D849296697B400F1581F /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D848296697B400F1581F /* UploadViewController.swift */; };
+		DA20D849296697B400F1581F /* UploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D848296697B400F1581F /* UploadVC.swift */; };
 		DA20D84B296697C600F1581F /* UploadResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D84A296697C600F1581F /* UploadResultViewController.swift */; };
 		DA20D84E2966A9B300F1581F /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D84D2966A9B300F1581F /* SearchVC.swift */; };
 		DA20D8502966C0D500F1581F /* MapCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D84F2966C0D500F1581F /* MapCollectionViewController.swift */; };
@@ -207,7 +207,7 @@
 		DA20D8422966977D00F1581F /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
 		DA20D8442966979100F1581F /* DiscoveryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryDetailViewController.swift; sourceTree = "<group>"; };
 		DA20D846296697A600F1581F /* PlusDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusDetailVC.swift; sourceTree = "<group>"; };
-		DA20D848296697B400F1581F /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
+		DA20D848296697B400F1581F /* UploadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadVC.swift; sourceTree = "<group>"; };
 		DA20D84A296697C600F1581F /* UploadResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadResultViewController.swift; sourceTree = "<group>"; };
 		DA20D84D2966A9B300F1581F /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		DA20D84F2966C0D500F1581F /* MapCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCollectionViewController.swift; sourceTree = "<group>"; };
@@ -422,7 +422,7 @@
 				DA20D8422966977D00F1581F /* SearchResultViewController.swift */,
 				DA20D8442966979100F1581F /* DiscoveryDetailViewController.swift */,
 				DA20D846296697A600F1581F /* PlusDetailVC.swift */,
-				DA20D848296697B400F1581F /* UploadViewController.swift */,
+				DA20D848296697B400F1581F /* UploadVC.swift */,
 				DA20D84A296697C600F1581F /* UploadResultViewController.swift */,
 				DA20D84D2966A9B300F1581F /* SearchVC.swift */,
 			);
@@ -964,7 +964,7 @@
 				CEEC6B402961C55000D00E1E /* MyPageVC.swift in Sources */,
 				CE665608295D921500C64E12 /* setImage.swift in Sources */,
 				CE146770296568DC00DCEA1B /* RunTrackingVC.swift in Sources */,
-				DA20D849296697B400F1581F /* UploadViewController.swift in Sources */,
+				DA20D849296697B400F1581F /* UploadVC.swift in Sources */,
 				CE665612295D92E400C64E12 /* UserDefaultWrapper.swift in Sources */,
 				A3BC2F3A2963D0ED00198261 /* ActivityRecordInfoTVC.swift in Sources */,
 				CE665610295D92C200C64E12 /* setTextLineHeight.swift in Sources */,

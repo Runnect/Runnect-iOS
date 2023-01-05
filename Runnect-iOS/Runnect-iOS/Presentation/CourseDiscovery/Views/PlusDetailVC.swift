@@ -55,15 +55,29 @@ class PlusDetailVC: UIViewController {
         setNavigationBar()
         setUI()
         setLayout()
-//        setAddTarget()
+        setAddTarget()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
- }
- 
+    }
 }
+// MARK: - Methods
+
+extension PlusDetailVC {
+    private func setAddTarget() {
+        self.selectButton.addTarget(self, action: #selector(presentToUploadVC), for: .touchUpInside)
+    }
+}
+    // MARK: - @objc Function
+
+    extension PlusDetailVC {
+        @objc private func presentToUploadVC() {
+            let nextVC = UploadVC()
+            self.navigationController?.pushViewController(nextVC, animated: true)
+        }
+    }
     // MARK: - naviVar Layout
 
 extension PlusDetailVC {
