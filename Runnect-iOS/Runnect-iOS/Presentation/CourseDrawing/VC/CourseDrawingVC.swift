@@ -11,6 +11,7 @@ import Combine
 final class CourseDrawingVC: UIViewController {
     
     // MARK: - Properties
+    var pathImage: UIImage?
     
     private var cancelBag = CancelBag()
     
@@ -113,19 +114,51 @@ extension CourseDrawingVC {
     }
     
     private func bindMapView() {
-        mapView.$pathDistance.sink { distance in
+        mapView.$pathDistance.sink { [weak self] distance in
+            guard let self = self else { return }
             let kilometers = String(format: "%.1f", distance/1000)
             self.distanceLabel.text = kilometers
         }.store(in: cancelBag)
         
         mapView.$markerCount.sink { [weak self] count in
-            self?.completeButton.setEnabled(count >= 2)
-            self?.undoButton.isEnabled = (count >= 2)
+            guard let self = self else { return }
+            self.completeButton.setEnabled(count >= 2)
+            self.undoButton.isEnabled = (count >= 2)
+        }.store(in: cancelBag)
+        
+        mapView.pathImage.sink { [weak self] image in
+            guard let self = self else { return }
+            self.pathImage = image
+            self.presentAlertVC()
         }.store(in: cancelBag)
     }
     
     private func setNavigationGesture(_ enabled: Bool) {
         navigationController?.interactivePopGestureRecognizer?.isEnabled = enabled
+    }
+    
+    private func presentAlertVC() {
+        let alertVC = CustomAlertVC()
+        alertVC.modalPresentationStyle = .overFullScreen
+        
+        alertVC.leftButtonTapped.sink { [weak self] _ in
+            guard let self = self else { return }
+            self.tabBarController?.selectedIndex = 1
+            self.navigationController?.popToRootViewController(animated: true)
+            alertVC.dismiss(animated: true)
+        }.store(in: cancelBag)
+        
+        alertVC.rightButtonTapped.sink { [weak self] _ in
+            guard let self = self else { return }
+            let countDownVC = CountDownVC()
+            countDownVC.setData(locations: self.mapView.getMarkersLatLng(),
+                                distance: self.distanceLabel.text,
+                                pathImage: self.pathImage)
+            self.navigationController?.pushViewController(countDownVC, animated: true)
+            alertVC.dismiss(animated: true)
+        }.store(in: cancelBag)
+        
+        self.present(alertVC, animated: false)
     }
 }
 
@@ -143,26 +176,7 @@ extension CourseDrawingVC {
     }
     
     @objc private func completeButtonDidTap() {
-        let alertVC = CustomAlertVC()
-        alertVC.modalPresentationStyle = .overFullScreen
-        
-        alertVC.leftButtonTapped.sink { [weak self] _ in
-            guard let self = self else { return }
-            self.tabBarController?.selectedIndex = 1
-            self.navigationController?.popToRootViewController(animated: true)
-            alertVC.dismiss(animated: true)
-        }.store(in: cancelBag)
-        
-        alertVC.rightButtonTapped.sink { [weak self] _ in
-            guard let self = self else { return }
-            let countDownVC = CountDownVC()
-            countDownVC.locations = self.mapView.getMarkersLatLng()
-            countDownVC.distance = self.distanceLabel.text
-            self.navigationController?.pushViewController(countDownVC, animated: true)
-            alertVC.dismiss(animated: true)
-        }.store(in: cancelBag)
-        
-        self.present(alertVC, animated: false)
+        mapView.capturePathImage()
     }
 }
 

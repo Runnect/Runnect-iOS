@@ -34,4 +34,13 @@ extension UITextField {
         attributedStr.addAttribute(NSAttributedString.Key.kern, value: spacing, range: NSMakeRange(0, attributedStr.length))
         self.attributedText = attributedStr
     }
+    
+    /// 하단에 Border 생성
+    func addBottomBorder(height: CGFloat) {
+        let bottomLine = CALayer()
+        bottomLine.frame = CGRect(x: 0, y: self.frame.size.height - height, width: self.frame.size.width, height: height)
+        bottomLine.backgroundColor = UIColor.g5.cgColor
+        borderStyle = .none
+        layer.addSublayer(bottomLine)
+    }
 }
