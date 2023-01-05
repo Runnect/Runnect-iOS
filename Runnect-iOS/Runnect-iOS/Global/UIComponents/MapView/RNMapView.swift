@@ -142,6 +142,7 @@ extension RNMapView {
     /// NMGLatLng 어레이를 받아서 첫 위치를 startMarker로 설정하고 나머지를 일반 마커로 생성
     @discardableResult
     func makeMarkersWithStartMarker(at locations: [NMGLatLng], moveCameraToStartMarker: Bool) -> Self {
+        removeMarkers()
         if locations.count < 2 { return self }
         makeStartMarker(at: locations[0], withCameraMove: moveCameraToStartMarker)
         locations[1...].forEach { location in
@@ -163,9 +164,9 @@ extension RNMapView {
             if isCancelled {
                 print("카메라 이동 취소")
             } else {
-                self.dummyMap.map.mapView.zoomLevel -= 1
                 LoadingIndicator.showLoading()
-                DispatchQueue.main.asyncAfter(deadline: .now()+3) {
+                DispatchQueue.main.asyncAfter(deadline: .now()+2) {
+                    self.dummyMap.map.mapView.zoomLevel -= 1
                     self.makePathImage()
                     LoadingIndicator.hideLoading()
                 }
@@ -272,6 +273,13 @@ extension RNMapView {
         guard let lastMarker = self.markers.popLast() else { return }
         substractDistance(with: lastMarker.position)
         lastMarker.mapView = nil
+    }
+    
+    /// 출발지 마커를 제외한 모든 마커 제거
+    func removeMarkers() {
+        while self.markers.count != 0 {
+            undo()
+        }
     }
     
     // 두 지점 사이의 거리(m) 추가
