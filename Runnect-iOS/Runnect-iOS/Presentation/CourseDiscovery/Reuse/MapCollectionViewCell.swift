@@ -30,7 +30,7 @@ class MapCollectionViewCell: UICollectionViewCell {
         $0.font = UIFont.b6
         $0.textColor = UIColor.g2
     }
-    private let heartButton = UIImageView().then {
+    let heartButton = UIImageView().then {
         $0.image = ImageLiterals.icHeartFill
     }
     // MARK: - ClickAction Constants
@@ -81,7 +81,7 @@ extension MapCollectionViewCell {
    
     // MARK: - Layout Helpers
     
-    private func layout() {
+    func layout() {
         contentView.backgroundColor = .clear
         mapImageView.backgroundColor = .systemGray4
         [mapContainerView, mapImageView, titleLabel, locationLabel, heartButton].forEach {

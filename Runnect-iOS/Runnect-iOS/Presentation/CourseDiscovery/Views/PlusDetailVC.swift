@@ -13,7 +13,7 @@ class PlusDetailVC: UIViewController {
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("불러오기")
-    private let selectButton = CustomButton(title: "선택하기")
+    private let selectButton = CustomButton(title: "선택하기").setColor(bgColor: .g3, disableColor: .g3, textColor: .w1)
     
     // MARK: - collectionview
     private lazy var containerView = UIScrollView()
@@ -128,11 +128,12 @@ extension PlusDetailVC: UICollectionViewDelegateFlowLayout {
         let cell = collectionView.cellForItem(at: indexPath) as! MapCollectionViewCell
         if cell.clickCount == 1 {
             cell.clickCount = 0
-        }
-        else {
+//            selectButton.setBackgroundColor(UIColor.m1, for: UIControl.State)
+        } else {
             cell.clickCount += 1
         }
     }
+   
 }
 // MARK: - UICollectionViewDataSource
 
@@ -145,7 +146,7 @@ extension PlusDetailVC: UICollectionViewDataSource {
             withReuseIdentifier: MapCollectionViewCell.identifier, for: indexPath)
                 as? MapCollectionViewCell else { return UICollectionViewCell() }
         mapCell.dataBind(model: mapList[indexPath.item])
-        
+        mapCell.heartButton.isHidden = true
         return mapCell
     }
 }
