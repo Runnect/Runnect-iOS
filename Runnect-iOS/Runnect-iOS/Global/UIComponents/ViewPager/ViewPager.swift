@@ -25,7 +25,8 @@ class ViewPager: UIView {
     }
     
     private let barBackgroundView = UIView().then {
-        $0.backgroundColor = .clear
+        $0.backgroundColor = .w1
+        $0.clipsToBounds = true
     }
     
     private let barView = UIView().then {
@@ -79,7 +80,7 @@ extension ViewPager {
         let buttonWidth = self.buttonStackView.arrangedSubviews[0].frame.width
         leadingConstant += (buttonWidth * CGFloat(index))
         
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.4, delay: 0, options: [.curveLinear]) {
             self.barView.snp.updateConstraints { make in
                 make.leading.equalToSuperview().offset(leadingConstant)
             }
