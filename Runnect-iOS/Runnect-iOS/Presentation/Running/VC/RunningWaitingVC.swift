@@ -68,6 +68,10 @@ extension RunningWaitingVC {
 
 extension RunningWaitingVC {
     @objc private func startButtonDidTap() {
+        if self.distanceLabel.text == "0.0" {
+            return
+        }
+        
         let countDownVC = CountDownVC()
         countDownVC.setData(locations: self.mapView.getMarkersLatLng(),
                             distance: self.distanceLabel.text,
