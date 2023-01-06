@@ -8,7 +8,7 @@
 import UIKit
 import Then
 
-class PlusDetailVC: UIViewController {
+class MyCourseSelectVC: UIViewController {
     
     // MARK: - UI Components
     
@@ -65,14 +65,14 @@ class PlusDetailVC: UIViewController {
 }
 // MARK: - Methods
 
-extension PlusDetailVC {
+extension MyCourseSelectVC {
     private func setAddTarget() {
         self.selectButton.addTarget(self, action: #selector(presentToUploadVC), for: .touchUpInside)
     }
 }
     // MARK: - @objc Function
 
-    extension PlusDetailVC {
+    extension MyCourseSelectVC {
         @objc private func presentToUploadVC() {
             let nextVC = UploadVC()
             self.navigationController?.pushViewController(nextVC, animated: true)
@@ -80,7 +80,7 @@ extension PlusDetailVC {
     }
     // MARK: - naviVar Layout
 
-extension PlusDetailVC {
+extension MyCourseSelectVC {
     private func setNavigationBar() {
         view.addSubview(navibar)
         navibar.snp.makeConstraints { make in
@@ -124,7 +124,7 @@ extension PlusDetailVC {
 }
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension PlusDetailVC: UICollectionViewDelegateFlowLayout {
+extension MyCourseSelectVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenWidth = UIScreen.main.bounds.width
         let doubleCellWidth = screenWidth - inset.left - inset.right - interItemSpacing
@@ -150,7 +150,7 @@ extension PlusDetailVC: UICollectionViewDelegateFlowLayout {
 }
 // MARK: - UICollectionViewDataSource
 
-extension PlusDetailVC: UICollectionViewDataSource {
+extension MyCourseSelectVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return mapList.count
     }
