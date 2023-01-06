@@ -24,6 +24,7 @@
 		CE0C23792966D6AF00B45063 /* ViewPager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C23782966D6AF00B45063 /* ViewPager.swift */; };
 		CE0D9FD329648DA300CEB5CD /* CustomAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0D9FD229648DA300CEB5CD /* CustomAlertVC.swift */; };
 		CE10065529680F7000FD31FB /* DepartureSearchingResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10065429680F7000FD31FB /* DepartureSearchingResponseDto.swift */; };
+		CE1006572968230800FD31FB /* DepartureLocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1006562968230800FD31FB /* DepartureLocationModel.swift */; };
 		CE146770296568DC00DCEA1B /* RunTrackingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14676F296568DC00DCEA1B /* RunTrackingVC.swift */; };
 		CE14677829658C7200DCEA1B /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14677729658C7200DCEA1B /* Stopwatch.swift */; };
 		CE14677A2965A80700DCEA1B /* CustomBottomSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1467792965A80700DCEA1B /* CustomBottomSheetVC.swift */; };
@@ -154,13 +155,13 @@
 		CE10064429680CBC00FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10064529680CC300FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10064D29680D2500FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		CE10064E29680D2C00FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10064F29680D3300FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10065029680D3800FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10065129680D3F00FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10065229680D4400FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10065329680D5400FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10065429680F7000FD31FB /* DepartureSearchingResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureSearchingResponseDto.swift; sourceTree = "<group>"; };
+		CE1006562968230800FD31FB /* DepartureLocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureLocationModel.swift; sourceTree = "<group>"; };
 		CE14676F296568DC00DCEA1B /* RunTrackingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunTrackingVC.swift; sourceTree = "<group>"; };
 		CE14677729658C7200DCEA1B /* Stopwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
 		CE1467792965A80700DCEA1B /* CustomBottomSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheetVC.swift; sourceTree = "<group>"; };
@@ -464,7 +465,7 @@
 		CE10064B29680D0900FD31FB /* CourseDrawingModel */ = {
 			isa = PBXGroup;
 			children = (
-				CE10064E29680D2C00FD31FB /* .gitkeep */,
+				CE1006562968230800FD31FB /* DepartureLocationModel.swift */,
 			);
 			path = CourseDrawingModel;
 			sourceTree = "<group>";
@@ -1268,6 +1269,7 @@
 				CE0D9FD329648DA300CEB5CD /* CustomAlertVC.swift in Sources */,
 				CEB841702963360800BF8080 /* CountDownVC.swift in Sources */,
 				DA20D84E2966A9B300F1581F /* SearchVC.swift in Sources */,
+				CE1006572968230800FD31FB /* DepartureLocationModel.swift in Sources */,
 				CE6655EC295D88D000C64E12 /* UITableView+.swift in Sources */,
 				CEEC6B3A2961C4F300D00E1E /* CourseDrawingHomeVC.swift in Sources */,
 				CEC2A6902962B06C00160BF7 /* convertLocationObject.swift in Sources */,

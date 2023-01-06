@@ -33,4 +33,8 @@ struct KakaoAddressResult: Codable {
         case longitude = "x"
         case latitude = "y"
     }
+    
+    func toDepartureLocationModel() -> DepartureLocationModel {
+        return DepartureLocationModel(departureName: self.placeName, departureAddress: self.addressName, latitude: self.latitude, longitude: self.longitude)
+    }
 }

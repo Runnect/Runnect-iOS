@@ -141,6 +141,10 @@ extension DepartureSearchVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let courseDrawingVC = CourseDrawingVC()
+        
+        let departureLocationModel = addressList[indexPath.item].toDepartureLocationModel()
+        courseDrawingVC.setData(model: departureLocationModel)
+        
         courseDrawingVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(courseDrawingVC, animated: true)
     }
