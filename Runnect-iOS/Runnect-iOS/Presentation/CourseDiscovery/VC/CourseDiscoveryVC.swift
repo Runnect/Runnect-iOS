@@ -49,41 +49,41 @@ final class CourseDiscoveryVC: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.isScrollEnabled = true
+        collectionView.isScrollEnabled = false
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.delegate = self
-        collectionView.dataSource = self
         return collectionView
     }()
     
     // MARK: - Constants
     
-    var mapList: [MapModel] = [
-    MapModel(mapImage: "", title: "제목제목제목제목", location: "00동00구"),
-    MapModel(mapImage: "", title: "제목제목제목제목", location: "00동00구"),
-    MapModel(mapImage: "", title: "제목제목제목제목", location: "00동00구"),
-    MapModel(mapImage: "", title: "제목제목제목제목", location: "00동00구"),
-    MapModel(mapImage: "", title: "제목제목제목제목", location: "00동00구"),
-    MapModel(mapImage: "", title: "제목제목제목제목", location: "00동00구"),
-    MapModel(mapImage: "", title: "제목제목제목제목", location: "00동00구"),
-    MapModel(mapImage: "", title: "제목제목제목제목", location: "00동00구")
-    ]
-    final let inset: UIEdgeInsets = UIEdgeInsets(top: 10, left: 16, bottom: 0, right: 16)
-    final let lineSpacing: CGFloat = 10
-    final let interItemSpacing: CGFloat = 20
-    final let height: CGFloat = 164
+    final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
+    final let itemSpacing: CGFloat = 10
+    final let lineSpacing: CGFloat = 20
+    
+    // MARK: - View Life Cycle
     
     override func viewDidLoad () {
         super.viewDidLoad()
         register()
         setNavigationBar()
+        setDelegate()
         layout()
         setAddTarget()
+        self.tabBarController?.tabBar.isHidden = false
     }
 }
 // MARK: - Methods
 
 extension CourseDiscoveryVC {
+    
+    private func setDelegate() {
+        mapCollectionView.delegate = self
+        mapCollectionView.dataSource = self
+    }
+    private func register() {
+        mapCollectionView.register(CourseListCVC.self,
+                                          forCellWithReuseIdentifier: CourseListCVC.className)
+    }
     private func setAddTarget() {
         self.searchButton.addTarget(self, action: #selector(pushToSearchVC), for: .touchUpInside)
         self.plusButton.addTarget(self, action: #selector(pushToDiscoveryVC), for: .touchUpInside)
@@ -164,43 +164,44 @@ extension CourseDiscoveryVC {
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(20)
         }
     }
-    // MARK: - register
-    
-    private func register() {
-        mapCollectionView.register(MapCollectionViewCell.self, forCellWithReuseIdentifier: MapCollectionViewCell.identifier)
+}
+
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+
+extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 15
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className,
+                                                            for: indexPath)
+                as? CourseListCVC else { return UICollectionViewCell() }
+        cell.setCellType(type: .all)
+        return cell
     }
 }
 
-    // MARK: - UICollectionViewDelegateFlowLayout
+// MARK: - UICollectionViewDelegateFlowLayout
 
-    extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            let screenWidth = UIScreen.main.bounds.width
-            let doubleCellWidth = screenWidth - inset.left - inset.right - interItemSpacing
-            return CGSize(width: doubleCellWidth / 2, height: 164)
-        }
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-            return lineSpacing
-        }
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-            return interItemSpacing
-        }
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-            return inset
-        }
+extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let cellWidth = (UIScreen.main.bounds.width - (self.itemSpacing + 2*self.collectionViewInset.left)) / 2
+        let cellHeight = CourseListCVCType.getCellHeight(type: .all, cellWidth: cellWidth)
+        
+        return CGSize(width: cellWidth, height: cellHeight)
     }
-    // MARK: - UICollectionViewDataSource
-
-extension CourseDiscoveryVC: UICollectionViewDataSource {
-        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            return mapList.count
-        }
-        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            guard let mapCell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: MapCollectionViewCell.identifier, for: indexPath)
-                    as? MapCollectionViewCell else { return UICollectionViewCell() }
-            mapCell.dataBind(model: mapList[indexPath.item])
-            
-            return mapCell
-        }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return self.collectionViewInset
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return self.itemSpacing
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return self.lineSpacing
+    }
+    
+}

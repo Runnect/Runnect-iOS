@@ -31,6 +31,9 @@ class CourseUploadVC: UIViewController {
         $0.textColor = .g1
         $0.addLeftPadding(width: 2)
     }
+    private let dividerView = UIView().then {
+        $0.backgroundColor = .g5
+    }
     private let distanceInfoView = CourseDetailInfoView(title: "거리", description: "0.0km")
     private let departureInfoView = CourseDetailInfoView(title: "출발지", description: "패스트파이브 을지로점")
     private let placeholder = "코스에 대한 소개를 적어주세요.(난이도/풍경/지형)"
@@ -50,6 +53,7 @@ class CourseUploadVC: UIViewController {
         setUI()
         setLayout()
         setupTextView()
+        setAddTarget()
 
     }
     
@@ -59,6 +63,24 @@ class CourseUploadVC: UIViewController {
     }
     
 }
+
+// MARK: - Methods
+
+extension CourseUploadVC {
+    private func setAddTarget() {
+        self.uploadButton.addTarget(self, action: #selector(pushToCourseDiscoveryVC), for: .touchUpInside)
+    }
+}
+
+// MARK: - @objc Function
+
+extension CourseUploadVC {
+    @objc private func pushToCourseDiscoveryVC() {
+        let nextVC = CourseDiscoveryVC()
+        self.navigationController?.pushViewController(nextVC, animated: true)
+    }
+}
+
 
 
 // MARK: - naviVar Layout
@@ -102,6 +124,7 @@ extension CourseUploadVC {
         view.addSubview(containerView)
         [mapImageView,
          courseTitleTextField,
+         dividerView,
          distanceInfoView,
          departureInfoView,
          activityTextView].forEach {
@@ -124,6 +147,12 @@ extension CourseUploadVC {
             make.top.equalTo(mapImageView.snp.bottom).offset(28)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(35)
+        }
+        
+        dividerView.snp.makeConstraints { make in
+            make.top.equalTo(courseTitleTextField.snp.bottom).offset(0)
+            make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(16)
+            make.height.equalTo(2)
         }
         
         distanceInfoView.snp.makeConstraints { make in
