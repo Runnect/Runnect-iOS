@@ -16,7 +16,9 @@ class CourseUploadVC: UIViewController {
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("코스 업로드")
     private let buttonContainerView = UIView()
-    private let uploadButton = CustomButton(title: "업로드하기").setColor(bgColor: .g3, disableColor: .g3, textColor: .w1)
+    private let uploadButton = CustomButton(title: "업로드하기").setEnabled(false)
+    
+    private lazy var containerView = UIScrollView()
     private let mapImageView = UIImageView().then {
         $0.image = UIImage(named: "")
     }
@@ -58,13 +60,6 @@ class CourseUploadVC: UIViewController {
     
 }
 
-// MARK: - Methods
-
-
-
-// MARK: - @objc Function
-
-
 
 // MARK: - naviVar Layout
 
@@ -80,23 +75,48 @@ extension CourseUploadVC {
     
     private func setUI() {
         view.backgroundColor = .w1
+        containerView.backgroundColor = .clear
         buttonContainerView.backgroundColor = .w1
         mapImageView.backgroundColor = .systemGray4
+        
     }
     
     // MARK: - Layout Helpers
     private func setLayout() {
-        view.addSubviews(mapImageView,
-                         courseTitleTextField,
-                         distanceInfoView,
-                         departureInfoView,
-                         buttonContainerView,
-                         activityTextView)
-        buttonContainerView.addSubview(uploadButton)
+        view.addSubview(buttonContainerView)
         self.view.bringSubviewToFront(uploadButton)
+        buttonContainerView.addSubview(uploadButton)
+        
+        buttonContainerView.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(86)
+            make.bottom.equalToSuperview()
+        }
+        uploadButton.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            make.height.equalTo(44)
+            make.bottom.equalToSuperview().inset(34)
+        }
+        
+        
+        view.addSubview(containerView)
+        [mapImageView,
+         courseTitleTextField,
+         distanceInfoView,
+         departureInfoView,
+         activityTextView].forEach {
+            containerView.addSubview($0)
+        }
+        
+        
+        containerView.snp.makeConstraints {
+            $0.top.equalTo(navibar.snp.bottom)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(uploadButton.snp.top).inset(-25)
+        }
         
         mapImageView.snp.makeConstraints { make in
-            make.top.equalTo(self.navibar.snp.bottom)
+            make.top.equalToSuperview()
             make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
             make.height.equalTo(313)
         }
@@ -118,19 +138,11 @@ extension CourseUploadVC {
         }
         activityTextView.snp.makeConstraints { make in
             make.top.equalTo(departureInfoView.snp.bottom).offset(34)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.bottom.equalTo(buttonContainerView.snp.top).offset(-13)
-        }
-        buttonContainerView.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(86)
-            make.bottom.equalToSuperview()
-        }
-        uploadButton.snp.makeConstraints { make in
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.height.equalTo(44)
-            make.bottom.equalToSuperview().inset(34)
+            make.bottom.equalToSuperview()
+            make.height.equalTo(187)
         }
+       
     }
     
     func setupTextView() {
@@ -140,6 +152,8 @@ extension CourseUploadVC {
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+        
+        
     }
 }
 
@@ -152,6 +166,7 @@ extension CourseUploadVC: UITextViewDelegate {
         } else if textView.text == placeholder {
             activityTextView.textColor = .g1
             activityTextView.text = nil
+            self.uploadButton.setEnabled(true)
         }
     }
     
@@ -167,4 +182,6 @@ extension CourseUploadVC: UITextViewDelegate {
             uploadButton.setColor(bgColor: .m3, disableColor: .g3)
         }
     }
+    
+    
 }
