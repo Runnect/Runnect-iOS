@@ -85,6 +85,15 @@ final class CourseDetailVC: UIViewController {
     }
 }
 
+// MARK: - Method
+
+extension CourseDetailVC {
+    func addKeyboardNotification() {
+        
+    }
+    
+}
+
 extension CourseDetailVC {
     
     // MARK: - Layout Helpers
