@@ -136,8 +136,6 @@ extension CourseUploadVC {
     }
 }
 
-
-
 // MARK: - naviVar Layout
 
 extension CourseUploadVC {
@@ -161,21 +159,19 @@ extension CourseUploadVC {
     // MARK: - Layout Helpers
     private func setLayout() {
         view.addSubview(buttonContainerView)
-        self.view.bringSubviewToFront(uploadButton)
+        view.bringSubviewToFront(uploadButton)
         buttonContainerView.addSubview(uploadButton)
         
         buttonContainerView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(86)
             make.bottom.equalToSuperview()
-        }
+    }
         uploadButton.snp.makeConstraints { make in
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
             make.height.equalTo(44)
             make.bottom.equalToSuperview().inset(34)
         }
-        
-        
         view.addSubview(containerView)
         [mapImageView,
          courseTitleTextField,
@@ -185,7 +181,6 @@ extension CourseUploadVC {
          activityTextView].forEach {
             containerView.addSubview($0)
         }
-        
         
         containerView.snp.makeConstraints {
             $0.top.equalTo(navibar.snp.bottom)
@@ -242,7 +237,6 @@ extension CourseUploadVC {
 }
 
 extension CourseUploadVC: UITextViewDelegate {
-
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             activityTextView.textColor = .g3
