@@ -140,6 +140,26 @@
 		CE0C23762966D64D00B45063 /* PageCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageCVC.swift; sourceTree = "<group>"; };
 		CE0C23782966D6AF00B45063 /* ViewPager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPager.swift; sourceTree = "<group>"; };
 		CE0D9FD229648DA300CEB5CD /* CustomAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertVC.swift; sourceTree = "<group>"; };
+		CE10063929680C5700FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE10063A29680C6100FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE10063B29680C6800FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE10063C29680C7000FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE10063D29680C8100FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE10063E29680C8800FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE10063F29680C9800FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE10064029680C9F00FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE10064129680CA700FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE10064229680CAD00FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE10064329680CB400FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE10064429680CBC00FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE10064529680CC300FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE10064D29680D2500FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE10064E29680D2C00FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE10064F29680D3300FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE10065029680D3800FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE10065129680D3F00FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE10065229680D4400FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE10065329680D5400FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE14676F296568DC00DCEA1B /* RunTrackingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunTrackingVC.swift; sourceTree = "<group>"; };
 		CE14677729658C7200DCEA1B /* Stopwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
 		CE1467792965A80700DCEA1B /* CustomBottomSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheetVC.swift; sourceTree = "<group>"; };
@@ -170,7 +190,6 @@
 		CE58759F29601500005D967E /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		CE5875A1296015A2005D967E /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
 		CE5875A3296015D2005D967E /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
-		CE6655BC295D82CF00C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE6655BE295D82E200C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE6655C0295D82F000C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE6655C1295D82F700C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
@@ -343,6 +362,118 @@
 				CE0C23762966D64D00B45063 /* PageCVC.swift */,
 			);
 			path = CVC;
+			sourceTree = "<group>";
+		};
+		CE10063229680BEB00FD31FB /* RunningDto */ = {
+			isa = PBXGroup;
+			children = (
+				CE10063F29680C9800FD31FB /* .gitkeep */,
+			);
+			path = RunningDto;
+			sourceTree = "<group>";
+		};
+		CE10063329680BFD00FD31FB /* CourseDetailDto */ = {
+			isa = PBXGroup;
+			children = (
+				CE10063E29680C8800FD31FB /* .gitkeep */,
+			);
+			path = CourseDetailDto;
+			sourceTree = "<group>";
+		};
+		CE10063429680C0800FD31FB /* MyPageDto */ = {
+			isa = PBXGroup;
+			children = (
+				CE10063D29680C8100FD31FB /* .gitkeep */,
+			);
+			path = MyPageDto;
+			sourceTree = "<group>";
+		};
+		CE10063529680C0F00FD31FB /* CourseDiscoveryDto */ = {
+			isa = PBXGroup;
+			children = (
+				CE10063C29680C7000FD31FB /* .gitkeep */,
+			);
+			path = CourseDiscoveryDto;
+			sourceTree = "<group>";
+		};
+		CE10063629680C1C00FD31FB /* CourseStorageDto */ = {
+			isa = PBXGroup;
+			children = (
+				CE10063B29680C6800FD31FB /* .gitkeep */,
+			);
+			path = CourseStorageDto;
+			sourceTree = "<group>";
+		};
+		CE10063729680C2400FD31FB /* CourseDrawingDto */ = {
+			isa = PBXGroup;
+			children = (
+				CE10063A29680C6100FD31FB /* .gitkeep */,
+			);
+			path = CourseDrawingDto;
+			sourceTree = "<group>";
+		};
+		CE10063829680C2A00FD31FB /* SignInDto */ = {
+			isa = PBXGroup;
+			children = (
+				CE10063929680C5700FD31FB /* .gitkeep */,
+			);
+			path = SignInDto;
+			sourceTree = "<group>";
+		};
+		CE10064629680CE600FD31FB /* RunningModel */ = {
+			isa = PBXGroup;
+			children = (
+				CE10065329680D5400FD31FB /* .gitkeep */,
+			);
+			path = RunningModel;
+			sourceTree = "<group>";
+		};
+		CE10064729680CED00FD31FB /* CourseDetailModel */ = {
+			isa = PBXGroup;
+			children = (
+				CE10065229680D4400FD31FB /* .gitkeep */,
+			);
+			path = CourseDetailModel;
+			sourceTree = "<group>";
+		};
+		CE10064829680CF200FD31FB /* MyPageModel */ = {
+			isa = PBXGroup;
+			children = (
+				CE10065129680D3F00FD31FB /* .gitkeep */,
+			);
+			path = MyPageModel;
+			sourceTree = "<group>";
+		};
+		CE10064929680CF800FD31FB /* CourseDiscoveryModel */ = {
+			isa = PBXGroup;
+			children = (
+				CE10065029680D3800FD31FB /* .gitkeep */,
+			);
+			path = CourseDiscoveryModel;
+			sourceTree = "<group>";
+		};
+		CE10064A29680D0200FD31FB /* CourseStorageModel */ = {
+			isa = PBXGroup;
+			children = (
+				CE10064F29680D3300FD31FB /* .gitkeep */,
+			);
+			path = CourseStorageModel;
+			sourceTree = "<group>";
+		};
+		CE10064B29680D0900FD31FB /* CourseDrawingModel */ = {
+			isa = PBXGroup;
+			children = (
+				CE10064E29680D2C00FD31FB /* .gitkeep */,
+			);
+			path = CourseDrawingModel;
+			sourceTree = "<group>";
+		};
+		CE10064C29680D1700FD31FB /* SignInModel */ = {
+			isa = PBXGroup;
+			children = (
+				CE10064D29680D2500FD31FB /* .gitkeep */,
+			);
+			path = SignInModel;
 			sourceTree = "<group>";
 		};
 		CE14676C296568C000DCEA1B /* Running */ = {
@@ -532,6 +663,7 @@
 		CE40BB25296807FC0030ABCA /* SignInRouter */ = {
 			isa = PBXGroup;
 			children = (
+				CE10064029680C9F00FD31FB /* .gitkeep */,
 			);
 			path = SignInRouter;
 			sourceTree = "<group>";
@@ -547,6 +679,7 @@
 		CE40BB27296808290030ABCA /* CourseStorageRouter */ = {
 			isa = PBXGroup;
 			children = (
+				CE10064129680CA700FD31FB /* .gitkeep */,
 			);
 			path = CourseStorageRouter;
 			sourceTree = "<group>";
@@ -554,6 +687,7 @@
 		CE40BB28296808300030ABCA /* CourseDiscoveryRouter */ = {
 			isa = PBXGroup;
 			children = (
+				CE10064229680CAD00FD31FB /* .gitkeep */,
 			);
 			path = CourseDiscoveryRouter;
 			sourceTree = "<group>";
@@ -561,6 +695,7 @@
 		CE40BB292968083B0030ABCA /* MyPageRouter */ = {
 			isa = PBXGroup;
 			children = (
+				CE10064329680CB400FD31FB /* .gitkeep */,
 			);
 			path = MyPageRouter;
 			sourceTree = "<group>";
@@ -568,6 +703,7 @@
 		CE40BB2A296808440030ABCA /* CourseDetailRouter */ = {
 			isa = PBXGroup;
 			children = (
+				CE10064429680CBC00FD31FB /* .gitkeep */,
 			);
 			path = CourseDetailRouter;
 			sourceTree = "<group>";
@@ -575,6 +711,7 @@
 		CE40BB2B296808500030ABCA /* RunningRouter */ = {
 			isa = PBXGroup;
 			children = (
+				CE10064529680CC300FD31FB /* .gitkeep */,
 			);
 			path = RunningRouter;
 			sourceTree = "<group>";
@@ -662,6 +799,13 @@
 		CE6655AC295D7FE400C64E12 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CE10064C29680D1700FD31FB /* SignInModel */,
+				CE10064B29680D0900FD31FB /* CourseDrawingModel */,
+				CE10064A29680D0200FD31FB /* CourseStorageModel */,
+				CE10064929680CF800FD31FB /* CourseDiscoveryModel */,
+				CE10064829680CF200FD31FB /* MyPageModel */,
+				CE10064729680CED00FD31FB /* CourseDetailModel */,
+				CE10064629680CE600FD31FB /* RunningModel */,
 				CE6655C1295D82F700C64E12 /* .gitkeep */,
 			);
 			path = Model;
@@ -705,7 +849,13 @@
 		CE6655B0295D800700C64E12 /* Dto */ = {
 			isa = PBXGroup;
 			children = (
-				CE6655BC295D82CF00C64E12 /* .gitkeep */,
+				CE10063829680C2A00FD31FB /* SignInDto */,
+				CE10063729680C2400FD31FB /* CourseDrawingDto */,
+				CE10063629680C1C00FD31FB /* CourseStorageDto */,
+				CE10063529680C0F00FD31FB /* CourseDiscoveryDto */,
+				CE10063429680C0800FD31FB /* MyPageDto */,
+				CE10063329680BFD00FD31FB /* CourseDetailDto */,
+				CE10063229680BEB00FD31FB /* RunningDto */,
 			);
 			path = Dto;
 			sourceTree = "<group>";
