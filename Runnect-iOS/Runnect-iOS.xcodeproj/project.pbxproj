@@ -109,7 +109,6 @@
 		DA20D8432966977D00F1581F /* SearchResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D8422966977D00F1581F /* SearchResultVC.swift */; };
 		DA20D847296697A600F1581F /* MyCourseSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D846296697A600F1581F /* MyCourseSelectVC.swift */; };
 		DA20D849296697B400F1581F /* CourseUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D848296697B400F1581F /* CourseUploadVC.swift */; };
-		DA20D84B296697C600F1581F /* UploadResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D84A296697C600F1581F /* UploadResultVC.swift */; };
 		DA20D84E2966A9B300F1581F /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D84D2966A9B300F1581F /* SearchVC.swift */; };
 		DA20D8502966C0D500F1581F /* MapCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D84F2966C0D500F1581F /* MapCollectionViewController.swift */; };
 /* End PBXBuildFile section */
@@ -229,7 +228,6 @@
 		DA20D8422966977D00F1581F /* SearchResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultVC.swift; sourceTree = "<group>"; };
 		DA20D846296697A600F1581F /* MyCourseSelectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCourseSelectVC.swift; sourceTree = "<group>"; };
 		DA20D848296697B400F1581F /* CourseUploadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseUploadVC.swift; sourceTree = "<group>"; };
-		DA20D84A296697C600F1581F /* UploadResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadResultVC.swift; sourceTree = "<group>"; };
 		DA20D84D2966A9B300F1581F /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		DA20D84F2966C0D500F1581F /* MapCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCollectionViewController.swift; sourceTree = "<group>"; };
 		E837271A78E1C0A0C30789BF /* Pods-Runnect-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runnect-iOS.release.xcconfig"; path = "Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -471,7 +469,6 @@
 				DA20D8422966977D00F1581F /* SearchResultVC.swift */,
 				DA20D846296697A600F1581F /* MyCourseSelectVC.swift */,
 				DA20D848296697B400F1581F /* CourseUploadVC.swift */,
-				DA20D84A296697C600F1581F /* UploadResultVC.swift */,
 				DA20D84D2966A9B300F1581F /* SearchVC.swift */,
 			);
 			path = Views;
@@ -1050,7 +1047,6 @@
 				CE6655E2295D87EB00C64E12 /* UIImage+.swift in Sources */,
 				A3BC2F322962E0DB00198261 /* GoalRewardInfoModel.swift in Sources */,
 				CEC2A68C2962AE1B00160BF7 /* RNStartMarker.swift in Sources */,
-				DA20D84B296697C600F1581F /* UploadResultVC.swift in Sources */,
 				DA20D8432966977D00F1581F /* SearchResultVC.swift in Sources */,
 				CE5875A4296015D2005D967E /* Encodable+.swift in Sources */,
 				A3BC2F4129667A0D00198261 /* NicknameEditorVC.swift in Sources */,

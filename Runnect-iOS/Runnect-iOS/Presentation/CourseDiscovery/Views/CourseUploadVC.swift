@@ -11,7 +11,9 @@ import SnapKit
 import Then
 
 class CourseUploadVC: UIViewController {
+    // MARK: - Properties
     
+    private let courseTitleMaxLength = 20
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("코스 업로드")
@@ -67,17 +69,70 @@ class CourseUploadVC: UIViewController {
 // MARK: - Methods
 
 extension CourseUploadVC {
+
     private func setAddTarget() {
         self.uploadButton.addTarget(self, action: #selector(pushToCourseDiscoveryVC), for: .touchUpInside)
+        self.courseTitleTextField.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
+    }
+    private func setKeyboardNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil)
+    }
+    // 화면 터치 시 키보드 내리기
+    private func setTapGesture() {
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
     }
 }
 
 // MARK: - @objc Function
 
 extension CourseUploadVC {
+    @objc private func textFieldTextDidChange() {
+        guard let text = courseTitleTextField.text else { return }
+        
+        uploadButton.isEnabled = !text.isEmpty
+        
+        if text.count > courseTitleMaxLength {
+            let index = text.index(text.startIndex, offsetBy: courseTitleMaxLength)
+            let newString = text[text.startIndex..<index]
+            self.courseTitleTextField.text = String(newString)
+        }
+    }
+    
     @objc private func pushToCourseDiscoveryVC() {
         let nextVC = CourseDiscoveryVC()
         self.navigationController?.pushViewController(nextVC, animated: true)
+    }
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+                return
+        }
+
+        let contentInset = UIEdgeInsets(
+            top: 0.0,
+            left: 0.0,
+            bottom: keyboardFrame.size.height,
+            right: 0.0)
+        containerView.contentInset = contentInset
+        containerView.scrollIndicatorInsets = contentInset
+    }
+    
+    @objc private func keyboardWillHide() {
+        let contentInset = UIEdgeInsets.zero
+        containerView.contentInset = contentInset
+        containerView.scrollIndicatorInsets = contentInset
     }
 }
 
@@ -187,7 +242,7 @@ extension CourseUploadVC {
 }
 
 extension CourseUploadVC: UITextViewDelegate {
-    
+
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             activityTextView.textColor = .g3
@@ -198,7 +253,7 @@ extension CourseUploadVC: UITextViewDelegate {
             self.uploadButton.setEnabled(true)
         }
     }
-    
+
     func textViewDidChange(_ textView: UITextView) {
         if activityTextView.text.count > 150 {
             activityTextView.deleteBackward()
@@ -211,6 +266,4 @@ extension CourseUploadVC: UITextViewDelegate {
             uploadButton.setColor(bgColor: .m3, disableColor: .g3)
         }
     }
-    
-    
 }
