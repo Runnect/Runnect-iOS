@@ -39,6 +39,8 @@
 		CE40BB1E2968054F0030ABCA /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40BB1D2968054F0030ABCA /* BaseResponse.swift */; };
 		CE40BB20296805F70030ABCA /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40BB1F296805F70030ABCA /* NetworkResult.swift */; };
 		CE40BB22296806140030ABCA /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40BB21296806140030ABCA /* NetworkHelper.swift */; };
+		CE40BB242968068E0030ABCA /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40BB232968068E0030ABCA /* Config.swift */; };
+		CE40BB2D296808B00030ABCA /* DepartureSearchingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40BB2C296808B00030ABCA /* DepartureSearchingRouter.swift */; };
 		CE4545C9295D7AF4003201E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545C8295D7AF4003201E1 /* AppDelegate.swift */; };
 		CE4545CB295D7AF4003201E1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CA295D7AF4003201E1 /* SceneDelegate.swift */; };
 		CE4545CD295D7AF4003201E1 /* TaBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CC295D7AF4003201E1 /* TaBarController.swift */; };
@@ -154,6 +156,8 @@
 		CE40BB1D2968054F0030ABCA /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		CE40BB1F296805F70030ABCA /* NetworkResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult.swift; sourceTree = "<group>"; };
 		CE40BB21296806140030ABCA /* NetworkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHelper.swift; sourceTree = "<group>"; };
+		CE40BB232968068E0030ABCA /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		CE40BB2C296808B00030ABCA /* DepartureSearchingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureSearchingRouter.swift; sourceTree = "<group>"; };
 		CE4545C5295D7AF4003201E1 /* Runnect-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Runnect-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4545C8295D7AF4003201E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE4545CA295D7AF4003201E1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -525,6 +529,56 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		CE40BB25296807FC0030ABCA /* SignInRouter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SignInRouter;
+			sourceTree = "<group>";
+		};
+		CE40BB26296808020030ABCA /* CourseDrawingRouter */ = {
+			isa = PBXGroup;
+			children = (
+				CE40BB2C296808B00030ABCA /* DepartureSearchingRouter.swift */,
+			);
+			path = CourseDrawingRouter;
+			sourceTree = "<group>";
+		};
+		CE40BB27296808290030ABCA /* CourseStorageRouter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CourseStorageRouter;
+			sourceTree = "<group>";
+		};
+		CE40BB28296808300030ABCA /* CourseDiscoveryRouter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CourseDiscoveryRouter;
+			sourceTree = "<group>";
+		};
+		CE40BB292968083B0030ABCA /* MyPageRouter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MyPageRouter;
+			sourceTree = "<group>";
+		};
+		CE40BB2A296808440030ABCA /* CourseDetailRouter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CourseDetailRouter;
+			sourceTree = "<group>";
+		};
+		CE40BB2B296808500030ABCA /* RunningRouter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RunningRouter;
+			sourceTree = "<group>";
+		};
 		CE4545BC295D7AF4003201E1 = {
 			isa = PBXGroup;
 			children = (
@@ -616,6 +670,13 @@
 		CE6655AD295D7FEA00C64E12 /* Router */ = {
 			isa = PBXGroup;
 			children = (
+				CE40BB25296807FC0030ABCA /* SignInRouter */,
+				CE40BB26296808020030ABCA /* CourseDrawingRouter */,
+				CE40BB27296808290030ABCA /* CourseStorageRouter */,
+				CE40BB28296808300030ABCA /* CourseDiscoveryRouter */,
+				CE40BB292968083B0030ABCA /* MyPageRouter */,
+				CE40BB2A296808440030ABCA /* CourseDetailRouter */,
+				CE40BB2B296808500030ABCA /* RunningRouter */,
 				CE6655C0295D82F000C64E12 /* .gitkeep */,
 			);
 			path = Router;
@@ -636,6 +697,7 @@
 				CE40BB1D2968054F0030ABCA /* BaseResponse.swift */,
 				CE40BB1F296805F70030ABCA /* NetworkResult.swift */,
 				CE40BB21296806140030ABCA /* NetworkHelper.swift */,
+				CE40BB232968068E0030ABCA /* Config.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -1023,6 +1085,7 @@
 				CEEC6B3E2961C53700D00E1E /* CourseDiscoveryVC.swift in Sources */,
 				DA20D8452966979100F1581F /* DiscoveryDetailViewController.swift in Sources */,
 				CE6655E0295D87D200C64E12 /* UIDevice+.swift in Sources */,
+				CE40BB242968068E0030ABCA /* Config.swift in Sources */,
 				CE17F0382961BF8B00E1DED0 /* FontLiterals.swift in Sources */,
 				CE6655E8295D889600C64E12 /* UISwitch+.swift in Sources */,
 				CE0C23772966D64D00B45063 /* PageCVC.swift in Sources */,
@@ -1079,6 +1142,7 @@
 				CE0C23742966D62A00B45063 /* PagedView.swift in Sources */,
 				CE14677A2965A80700DCEA1B /* CustomBottomSheetVC.swift in Sources */,
 				CEEC6B4B2961D89700D00E1E /* CustomNavigationBar.swift in Sources */,
+				CE40BB2D296808B00030ABCA /* DepartureSearchingRouter.swift in Sources */,
 				CE17F02D2961BBA100E1DED0 /* ColorLiterals.swift in Sources */,
 				CEC2A68E2962AF2C00160BF7 /* RNMarker.swift in Sources */,
 				CE6655D2295D862A00C64E12 /* Publisher+Driver.swift in Sources */,
