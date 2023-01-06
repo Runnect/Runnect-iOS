@@ -18,6 +18,9 @@
 		A3BC2F3D296468E500198261 /* UploadedCourseInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F3C296468E500198261 /* UploadedCourseInfoModel.swift */; };
 		A3BC2F3F2964706100198261 /* UploadedCourseInfoCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F3E2964706100198261 /* UploadedCourseInfoCVC.swift */; };
 		A3BC2F4129667A0D00198261 /* NicknameEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F4029667A0D00198261 /* NicknameEditorVC.swift */; };
+		CE0C23742966D62A00B45063 /* PagedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C23732966D62A00B45063 /* PagedView.swift */; };
+		CE0C23772966D64D00B45063 /* PageCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C23762966D64D00B45063 /* PageCVC.swift */; };
+		CE0C23792966D6AF00B45063 /* ViewPager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C23782966D6AF00B45063 /* ViewPager.swift */; };
 		CE0D9FD329648DA300CEB5CD /* CustomAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0D9FD229648DA300CEB5CD /* CustomAlertVC.swift */; };
 		CE146770296568DC00DCEA1B /* RunTrackingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14676F296568DC00DCEA1B /* RunTrackingVC.swift */; };
 		CE14677829658C7200DCEA1B /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14677729658C7200DCEA1B /* Stopwatch.swift */; };
@@ -79,6 +82,10 @@
 		CE665610295D92C200C64E12 /* setTextLineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE66560F295D92C200C64E12 /* setTextLineHeight.swift */; };
 		CE665612295D92E400C64E12 /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE665611295D92E400C64E12 /* UserDefaultWrapper.swift */; };
 		CE665615295D989A00C64E12 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = CE665614295D989A00C64E12 /* .swiftlint.yml */; };
+		CE6B63D02967230D003F900F /* PrivateCourseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6B63CF2967230D003F900F /* PrivateCourseListView.swift */; };
+		CE6B63D3296725E6003F900F /* CourseListCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6B63D2296725E6003F900F /* CourseListCVC.swift */; };
+		CE6B63D6296731F9003F900F /* ScrapCourseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6B63D5296731F9003F900F /* ScrapCourseListView.swift */; };
+		CE6B63D829673450003F900F /* ListEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6B63D729673450003F900F /* ListEmptyView.swift */; };
 		CE9291252965C9FB0010959C /* CourseDetailInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9291242965C9FB0010959C /* CourseDetailInfoView.swift */; };
 		CE9291272965D0ED0010959C /* StatsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9291262965D0ED0010959C /* StatsInfoView.swift */; };
 		CE9291292965E01D0010959C /* RNTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9291282965E01D0010959C /* RNTimeFormatter.swift */; };
@@ -121,6 +128,9 @@
 		A3BC2F3C296468E500198261 /* UploadedCourseInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedCourseInfoModel.swift; sourceTree = "<group>"; };
 		A3BC2F3E2964706100198261 /* UploadedCourseInfoCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedCourseInfoCVC.swift; sourceTree = "<group>"; };
 		A3BC2F4029667A0D00198261 /* NicknameEditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditorVC.swift; sourceTree = "<group>"; };
+		CE0C23732966D62A00B45063 /* PagedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedView.swift; sourceTree = "<group>"; };
+		CE0C23762966D64D00B45063 /* PageCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageCVC.swift; sourceTree = "<group>"; };
+		CE0C23782966D6AF00B45063 /* ViewPager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPager.swift; sourceTree = "<group>"; };
 		CE0D9FD229648DA300CEB5CD /* CustomAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertVC.swift; sourceTree = "<group>"; };
 		CE14676F296568DC00DCEA1B /* RunTrackingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunTrackingVC.swift; sourceTree = "<group>"; };
 		CE14677729658C7200DCEA1B /* Stopwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
@@ -189,6 +199,10 @@
 		CE66560F295D92C200C64E12 /* setTextLineHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setTextLineHeight.swift; sourceTree = "<group>"; };
 		CE665611295D92E400C64E12 /* UserDefaultWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultWrapper.swift; sourceTree = "<group>"; };
 		CE665614295D989A00C64E12 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		CE6B63CF2967230D003F900F /* PrivateCourseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateCourseListView.swift; sourceTree = "<group>"; };
+		CE6B63D2296725E6003F900F /* CourseListCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListCVC.swift; sourceTree = "<group>"; };
+		CE6B63D5296731F9003F900F /* ScrapCourseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapCourseListView.swift; sourceTree = "<group>"; };
+		CE6B63D729673450003F900F /* ListEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListEmptyView.swift; sourceTree = "<group>"; };
 		CE9291242965C9FB0010959C /* CourseDetailInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailInfoView.swift; sourceTree = "<group>"; };
 		CE9291262965D0ED0010959C /* StatsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsInfoView.swift; sourceTree = "<group>"; };
 		CE9291282965E01D0010959C /* RNTimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNTimeFormatter.swift; sourceTree = "<group>"; };
@@ -205,7 +219,6 @@
 		CEEC6B3B2961C51A00D00E1E /* CourseStorageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseStorageVC.swift; sourceTree = "<group>"; };
 		CEEC6B3D2961C53700D00E1E /* CourseDiscoveryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDiscoveryVC.swift; sourceTree = "<group>"; };
 		CEEC6B3F2961C55000D00E1E /* MyPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageVC.swift; sourceTree = "<group>"; };
-		CEEC6B422961C59600D00E1E /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CEEC6B432961C59F00D00E1E /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CEEC6B442961C5A800D00E1E /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CEEC6B452961C5B200D00E1E /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
@@ -293,19 +306,47 @@
 			path = UploadedCourseInfoCollectionView;
 			sourceTree = "<group>";
 		};
-		CE14676C296568C000DCEA1B /* RunTracking */ = {
+		CE0C23712966D5FF00B45063 /* ViewPager */ = {
+			isa = PBXGroup;
+			children = (
+				CE0C23782966D6AF00B45063 /* ViewPager.swift */,
+				CE0C23722966D62200B45063 /* PagedView */,
+			);
+			path = ViewPager;
+			sourceTree = "<group>";
+		};
+		CE0C23722966D62200B45063 /* PagedView */ = {
+			isa = PBXGroup;
+			children = (
+				CE0C23752966D63C00B45063 /* CVC */,
+				CE0C23732966D62A00B45063 /* PagedView.swift */,
+			);
+			path = PagedView;
+			sourceTree = "<group>";
+		};
+		CE0C23752966D63C00B45063 /* CVC */ = {
+			isa = PBXGroup;
+			children = (
+				CE0C23762966D64D00B45063 /* PageCVC.swift */,
+			);
+			path = CVC;
+			sourceTree = "<group>";
+		};
+		CE14676C296568C000DCEA1B /* Running */ = {
 			isa = PBXGroup;
 			children = (
 				CE14676E296568CD00DCEA1B /* Views */,
 				CE14676D296568CA00DCEA1B /* VC */,
 			);
-			path = RunTracking;
+			path = Running;
 			sourceTree = "<group>";
 		};
 		CE14676D296568CA00DCEA1B /* VC */ = {
 			isa = PBXGroup;
 			children = (
+				CEB8416F2963360800BF8080 /* CountDownVC.swift */,
 				CE14676F296568DC00DCEA1B /* RunTrackingVC.swift */,
+				CE14677B2965C1B100DCEA1B /* RunningRecordVC.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -388,8 +429,6 @@
 				CEEC6B392961C4F300D00E1E /* CourseDrawingHomeVC.swift */,
 				CEC2A6912962BE2900160BF7 /* DepartureSearchVC.swift */,
 				CE29D581296402B500F47542 /* CourseDrawingVC.swift */,
-				CEB8416F2963360800BF8080 /* CountDownVC.swift */,
-				CE14677B2965C1B100DCEA1B /* RunningRecordVC.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -413,7 +452,8 @@
 		CE17F0422961C3D300E1DED0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				CEEC6B422961C59600D00E1E /* .gitkeep */,
+				CE6B63D4296731D8003F900F /* CourseListView */,
+				CE6B63D1296725BD003F900F /* CVC */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -515,7 +555,7 @@
 				CE17F03C2961C32C00E1DED0 /* CourseDiscovery */,
 				CE17F03B2961C2F700E1DED0 /* MyPage */,
 				CE17F03E2961C38100E1DED0 /* CourseDetail */,
-				CE14676C296568C000DCEA1B /* RunTracking */,
+				CE14676C296568C000DCEA1B /* Running */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -666,6 +706,7 @@
 		CE6655B6295D803C00C64E12 /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
+				CE0C23712966D5FF00B45063 /* ViewPager */,
 				CEC2A6882962ADB900160BF7 /* MapView */,
 				CEEC6B4A2961D89700D00E1E /* CustomNavigationBar.swift */,
 				CEC2A6842961F92C00160BF7 /* CustomButton.swift */,
@@ -673,6 +714,7 @@
 				CE1467792965A80700DCEA1B /* CustomBottomSheetVC.swift */,
 				CE9291242965C9FB0010959C /* CourseDetailInfoView.swift */,
 				CE9291262965D0ED0010959C /* StatsInfoView.swift */,
+				CE6B63D729673450003F900F /* ListEmptyView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -749,6 +791,23 @@
 				CE6655F3295D898400C64E12 /* UIViewController+.swift */,
 			);
 			path = "UIKit+";
+			sourceTree = "<group>";
+		};
+		CE6B63D1296725BD003F900F /* CVC */ = {
+			isa = PBXGroup;
+			children = (
+				CE6B63D2296725E6003F900F /* CourseListCVC.swift */,
+			);
+			path = CVC;
+			sourceTree = "<group>";
+		};
+		CE6B63D4296731D8003F900F /* CourseListView */ = {
+			isa = PBXGroup;
+			children = (
+				CE6B63CF2967230D003F900F /* PrivateCourseListView.swift */,
+				CE6B63D5296731F9003F900F /* ScrapCourseListView.swift */,
+			);
+			path = CourseListView;
 			sourceTree = "<group>";
 		};
 		CEC2A6882962ADB900160BF7 /* MapView */ = {
@@ -938,6 +997,8 @@
 				DA20D847296697A600F1581F /* PlusDetailVC.swift in Sources */,
 				CE66560E295D92A500C64E12 /* setStatusBarBackgroundColor.swift in Sources */,
 				CE9291292965E01D0010959C /* RNTimeFormatter.swift in Sources */,
+				CE0C23792966D6AF00B45063 /* ViewPager.swift in Sources */,
+				CE6B63D02967230D003F900F /* PrivateCourseListView.swift in Sources */,
 				CE6655D7295D86F900C64E12 /* String+.swift in Sources */,
 				CE58759E29601476005D967E /* LoadingIndicator.swift in Sources */,
 				CE5875A2296015A2005D967E /* NetworkLoggerPlugin.swift in Sources */,
@@ -949,13 +1010,16 @@
 				CE6655E0295D87D200C64E12 /* UIDevice+.swift in Sources */,
 				CE17F0382961BF8B00E1DED0 /* FontLiterals.swift in Sources */,
 				CE6655E8295D889600C64E12 /* UISwitch+.swift in Sources */,
+				CE0C23772966D64D00B45063 /* PageCVC.swift in Sources */,
 				CE5875A029601500005D967E /* Toast.swift in Sources */,
 				CE14677C2965C1B100DCEA1B /* RunningRecordVC.swift in Sources */,
+				CE6B63D829673450003F900F /* ListEmptyView.swift in Sources */,
 				CE6655F6295D90B600C64E12 /* addToolBar.swift in Sources */,
 				CEC2A68A2962ADCD00160BF7 /* RNMapView.swift in Sources */,
 				CE6655F0295D891B00C64E12 /* UITextView+.swift in Sources */,
 				CEC2A6922962BE2900160BF7 /* DepartureSearchVC.swift in Sources */,
 				CE6655EE295D88E600C64E12 /* UITextField+.swift in Sources */,
+				CE6B63D6296731F9003F900F /* ScrapCourseListView.swift in Sources */,
 				DA20D841296696C300F1581F /* MapCollectionViewCell.swift in Sources */,
 				CE6655F8295D90CF00C64E12 /* adjusted+.swift in Sources */,
 				CE4545CB295D7AF4003201E1 /* SceneDelegate.swift in Sources */,
@@ -975,6 +1039,7 @@
 				CEEC6B3A2961C4F300D00E1E /* CourseDrawingHomeVC.swift in Sources */,
 				CEC2A6902962B06C00160BF7 /* convertLocationObject.swift in Sources */,
 				CEC2A6852961F92C00160BF7 /* CustomButton.swift in Sources */,
+				CE6B63D3296725E6003F900F /* CourseListCVC.swift in Sources */,
 				CE29D584296416D800F47542 /* caculateStatusBarHeight.swift in Sources */,
 				CE66560C295D928300C64E12 /* setRootViewController.swift in Sources */,
 				CE6655D9295D871B00C64E12 /* URL+.swift in Sources */,
@@ -993,6 +1058,7 @@
 				DA20D8432966977D00F1581F /* SearchResultViewController.swift in Sources */,
 				CE5875A4296015D2005D967E /* Encodable+.swift in Sources */,
 				A3BC2F4129667A0D00198261 /* NicknameEditorVC.swift in Sources */,
+				CE0C23742966D62A00B45063 /* PagedView.swift in Sources */,
 				CE14677A2965A80700DCEA1B /* CustomBottomSheetVC.swift in Sources */,
 				CEEC6B4B2961D89700D00E1E /* CustomNavigationBar.swift in Sources */,
 				CE17F02D2961BBA100E1DED0 /* ColorLiterals.swift in Sources */,
