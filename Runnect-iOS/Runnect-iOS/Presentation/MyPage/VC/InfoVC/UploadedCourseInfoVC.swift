@@ -27,7 +27,7 @@ final class UploadedCourseInfoVC: UIViewController {
     
     // MARK: - Constants
     
-    final let uploadedCourseInset: UIEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 25e, right: 16)
+    final let uploadedCourseInset: UIEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 25, right: 16)
     final let uploadedCourseLineSpacing: CGFloat = 20
     final let uploadedCourseItemSpacing: CGFloat = 10
     final let uplodaedCourseCellHeight: CGFloat = 124
