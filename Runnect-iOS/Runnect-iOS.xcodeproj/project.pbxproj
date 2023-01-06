@@ -18,10 +18,10 @@
 		A3BC2F3D296468E500198261 /* UploadedCourseInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F3C296468E500198261 /* UploadedCourseInfoModel.swift */; };
 		A3BC2F3F2964706100198261 /* UploadedCourseInfoCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F3E2964706100198261 /* UploadedCourseInfoCVC.swift */; };
 		A3BC2F4129667A0D00198261 /* NicknameEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F4029667A0D00198261 /* NicknameEditorVC.swift */; };
+		A3BC2F432966A93100198261 /* CourseDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F422966A93100198261 /* CourseDetailVC.swift */; };
 		CE0C23742966D62A00B45063 /* PagedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C23732966D62A00B45063 /* PagedView.swift */; };
 		CE0C23772966D64D00B45063 /* PageCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C23762966D64D00B45063 /* PageCVC.swift */; };
 		CE0C23792966D6AF00B45063 /* ViewPager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C23782966D6AF00B45063 /* ViewPager.swift */; };
-		A3BC2F432966A93100198261 /* CourseDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F422966A93100198261 /* CourseDetailVC.swift */; };
 		CE0D9FD329648DA300CEB5CD /* CustomAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0D9FD229648DA300CEB5CD /* CustomAlertVC.swift */; };
 		CE146770296568DC00DCEA1B /* RunTrackingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14676F296568DC00DCEA1B /* RunTrackingVC.swift */; };
 		CE14677829658C7200DCEA1B /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14677729658C7200DCEA1B /* Stopwatch.swift */; };
@@ -36,6 +36,9 @@
 		CE29D582296402B500F47542 /* CourseDrawingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE29D581296402B500F47542 /* CourseDrawingVC.swift */; };
 		CE29D584296416D800F47542 /* caculateStatusBarHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE29D583296416D800F47542 /* caculateStatusBarHeight.swift */; };
 		CE40BB1C2967E4910030ABCA /* RunningWaitingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40BB1B2967E4910030ABCA /* RunningWaitingVC.swift */; };
+		CE40BB1E2968054F0030ABCA /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40BB1D2968054F0030ABCA /* BaseResponse.swift */; };
+		CE40BB20296805F70030ABCA /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40BB1F296805F70030ABCA /* NetworkResult.swift */; };
+		CE40BB22296806140030ABCA /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40BB21296806140030ABCA /* NetworkHelper.swift */; };
 		CE4545C9295D7AF4003201E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545C8295D7AF4003201E1 /* AppDelegate.swift */; };
 		CE4545CB295D7AF4003201E1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CA295D7AF4003201E1 /* SceneDelegate.swift */; };
 		CE4545CD295D7AF4003201E1 /* TaBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CC295D7AF4003201E1 /* TaBarController.swift */; };
@@ -148,6 +151,9 @@
 		CE29D581296402B500F47542 /* CourseDrawingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDrawingVC.swift; sourceTree = "<group>"; };
 		CE29D583296416D800F47542 /* caculateStatusBarHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = caculateStatusBarHeight.swift; sourceTree = "<group>"; };
 		CE40BB1B2967E4910030ABCA /* RunningWaitingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningWaitingVC.swift; sourceTree = "<group>"; };
+		CE40BB1D2968054F0030ABCA /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
+		CE40BB1F296805F70030ABCA /* NetworkResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult.swift; sourceTree = "<group>"; };
+		CE40BB21296806140030ABCA /* NetworkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHelper.swift; sourceTree = "<group>"; };
 		CE4545C5295D7AF4003201E1 /* Runnect-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Runnect-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4545C8295D7AF4003201E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE4545CA295D7AF4003201E1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -161,7 +167,6 @@
 		CE5875A1296015A2005D967E /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
 		CE5875A3296015D2005D967E /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
 		CE6655BC295D82CF00C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		CE6655BD295D82D800C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE6655BE295D82E200C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE6655C0295D82F000C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE6655C1295D82F700C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
@@ -627,8 +632,10 @@
 		CE6655AF295D7FF600C64E12 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				CE6655BD295D82D800C64E12 /* .gitkeep */,
 				CE5875A1296015A2005D967E /* NetworkLoggerPlugin.swift */,
+				CE40BB1D2968054F0030ABCA /* BaseResponse.swift */,
+				CE40BB1F296805F70030ABCA /* NetworkResult.swift */,
+				CE40BB21296806140030ABCA /* NetworkHelper.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -983,6 +990,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE40BB20296805F70030ABCA /* NetworkResult.swift in Sources */,
 				CE665604295D91B100C64E12 /* makeAlert.swift in Sources */,
 				A3BC2F2F2962C40A00198261 /* UploadedCourseInfoVC.swift in Sources */,
 				CE6655EA295D88B200C64E12 /* UITabBar+.swift in Sources */,
@@ -992,6 +1000,7 @@
 				CE4545CD295D7AF4003201E1 /* TaBarController.swift in Sources */,
 				CE6655F4295D898400C64E12 /* UIViewController+.swift in Sources */,
 				CE14677829658C7200DCEA1B /* Stopwatch.swift in Sources */,
+				CE40BB22296806140030ABCA /* NetworkHelper.swift in Sources */,
 				CE5645162961B72E000A2856 /* ImageLiterals.swift in Sources */,
 				CE6655CD295D856300C64E12 /* KeyPathFindable.swift in Sources */,
 				CE29D582296402B500F47542 /* CourseDrawingVC.swift in Sources */,
@@ -1018,6 +1027,7 @@
 				CE6655E8295D889600C64E12 /* UISwitch+.swift in Sources */,
 				CE0C23772966D64D00B45063 /* PageCVC.swift in Sources */,
 				CE5875A029601500005D967E /* Toast.swift in Sources */,
+				CE40BB1E2968054F0030ABCA /* BaseResponse.swift in Sources */,
 				CE14677C2965C1B100DCEA1B /* RunningRecordVC.swift in Sources */,
 				CE6B63D829673450003F900F /* ListEmptyView.swift in Sources */,
 				CE6655F6295D90B600C64E12 /* addToolBar.swift in Sources */,
