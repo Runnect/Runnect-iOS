@@ -18,6 +18,7 @@ class MapCollectionViewCell: UICollectionViewCell {
     private let mapContainerView = UIView()
     private let mapImageView = UIImageView().then {
         $0.image = ImageLiterals.imgLogo
+        $0.layer.cornerRadius = 5
     }
     private let titleLabel = UILabel().then {
         $0.text = "제목제목제목제목제목"
@@ -29,9 +30,35 @@ class MapCollectionViewCell: UICollectionViewCell {
         $0.font = UIFont.b6
         $0.textColor = UIColor.g2
     }
-    private let heartButton = UIImageView().then {
+    let heartButton = UIImageView().then {
         $0.image = ImageLiterals.icHeartFill
     }
+    // MARK: - ClickAction Constants
+    var clickCount: Int = 0 {
+            didSet {
+                if clickCount == 0 {
+                    mapImageView.backgroundColor = UIColor.systemGray4
+                    mapImageView.alpha = 1
+                    mapImageView.layer.borderColor = UIColor.w1.cgColor
+                    mapImageView.layer.borderWidth = 0 } else {
+                    mapImageView.backgroundColor = UIColor.m1
+                    mapImageView.alpha = 0.15
+                    mapImageView.layer.borderColor = UIColor.purple.cgColor
+                    mapImageView.layer.borderWidth = 2
+                }
+            }
+        }
+        override var isSelected: Bool {
+            didSet {
+                if !isSelected {
+                    mapImageView.backgroundColor = UIColor.systemGray4
+                    mapImageView.alpha = 1
+                    mapImageView.layer.borderColor = UIColor.w1.cgColor
+                    mapImageView.layer.borderWidth = 0
+                    clickCount = 0
+                }
+            }
+        }
     // MARK: - Life cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,9 +75,11 @@ class MapCollectionViewCell: UICollectionViewCell {
 // MARK: - Extensions
 
 extension MapCollectionViewCell {
+    // MARK: - Function
+   
     // MARK: - Layout Helpers
     
-    private func layout() {
+    func layout() {
         contentView.backgroundColor = .clear
         mapImageView.backgroundColor = .systemGray4
         [mapContainerView, mapImageView, titleLabel, locationLabel, heartButton].forEach {

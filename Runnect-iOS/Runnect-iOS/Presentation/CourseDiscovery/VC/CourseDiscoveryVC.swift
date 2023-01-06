@@ -13,14 +13,13 @@ import SnapKit
 final class CourseDiscoveryVC: UIViewController {
     // MARK: - Properties
     private lazy var navibar = CustomNavigationBar(self, type: .title).setTitle("코스 발견")
-    private let searchButton = UIImageView().then {
-        $0.image = ImageLiterals.icSearch
+    private let searchButton = UIButton(type: .system).then {
+        $0.setImage(ImageLiterals.icSearch, for: .normal)
+        $0.tintColor = .g1
     }
-    private let plusButton = UIImageView().then {
-        $0.image = ImageLiterals.icPlus
-        
+    private let plusButton = UIButton(type: .system).then {
+        $0.setImage(ImageLiterals.icPlus, for: .normal)
     }
-    
     // MARK: - UIComponents
     private lazy var containerView = UIScrollView()
     private let adImageView = UIImageView().then {
@@ -42,7 +41,7 @@ final class CourseDiscoveryVC: UIViewController {
         return label
     }()
    
-    // MARK: - Reusable Components
+    // MARK: - collectionview
     private lazy var mapCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -58,6 +57,7 @@ final class CourseDiscoveryVC: UIViewController {
     }()
     
     // MARK: - Constants
+    
     var mapList: [MapModel] = [
     MapModel(mapImage: "", title: "제목제목제목제목", location: "00동00구"),
     MapModel(mapImage: "", title: "제목제목제목제목", location: "00동00구"),
@@ -68,8 +68,6 @@ final class CourseDiscoveryVC: UIViewController {
     MapModel(mapImage: "", title: "제목제목제목제목", location: "00동00구"),
     MapModel(mapImage: "", title: "제목제목제목제목", location: "00동00구")
     ]
-    // MARK: - Constants
-    
     final let inset: UIEdgeInsets = UIEdgeInsets(top: 10, left: 16, bottom: 0, right: 16)
     final let lineSpacing: CGFloat = 10
     final let interItemSpacing: CGFloat = 20
@@ -80,12 +78,34 @@ final class CourseDiscoveryVC: UIViewController {
         register()
         setNavigationBar()
         layout()
+        setAddTarget()
     }
 }
-// MARK: - Extension
+// MARK: - Methods
 
 extension CourseDiscoveryVC {
+    private func setAddTarget() {
+        self.searchButton.addTarget(self, action: #selector(presentToSearchVC), for: .touchUpInside)
+        self.plusButton.addTarget(self, action: #selector(presentToDiscoveryVC), for: .touchUpInside)
+    }
+}
+    
+    // MARK: - @objc Function
+
+    extension CourseDiscoveryVC {
+        @objc private func presentToSearchVC() {
+            let nextVC = SearchVC()
+            nextVC.modalPresentationStyle = .overFullScreen
+            self.present(nextVC, animated: true)
+        }
+        @objc private func presentToDiscoveryVC() {
+            let nextVC = PlusDetailVC()
+            self.navigationController?.pushViewController(nextVC, animated: true)
+        }
+    }
+
     // MARK: - UI & Layout
+extension CourseDiscoveryVC {
     private func setNavigationBar() {
         view.addSubview(navibar)
         view.addSubview(searchButton)
@@ -103,7 +123,7 @@ extension CourseDiscoveryVC {
     private func layout() {
         view.backgroundColor = .w1
         containerView.backgroundColor = .clear
-//        mapCollectionView.backgroundColor = .systemGray4
+        self.tabBarController?.tabBar.isHidden = false
         view.addSubview(containerView)
         view.addSubview(plusButton)
         self.view.bringSubviewToFront(plusButton)
@@ -142,14 +162,18 @@ extension CourseDiscoveryVC {
         }
         plusButton.snp.makeConstraints { make in
             make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(16)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(50)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(20)
         }
     }
+    // MARK: - register
+    
     private func register() {
-        mapCollectionView.register(MapCollectionViewCell.self,forCellWithReuseIdentifier: MapCollectionViewCell.identifier)
+        mapCollectionView.register(MapCollectionViewCell.self, forCellWithReuseIdentifier: MapCollectionViewCell.identifier)
     }
 }
+
     // MARK: - UICollectionViewDelegateFlowLayout
+
     extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
         func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
             let screenWidth = UIScreen.main.bounds.width
