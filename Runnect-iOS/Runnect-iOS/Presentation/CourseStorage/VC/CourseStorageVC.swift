@@ -39,12 +39,26 @@ final class CourseStorageVC: UIViewController {
 
 extension CourseStorageVC {
     private func bindUI() {
-        privateCourseListView.courseDrawButtonTapped.sink {
+        privateCourseListView.courseDrawButtonTapped.sink { [weak self] in
+            guard let self = self else { return }
             self.tabBarController?.selectedIndex = 0
         }.store(in: cancelBag)
         
-        scrapCourseListView.scrapButtonTapped.sink {
+        scrapCourseListView.scrapButtonTapped.sink { [weak self] in
+            guard let self = self else { return }
             self.tabBarController?.selectedIndex = 2
+        }.store(in: cancelBag)
+        
+        privateCourseListView.cellDidTapped.sink { [weak self] index in
+            guard let self = self else { return }
+            let runningWaitingVC = RunningWaitingVC()
+            runningWaitingVC.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(runningWaitingVC, animated: true)
+        }.store(in: cancelBag)
+        
+        scrapCourseListView.cellDidTapped.sink { [weak self] index in
+            guard let self = self else { return }
+            print(index)
         }.store(in: cancelBag)
     }
 }
