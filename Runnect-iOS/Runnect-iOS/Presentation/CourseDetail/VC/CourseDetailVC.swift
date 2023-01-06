@@ -9,15 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
-protocol CourseDetailVCDelegate: AnyObject {
-    func likeButtonTapped(wantsTolike: Bool)
-}
-
 final class CourseDetailVC: UIViewController {
-    
-    // MARK: - Properties
-    
-    weak var delegate: CourseDetailVCDelegate?
     
     // MARK: - UI Components
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton)
@@ -105,7 +97,6 @@ final class CourseDetailVC: UIViewController {
 extension CourseDetailVC {
     @objc func likeButtonDidTap(_ sender: UIButton) {
         sender.isSelected.toggle()
-        delegate?.likeButtonTapped(wantsTolike: (sender.isSelected == true))
     }
 }
 
