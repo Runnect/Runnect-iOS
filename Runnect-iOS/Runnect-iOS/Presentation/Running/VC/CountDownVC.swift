@@ -60,7 +60,7 @@ extension CountDownVC {
                 self.animateTimeLabel()
             } else {
                 let runTrackingVC = RunTrackingVC()
-                runTrackingVC.makePath(locations: self.locations, distance: self.distance ?? "0:0")
+                runTrackingVC.makePath(locations: self.locations, distance: self.distance ?? "0.0")
                 runTrackingVC.pathImage = self.pathImage
                 self.navigationController?.pushViewController(runTrackingVC, animated: true)
                 
