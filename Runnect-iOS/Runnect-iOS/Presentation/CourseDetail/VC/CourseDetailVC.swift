@@ -63,16 +63,10 @@ final class CourseDetailVC: UIViewController {
         $0.distribution = .fillEqually
     }
     
-    private let courseExplanationLabel = UITextField().then {
-        $0.resignFirstResponder()
+    private let courseExplanationLabel = UITextView().then {
         $0.text = nil
         $0.textColor = .g1
         $0.font = .b3
-        $0.attributedPlaceholder = NSAttributedString(
-            string: "내용을 입력하세요",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.g2, NSAttributedString.Key.font: UIFont.b6]
-        )
-        $0.keyboardType = .webSearch
     }
     
     // MARK: - View Life Cycle
@@ -87,12 +81,6 @@ final class CourseDetailVC: UIViewController {
 
 // MARK: - Method
 
-extension CourseDetailVC {
-    func addKeyboardNotification() {
-        
-    }
-    
-}
 
 extension CourseDetailVC {
     
@@ -202,17 +190,3 @@ extension CourseDetailVC {
     }
 }
 
-// MARK: - UITextFieldDelegate
-
-extension CourseDetailVC: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let text = textField.text else {return false}
-            
-        // 최대 글자수 이상을 입력한 이후에는 중간에 다른 글자를 추가할 수 없게끔 작동
-        if text.count >= textFieldMaxLength && range.length == 0 && range.location < textFieldMaxLength {
-            return false
-        }
-            
-        return true
-    }
-}
