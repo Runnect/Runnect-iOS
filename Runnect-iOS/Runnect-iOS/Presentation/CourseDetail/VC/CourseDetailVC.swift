@@ -88,7 +88,7 @@ final class CourseDetailVC: UIViewController {
         setNavigationBar()
         setUI()
         setLayout()
-        likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
+        setAddTarget()
     }
 }
 
@@ -98,15 +98,19 @@ extension CourseDetailVC {
     @objc func likeButtonDidTap(_ sender: UIButton) {
         sender.isSelected.toggle()
     }
+    
+    @objc private func pushToCountDownVC() {
+        let countDownVC = CountDownVC()
+        countDownVC.setData(locations: [], distance: "1.0", pathImage: UIImage())
+        self.navigationController?.pushViewController(countDownVC, animated: true)
+    }
 }
 
 // MARK: - Method
 
 extension CourseDetailVC {
-    @objc private func pushToCountDownVC() {
-        let countDownVC = CountDownVC()
-        countDownVC.setData(locations: [], distance: "1.0", pathImage: UIImage())
-        self.navigationController?.pushViewController(countDownVC, animated: true)
+    private func setAddTarget() {
+        likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
     }
 }
 
