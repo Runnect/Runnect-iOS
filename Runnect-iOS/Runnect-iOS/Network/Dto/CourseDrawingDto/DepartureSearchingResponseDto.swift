@@ -7,18 +7,19 @@
 
 import Foundation
 
-// MARK: - Empty
+// MARK: - DepartureSearchingResponseDto
+
 struct DepartureSearchingResponseDto: Codable {
     let documents: [KakaoAddressResult]
-//    let meta: Meta
 }
 
-// MARK: - Document
+// MARK: - KakaoAddressResult
+
 struct KakaoAddressResult: Codable {
     let addressName, categoryGroupCode, categoryGroupName, categoryName: String
     let distance, id, phone, placeName: String
     let placeURL: String
-    let roadAddressName, x, y: String
+    let roadAddressName, latitude, longitude: String
 
     enum CodingKeys: String, CodingKey {
         case addressName = "address_name"
@@ -29,6 +30,7 @@ struct KakaoAddressResult: Codable {
         case placeName = "place_name"
         case placeURL = "place_url"
         case roadAddressName = "road_address_name"
-        case x, y
+        case longitude = "x"
+        case latitude = "y"
     }
 }

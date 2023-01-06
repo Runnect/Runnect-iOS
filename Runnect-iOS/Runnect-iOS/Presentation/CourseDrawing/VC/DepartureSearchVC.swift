@@ -17,9 +17,13 @@ final class DepartureSearchVC: UIViewController {
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
+    private var addressList = [KakaoAddressResult]()
+    
     // MARK: - UI Components
     
-    private lazy var naviBar = CustomNavigationBar(self, type: .search).setTextFieldPlaceholder(placeholder: "지역과 키워드 위주로 검색해보세요")
+    private lazy var naviBar = CustomNavigationBar(self, type: .search)
+        .setTextFieldPlaceholder(placeholder: "지역과 키워드 위주로 검색해보세요")
+        .showKeyboard()
     
     private let dividerView = UIView().then {
         $0.backgroundColor = .g5
@@ -73,6 +77,12 @@ extension DepartureSearchVC {
         self.locationTableView.register(LocationSearchResultTVC.self,
                                         forCellReuseIdentifier: LocationSearchResultTVC.className)
     }
+    
+    func setData(data: [KakaoAddressResult]) {
+        self.addressList = data
+        emptyDataView.isHidden = !data.isEmpty
+        locationTableView.reloadData()
+    }
 }
 
 // MARK: - UI & Layout
@@ -113,7 +123,7 @@ extension DepartureSearchVC {
 
 extension DepartureSearchVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return addressList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -121,6 +131,7 @@ extension DepartureSearchVC: UITableViewDelegate, UITableViewDataSource {
                 as? LocationSearchResultTVC
         else { return UITableViewCell() }
         cell.selectionStyle = .none
+        cell.setData(model: self.addressList[indexPath.item])
         return cell
     }
     
@@ -156,7 +167,7 @@ extension DepartureSearchVC {
                 if 200..<300 ~= status {
                     do {
                         let responseDto = try result.map(DepartureSearchingResponseDto.self)
-                        print(responseDto)
+                        self.setData(data: responseDto.documents)
                     } catch {
                         print(error.localizedDescription)
                     }

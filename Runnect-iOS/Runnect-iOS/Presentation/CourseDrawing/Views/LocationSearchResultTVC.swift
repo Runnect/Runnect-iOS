@@ -51,6 +51,15 @@ final class LocationSearchResultTVC: UITableViewCell {
     }
 }
 
+// MARK: - Methods
+
+extension LocationSearchResultTVC {
+    func setData(model: KakaoAddressResult) {
+        self.locationLabel.text = model.placeName
+        self.detailLocationLabel.text = model.addressName
+    }
+}
+
 // MARK: - UI & Layout
 
 extension LocationSearchResultTVC {
