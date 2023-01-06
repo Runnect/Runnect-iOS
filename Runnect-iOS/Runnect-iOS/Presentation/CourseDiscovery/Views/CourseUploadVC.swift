@@ -157,6 +157,7 @@ extension CourseUploadVC {
     }
     
     // MARK: - Layout Helpers
+    
     private func setLayout() {
         view.addSubview(buttonContainerView)
         view.bringSubviewToFront(uploadButton)
@@ -222,7 +223,7 @@ extension CourseUploadVC {
             make.height.equalTo(187)
         }
        
-    }
+}
     
     func setupTextView() {
         activityTextView.delegate = self
@@ -231,8 +232,6 @@ extension CourseUploadVC {
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
-        
-        
     }
 }
 
