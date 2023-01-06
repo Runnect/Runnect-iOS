@@ -9,9 +9,15 @@ import UIKit
 import SnapKit
 import Then
 
+protocol CourseDetailVCDelegate: AnyObject {
+    func likeButtonTapped(wantsTolike: Bool)
+}
+
 final class CourseDetailVC: UIViewController {
     
-    private var textFieldMaxLength: Int = 150
+    // MARK: - Properties
+    
+    weak var delegate: CourseDetailVCDelegate?
     
     // MARK: - UI Components
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton)
@@ -24,9 +30,11 @@ final class CourseDetailVC: UIViewController {
     private let secondHorizontalDivideLine = UIView()
     private let thirdHorizontalDivideLine = UIView()
     
-    private let likeButton = UIButton(type: .system).then {
+    private lazy var likeButton = UIButton(type: .custom).then {
         $0.setImage(ImageLiterals.icHeart, for: .normal)
+        $0.setImage(ImageLiterals.icHeartFill, for: .selected)
         $0.tintColor = .g2
+        $0.backgroundColor = .w1
     }
     
     private let startButton = CustomButton(title: "시작하기")
@@ -86,6 +94,16 @@ final class CourseDetailVC: UIViewController {
         setNavigationBar()
         setUI()
         setLayout()
+        likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
+    }
+}
+
+// MARK: - @objc Function
+
+extension CourseDetailVC {
+    @objc func likeButtonDidTap(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        delegate?.likeButtonTapped(wantsTolike: (sender.isSelected == true))
     }
 }
 
