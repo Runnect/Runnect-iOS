@@ -13,6 +13,7 @@ final class ScrapCourseListView: UIView {
     // MARK: - Properties
     
     var scrapButtonTapped = PassthroughSubject<Void, Never>()
+    var cellDidTapped = PassthroughSubject<Int, Never>()
     
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
     final let itemSpacing: CGFloat = 10
@@ -125,6 +126,10 @@ extension ScrapCourseListView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return self.lineSpacing
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.cellDidTapped.send(indexPath.item)
     }
 }
 
