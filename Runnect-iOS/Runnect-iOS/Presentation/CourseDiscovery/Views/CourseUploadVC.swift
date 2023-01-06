@@ -7,6 +7,9 @@
 
 import UIKit
 
+import SnapKit
+import Then
+
 class CourseUploadVC: UIViewController {
     
     // MARK: - UI Components
@@ -26,9 +29,16 @@ class CourseUploadVC: UIViewController {
         $0.textColor = .g1
         $0.addLeftPadding(width: 2)
     }
-    private let distanceInfoView = CourseDetailInfoView(title: "거리",description: "0.0km")
-    
+    private let distanceInfoView = CourseDetailInfoView(title: "거리", description: "0.0km")
     private let departureInfoView = CourseDetailInfoView(title: "출발지", description: "패스트파이브 을지로점")
+    private let placeholder = "코스에 대한 소개를 적어주세요.(난이도/풍경/지형)"
+    
+    let activityTextView = UITextView().then {
+        $0.font = .b4
+        $0.backgroundColor = .m3
+        $0.tintColor = .m1
+        $0.textContainerInset = UIEdgeInsets(top: 14, left: 12, bottom: 14, right: 12)
+    }
     
     // MARK: - Life Cycle
     
@@ -37,6 +47,7 @@ class CourseUploadVC: UIViewController {
         setNavigationBar()
         setUI()
         setLayout()
+        setupTextView()
 
     }
     
@@ -79,7 +90,8 @@ extension CourseUploadVC {
                          courseTitleTextField,
                          distanceInfoView,
                          departureInfoView,
-                         buttonContainerView)
+                         buttonContainerView,
+                         activityTextView)
         buttonContainerView.addSubview(uploadButton)
         self.view.bringSubviewToFront(uploadButton)
         
@@ -104,6 +116,11 @@ extension CourseUploadVC {
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(16)
         }
+        activityTextView.snp.makeConstraints { make in
+            make.top.equalTo(departureInfoView.snp.bottom).offset(34)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.bottom.equalTo(buttonContainerView.snp.top).offset(-13)
+        }
         buttonContainerView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(86)
@@ -115,7 +132,39 @@ extension CourseUploadVC {
             make.bottom.equalToSuperview().inset(34)
         }
     }
-    private func setTextFieldBottomBorder() {
-        courseTitleTextField.addBottomBorder(height: 2)
+    
+    func setupTextView() {
+        activityTextView.delegate = self
+        activityTextView.text = placeholder
+        activityTextView.textColor = .g3
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+}
+
+extension CourseUploadVC: UITextViewDelegate {
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            activityTextView.textColor = .g3
+            activityTextView.text = placeholder
+        } else if textView.text == placeholder {
+            activityTextView.textColor = .g1
+            activityTextView.text = nil
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if activityTextView.text.count > 150 {
+            activityTextView.deleteBackward()
+        }
+    }
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || textView.text == placeholder {
+            activityTextView.textColor = .g3
+            activityTextView.text = placeholder
+            uploadButton.setColor(bgColor: .m3, disableColor: .g3)
+        }
     }
 }
