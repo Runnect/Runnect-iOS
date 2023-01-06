@@ -85,21 +85,20 @@ final class CourseDiscoveryVC: UIViewController {
 
 extension CourseDiscoveryVC {
     private func setAddTarget() {
-        self.searchButton.addTarget(self, action: #selector(presentToSearchVC), for: .touchUpInside)
-        self.plusButton.addTarget(self, action: #selector(presentToDiscoveryVC), for: .touchUpInside)
+        self.searchButton.addTarget(self, action: #selector(pushToSearchVC), for: .touchUpInside)
+        self.plusButton.addTarget(self, action: #selector(pushToDiscoveryVC), for: .touchUpInside)
     }
 }
     
     // MARK: - @objc Function
 
     extension CourseDiscoveryVC {
-        @objc private func presentToSearchVC() {
+        @objc private func pushToSearchVC() {
             let nextVC = SearchVC()
-            nextVC.modalPresentationStyle = .overFullScreen
-            self.present(nextVC, animated: true)
+            self.navigationController?.pushViewController(nextVC, animated: true)
         }
-        @objc private func presentToDiscoveryVC() {
-            let nextVC = PlusDetailVC()
+        @objc private func pushToDiscoveryVC() {
+            let nextVC = MyCourseSelectVC()
             self.navigationController?.pushViewController(nextVC, animated: true)
         }
     }

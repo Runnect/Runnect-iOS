@@ -56,6 +56,7 @@ class MyCourseSelectVC: UIViewController {
         setUI()
         setLayout()
         setAddTarget()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -67,17 +68,18 @@ class MyCourseSelectVC: UIViewController {
 
 extension MyCourseSelectVC {
     private func setAddTarget() {
-        self.selectButton.addTarget(self, action: #selector(presentToUploadVC), for: .touchUpInside)
+        self.selectButton.addTarget(self, action: #selector(pushToUploadVC), for: .touchUpInside)
     }
 }
     // MARK: - @objc Function
 
     extension MyCourseSelectVC {
-        @objc private func presentToUploadVC() {
-            let nextVC = UploadVC()
+        @objc private func pushToUploadVC() {
+            let nextVC = CourseUploadVC()
             self.navigationController?.pushViewController(nextVC, animated: true)
         }
     }
+
     // MARK: - naviVar Layout
 
 extension MyCourseSelectVC {
