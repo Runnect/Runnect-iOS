@@ -23,6 +23,7 @@
 		CE0C23772966D64D00B45063 /* PageCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C23762966D64D00B45063 /* PageCVC.swift */; };
 		CE0C23792966D6AF00B45063 /* ViewPager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C23782966D6AF00B45063 /* ViewPager.swift */; };
 		CE0D9FD329648DA300CEB5CD /* CustomAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0D9FD229648DA300CEB5CD /* CustomAlertVC.swift */; };
+		CE10065529680F7000FD31FB /* DepartureSearchingResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10065429680F7000FD31FB /* DepartureSearchingResponseDto.swift */; };
 		CE146770296568DC00DCEA1B /* RunTrackingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14676F296568DC00DCEA1B /* RunTrackingVC.swift */; };
 		CE14677829658C7200DCEA1B /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14677729658C7200DCEA1B /* Stopwatch.swift */; };
 		CE14677A2965A80700DCEA1B /* CustomBottomSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1467792965A80700DCEA1B /* CustomBottomSheetVC.swift */; };
@@ -141,7 +142,6 @@
 		CE0C23782966D6AF00B45063 /* ViewPager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPager.swift; sourceTree = "<group>"; };
 		CE0D9FD229648DA300CEB5CD /* CustomAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertVC.swift; sourceTree = "<group>"; };
 		CE10063929680C5700FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		CE10063A29680C6100FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10063B29680C6800FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10063C29680C7000FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10063D29680C8100FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
@@ -160,6 +160,7 @@
 		CE10065129680D3F00FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10065229680D4400FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10065329680D5400FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CE10065429680F7000FD31FB /* DepartureSearchingResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureSearchingResponseDto.swift; sourceTree = "<group>"; };
 		CE14676F296568DC00DCEA1B /* RunTrackingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunTrackingVC.swift; sourceTree = "<group>"; };
 		CE14677729658C7200DCEA1B /* Stopwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
 		CE1467792965A80700DCEA1B /* CustomBottomSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheetVC.swift; sourceTree = "<group>"; };
@@ -407,7 +408,7 @@
 		CE10063729680C2400FD31FB /* CourseDrawingDto */ = {
 			isa = PBXGroup;
 			children = (
-				CE10063A29680C6100FD31FB /* .gitkeep */,
+				CE10065429680F7000FD31FB /* DepartureSearchingResponseDto.swift */,
 			);
 			path = CourseDrawingDto;
 			sourceTree = "<group>";
@@ -765,8 +766,8 @@
 		CE6655A9295D7FAA00C64E12 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				CE6655B0295D800700C64E12 /* Dto */,
 				CE6655AF295D7FF600C64E12 /* Foundation */,
+				CE6655B0295D800700C64E12 /* Dto */,
 				CE6655AE295D7FF000C64E12 /* Service */,
 				CE6655AD295D7FEA00C64E12 /* Router */,
 				CE6655AC295D7FE400C64E12 /* Model */,
@@ -1221,6 +1222,7 @@
 				A3BC2F2B2962C3D500198261 /* GoalRewardInfoVC.swift in Sources */,
 				CE665606295D91C500C64E12 /* makeVibrate.swift in Sources */,
 				CE66560A295D924A00C64E12 /* Result+.swift in Sources */,
+				CE10065529680F7000FD31FB /* DepartureSearchingResponseDto.swift in Sources */,
 				DA20D847296697A600F1581F /* PlusDetailVC.swift in Sources */,
 				CE66560E295D92A500C64E12 /* setStatusBarBackgroundColor.swift in Sources */,
 				CE9291292965E01D0010959C /* RNTimeFormatter.swift in Sources */,

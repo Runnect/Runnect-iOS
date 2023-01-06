@@ -13,6 +13,10 @@ public extension UIViewController {
     func showToast(message: String) {
         Toast.show(message: message, view: self.view, safeAreaBottomInset: self.safeAreaBottomInset())
     }
+    
+    func showNetworkFailureToast() {
+        showToast(message: "네트워크 통신 실패")
+    }
 }
 
 public class Toast {

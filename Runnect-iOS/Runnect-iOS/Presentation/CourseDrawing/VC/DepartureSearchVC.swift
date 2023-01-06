@@ -7,7 +7,15 @@
 
 import UIKit
 
+import Moya
+
 final class DepartureSearchVC: UIViewController {
+    
+    // MARK: - Properties
+    
+    private let departureSearchingProvider = MoyaProvider<DepartureSearchingRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
     
     // MARK: - UI Components
     
@@ -131,7 +139,35 @@ extension DepartureSearchVC: UITableViewDelegate, UITableViewDataSource {
 
 extension DepartureSearchVC: CustomNavigationBarDelegate {
     func searchButtonDidTap(text: String) {
-        print(text)
-        // 서버 통신 구현
+        searchAddressWithKeyword(keyword: text)
+    }
+}
+
+// MARK: - Network
+
+extension DepartureSearchVC {
+    private func searchAddressWithKeyword(keyword: String) {
+        departureSearchingProvider
+            .request(.getAddress(keyword: keyword)) { [weak self] response in
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    do {
+                        let responseDto = try result.map(DepartureSearchingResponseDto.self)
+                        print(responseDto)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if status >= 400 {
+                    print("400 error")
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showToast(message: "네트워크 통신 실패")
+            }
+        }
     }
 }

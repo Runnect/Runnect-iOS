@@ -43,7 +43,7 @@ extension DepartureSearchingRouter: TargetType {
         }
     }
     
-    var headers: [String : String]? {
+    var headers: [String: String]? {
         return ["Content-Type": "application/json",
                 "Authorization": "KakaoAK \(Config.kakaoRestAPIKey)"]
     }
