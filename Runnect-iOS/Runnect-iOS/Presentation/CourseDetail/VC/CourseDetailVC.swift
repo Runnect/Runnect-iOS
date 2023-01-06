@@ -15,10 +15,14 @@ final class CourseDetailVC: UIViewController {
     
     // MARK: - UI Components
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton)
-    private let middleScorollView = UIScrollView()
+    private lazy var middleScorollView = UIScrollView().then {
+        $0.isScrollEnabled = true
+        $0.showsVerticalScrollIndicator = false
+    }
     private let bottomView = UIView()
     private let firstHorizontalDivideLine = UIView()
     private let secondHorizontalDivideLine = UIView()
+    private let thirdHorizontalDivideLine = UIView()
     
     private let likeButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icHeart, for: .normal)
@@ -63,10 +67,16 @@ final class CourseDetailVC: UIViewController {
         $0.distribution = .fillEqually
     }
     
-    private let courseExplanationLabel = UITextView().then {
-        $0.text = nil
-        $0.textColor = .g1
-        $0.font = .b3
+    private lazy var courseExplanationTextView = UITextView().then {
+        $0.text = "석촌 호수 한 바퀴 뛰는 코스에요! 평탄한 길과 느린 페이스, 난이도 하 코스입니다! 롯데월드 야경 감상 하면서 뛰기에 좋은 야간 코스에요! 석촌 호수 한 바퀴 뛰는 코스에요! 평탄한 길과 느린 페이스, 난이도 하 코스입니다! 롯데월드 야경 감상 하면서 뛰기에 좋은"
+        $0.isEditable = false
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 10
+        let attributedString = NSMutableAttributedString(string: $0.text, attributes: [.font: UIFont.b3, .foregroundColor: UIColor.g1])
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
+        $0.attributedText = attributedString
+        $0.isScrollEnabled = false
+        $0.sizeToFit()
     }
     
     // MARK: - View Life Cycle
@@ -78,9 +88,6 @@ final class CourseDetailVC: UIViewController {
         setLayout()
     }
 }
-
-// MARK: - Method
-
 
 extension CourseDetailVC {
     
@@ -96,19 +103,26 @@ extension CourseDetailVC {
     
     private func setUI() {
         view.backgroundColor = .w1
-        bottomView.backgroundColor = .blue
-        middleScorollView.backgroundColor = .brown
+        bottomView.backgroundColor = .w1
+        middleScorollView.backgroundColor = .w1
         mapImage.backgroundColor = .g3
         firstHorizontalDivideLine.backgroundColor = .g3
         secondHorizontalDivideLine.backgroundColor = .g5
+        thirdHorizontalDivideLine.backgroundColor = .g3
     }
     
     private func setLayout() {
-        view.addSubviews(middleScorollView, bottomView)
+        view.addSubviews(middleScorollView, thirdHorizontalDivideLine, bottomView)
         
         bottomView.snp.makeConstraints { make in
             make.bottom.leading.trailing.equalToSuperview()
             make.height.equalTo(84)
+        }
+        
+        thirdHorizontalDivideLine.snp.makeConstraints { make in
+            make.bottom.equalTo(bottomView.snp.top)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(0.5)
         }
         
         bottomView.addSubviews(likeButton, startButton)
@@ -134,13 +148,14 @@ extension CourseDetailVC {
         middleScorollView.snp.makeConstraints { make in
             make.top.equalTo(navibar.snp.bottom)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(thirdHorizontalDivideLine.snp.top)
         }
         
-        middleScorollView.addSubviews(mapImage, profileImage, profileNameLabel, runningLevelLabel, firstHorizontalDivideLine, courseTitleLabel, courseDetailStackView, secondHorizontalDivideLine, courseExplanationLabel)
+        middleScorollView.addSubviews(mapImage, profileImage, profileNameLabel, runningLevelLabel, firstHorizontalDivideLine, courseTitleLabel, courseDetailStackView, secondHorizontalDivideLine, courseExplanationTextView)
         
         mapImage.snp.makeConstraints { make in
-            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalToSuperview()
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(middleScorollView.snp.width).multipliedBy(0.7)
         }
         
@@ -182,11 +197,10 @@ extension CourseDetailVC {
             make.height.equalTo(8)
         }
         
-        courseExplanationLabel.snp.makeConstraints { make in
-            make.top.equalTo(secondHorizontalDivideLine.snp.bottom).offset(3)
+        courseExplanationTextView.snp.makeConstraints { make in
+            make.top.equalTo(secondHorizontalDivideLine.snp.bottom).offset(17)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.height.equalTo(135)
+            make.bottom.equalToSuperview().inset(20)
         }
     }
 }
-
