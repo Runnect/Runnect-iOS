@@ -302,5 +302,5 @@ extension MyPageVC {
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(60)
         }
-    }
+    }    
 }
