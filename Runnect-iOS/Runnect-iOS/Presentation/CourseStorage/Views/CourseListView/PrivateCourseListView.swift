@@ -13,6 +13,7 @@ final class PrivateCourseListView: UIView {
     // MARK: - Properties
     
     var courseDrawButtonTapped = PassthroughSubject<Void, Never>()
+    var cellDidTapped = PassthroughSubject<Int, Never>()
     
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
     final let itemSpacing: CGFloat = 10
@@ -125,6 +126,10 @@ extension PrivateCourseListView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return self.lineSpacing
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        cellDidTapped.send(indexPath.item)
     }
 }
 

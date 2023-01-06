@@ -27,7 +27,7 @@ final class UploadedCourseInfoVC: UIViewController {
     
     // MARK: - Constants
     
-    final let uploadedCourseInset: UIEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)
+    final let uploadedCourseInset: UIEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 25, right: 16)
     final let uploadedCourseLineSpacing: CGFloat = 20
     final let uploadedCourseItemSpacing: CGFloat = 10
     final let uplodaedCourseCellHeight: CGFloat = 124
@@ -84,7 +84,7 @@ extension UploadedCourseInfoVC {
         UploadedCourseInfoCollectionView.snp.makeConstraints {  make in
             make.top.equalTo(navibar.snp.bottom)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
