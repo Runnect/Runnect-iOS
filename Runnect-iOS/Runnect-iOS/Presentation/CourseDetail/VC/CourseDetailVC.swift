@@ -37,7 +37,9 @@ final class CourseDetailVC: UIViewController {
         $0.backgroundColor = .w1
     }
     
-    private let startButton = CustomButton(title: "시작하기")
+    private lazy var startButton = CustomButton(title: "시작하기").then {
+        $0.addTarget(self, action: #selector(pushToCountDownVC), for: .touchUpInside)
+    }
     
     private let mapImage = UIImageView()
     private let profileImage = UIImageView().then {
@@ -104,6 +106,16 @@ extension CourseDetailVC {
     @objc func likeButtonDidTap(_ sender: UIButton) {
         sender.isSelected.toggle()
         delegate?.likeButtonTapped(wantsTolike: (sender.isSelected == true))
+    }
+}
+
+// MARK: - Method
+
+extension CourseDetailVC {
+    @objc private func pushToCountDownVC() {
+        let countDownVC = CountDownVC()
+        countDownVC.setData(locations: [], distance: "1.0", pathImage: UIImage())
+        self.navigationController?.pushViewController(countDownVC, animated: true)
     }
 }
 
