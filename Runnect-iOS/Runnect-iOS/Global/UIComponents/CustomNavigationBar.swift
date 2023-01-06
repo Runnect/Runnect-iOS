@@ -47,6 +47,7 @@ final class CustomNavigationBar: UIView {
         self.setUI(type)
         self.setLayout(type)
         self.setAddTarget()
+        self.setDelegate()
     }
     
     required init?(coder: NSCoder) {
@@ -68,6 +69,10 @@ extension CustomNavigationBar {
     private func setAddTarget() {
         self.leftButton.addTarget(self, action: #selector(popToPreviousVC), for: .touchUpInside)
         self.rightButton.addTarget(self, action: #selector(searchLocation), for: .touchUpInside)
+    }
+    
+    private func setDelegate() {
+        textField.delegate = self
     }
     
     @discardableResult
@@ -125,6 +130,12 @@ extension CustomNavigationBar {
         self.rightButton.isHidden = true
         return self
     }
+    
+    @discardableResult
+    func hideKeyboard() -> Self {
+        self.textField.resignFirstResponder()
+        return self
+    }
 }
 
 // MARK: - @objc Function
@@ -136,6 +147,7 @@ extension CustomNavigationBar {
     
     @objc private func searchLocation() {
         guard let text = textField.text else { return }
+        self.hideKeyboard()
         delegate?.searchButtonDidTap(text: text)
     }
     
@@ -152,6 +164,7 @@ extension CustomNavigationBar {
 
 extension CustomNavigationBar {
     private func setUI(_ type: NaviType) {
+        self.textField.returnKeyType = .search
         self.naviType = type
         self.backgroundColor = .m4
         
@@ -231,5 +244,16 @@ extension CustomNavigationBar {
             make.leading.equalTo(leftButton.snp.trailing)
             make.trailing.equalTo(rightButton.snp.leading)
         }
+    }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension CustomNavigationBar: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard let text = textField.text else { return true }
+        delegate?.searchButtonDidTap(text: text)
+        self.hideKeyboard()
+        return true
     }
 }

@@ -35,7 +35,7 @@ final class LocationSearchResultTVC: UITableViewCell {
     }
     
     private let dividerView = UIView().then {
-        $0.backgroundColor = .g4
+        $0.backgroundColor = .g5
     }
     
     // MARK: - initialization

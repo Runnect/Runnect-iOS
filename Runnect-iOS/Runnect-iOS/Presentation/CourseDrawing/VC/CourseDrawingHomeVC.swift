@@ -45,6 +45,7 @@ extension CourseDrawingHomeVC {
 extension CourseDrawingHomeVC {
     @objc private func pushToDepartureSearchVC() {
         let departureSearchVC = DepartureSearchVC()
+        departureSearchVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(departureSearchVC, animated: true)
     }
 }

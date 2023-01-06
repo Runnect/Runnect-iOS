@@ -144,6 +144,10 @@ extension DepartureSearchVC: UITableViewDelegate, UITableViewDataSource {
         courseDrawingVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(courseDrawingVC, animated: true)
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.naviBar.hideKeyboard()
+    }
 }
 
 // MARK: - CustomNavigationBarDelegate
@@ -158,9 +162,11 @@ extension DepartureSearchVC: CustomNavigationBarDelegate {
 
 extension DepartureSearchVC {
     private func searchAddressWithKeyword(keyword: String) {
+        LoadingIndicator.showLoading()
         departureSearchingProvider
             .request(.getAddress(keyword: keyword)) { [weak self] response in
             guard let self = self else { return }
+            LoadingIndicator.hideLoading()
             switch response {
             case .success(let result):
                 let status = result.statusCode
@@ -174,6 +180,7 @@ extension DepartureSearchVC {
                 }
                 if status >= 400 {
                     print("400 error")
+                    self.setData(data: [])
                 }
             case .failure(let error):
                 print(error.localizedDescription)

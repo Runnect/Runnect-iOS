@@ -24,4 +24,9 @@ extension UIViewController {
     func dismissKeyboard() {
         view.endEditing(true)
     }
+    
+    /// tabBar 숨기기
+    func hideTabBar(wantsToHide: Bool) {
+        self.tabBarController?.tabBar.isHidden = wantsToHide
+    }
 }
