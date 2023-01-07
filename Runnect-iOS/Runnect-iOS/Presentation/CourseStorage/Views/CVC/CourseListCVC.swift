@@ -101,6 +101,15 @@ extension CourseListCVC {
             self.likeButton.isSelected = didLike
         }
     }
+    
+    func selectCell(didSelect: Bool) {
+        if didSelect {
+            courseImageView.layer.borderColor = UIColor.m1.cgColor
+            courseImageView.layer.borderWidth = 2
+        } else {
+            courseImageView.layer.borderColor = UIColor.clear.cgColor
+        }
+    }
 }
 
 // MARK: - @objc Function
