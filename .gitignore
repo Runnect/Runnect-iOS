@@ -108,3 +108,4 @@ iOSInjectionProject/
 
 # End of https://www.toptal.com/developers/gitignore/api/xcode,swift,cocoapods
 .DS_Store
+Config.swift

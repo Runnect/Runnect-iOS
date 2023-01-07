@@ -35,7 +35,7 @@ final class LocationSearchResultTVC: UITableViewCell {
     }
     
     private let dividerView = UIView().then {
-        $0.backgroundColor = .g4
+        $0.backgroundColor = .g5
     }
     
     // MARK: - initialization
@@ -48,6 +48,15 @@ final class LocationSearchResultTVC: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: - Methods
+
+extension LocationSearchResultTVC {
+    func setData(model: KakaoAddressResult) {
+        self.locationLabel.text = model.placeName
+        self.detailLocationLabel.text = model.addressName
     }
 }
 

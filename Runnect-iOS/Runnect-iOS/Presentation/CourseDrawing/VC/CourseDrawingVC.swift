@@ -11,6 +11,9 @@ import Combine
 final class CourseDrawingVC: UIViewController {
     
     // MARK: - Properties
+    
+    private var departureLocationModel: DepartureLocationModel?
+    
     var pathImage: UIImage?
     
     private var cancelBag = CancelBag()
@@ -36,7 +39,7 @@ final class CourseDrawingVC: UIViewController {
         $0.axis = .vertical
     }
     
-    private let mapView = RNMapView().makeStartMarkerAtUserLocation()
+    private let mapView = RNMapView()
     
     private let departureLocationLabel = UILabel().then {
         $0.font = .b1
@@ -107,6 +110,14 @@ final class CourseDrawingVC: UIViewController {
 // MARK: - Methods
 
 extension CourseDrawingVC {
+    func setData(model: DepartureLocationModel) {
+        self.departureLocationModel = model
+        
+        self.mapView.makeStartMarker(at: model.toNMGLatLng(), withCameraMove: true)
+        self.departureLocationLabel.text = model.departureName
+        self.departureDetailLocationLabel.text = model.departureAddress
+    }
+    
     private func setAddTarget() {
         self.decideDepartureButton.addTarget(self, action: #selector(decideDepartureButtonDidTap), for: .touchUpInside)
         self.undoButton.addTarget(self, action: #selector(undoButtonDidTap), for: .touchUpInside)
@@ -133,8 +144,8 @@ extension CourseDrawingVC {
         }.store(in: cancelBag)
     }
     
-    private func setNavigationGesture(_ enabled: Bool) {
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = enabled
+    private func setNavigationGesture(_ isEnabled: Bool) {
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = isEnabled
     }
     
     private func presentAlertVC() {

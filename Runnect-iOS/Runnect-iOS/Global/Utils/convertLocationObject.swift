@@ -27,3 +27,15 @@ extension NMGLatLng {
         return CLLocation(latitude: lat, longitude: lng)
     }
 }
+
+extension DepartureLocationModel {
+    func toNMGLatLng() -> NMGLatLng {
+        guard let lat = Double(self.latitude),
+                let lng = Double(self.longitude)
+        else {
+            return NMGLatLng(lat: 37.52901832956373, lng: 126.9136196847032)
+        }
+        
+        return NMGLatLng(lat: lat, lng: lng)
+    }
+}

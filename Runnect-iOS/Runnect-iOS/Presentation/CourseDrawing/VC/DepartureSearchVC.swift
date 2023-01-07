@@ -7,11 +7,23 @@
 
 import UIKit
 
+import Moya
+
 final class DepartureSearchVC: UIViewController {
+    
+    // MARK: - Properties
+    
+    private let departureSearchingProvider = MoyaProvider<DepartureSearchingRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
+    
+    private var addressList = [KakaoAddressResult]()
     
     // MARK: - UI Components
     
-    private lazy var naviBar = CustomNavigationBar(self, type: .search).setTextFieldPlaceholder(placeholder: "지역과 키워드 위주로 검색해보세요")
+    private lazy var naviBar = CustomNavigationBar(self, type: .search)
+        .setTextFieldPlaceholder(placeholder: "지역과 키워드 위주로 검색해보세요")
+        .showKeyboard()
     
     private let dividerView = UIView().then {
         $0.backgroundColor = .g5
@@ -65,6 +77,12 @@ extension DepartureSearchVC {
         self.locationTableView.register(LocationSearchResultTVC.self,
                                         forCellReuseIdentifier: LocationSearchResultTVC.className)
     }
+    
+    func setData(data: [KakaoAddressResult]) {
+        self.addressList = data
+        emptyDataView.isHidden = !data.isEmpty
+        locationTableView.reloadData()
+    }
 }
 
 // MARK: - UI & Layout
@@ -105,7 +123,7 @@ extension DepartureSearchVC {
 
 extension DepartureSearchVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return addressList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -113,6 +131,7 @@ extension DepartureSearchVC: UITableViewDelegate, UITableViewDataSource {
                 as? LocationSearchResultTVC
         else { return UITableViewCell() }
         cell.selectionStyle = .none
+        cell.setData(model: self.addressList[indexPath.item])
         return cell
     }
     
@@ -122,8 +141,16 @@ extension DepartureSearchVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let courseDrawingVC = CourseDrawingVC()
+        
+        let departureLocationModel = addressList[indexPath.item].toDepartureLocationModel()
+        courseDrawingVC.setData(model: departureLocationModel)
+        
         courseDrawingVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(courseDrawingVC, animated: true)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.naviBar.hideKeyboard()
     }
 }
 
@@ -131,7 +158,38 @@ extension DepartureSearchVC: UITableViewDelegate, UITableViewDataSource {
 
 extension DepartureSearchVC: CustomNavigationBarDelegate {
     func searchButtonDidTap(text: String) {
-        print(text)
-        // 서버 통신 구현
+        searchAddressWithKeyword(keyword: text)
+    }
+}
+
+// MARK: - Network
+
+extension DepartureSearchVC {
+    private func searchAddressWithKeyword(keyword: String) {
+        LoadingIndicator.showLoading()
+        departureSearchingProvider
+            .request(.getAddress(keyword: keyword)) { [weak self] response in
+            guard let self = self else { return }
+            LoadingIndicator.hideLoading()
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    do {
+                        let responseDto = try result.map(DepartureSearchingResponseDto.self)
+                        self.setData(data: responseDto.documents)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.setData(data: [])
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showToast(message: "네트워크 통신 실패")
+            }
+        }
     }
 }
