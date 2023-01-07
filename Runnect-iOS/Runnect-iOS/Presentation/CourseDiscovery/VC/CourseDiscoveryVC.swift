@@ -94,7 +94,7 @@ extension CourseDiscoveryVC {
 
     extension CourseDiscoveryVC {
         @objc private func pushToSearchVC() {
-            let nextVC = SearchVC()
+            let nextVC = CourseSearchVC()
             self.navigationController?.pushViewController(nextVC, animated: true)
         }
         @objc private func pushToDiscoveryVC() {
