@@ -742,8 +742,8 @@
 		CE6655A8295D7F7D00C64E12 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				CE17F0392961C28C00E1DED0 /* Splash */,
 				CE6655C2295D836D00C64E12 /* SignIn */,
+				CE17F0392961C28C00E1DED0 /* Splash */,
 				CE6655AB295D7FBC00C64E12 /* TabBar */,
 				CE17F03A2961C2E200E1DED0 /* CourseDrawing */,
 				CE17F03D2961C34300E1DED0 /* CourseStorage */,

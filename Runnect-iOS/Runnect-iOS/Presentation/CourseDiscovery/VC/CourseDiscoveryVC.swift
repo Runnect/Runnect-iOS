@@ -9,9 +9,16 @@ import UIKit
 
 import Then
 import SnapKit
+import Combine
 
 final class CourseDiscoveryVC: UIViewController {
     // MARK: - Properties
+
+    var courseDrawButtonTapped = PassthroughSubject<Void, Never>()
+    var cellDidTapped = PassthroughSubject<Int, Never>()
+    private let cancelBag = CancelBag()
+    
+    // MARK: - UIComponents
     private lazy var navibar = CustomNavigationBar(self, type: .title).setTitle("코스 발견")
     private let searchButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icSearch, for: .normal)
@@ -20,7 +27,7 @@ final class CourseDiscoveryVC: UIViewController {
     private let plusButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icPlus, for: .normal)
     }
-    // MARK: - UIComponents
+
     private lazy var containerView = UIScrollView()
     private let adImageView = UIImageView().then {
         $0.image = UIImage(named: "adimage")
@@ -69,6 +76,7 @@ final class CourseDiscoveryVC: UIViewController {
         setDelegate()
         layout()
         setAddTarget()
+//      cellAddTarget()
         self.tabBarController?.tabBar.isHidden = false
     }
 }
@@ -85,9 +93,14 @@ extension CourseDiscoveryVC {
                                           forCellWithReuseIdentifier: CourseListCVC.className)
     }
     private func setAddTarget() {
+        
         self.searchButton.addTarget(self, action: #selector(pushToSearchVC), for: .touchUpInside)
         self.plusButton.addTarget(self, action: #selector(pushToDiscoveryVC), for: .touchUpInside)
     }
+    
+//    private func cellAddTarget() {
+//        self.courseImageView.addTarget(self, action: #selector(CourseDetailVC), for: .touchUpInside)
+//    }
 }
     
     // MARK: - @objc Function
@@ -172,7 +185,7 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 15
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className,
                                                             for: indexPath)
@@ -203,5 +216,7 @@ extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return self.lineSpacing
     }
-    
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        self.cellDidTapped.send(indexPath.item)
+//    }
 }

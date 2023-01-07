@@ -12,7 +12,6 @@ import SnapKit
 
 final class CourseSearchVC: UIViewController {
     
-    
     // MARK: - UI Components
     
     private lazy var naviBar = CustomNavigationBar(self, type: .search).setTextFieldPlaceholder(placeholder: "지역과 키워드 위주로 검색해보세요").showKeyboard()
