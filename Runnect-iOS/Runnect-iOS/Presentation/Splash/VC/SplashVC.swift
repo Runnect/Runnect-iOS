@@ -40,8 +40,16 @@ final class SplashVC: UIViewController {
 extension SplashVC {
     private func checkDidSignIn() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            let needAuth = (UserDefaultKeyList.Auth.didSignIn == nil)
-            needAuth ? self.pushToSignInView() : self.pushToTabBarController()
+            let deviceId = KeychainManager.shared.getDeviceId()
+            
+            if deviceId.isEmpty {
+                let deviceIdStoreSuccess = KeychainManager.shared.storeDeviceId()
+                guard deviceIdStoreSuccess else { return }
+                self.pushToSignInView()
+                return
+            }
+            
+            self.pushToTabBarController()
         }
     }
     
