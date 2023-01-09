@@ -13,7 +13,7 @@ import Then
 class TitleCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Identifier
-    static let identifier = "TitleCollectionViewCell"
+    static let titleCellId = "TitleCollectionViewCell"
     // MARK: - UI Components
     private let titleView = UIView()
     private let mainLabel: UILabel = {
@@ -52,10 +52,16 @@ extension TitleCollectionViewCell {
         contentView.addSubview(titleView)
         
         titleView.addSubviews(mainLabel, subLabel)
+        titleView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalTo(contentView.safeAreaLayoutGuide)
+                $0.height.equalTo(60)
+        }
             mainLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(9)
             $0.leading.equalToSuperview().offset(16)
         }
+        
         subLabel.snp.makeConstraints {
             $0.top.equalTo(self.mainLabel.snp.bottom).offset(4)
             $0.leading.equalToSuperview().offset(16)

@@ -12,12 +12,11 @@ import SnapKit
 import Combine
 
 final class CourseDiscoveryVC: UIViewController {
-    // MARK: - Properties
-
-    var courseDrawButtonTapped = PassthroughSubject<Void, Never>()
-    var cellDidTapped = PassthroughSubject<Int, Never>()
-    private let cancelBag = CancelBag()
     
+    let adImageCellId = "AdImageCollectionViewCell"
+    let titleCellId = "TitleCollectionViewCell"
+    let collectionViewId = "CollectionViewCell"
+  
     // MARK: - UIComponents
     private lazy var navibar = CustomNavigationBar(self, type: .title).setTitle("코스 발견")
     private let searchButton = UIButton(type: .system).then {
@@ -27,26 +26,6 @@ final class CourseDiscoveryVC: UIViewController {
     private let plusButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icPlus, for: .normal)
     }
-
-    private lazy var containerView = UIScrollView()
-    private let adImageView = UIImageView().then {
-        $0.image = UIImage(named: "adimage")
-    }
-    private let titleView = UIView()
-    private let mainLabel: UILabel = {
-        let label = UILabel()
-        label.text = "코스 추천"
-        label.font =  UIFont.h4
-        label.textColor = UIColor.g1
-        return label
-    }()
-    private let subLabel: UILabel = {
-        let label = UILabel()
-        label.text = "새로운 코스를 발견해나가요"
-        label.font =  UIFont.b6
-        label.textColor = UIColor.g1
-        return label
-    }()
    
     // MARK: - collectionview
     private lazy var mapCollectionView: UICollectionView = {
@@ -55,17 +34,10 @@ final class CourseDiscoveryVC: UIViewController {
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.isScrollEnabled = false
+        collectionView.isScrollEnabled = true
         collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
-    
-    // MARK: - Constants
-    
-    final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
-    final let itemSpacing: CGFloat = 10
-    final let lineSpacing: CGFloat = 20
     
     // MARK: - View Life Cycle
     
@@ -76,8 +48,6 @@ final class CourseDiscoveryVC: UIViewController {
         setDelegate()
         layout()
         setAddTarget()
-//      cellAddTarget()
-        self.tabBarController?.tabBar.isHidden = false
     }
 }
 // MARK: - Methods
@@ -89,18 +59,16 @@ extension CourseDiscoveryVC {
         mapCollectionView.dataSource = self
     }
     private func register() {
-        mapCollectionView.register(CourseListCVC.self,
-                                          forCellWithReuseIdentifier: CourseListCVC.className)
+        self.mapCollectionView.register(AdImageCollectionViewCell.self, forCellWithReuseIdentifier: adImageCellId)
+        self.mapCollectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: titleCellId)
+        self.mapCollectionView.register(MapCollectionViewCell.self, forCellWithReuseIdentifier: collectionViewId)
     }
     private func setAddTarget() {
         
         self.searchButton.addTarget(self, action: #selector(pushToSearchVC), for: .touchUpInside)
         self.plusButton.addTarget(self, action: #selector(pushToDiscoveryVC), for: .touchUpInside)
+        
     }
-    
-//    private func cellAddTarget() {
-//        self.courseImageView.addTarget(self, action: #selector(CourseDetailVC), for: .touchUpInside)
-//    }
 }
     
     // MARK: - @objc Function
@@ -134,40 +102,13 @@ extension CourseDiscoveryVC {
     
     private func layout() {
         view.backgroundColor = .w1
-        containerView.backgroundColor = .clear
+        mapCollectionView.backgroundColor = .w1
         self.tabBarController?.tabBar.isHidden = false
-        view.addSubview(containerView)
-        view.addSubview(plusButton)
-        self.view.bringSubviewToFront(plusButton)
-        [adImageView, titleView, mapCollectionView].forEach {
-            containerView.addSubview($0)
-        }
-        
-        containerView.snp.makeConstraints {
-            $0.top.equalTo(self.navibar.snp.bottom)
-            $0.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
-        }
-        adImageView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
-            $0.height.equalTo(183)
-        }
-        titleView.snp.makeConstraints {
-            $0.top.equalTo(self.adImageView.snp.bottom).offset(11)
-            $0.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
-            $0.height.equalTo(50)
-        }
-        titleView.addSubviews(mainLabel, subLabel)
-            mainLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(9)
-            $0.leading.equalToSuperview().offset(16)
-        }
-        subLabel.snp.makeConstraints {
-            $0.top.equalTo(self.mainLabel.snp.bottom).offset(4)
-            $0.leading.equalToSuperview().offset(16)
-        }
+        view.addSubviews(plusButton, mapCollectionView)
+        view.bringSubviewToFront(plusButton)
+
         mapCollectionView.snp.makeConstraints {
-            $0.top.equalTo(self.titleView.snp.bottom).offset(10)
+            $0.top.equalTo(self.navibar.snp.bottom).offset(10)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.bottom.equalToSuperview()
             $0.height.equalTo(1000)
@@ -182,15 +123,24 @@ extension CourseDiscoveryVC {
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
 extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        3
+    }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className,
-                                                            for: indexPath)
-                as? CourseListCVC else { return UICollectionViewCell() }
-        cell.setCellType(type: .all)
+        var cell = UICollectionViewCell()
+               
+               if indexPath.section == 0 {
+                   cell = collectionView.dequeueReusableCell(withReuseIdentifier: adImageCellId, for: indexPath) as! AdImageCollectionViewCell
+               } else if indexPath.section == 1 {
+                   cell = collectionView.dequeueReusableCell(withReuseIdentifier: titleCellId, for: indexPath) as! TitleCollectionViewCell
+               } else {
+                   cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionViewId, for: indexPath) as! MapCollectionViewCell
+               }
+               
         return cell
     }
 }
@@ -198,25 +148,10 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cellWidth = (UIScreen.main.bounds.width - (self.itemSpacing + 2*self.collectionViewInset.left)) / 2
-        let cellHeight = CourseListCVCType.getCellHeight(type: .all, cellWidth: cellWidth)
-        
-        return CGSize(width: cellWidth, height: cellHeight)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return self.collectionViewInset
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return self.itemSpacing
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return self.lineSpacing
-    }
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        self.cellDidTapped.send(indexPath.item)
-//    }
+        _ = UICollectionViewCell()
+           return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+       }
+
 }

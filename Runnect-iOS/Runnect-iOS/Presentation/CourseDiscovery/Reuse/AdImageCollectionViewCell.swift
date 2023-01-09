@@ -13,7 +13,7 @@ import Then
 class AdImageCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Identifier
-    static let identifier = "AdImageCollectionViewCell"
+    static let adImageCellId = "AdImageCollectionViewCell"
     // MARK: - UI Components
     private let adImageView = UIImageView().then {
         $0.image = UIImage(named: "adimage")
