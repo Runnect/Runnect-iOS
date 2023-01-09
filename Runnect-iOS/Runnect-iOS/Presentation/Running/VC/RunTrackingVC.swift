@@ -14,11 +14,12 @@ final class RunTrackingVC: UIViewController {
     
     // MARK: - Properties
     
+    private var runningModel: RunningModel?
+    
     private let stopwatch = Stopwatch()
     private var cancelBag = CancelBag()
     var totalTime: Int = 0
     var distance: String = "0.0"
-    var pathImage: UIImage?
     
     // MARK: - UI Components
     
@@ -134,6 +135,11 @@ final class RunTrackingVC: UIViewController {
 // MARK: - Methods
 
 extension RunTrackingVC {
+    func setData(runningModel: RunningModel) {
+        self.runningModel = runningModel
+        makePath(locations: runningModel.locations, distance: runningModel.distance ?? "0.0")
+    }
+    
     func makePath(locations: [NMGLatLng], distance: String) {
         self.mapView.makeMarkersWithStartMarker(at: locations, moveCameraToStartMarker: true)
         self.totalDistanceLabel.attributedText = makeAttributedLabelForDistance(distance: distance)
@@ -178,8 +184,8 @@ extension RunTrackingVC {
     }
     
     private func pushToRunningRecordVC() {
-        guard let pathImage = pathImage else { return }
         guard let distance = Float(self.distance) else { return }
+        guard let runningModel = self.runningModel else { return }
         let averagePaceSeconds = round(Float(self.totalTime) / distance)
         let averagePaceSecondsInt = Int(averagePaceSeconds)
         let formatedAveragePace = "\(averagePaceSecondsInt / 60)'\(averagePaceSecondsInt % 60)''"
@@ -187,7 +193,8 @@ extension RunTrackingVC {
         let runningRecordVC = RunningRecordVC()
         runningRecordVC.setData(distance: self.distance,
                                 totalTime: RNTimeFormatter.secondsToHHMMSS(seconds: self.totalTime),
-                                averagePace: formatedAveragePace, pathImage: pathImage)
+                                averagePace: formatedAveragePace,
+                                pathImage: runningModel.pathImage)
         self.navigationController?.pushViewController(runningRecordVC, animated: true)
     }
 }
