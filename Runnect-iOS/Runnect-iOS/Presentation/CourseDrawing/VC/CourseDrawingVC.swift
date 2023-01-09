@@ -8,13 +8,20 @@
 import UIKit
 import Combine
 
+import Moya
+
 final class CourseDrawingVC: UIViewController {
     
     // MARK: - Properties
     
+    private let courseDrawingProvider = MoyaProvider<CourseDrawingRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
+    
     private var departureLocationModel: DepartureLocationModel?
     
     var pathImage: UIImage?
+    var distance: Float = 0.0
     
     private var cancelBag = CancelBag()
     
@@ -129,6 +136,7 @@ extension CourseDrawingVC {
             guard let self = self else { return }
             let kilometers = String(format: "%.1f", distance/1000)
             self.distanceLabel.text = kilometers
+            self.distance = Float(kilometers) ?? 0.0
         }.store(in: cancelBag)
         
         mapView.$markerCount.sink { [weak self] count in
@@ -140,7 +148,7 @@ extension CourseDrawingVC {
         mapView.pathImage.sink { [weak self] image in
             guard let self = self else { return }
             self.pathImage = image
-            self.presentAlertVC()
+            self.uploadCourseDrawing()
         }.store(in: cancelBag)
     }
     
@@ -148,7 +156,7 @@ extension CourseDrawingVC {
         navigationController?.interactivePopGestureRecognizer?.isEnabled = isEnabled
     }
     
-    private func presentAlertVC() {
+    private func presentAlertVC(courseId: Int) {
         let alertVC = CustomAlertVC()
         alertVC.modalPresentationStyle = .overFullScreen
         
@@ -162,9 +170,10 @@ extension CourseDrawingVC {
         alertVC.rightButtonTapped.sink { [weak self] _ in
             guard let self = self else { return }
             let countDownVC = CountDownVC()
-            countDownVC.setData(locations: self.mapView.getMarkersLatLng(),
-                                distance: self.distanceLabel.text,
-                                pathImage: self.pathImage)
+            let runninModel = RunningModel(locations: self.mapView.getMarkersLatLng(),
+                                           distance: self.distanceLabel.text,
+                                           pathImage: self.pathImage)
+            countDownVC.setData(runningModel: runninModel)
             self.navigationController?.pushViewController(countDownVC, animated: true)
             alertVC.dismiss(animated: true)
         }.store(in: cancelBag)
@@ -300,6 +309,54 @@ extension CourseDrawingVC {
             self.distanceContainerView.transform = CGAffineTransform(translationX: 0, y: -151)
             self.completeButton.transform = CGAffineTransform(translationX: 0, y: -112)
             self.undoButton.transform = CGAffineTransform(translationX: 0, y: -(self.undoButton.frame.height+95))
+        }
+    }
+}
+
+// MARK: - Network
+
+extension CourseDrawingVC {
+    private func makecourseDrawingRequestDto() -> CourseDrawingRequestDto? {
+        guard let image = self.pathImage else { return nil }
+        guard let imageData = image.jpegData(compressionQuality: 1.0) else { return nil }
+        guard let departureLocationModel = self.departureLocationModel else { return nil }
+        let path = mapView.getMarkersLatLng().map { $0.toRNLocationModel() }
+        let courseDrawingRequestData = CourseDrawingRequestData(path: path,
+                                                                distance: self.distance,
+                                                                departureAddress: departureLocationModel.departureAddress,
+                                                                departureName: departureLocationModel.departureName)
+
+        let courseDrawingRequestDto = CourseDrawingRequestDto(image: imageData, data: courseDrawingRequestData)
+        
+        return courseDrawingRequestDto
+    }
+    
+    private func uploadCourseDrawing() {
+        guard let requestDto = makecourseDrawingRequestDto() else { return }
+        
+        LoadingIndicator.showLoading()
+        courseDrawingProvider.request(.uploadCourseDrawing(param: requestDto)) {[weak self] response in
+            guard let self = self else { return }
+            LoadingIndicator.hideLoading()
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    do {
+                        let responseDto = try result.map(BaseResponse<CourseDrawingResponseData>.self)
+                        guard let data = responseDto.data else { return }
+                        self.presentAlertVC(courseId: data.course.id)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if status >= 400 {
+                    print("400 error")
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
         }
     }
 }
