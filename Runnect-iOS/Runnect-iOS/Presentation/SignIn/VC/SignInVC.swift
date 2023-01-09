@@ -151,7 +151,9 @@ extension SignInVC: UITextFieldDelegate {
 
 extension SignInVC {
     func signIn(nickname: String) {
+        LoadingIndicator.showLoading()
         signInProvider.request(.signUp(nickname: nickname)) { [weak self] response in
+            LoadingIndicator.hideLoading()
             guard let self = self else { return }
             switch response {
             case .success(let result):
