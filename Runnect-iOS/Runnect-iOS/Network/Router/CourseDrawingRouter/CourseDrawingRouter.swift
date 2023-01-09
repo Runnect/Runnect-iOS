@@ -51,19 +51,23 @@ extension CourseDrawingRouter: TargetType {
             
             var path = [[String: Any]]()
             
-            for location in param.data.path {
-                let locationData = try! location.asParameter()
-                path.append(locationData)
+            do {
+                for location in param.data.path {
+                    let locationData = try location.asParameter()
+                    path.append(locationData)
+                }
+                
+                content["path"] = path
+                content["distance"] = param.data.distance
+                content["departureAddress"] = param.data.departureAddress
+                content["departureName"] = param.data.departureName
+                
+                let jsonData = try JSONSerialization.data(withJSONObject: content)
+                let formData = MultipartFormData(provider: .data(jsonData), name: "data", mimeType: "application/json")
+                multipartFormData.append(formData)
+            } catch {
+                print(error.localizedDescription)
             }
-            
-            content["path"] = path
-            content["distance"] = param.data.distance
-            content["departureAddress"] = param.data.departureAddress
-            content["departureName"] = param.data.departureName
-            
-            let jsonData = try! JSONSerialization.data(withJSONObject: content)
-            let formData = MultipartFormData(provider: .data(jsonData), name: "data", mimeType: "application/json")
-            multipartFormData.append(formData)
             
             return .uploadMultipart(multipartFormData)
         }
