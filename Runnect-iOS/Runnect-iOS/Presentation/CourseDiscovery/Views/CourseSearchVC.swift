@@ -61,7 +61,8 @@ final class CourseSearchVC: UIViewController {
         setNavigationBar()
         setDelegate()
         layout()
-        self.tabBarController?.tabBar.isHidden = true
+        setTabBar()
+    
     }
 }
 // MARK: - Methods
@@ -69,14 +70,16 @@ final class CourseSearchVC: UIViewController {
 extension CourseSearchVC {
     
     private func setDelegate() {
-//        self.naviBar.delegate = self
         self.mapCollectionView.delegate = self
         self.mapCollectionView.dataSource = self
     }
-    
     private func register() {
         mapCollectionView.register(CourseListCVC.self,
                                    forCellWithReuseIdentifier: CourseListCVC.className)
+        
+    }
+    private func setTabBar() {
+            self.tabBarController?.tabBar.isHidden = true
     }
 }
 
@@ -90,9 +93,9 @@ extension CourseSearchVC {
         }
     }
     private func layout() {
-            view.backgroundColor = .w1
-            emptyDataView.isHidden = true // 데이터가 없으면 false로 설정
-            view.addSubviews(dividerView, mapCollectionView)
+        view.backgroundColor = .w1
+        emptyDataView.isHidden = true // 데이터가 없으면 false로 설정
+        view.addSubviews(dividerView, mapCollectionView)
         
         dividerView.snp.makeConstraints { make in
             make.top.equalTo(naviBar.snp.bottom)
@@ -150,3 +153,5 @@ extension CourseSearchVC: UICollectionViewDelegateFlowLayout {
         self.naviBar.hideKeyboard()
     }
 }
+
+

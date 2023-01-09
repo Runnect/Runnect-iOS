@@ -58,13 +58,14 @@ class CourseUploadVC: UIViewController {
         setAddTarget()
         setKeyboardNotification()
         setTapGesture()
+        addKeyboardObserver()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
     }
-    
+
 }
 
 // MARK: - Methods
@@ -74,7 +75,7 @@ extension CourseUploadVC {
     private func setAddTarget() {
         self.uploadButton.addTarget(self, action: #selector(pushToCourseDiscoveryVC), for: .touchUpInside)
         self.courseTitleTextField.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
-//        self.activityTextView.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
+        
     }
     // 키보드가 올라오면 scrollView 위치 조정
     private func setKeyboardNotification() {
@@ -97,6 +98,20 @@ extension CourseUploadVC {
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
+    
+    private func addKeyboardObserver() {
+            // Register Keyboard notifications
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(keyboardWillShow),
+                name: UIResponder.keyboardWillShowNotification,
+                object: nil)
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(keyboardWillHide),
+                name: UIResponder.keyboardWillHideNotification,
+                object: nil)
+        }
 }
 
 // MARK: - @objc Function
@@ -121,10 +136,10 @@ extension CourseUploadVC {
     
     @objc private func keyboardWillShow(_ notification: Notification) {
         guard let userInfo = notification.userInfo,
-            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
-                return
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+            return
         }
-
+        
         let contentInset = UIEdgeInsets(
             top: 0.0,
             left: 0.0,
@@ -132,6 +147,7 @@ extension CourseUploadVC {
             right: 0.0)
         containerView.contentInset = contentInset
         containerView.scrollIndicatorInsets = contentInset
+        
     }
     
     @objc private func keyboardWillHide() {
@@ -235,46 +251,37 @@ extension CourseUploadVC {
             activityTextView.text = placeholder
             activityTextView.textColor = .g3
         }
-        override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-            self.view.endEditing(true)
+//        override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//            self.view.endEditing(true)
+//        }
+    }
+    
+extension CourseUploadVC: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            activityTextView.textColor = .g3
+            activityTextView.text = placeholder
+            
+        } else if textView.text == placeholder {
+            activityTextView.textColor = .g1
+            activityTextView.text = nil
+            self.uploadButton.setEnabled(true)
         }
     }
     
-    extension CourseUploadVC: UITextViewDelegate {
-        func textViewDidBeginEditing(_ textView: UITextView) {
-            if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                activityTextView.textColor = .g3
-                activityTextView.text = placeholder
-                
-                NotificationCenter.default.addObserver(
-                    self,
-                    selector: #selector(keyboardWillShow),
-                    name: UIResponder.keyboardWillShowNotification,
-                    object: nil)
-                
-                NotificationCenter.default.addObserver(
-                    self,
-                    selector: #selector(keyboardWillHide),
-                    name: UIResponder.keyboardWillHideNotification,
-                    object: nil)
-            } else if textView.text == placeholder {
-                activityTextView.textColor = .g1
-                activityTextView.text = nil
-                self.uploadButton.setEnabled(true)
-            }
+    func textViewDidChange(_ textView: UITextView) {
+        if activityTextView.text.count > 150 {
+            activityTextView.deleteBackward()
         }
-
-        func textViewDidChange(_ textView: UITextView) {
-            if activityTextView.text.count > 150 {
-                activityTextView.deleteBackward()
-            }
-        }
-        func textViewDidEndEditing(_ textView: UITextView) {
-            if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || textView.text == placeholder {
-                activityTextView.textColor = .g3
-                activityTextView.text = placeholder
-                uploadButton.setColor(bgColor: .m3, disableColor: .g3)
-            }
-            }
-        }
+    }
     
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || textView.text == placeholder {
+            activityTextView.textColor = .g3
+            activityTextView.text = placeholder
+            uploadButton.setColor(bgColor: .m3, disableColor: .g3)
+        }
+    }
+  }
+
