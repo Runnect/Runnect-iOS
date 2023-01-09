@@ -31,18 +31,29 @@ final class SplashVC: UIViewController {
         self.setUI()
         self.setNavigationBar()
         self.setLayout()
-        self.pushToSignInView()
+        self.checkDidSignIn()
     }
 }
 
 // MARK: - Methods
 
 extension SplashVC {
-    private func pushToSignInView() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            let signInVC = SignInVC()
-            self.navigationController?.pushViewController(signInVC, animated: true)
+    private func checkDidSignIn() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            let needAuth = (UserDefaultKeyList.Auth.didSignIn == nil)
+            needAuth ? self.pushToSignInView() : self.pushToTabBarController()
         }
+    }
+    
+    private func pushToSignInView() {
+        let signInVC = SignInVC()
+        self.navigationController?.pushViewController(signInVC, animated: true)
+    }
+    
+    private func pushToTabBarController() {
+        let tabBarController = TabBarController()
+        guard let window = self.view.window else { return }
+        ViewControllerUtils.setRootViewController(window: window, viewController: tabBarController, withAnimation: true)
     }
 }
 
