@@ -38,7 +38,7 @@ final class ListEmptyView: UIView {
     ).then {
         $0.axis = .vertical
         $0.alignment = .center
-        $0.spacing = 22
+        $0.spacing = 24
     }
 
     // MARK: - initialization
@@ -87,6 +87,10 @@ extension ListEmptyView {
         bottomButton.snp.makeConstraints { make in
             make.height.equalTo(40)
             make.leading.trailing.equalToSuperview()
+        }
+        
+        mainImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(148)
         }
         
         containerStackView.snp.makeConstraints { make in

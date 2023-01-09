@@ -33,7 +33,7 @@ final class CustomBottomSheetVC: UIViewController {
     }
     
     private let mainImageView = UIImageView().then {
-        $0.image = ImageLiterals.imgTelescope
+        $0.image = ImageLiterals.imgSpaceship
     }
     
     private let completeButton = CustomButton(title: "기록 보러가기")
@@ -84,14 +84,14 @@ extension CustomBottomSheetVC {
         
         contentsLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(26)
+            make.top.equalToSuperview().inset(30)
         }
         
         mainImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(contentsLabel.snp.bottom).offset(8)
-            make.width.equalTo(223)
-            make.height.equalTo(180)
+            make.top.equalTo(contentsLabel.snp.bottom).offset(24)
+            make.width.equalTo(267)
+            make.height.equalTo(158)
         }
         
         completeButton.snp.makeConstraints { make in

@@ -103,6 +103,8 @@ extension CustomAlertVC {
         alertImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(38)
             make.centerX.equalToSuperview()
+            make.width.equalTo(189)
+            make.height.equalTo(169)
         }
         
         contentsLabel.snp.makeConstraints { make in
