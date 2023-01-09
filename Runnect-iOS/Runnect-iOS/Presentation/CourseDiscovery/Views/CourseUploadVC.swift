@@ -274,8 +274,6 @@ extension CourseUploadVC: UITextViewDelegate {
             activityTextView.deleteBackward()
         }
     }
-    
-    
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || textView.text == placeholder {
             activityTextView.textColor = .g3

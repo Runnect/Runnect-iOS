@@ -153,5 +153,3 @@ extension CourseSearchVC: UICollectionViewDelegateFlowLayout {
         self.naviBar.hideKeyboard()
     }
 }
-
-
