@@ -10,9 +10,17 @@ import UIKit
 import Then
 import SnapKit
 import Combine
+import Moya
 
 final class CourseDiscoveryVC: UIViewController {
-  
+    // MARK: - Properties
+    
+    let pickedMapListProvider = MoyaProvider<pickedMapListRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
+    
+    private var courseList = [PublicCourse]()
+    
     // MARK: - UIComponents
     
     private lazy var navibar = CustomNavigationBar(self, type: .title).setTitle("코스 발견")
@@ -23,13 +31,13 @@ final class CourseDiscoveryVC: UIViewController {
     private let plusButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icPlus, for: .normal)
     }
-   
+    
     // MARK: - collectionview
     
     private lazy var mapCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-
+        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.isScrollEnabled = true
@@ -51,12 +59,18 @@ final class CourseDiscoveryVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.hideTabBar(wantsToHide: false)
+        self.getCourseData()
     }
 }
 
 // MARK: - Methods
 
 extension CourseDiscoveryVC {
+    
+    private func setData(courseList: [PublicCourse]) {
+        self.courseList = courseList
+        mapCollectionView.reloadData()
+    }
     
     private func setDelegate() {
         mapCollectionView.delegate = self
@@ -76,21 +90,22 @@ extension CourseDiscoveryVC {
         
     }
 }
-    
-    // MARK: - @objc Function
 
-    extension CourseDiscoveryVC {
-        @objc private func pushToSearchVC() {
-            let nextVC = CourseSearchVC()
-            self.navigationController?.pushViewController(nextVC, animated: true)
-        }
-        @objc private func pushToDiscoveryVC() {
-            let nextVC = MyCourseSelectVC()
-            self.navigationController?.pushViewController(nextVC, animated: true)
-        }
+// MARK: - @objc Function
+
+extension CourseDiscoveryVC {
+    @objc private func pushToSearchVC() {
+        let nextVC = CourseSearchVC()
+        self.navigationController?.pushViewController(nextVC, animated: true)
     }
+    @objc private func pushToDiscoveryVC() {
+        let nextVC = MyCourseSelectVC()
+        self.navigationController?.pushViewController(nextVC, animated: true)
+    }
+}
 
-    // MARK: - UI & Layout
+// MARK: - UI & Layout
+
 extension CourseDiscoveryVC {
     private func setNavigationBar() {
         view.addSubview(navibar)
@@ -111,7 +126,7 @@ extension CourseDiscoveryVC {
         mapCollectionView.backgroundColor = .w1
         view.addSubviews(plusButton, mapCollectionView)
         view.bringSubviewToFront(plusButton)
-
+        
         mapCollectionView.snp.makeConstraints {
             $0.top.equalTo(self.navibar.snp.bottom)
             $0.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -128,7 +143,7 @@ extension CourseDiscoveryVC {
 
 extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        3
+        return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -136,7 +151,7 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
         case 0, 1:
             return 1
         case 2:
-            return 15
+            return self.courseList.count
         default:
             return 0
         }
@@ -152,6 +167,9 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
         } else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath) as? CourseListCVC else { return UICollectionViewCell() }
             cell.setCellType(type: .all)
+            let model = self.courseList[indexPath.item]
+            let location = "\(model.departure.region) \(model.departure.city)"
+            cell.setData(imageURL: model.image, title: model.title, location: location, didLike: model.scarp)
             return cell
         }
     }
@@ -205,6 +223,37 @@ extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
         if indexPath.section == 2 {
             let courseDetailVC = CourseDetailVC()
             self.navigationController?.pushViewController(courseDetailVC, animated: true)
+        }
+    }
+}
+
+// MARK: - Network
+
+extension CourseDiscoveryVC {
+    private func getCourseData() {
+        LoadingIndicator.showLoading()
+        pickedMapListProvider.request(.getCourseData) { response in
+            LoadingIndicator.hideLoading()
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    do {
+                        let responseDto = try result.map(BaseResponse<PickedMapListResponseDto>.self)
+                        guard let data = responseDto.data else { return }
+                        self.setData(courseList: data.publicCourses)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
         }
     }
 }
