@@ -127,6 +127,7 @@
 		CEEC6B492961C5E200D00E1E /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B482961C5E200D00E1E /* SplashVC.swift */; };
 		CEEC6B4B2961D89700D00E1E /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B4A2961D89700D00E1E /* CustomNavigationBar.swift */; };
 		CEF3CD98296D63B9002723A1 /* CourseStorageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3CD97296D63B9002723A1 /* CourseStorageRouter.swift */; };
+		CEF3CD9A296DB305002723A1 /* CourseDetailResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3CD99296DB305002723A1 /* CourseDetailResponseDto.swift */; };
 		DA20D847296697A600F1581F /* MyCourseSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D846296697A600F1581F /* MyCourseSelectVC.swift */; };
 		DA20D849296697B400F1581F /* CourseUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D848296697B400F1581F /* CourseUploadVC.swift */; };
 		DA20D84E2966A9B300F1581F /* CourseSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D84D2966A9B300F1581F /* CourseSearchVC.swift */; };
@@ -158,13 +159,8 @@
 		CE0C23782966D6AF00B45063 /* ViewPager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPager.swift; sourceTree = "<group>"; };
 		CE0D9FD229648DA300CEB5CD /* CustomAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertVC.swift; sourceTree = "<group>"; };
 		CE10063929680C5700FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		CE10063B29680C6800FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		CE10063C29680C7000FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10063D29680C8100FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10063E29680C8800FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		CE10063F29680C9800FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		CE10064129680CA700FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		CE10064229680CAD00FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10064329680CB400FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10064429680CBC00FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10064D29680D2500FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
@@ -215,7 +211,6 @@
 		CE591E9D296D5140000FCBB3 /* RunningRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningRouter.swift; sourceTree = "<group>"; };
 		CE591EA0296D5EB5000FCBB3 /* PrivateCourseResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateCourseResponseDto.swift; sourceTree = "<group>"; };
 		CE6655BE295D82E200C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		CE6655C0295D82F000C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE6655C1295D82F700C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE6655C5295D83B700C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE6655C7295D849F00C64E12 /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
@@ -283,6 +278,7 @@
 		CEEC6B482961C5E200D00E1E /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		CEEC6B4A2961D89700D00E1E /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		CEF3CD97296D63B9002723A1 /* CourseStorageRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseStorageRouter.swift; sourceTree = "<group>"; };
+		CEF3CD99296DB305002723A1 /* CourseDetailResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailResponseDto.swift; sourceTree = "<group>"; };
 		DA20D846296697A600F1581F /* MyCourseSelectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCourseSelectVC.swift; sourceTree = "<group>"; };
 		DA20D848296697B400F1581F /* CourseUploadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseUploadVC.swift; sourceTree = "<group>"; };
 		DA20D84D2966A9B300F1581F /* CourseSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseSearchVC.swift; sourceTree = "<group>"; };
@@ -816,6 +812,7 @@
 			isa = PBXGroup;
 			children = (
 				CE591E9B296D4F69000FCBB3 /* RunningRecordResonseDto.swift */,
+				CEF3CD99296DB305002723A1 /* CourseDetailResponseDto.swift */,
 			);
 			path = ResponseDto;
 			sourceTree = "<group>";
@@ -903,7 +900,6 @@
 				CE40BB292968083B0030ABCA /* MyPageRouter */,
 				CE40BB2A296808440030ABCA /* CourseDetailRouter */,
 				CE40BB2B296808500030ABCA /* RunningRouter */,
-				CE6655C0295D82F000C64E12 /* .gitkeep */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -1362,6 +1358,7 @@
 				CEC2A6902962B06C00160BF7 /* convertLocationObject.swift in Sources */,
 				CEC2A6852961F92C00160BF7 /* CustomButton.swift in Sources */,
 				CE6B63D3296725E6003F900F /* CourseListCVC.swift in Sources */,
+				CEF3CD9A296DB305002723A1 /* CourseDetailResponseDto.swift in Sources */,
 				CE29D584296416D800F47542 /* caculateStatusBarHeight.swift in Sources */,
 				CE66560C295D928300C64E12 /* setRootViewController.swift in Sources */,
 				CE6655D9295D871B00C64E12 /* URL+.swift in Sources */,
