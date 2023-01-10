@@ -9,6 +9,6 @@ import Foundation
 
 struct UserDefaultKeyList {
     struct Auth {
-        @UserDefaultWrapper<String>(key: "deviceId") public static var deviceId
+        @UserDefaultWrapper<Bool>(key: "didSignIn") public static var didSignIn
     }
 }

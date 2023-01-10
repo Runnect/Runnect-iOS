@@ -7,9 +7,15 @@
 
 import UIKit
 
+import Moya
+
 final class SignInVC: UIViewController {
     
     // MARK: - Properties
+    
+    private var signInProvider = MoyaProvider<SignInRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
     
     private let nicknameMaxLength = 7
     
@@ -50,6 +56,7 @@ final class SignInVC: UIViewController {
         self.setUI()
         self.setLayout()
         self.setDelegate()
+        self.setAddTarget()
     }
 }
 
@@ -60,8 +67,18 @@ extension SignInVC {
         self.nicknameTextField.delegate = self
     }
     
+    private func setAddTarget() {
+        self.startButton.addTarget(self, action: #selector(startButtonDidTap), for: .touchUpInside)
+    }
+    
     private func changeTextFieldLayerColor(_ isEditing: Bool) {
         nicknameTextField.layer.borderColor = isEditing ? UIColor.m1.cgColor : UIColor.g3.cgColor
+    }
+    
+    private func pushToTabBarController() {
+        let tabBarController = TabBarController()
+        guard let window = self.view.window else { return }
+        ViewControllerUtils.setRootViewController(window: window, viewController: tabBarController, withAnimation: true)
     }
 }
 
@@ -79,6 +96,11 @@ extension SignInVC {
             let newString = text[text.startIndex..<index]
             self.nicknameTextField.text = String(newString)
         }
+    }
+    
+    @objc func startButtonDidTap() {
+        guard let nickname = nicknameTextField.text else { return }
+        self.signIn(nickname: nickname)
     }
 }
 
@@ -122,5 +144,39 @@ extension SignInVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+}
+
+// MARK: - Network
+
+extension SignInVC {
+    func signIn(nickname: String) {
+        LoadingIndicator.showLoading()
+        signInProvider.request(.signUp(nickname: nickname)) { [weak self] response in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    do {
+                        let responseDto = try result.map(BaseResponse<BlankData>.self)
+                        if responseDto.status == 200 {
+                            self.pushToTabBarController()
+                        } else {
+                            self.showToast(message: responseDto.message)
+                        }
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if status >= 400 {
+                    print("400 error")
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showToast(message: "네트워크 통신 실패")
+            }
+        }
     }
 }
