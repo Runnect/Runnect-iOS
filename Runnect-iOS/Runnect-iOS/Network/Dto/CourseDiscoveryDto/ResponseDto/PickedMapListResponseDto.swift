@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - DataClass
+// MARK: - PickedMapListResponseDto
 
 struct PickedMapListResponseDto: Codable {
     let publicCourses: [PublicCourse]
@@ -23,7 +23,7 @@ struct PublicCourse: Codable {
     let departure: CourseDiscoveryDeparture
 }
 
-// MARK: - Departure
+// MARK: - CourseDiscoveryDeparture
 
 struct CourseDiscoveryDeparture: Codable {
     let region: String
