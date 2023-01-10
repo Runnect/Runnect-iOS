@@ -172,10 +172,11 @@ extension SignInVC {
                 }
                 if status >= 400 {
                     print("400 error")
+                    self.showNetworkFailureToast()
                 }
             case .failure(let error):
                 print(error.localizedDescription)
-                self.showToast(message: "네트워크 통신 실패")
+                self.showNetworkFailureToast()
             }
         }
     }

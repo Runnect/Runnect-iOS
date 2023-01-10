@@ -73,9 +73,11 @@ extension RunningWaitingVC {
         }
         
         let countDownVC = CountDownVC()
-        countDownVC.setData(locations: self.mapView.getMarkersLatLng(),
-                            distance: self.distanceLabel.text,
-                            pathImage: UIImage())
+        
+        let runningModel = RunningModel(locations: self.mapView.getMarkersLatLng(),
+                                        distance: self.distanceLabel.text,
+                                        pathImage: UIImage())
+        countDownVC.setData(runningModel: runningModel)
         self.navigationController?.pushViewController(countDownVC, animated: true)
     }
 }

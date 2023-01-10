@@ -26,6 +26,10 @@ extension NMGLatLng {
     func toCLLocation() -> CLLocation {
         return CLLocation(latitude: lat, longitude: lng)
     }
+    
+    func toRNLocationModel() -> RNLocationModel {
+        return RNLocationModel(lat: self.lat, long: self.lng)
+    }
 }
 
 extension DepartureLocationModel {
