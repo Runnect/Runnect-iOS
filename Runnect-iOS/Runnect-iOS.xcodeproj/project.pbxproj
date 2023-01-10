@@ -37,6 +37,7 @@
 		CE17F0382961BF8B00E1DED0 /* FontLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17F0372961BF8B00E1DED0 /* FontLiterals.swift */; };
 		CE29D582296402B500F47542 /* CourseDrawingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE29D581296402B500F47542 /* CourseDrawingVC.swift */; };
 		CE29D584296416D800F47542 /* caculateStatusBarHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE29D583296416D800F47542 /* caculateStatusBarHeight.swift */; };
+		CE3A53C5296C6017003D518C /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A53C4296C6017003D518C /* KeychainManager.swift */; };
 		CE40BB1C2967E4910030ABCA /* RunningWaitingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40BB1B2967E4910030ABCA /* RunningWaitingVC.swift */; };
 		CE40BB1E2968054F0030ABCA /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40BB1D2968054F0030ABCA /* BaseResponse.swift */; };
 		CE40BB20296805F70030ABCA /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40BB1F296805F70030ABCA /* NetworkResult.swift */; };
@@ -107,6 +108,7 @@
 		CEC2A68E2962AF2C00160BF7 /* RNMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A68D2962AF2C00160BF7 /* RNMarker.swift */; };
 		CEC2A6902962B06C00160BF7 /* convertLocationObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A68F2962B06C00160BF7 /* convertLocationObject.swift */; };
 		CEC2A6922962BE2900160BF7 /* DepartureSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A6912962BE2900160BF7 /* DepartureSearchVC.swift */; };
+		CECBAD2F296C2F3C00AC8976 /* SignInRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECBAD2E296C2F3C00AC8976 /* SignInRouter.swift */; };
 		CEEC6B3A2961C4F300D00E1E /* CourseDrawingHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B392961C4F300D00E1E /* CourseDrawingHomeVC.swift */; };
 		CEEC6B3C2961C51A00D00E1E /* CourseStorageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B3B2961C51A00D00E1E /* CourseStorageVC.swift */; };
 		CEEC6B3E2961C53700D00E1E /* CourseDiscoveryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B3D2961C53700D00E1E /* CourseDiscoveryVC.swift */; };
@@ -172,6 +174,7 @@
 		CE17F0372961BF8B00E1DED0 /* FontLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontLiterals.swift; sourceTree = "<group>"; };
 		CE29D581296402B500F47542 /* CourseDrawingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDrawingVC.swift; sourceTree = "<group>"; };
 		CE29D583296416D800F47542 /* caculateStatusBarHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = caculateStatusBarHeight.swift; sourceTree = "<group>"; };
+		CE3A53C4296C6017003D518C /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		CE40BB1B2967E4910030ABCA /* RunningWaitingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningWaitingVC.swift; sourceTree = "<group>"; };
 		CE40BB1D2968054F0030ABCA /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		CE40BB1F296805F70030ABCA /* NetworkResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult.swift; sourceTree = "<group>"; };
@@ -247,6 +250,7 @@
 		CEC2A68D2962AF2C00160BF7 /* RNMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNMarker.swift; sourceTree = "<group>"; };
 		CEC2A68F2962B06C00160BF7 /* convertLocationObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = convertLocationObject.swift; sourceTree = "<group>"; };
 		CEC2A6912962BE2900160BF7 /* DepartureSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureSearchVC.swift; sourceTree = "<group>"; };
+		CECBAD2E296C2F3C00AC8976 /* SignInRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInRouter.swift; sourceTree = "<group>"; };
 		CEEC6B392961C4F300D00E1E /* CourseDrawingHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDrawingHomeVC.swift; sourceTree = "<group>"; };
 		CEEC6B3B2961C51A00D00E1E /* CourseStorageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseStorageVC.swift; sourceTree = "<group>"; };
 		CEEC6B3D2961C53700D00E1E /* CourseDiscoveryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDiscoveryVC.swift; sourceTree = "<group>"; };
@@ -659,6 +663,7 @@
 			isa = PBXGroup;
 			children = (
 				CE10064029680C9F00FD31FB /* .gitkeep */,
+				CECBAD2E296C2F3C00AC8976 /* SignInRouter.swift */,
 			);
 			path = SignInRouter;
 			sourceTree = "<group>";
@@ -879,6 +884,7 @@
 				CE29D583296416D800F47542 /* caculateStatusBarHeight.swift */,
 				CE14677729658C7200DCEA1B /* Stopwatch.swift */,
 				CE9291282965E01D0010959C /* RNTimeFormatter.swift */,
+				CE3A53C4296C6017003D518C /* KeychainManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1264,6 +1270,7 @@
 				DA20D84E2966A9B300F1581F /* CourseSearchVC.swift in Sources */,
 				CE1006572968230800FD31FB /* DepartureLocationModel.swift in Sources */,
 				CE6655EC295D88D000C64E12 /* UITableView+.swift in Sources */,
+				CECBAD2F296C2F3C00AC8976 /* SignInRouter.swift in Sources */,
 				CEEC6B3A2961C4F300D00E1E /* CourseDrawingHomeVC.swift in Sources */,
 				CEC2A6902962B06C00160BF7 /* convertLocationObject.swift in Sources */,
 				CEC2A6852961F92C00160BF7 /* CustomButton.swift in Sources */,
@@ -1286,6 +1293,7 @@
 				CE5875A4296015D2005D967E /* Encodable+.swift in Sources */,
 				A3BC2F4129667A0D00198261 /* NicknameEditorVC.swift in Sources */,
 				CE0C23742966D62A00B45063 /* PagedView.swift in Sources */,
+				CE3A53C5296C6017003D518C /* KeychainManager.swift in Sources */,
 				CE14677A2965A80700DCEA1B /* CustomBottomSheetVC.swift in Sources */,
 				CEEC6B4B2961D89700D00E1E /* CustomNavigationBar.swift in Sources */,
 				CE40BB2D296808B00030ABCA /* DepartureSearchingRouter.swift in Sources */,
@@ -1439,9 +1447,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9K86FQHDLU;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9K86FQHDLU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Runnect-iOS/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1455,6 +1465,8 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.runnect.Runnect-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Runnect Debug";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1467,9 +1479,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9K86FQHDLU;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9K86FQHDLU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Runnect-iOS/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1483,6 +1497,8 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.runnect.Runnect-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Runnect Release";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

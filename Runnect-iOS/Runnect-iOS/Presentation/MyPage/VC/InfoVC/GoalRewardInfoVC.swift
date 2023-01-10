@@ -98,21 +98,21 @@ extension GoalRewardInfoVC {
         stampTopView.snp.makeConstraints { make in
             make.top.equalTo(navibar.snp.bottom)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(235)
         }
         
         stampTopView.addSubviews(stampImage, stampExcourageLabel)
         
         stampImage.snp.makeConstraints { make in
-            make.top.equalToSuperview()
+            make.top.equalToSuperview().inset(18)
             make.centerX.equalToSuperview()
-            make.width.equalTo(181)
-            make.height.equalTo(167)
+            make.width.equalTo(139)
+            make.height.equalTo(126)
         }
         
         stampExcourageLabel.snp.makeConstraints { make in
-            make.top.equalTo(stampImage.snp.bottom).offset(16)
+            make.top.equalTo(stampImage.snp.bottom).offset(32)
             make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().inset(37)
         }
         
         stampCollectionView.snp.makeConstraints { make in

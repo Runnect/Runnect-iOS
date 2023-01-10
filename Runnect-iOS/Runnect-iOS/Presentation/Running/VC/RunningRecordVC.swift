@@ -169,8 +169,6 @@ extension RunningRecordVC {
     private func setLayout() {
         view.addSubviews(naviBar, scrollView, saveButton)
         scrollView.addSubviews(contentView)
-
-        setContentViewLayout()
         
         naviBar.snp.makeConstraints { make in
             make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -180,7 +178,7 @@ extension RunningRecordVC {
         scrollView.snp.makeConstraints { make in
             make.top.equalTo(naviBar.snp.bottom)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(91)
+            make.bottom.equalTo(saveButton.snp.top)
         }
         
         contentView.snp.makeConstraints { make in
@@ -188,6 +186,8 @@ extension RunningRecordVC {
             make.width.equalTo(scrollView.snp.width)
             make.height.greaterThanOrEqualTo(scrollView)
         }
+        
+        setContentViewLayout()
     
         saveButton.snp.makeConstraints { make in
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
@@ -248,7 +248,7 @@ extension RunningRecordVC {
         statsContainerStackView.snp.makeConstraints { make in
             make.top.equalTo(dividerView.snp.bottom).offset(25)
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().inset(25)
+            make.bottom.lessThanOrEqualToSuperview().inset(25)
         }
     }
     
