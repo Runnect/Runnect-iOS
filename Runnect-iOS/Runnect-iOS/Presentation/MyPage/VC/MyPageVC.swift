@@ -339,12 +339,8 @@ extension MyPageVC {
                 if 200..<300 ~= status {
                     do {
                         let responseDto = try result.map(BaseResponse<MyPageDto>.self)
-                        if responseDto.status == 200 {
-                            guard let data = responseDto.data else { return }
-                            self.setData(model: data)
-                        } else {
-                            self.showToast(message: responseDto.message)
-                        }
+                        guard let data = responseDto.data else { return }
+                        self.setData(model: data)
                     } catch {
                         print(error.localizedDescription)
                     }
