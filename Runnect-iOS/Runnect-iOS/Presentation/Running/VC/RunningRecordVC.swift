@@ -11,6 +11,7 @@ final class RunningRecordVC: UIViewController {
     
     // MARK: - Properties
     
+    private var runningModel: RunningModel?
     private let courseTitleMaxLength = 20
     
     // MARK: - UI Components
@@ -118,11 +119,12 @@ extension RunningRecordVC {
         view.addGestureRecognizer(tap)
     }
     
-    func setData(distance: String, totalTime: String, averagePace: String, pathImage: UIImage?) {
-        self.distanceStatsView.setAttributedStats(stats: distance)
-        self.totalTimeStatsView.setStats(stats: totalTime)
-        self.averagePaceStatsView.setStats(stats: averagePace)
-        self.courseImageView.image = pathImage
+    func setData(runningModel: RunningModel) {
+        self.runningModel = runningModel
+        self.distanceStatsView.setAttributedStats(stats: runningModel.distance ?? "0.0")
+        self.totalTimeStatsView.setStats(stats: runningModel.getFormattedTotalTime() ?? "00:00:00")
+        self.averagePaceStatsView.setStats(stats: runningModel.getFormattedAveragePage() ?? "0'00''")
+        self.courseImageView.image = runningModel.pathImage
     }
 }
 
