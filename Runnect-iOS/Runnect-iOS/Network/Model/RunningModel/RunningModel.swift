@@ -15,7 +15,10 @@ struct RunningModel {
     var locations: [NMGLatLng]
     var distance: String?
     var pathImage: UIImage?
+    var imageUrl: String?
     var totalTime: Int?
+    var region: String?
+    var city: String?
     
     /// HH:MM:SS 형식으로 반환
     func getFormattedTotalTime() -> String? {

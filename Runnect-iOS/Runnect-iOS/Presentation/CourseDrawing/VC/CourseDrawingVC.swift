@@ -173,7 +173,9 @@ extension CourseDrawingVC {
             let runningModel = RunningModel(courseId: courseId,
                                             locations: self.mapView.getMarkersLatLng(),
                                             distance: self.distanceLabel.text,
-                                            pathImage: self.pathImage)
+                                            pathImage: self.pathImage,
+                                            region: self.departureLocationModel?.region,
+                                            city: self.departureLocationModel?.city)
             countDownVC.setData(runningModel: runningModel)
             self.navigationController?.pushViewController(countDownVC, animated: true)
             alertVC.dismiss(animated: true)

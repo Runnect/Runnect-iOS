@@ -11,6 +11,7 @@ import Moya
 
 enum RunningRouter {
     case recordRunning(param: RunningRecordRequestDto)
+    case getCourseDetail(courseId: Int)
 }
 
 extension RunningRouter: TargetType {
@@ -26,6 +27,8 @@ extension RunningRouter: TargetType {
         switch self {
         case .recordRunning:
             return "/record"
+        case .getCourseDetail(let courseId):
+            return "/course/detail/\(courseId)"
         }
     }
     
@@ -33,6 +36,8 @@ extension RunningRouter: TargetType {
         switch self {
         case .recordRunning:
             return .post
+        case .getCourseDetail:
+            return .get
         }
     }
     
@@ -44,12 +49,14 @@ extension RunningRouter: TargetType {
             } catch {
                 fatalError(error.localizedDescription)
             }
+        case .getCourseDetail:
+            return .requestPlain
         }
     }
     
     var headers: [String: String]? {
         switch self {
-        case .recordRunning:
+        case .recordRunning, .getCourseDetail:
             return Config.headerWithDeviceId
         }
     }

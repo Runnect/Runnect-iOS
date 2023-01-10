@@ -7,7 +7,20 @@
 
 import UIKit
 
+import NMapsMap
+import Moya
+
 final class RunningWaitingVC: UIViewController {
+    
+    // MARK: - Properties
+    
+    private var courseId: Int?
+    private var publicCourseId: Int?
+    private var courseModel: Course?
+    
+    private let runningProvider = MoyaProvider<RunningRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
     
     // MARK: - UI Components
 
@@ -59,6 +72,26 @@ final class RunningWaitingVC: UIViewController {
 // MARK: - Methods
 
 extension RunningWaitingVC {
+    func setData(courseId: Int, publicCourseId: Int?) {
+        self.courseId = courseId
+        self.publicCourseId = publicCourseId
+        
+        getCourseDetail(courseId: courseId)
+    }
+    
+    private func setCourseData(courseModel: Course) {
+        self.courseModel = courseModel
+        
+        guard let path = courseModel.path, let distance = courseModel.distance else { return }
+        let locations = path.map { NMGLatLng(lat: $0[0], lng: $0[1]) }
+        self.makePath(locations: locations)
+        self.distanceLabel.text = String(distance)
+    }
+    
+    func makePath(locations: [NMGLatLng]) {
+        self.mapView.makeMarkersWithStartMarker(at: locations, moveCameraToStartMarker: true)
+    }
+    
     private func setAddTarget() {
         self.startButton.addTarget(self, action: #selector(startButtonDidTap), for: .touchUpInside)
     }
@@ -68,15 +101,17 @@ extension RunningWaitingVC {
 
 extension RunningWaitingVC {
     @objc private func startButtonDidTap() {
-        if self.distanceLabel.text == "0.0" {
-            return
-        }
+        guard let courseModel = self.courseModel, self.distanceLabel.text != "0.0" else { return }
         
         let countDownVC = CountDownVC()
-        
-        let runningModel = RunningModel(locations: self.mapView.getMarkersLatLng(),
+        let runningModel = RunningModel(courseId: self.courseId,
+                                        publicCourseId: self.publicCourseId,
+                                        locations: self.mapView.getMarkersLatLng(),
                                         distance: self.distanceLabel.text,
-                                        pathImage: UIImage())
+                                        imageUrl: courseModel.image,
+                                        region: courseModel.departure.region,
+                                        city: courseModel.departure.city)
+        
         countDownVC.setData(runningModel: runningModel)
         self.navigationController?.pushViewController(countDownVC, animated: true)
     }
@@ -136,6 +171,39 @@ extension RunningWaitingVC {
         UIView.animate(withDuration: withDuration) {
             self.distanceContainerView.transform = CGAffineTransform(translationX: 0, y: -151)
             self.startButton.transform = CGAffineTransform(translationX: 0, y: -112)
+        }
+    }
+}
+
+// MARK: - Network
+
+extension RunningWaitingVC {
+    private func getCourseDetail(courseId: Int) {
+        LoadingIndicator.showLoading()
+        
+        runningProvider.request(.getCourseDetail(courseId: courseId)) { [weak self] response in
+            guard let self = self else { return }
+            LoadingIndicator.hideLoading()
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    do {
+                        let responseDto = try result.map(BaseResponse<CourseDetailResponseDto>.self)
+                        guard let data = responseDto.data else { return }
+                        self.setCourseData(courseModel: data.course)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
         }
     }
 }
