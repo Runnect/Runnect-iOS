@@ -58,6 +58,7 @@ extension PrivateCourseListView {
     func setData(courseList: [PrivateCourse]) {
         self.courseList = courseList
         self.courseListCollectionView.reloadData()
+        self.emptyView.isHidden = !courseList.isEmpty
     }
     
     private func setDelegate() {
