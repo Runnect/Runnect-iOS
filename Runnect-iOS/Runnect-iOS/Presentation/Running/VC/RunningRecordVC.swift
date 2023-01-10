@@ -134,6 +134,9 @@ extension RunningRecordVC {
         self.totalTimeStatsView.setStats(stats: runningModel.getFormattedTotalTime() ?? "00:00:00")
         self.averagePaceStatsView.setStats(stats: runningModel.getFormattedAveragePage() ?? "0'00''")
         self.courseImageView.image = runningModel.pathImage
+        
+        guard let region = runningModel.region, let city = runningModel.city else { return }
+        self.departureInfoView.setDescriptionText(description: "\(region) \(city)")
     }
 }
 
