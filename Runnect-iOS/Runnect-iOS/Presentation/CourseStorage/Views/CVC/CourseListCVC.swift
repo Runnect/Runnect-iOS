@@ -40,6 +40,7 @@ final class CourseListCVC: UICollectionViewCell {
         $0.backgroundColor = .g3
         $0.contentMode = .scaleToFill
         $0.layer.cornerRadius = 5
+        $0.clipsToBounds = true
     }
     
     private let titleLabel = UILabel().then {
