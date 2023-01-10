@@ -137,6 +137,9 @@ extension RunningRecordVC {
         
         guard let region = runningModel.region, let city = runningModel.city else { return }
         self.departureInfoView.setDescriptionText(description: "\(region) \(city)")
+        
+        guard let imageUrl = runningModel.imageUrl else { return }
+        self.courseImageView.setImage(with: imageUrl)
     }
 }
 

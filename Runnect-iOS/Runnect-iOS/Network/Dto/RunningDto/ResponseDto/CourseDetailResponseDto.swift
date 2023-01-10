@@ -13,5 +13,5 @@ typealias CourseDeparture = PrivateCourseDeparture
 // MARK: - CourseDetailResponseDto
 
 struct CourseDetailResponseDto: Codable {
-    let course: [Course]
+    let course: Course
 }

@@ -15,6 +15,7 @@ struct RunningModel {
     var locations: [NMGLatLng]
     var distance: String?
     var pathImage: UIImage?
+    var imageUrl: String?
     var totalTime: Int?
     var region: String?
     var city: String?
