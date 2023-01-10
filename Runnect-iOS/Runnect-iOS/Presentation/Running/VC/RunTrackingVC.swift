@@ -184,17 +184,12 @@ extension RunTrackingVC {
     }
     
     private func pushToRunningRecordVC() {
-        guard let distance = Float(self.distance) else { return }
-        guard let runningModel = self.runningModel else { return }
-        let averagePaceSeconds = round(Float(self.totalTime) / distance)
-        let averagePaceSecondsInt = Int(averagePaceSeconds)
-        let formatedAveragePace = "\(averagePaceSecondsInt / 60)'\(averagePaceSecondsInt % 60)''"
+        guard var runningModel = self.runningModel else { return }
+        
+        runningModel.totalTime = self.totalTime
         
         let runningRecordVC = RunningRecordVC()
-        runningRecordVC.setData(distance: self.distance,
-                                totalTime: RNTimeFormatter.secondsToHHMMSS(seconds: self.totalTime),
-                                averagePace: formatedAveragePace,
-                                pathImage: runningModel.pathImage)
+        runningRecordVC.setData(runningModel: runningModel)
         self.navigationController?.pushViewController(runningRecordVC, animated: true)
     }
 }

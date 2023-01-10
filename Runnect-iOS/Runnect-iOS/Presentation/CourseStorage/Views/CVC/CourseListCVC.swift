@@ -40,6 +40,7 @@ final class CourseListCVC: UICollectionViewCell {
         $0.backgroundColor = .g3
         $0.contentMode = .scaleToFill
         $0.layer.cornerRadius = 5
+        $0.clipsToBounds = true
     }
     
     private let titleLabel = UILabel().then {
@@ -140,7 +141,8 @@ extension CourseListCVC {
         likeButton.snp.makeConstraints { make in
             make.top.equalTo(courseImageView.snp.bottom).offset(7)
             make.trailing.equalToSuperview()
-            make.width.height.equalTo(14)
+            make.width.equalTo(14)
+            make.height.equalTo(12)
         }
         
         labelStackView.snp.makeConstraints { make in

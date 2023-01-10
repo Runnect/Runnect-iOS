@@ -15,6 +15,8 @@ final class PrivateCourseListView: UIView {
     var courseDrawButtonTapped = PassthroughSubject<Void, Never>()
     var cellDidTapped = PassthroughSubject<Int, Never>()
     
+    private var courseList = [PrivateCourse]()
+    
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
     final let itemSpacing: CGFloat = 10
     final let lineSpacing: CGFloat = 20
@@ -53,6 +55,12 @@ final class PrivateCourseListView: UIView {
 // MARK: - Methods
 
 extension PrivateCourseListView {
+    func setData(courseList: [PrivateCourse]) {
+        self.courseList = courseList
+        self.courseListCollectionView.reloadData()
+        self.emptyView.isHidden = !courseList.isEmpty
+    }
+    
     private func setDelegate() {
         courseListCollectionView.delegate = self
         courseListCollectionView.dataSource = self
@@ -94,7 +102,7 @@ extension PrivateCourseListView {
 
 extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        return courseList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -102,6 +110,9 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
                                                             for: indexPath)
                 as? CourseListCVC else { return UICollectionViewCell() }
         cell.setCellType(type: .title)
+        let model = courseList[indexPath.item]
+        let cellTitle =  "\(model.departure.region) \(model.departure.city)"
+        cell.setData(imageURL: model.image, title: cellTitle, location: nil, didLike: nil)
         return cell
     }
 }

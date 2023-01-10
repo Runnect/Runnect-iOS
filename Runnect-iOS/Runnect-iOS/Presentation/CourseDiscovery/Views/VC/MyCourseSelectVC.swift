@@ -52,7 +52,7 @@ class MyCourseSelectVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.tabBarController?.tabBar.isHidden = true
+        self.hideTabBar(wantsToHide: true)
     }
 }
 // MARK: - Methods
@@ -139,7 +139,7 @@ extension MyCourseSelectVC: UICollectionViewDelegate, UICollectionViewDataSource
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className,
                                                             for: indexPath)
                 as? CourseListCVC else { return UICollectionViewCell() }
-        cell.setCellType(type: .title)
+        cell.setCellType(type: .titleWithLocation)
         
         if let selectedIndex = selectedIndex, selectedIndex == indexPath.item {
             cell.selectCell(didSelect: true)
@@ -156,7 +156,7 @@ extension MyCourseSelectVC: UICollectionViewDelegate, UICollectionViewDataSource
 extension MyCourseSelectVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cellWidth = (UIScreen.main.bounds.width - (self.itemSpacing + 2*self.collectionViewInset.left)) / 2
-        let cellHeight = CourseListCVCType.getCellHeight(type: .title, cellWidth: cellWidth)
+        let cellHeight = CourseListCVCType.getCellHeight(type: .titleWithLocation, cellWidth: cellWidth)
         
         return CGSize(width: cellWidth, height: cellHeight)
     }

@@ -8,11 +8,19 @@
 import UIKit
 import Combine
 
+import Moya
+
 final class CourseStorageVC: UIViewController {
     
     // MARK: - Properties
     
+    private let courseStorageProvider = MoyaProvider<CourseStorageRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
+    
     private let cancelBag = CancelBag()
+    
+    private var privateCourseList = [PrivateCourse]()
     
     // MARK: - UI Components
     
@@ -33,11 +41,21 @@ final class CourseStorageVC: UIViewController {
         self.setLayout()
         self.bindUI()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.getPrivateCourseList()
+    }
 }
 
 // MARK: - Methods
 
 extension CourseStorageVC {
+    private func setPrivateCourseData(courseList: [PrivateCourse]) {
+        self.privateCourseList = courseList
+        self.privateCourseListView.setData(courseList: courseList)
+    }
+    
     private func bindUI() {
         privateCourseListView.courseDrawButtonTapped.sink { [weak self] in
             guard let self = self else { return }
@@ -83,6 +101,38 @@ extension CourseStorageVC {
         viewPager.snp.makeConstraints { make in
             make.top.equalTo(naviBar.snp.bottom)
             make.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+}
+
+// MARK: - Network
+
+extension CourseStorageVC {
+    private func getPrivateCourseList() {
+        LoadingIndicator.showLoading()
+        courseStorageProvider.request(.getAllPrivateCourse) { [weak self] response in
+            guard let self = self else { return }
+            LoadingIndicator.hideLoading()
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    do {
+                        let responseDto = try result.map(BaseResponse<PrivateCourseResponseDto>.self)
+                        guard let data = responseDto.data else { return }
+                        self.setPrivateCourseData(courseList: data.courses)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
         }
     }
 }
