@@ -83,6 +83,10 @@ final class RunningRecordVC: UIViewController {
         super.viewDidAppear(true)
         self.setTextFieldBottomBorder()
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 // MARK: - Methods

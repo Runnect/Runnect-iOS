@@ -20,7 +20,7 @@ class CourseUploadVC: UIViewController {
     private let buttonContainerView = UIView()
     private let uploadButton = CustomButton(title: "업로드하기").setEnabled(false)
     
-    private lazy var containerView = UIScrollView()
+    private lazy var scrollView = UIScrollView()
     private let mapImageView = UIImageView().then {
         $0.image = UIImage(named: "")
     }
@@ -56,7 +56,9 @@ class CourseUploadVC: UIViewController {
         setLayout()
         setupTextView()
         setAddTarget()
-
+        setKeyboardNotification()
+        setTapGesture()
+        addKeyboardObserver()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -64,16 +66,21 @@ class CourseUploadVC: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 // MARK: - Methods
 
 extension CourseUploadVC {
-
+    
     private func setAddTarget() {
         self.uploadButton.addTarget(self, action: #selector(pushToCourseDiscoveryVC), for: .touchUpInside)
         self.courseTitleTextField.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
     }
+    
+    // 키보드가 올라오면 scrollView 위치 조정
     private func setKeyboardNotification() {
         NotificationCenter.default.addObserver(
             self,
@@ -87,52 +94,81 @@ extension CourseUploadVC {
             name: UIResponder.keyboardWillHideNotification,
             object: nil)
     }
+    
     // 화면 터치 시 키보드 내리기
     private func setTapGesture() {
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
+    
+    private func addKeyboardObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil)
+    }
 }
 
 // MARK: - @objc Function
 
 extension CourseUploadVC {
-    @objc private func textFieldTextDidChange() {
-        guard let text = courseTitleTextField.text else { return }
-        
-        uploadButton.isEnabled = !text.isEmpty
-        
-        if text.count > courseTitleMaxLength {
-            let index = text.index(text.startIndex, offsetBy: courseTitleMaxLength)
-            let newString = text[text.startIndex..<index]
-            self.courseTitleTextField.text = String(newString)
-        }
-    }
     
     @objc private func pushToCourseDiscoveryVC() {
         let nextVC = CourseDiscoveryVC()
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
+    
+    @objc private func textFieldTextDidChange() {
+        guard let text = courseTitleTextField.text else { return }
+                
+        if text.count > courseTitleMaxLength {
+            let index = text.index(text.startIndex, offsetBy: courseTitleMaxLength)
+            let newString = text[text.startIndex..<index]
+            self.courseTitleTextField.text = String(newString)
+        }
+        
+        if !text.isEmpty && activityTextView.text != self.placeholder {
+            uploadButton.setEnabled(true)
+        } else {
+            uploadButton.setEnabled(false)
+        }
+    }
+    
     @objc private func keyboardWillShow(_ notification: Notification) {
         guard let userInfo = notification.userInfo,
-            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
-                return
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+            return
         }
-
+        
         let contentInset = UIEdgeInsets(
             top: 0.0,
             left: 0.0,
             bottom: keyboardFrame.size.height,
             right: 0.0)
-        containerView.contentInset = contentInset
-        containerView.scrollIndicatorInsets = contentInset
+        scrollView.contentInset = contentInset
+        scrollView.scrollIndicatorInsets = contentInset
+        
+        if activityTextView.isFirstResponder {
+            let contentViewHeight = scrollView.contentSize.height
+            let textViewHeight = activityTextView.frame.height
+            let textViewOffsetY = contentViewHeight - (contentInset.bottom + textViewHeight)
+            let position = CGPoint(x: 0, y: textViewOffsetY + 100)
+            scrollView.setContentOffset(position, animated: true)
+            return
+        }
     }
     
     @objc private func keyboardWillHide() {
         let contentInset = UIEdgeInsets.zero
-        containerView.contentInset = contentInset
-        containerView.scrollIndicatorInsets = contentInset
+        scrollView.contentInset = contentInset
+        scrollView.scrollIndicatorInsets = contentInset
     }
 }
 
@@ -150,7 +186,7 @@ extension CourseUploadVC {
     
     private func setUI() {
         view.backgroundColor = .w1
-        containerView.backgroundColor = .clear
+        scrollView.backgroundColor = .clear
         buttonContainerView.backgroundColor = .w1
         mapImageView.backgroundColor = .systemGray4
         
@@ -167,23 +203,28 @@ extension CourseUploadVC {
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(86)
             make.bottom.equalToSuperview()
-    }
+        }
         uploadButton.snp.makeConstraints { make in
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
             make.height.equalTo(44)
             make.bottom.equalToSuperview().inset(34)
         }
-        view.addSubview(containerView)
+        
+        setScrollViewLayout()
+    }
+    
+    private func setScrollViewLayout() {
+        view.addSubview(scrollView)
         [mapImageView,
          courseTitleTextField,
          dividerView,
          distanceInfoView,
          departureInfoView,
          activityTextView].forEach {
-            containerView.addSubview($0)
+            scrollView.addSubview($0)
         }
         
-        containerView.snp.makeConstraints {
+        scrollView.snp.makeConstraints {
             $0.top.equalTo(navibar.snp.bottom)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.bottom.equalTo(uploadButton.snp.top).inset(-25)
@@ -222,16 +263,12 @@ extension CourseUploadVC {
             make.bottom.equalToSuperview()
             make.height.equalTo(187)
         }
-       
-}
+    }
     
     func setupTextView() {
         activityTextView.delegate = self
         activityTextView.text = placeholder
         activityTextView.textColor = .g3
-    }
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
     }
 }
 
@@ -240,14 +277,20 @@ extension CourseUploadVC: UITextViewDelegate {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             activityTextView.textColor = .g3
             activityTextView.text = placeholder
+            
         } else if textView.text == placeholder {
             activityTextView.textColor = .g1
             activityTextView.text = nil
-            self.uploadButton.setEnabled(true)
         }
     }
-
+    
     func textViewDidChange(_ textView: UITextView) {
+        if !courseTitleTextField.isEmpty && !activityTextView.text.isEmpty {
+            uploadButton.setEnabled(true)
+        } else {
+            uploadButton.setEnabled(false)
+        }
+        
         if activityTextView.text.count > 150 {
             activityTextView.deleteBackward()
         }
@@ -256,7 +299,6 @@ extension CourseUploadVC: UITextViewDelegate {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || textView.text == placeholder {
             activityTextView.textColor = .g3
             activityTextView.text = placeholder
-            uploadButton.setColor(bgColor: .m3, disableColor: .g3)
         }
     }
 }
