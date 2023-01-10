@@ -62,6 +62,7 @@
 		CE5875A4296015D2005D967E /* Encodable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5875A3296015D2005D967E /* Encodable+.swift */; };
 		CE591E9C296D4F69000FCBB3 /* RunningRecordResonseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE591E9B296D4F69000FCBB3 /* RunningRecordResonseDto.swift */; };
 		CE591E9E296D5140000FCBB3 /* RunningRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE591E9D296D5140000FCBB3 /* RunningRouter.swift */; };
+		CE591EA1296D5EB5000FCBB3 /* PrivateCourseResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE591EA0296D5EB5000FCBB3 /* PrivateCourseResponseDto.swift */; };
 		CE6655BF295D82E200C64E12 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = CE6655BE295D82E200C64E12 /* .gitkeep */; };
 		CE6655C8295D849F00C64E12 /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6655C7295D849F00C64E12 /* StringLiterals.swift */; };
 		CE6655CA295D84DD00C64E12 /* UserDefaultKeyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6655C9295D84DD00C64E12 /* UserDefaultKeyList.swift */; };
@@ -123,6 +124,7 @@
 		CEEC6B402961C55000D00E1E /* MyPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B3F2961C55000D00E1E /* MyPageVC.swift */; };
 		CEEC6B492961C5E200D00E1E /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B482961C5E200D00E1E /* SplashVC.swift */; };
 		CEEC6B4B2961D89700D00E1E /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B4A2961D89700D00E1E /* CustomNavigationBar.swift */; };
+		CEF3CD98296D63B9002723A1 /* CourseStorageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3CD97296D63B9002723A1 /* CourseStorageRouter.swift */; };
 		DA20D847296697A600F1581F /* MyCourseSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D846296697A600F1581F /* MyCourseSelectVC.swift */; };
 		DA20D849296697B400F1581F /* CourseUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D848296697B400F1581F /* CourseUploadVC.swift */; };
 		DA20D84E2966A9B300F1581F /* CourseSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D84D2966A9B300F1581F /* CourseSearchVC.swift */; };
@@ -150,11 +152,9 @@
 		CE0C23782966D6AF00B45063 /* ViewPager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPager.swift; sourceTree = "<group>"; };
 		CE0D9FD229648DA300CEB5CD /* CustomAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertVC.swift; sourceTree = "<group>"; };
 		CE10063929680C5700FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		CE10063B29680C6800FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10063C29680C7000FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10063D29680C8100FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10063E29680C8800FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		CE10064129680CA700FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10064229680CAD00FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10064329680CB400FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10064429680CBC00FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
@@ -204,6 +204,7 @@
 		CE5875A3296015D2005D967E /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
 		CE591E9B296D4F69000FCBB3 /* RunningRecordResonseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningRecordResonseDto.swift; sourceTree = "<group>"; };
 		CE591E9D296D5140000FCBB3 /* RunningRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningRouter.swift; sourceTree = "<group>"; };
+		CE591EA0296D5EB5000FCBB3 /* PrivateCourseResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateCourseResponseDto.swift; sourceTree = "<group>"; };
 		CE6655BE295D82E200C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE6655C0295D82F000C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE6655C1295D82F700C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
@@ -272,6 +273,7 @@
 		CEEC6B462961C5BB00D00E1E /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CEEC6B482961C5E200D00E1E /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		CEEC6B4A2961D89700D00E1E /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
+		CEF3CD97296D63B9002723A1 /* CourseStorageRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseStorageRouter.swift; sourceTree = "<group>"; };
 		DA20D846296697A600F1581F /* MyCourseSelectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCourseSelectVC.swift; sourceTree = "<group>"; };
 		DA20D848296697B400F1581F /* CourseUploadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseUploadVC.swift; sourceTree = "<group>"; };
 		DA20D84D2966A9B300F1581F /* CourseSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseSearchVC.swift; sourceTree = "<group>"; };
@@ -412,7 +414,7 @@
 		CE10063629680C1C00FD31FB /* CourseStorageDto */ = {
 			isa = PBXGroup;
 			children = (
-				CE10063B29680C6800FD31FB /* .gitkeep */,
+				CE591E9F296D5E0F000FCBB3 /* ResponseDto */,
 			);
 			path = CourseStorageDto;
 			sourceTree = "<group>";
@@ -711,7 +713,7 @@
 		CE40BB27296808290030ABCA /* CourseStorageRouter */ = {
 			isa = PBXGroup;
 			children = (
-				CE10064129680CA700FD31FB /* .gitkeep */,
+				CEF3CD97296D63B9002723A1 /* CourseStorageRouter.swift */,
 			);
 			path = CourseStorageRouter;
 			sourceTree = "<group>";
@@ -801,6 +803,14 @@
 			isa = PBXGroup;
 			children = (
 				CE591E9B296D4F69000FCBB3 /* RunningRecordResonseDto.swift */,
+			);
+			path = ResponseDto;
+			sourceTree = "<group>";
+		};
+		CE591E9F296D5E0F000FCBB3 /* ResponseDto */ = {
+			isa = PBXGroup;
+			children = (
+				CE591EA0296D5EB5000FCBB3 /* PrivateCourseResponseDto.swift */,
 			);
 			path = ResponseDto;
 			sourceTree = "<group>";
@@ -1298,10 +1308,12 @@
 				CE6655F0295D891B00C64E12 /* UITextView+.swift in Sources */,
 				CEC2A6922962BE2900160BF7 /* DepartureSearchVC.swift in Sources */,
 				CE6655EE295D88E600C64E12 /* UITextField+.swift in Sources */,
+				CEF3CD98296D63B9002723A1 /* CourseStorageRouter.swift in Sources */,
 				CE40BB1C2967E4910030ABCA /* RunningWaitingVC.swift in Sources */,
 				CE6B63D6296731F9003F900F /* ScrapCourseListView.swift in Sources */,
 				CE6655F8295D90CF00C64E12 /* adjusted+.swift in Sources */,
 				CE4545CB295D7AF4003201E1 /* SceneDelegate.swift in Sources */,
+				CE591EA1296D5EB5000FCBB3 /* PrivateCourseResponseDto.swift in Sources */,
 				A3BC2F3F2964706100198261 /* UploadedCourseInfoCVC.swift in Sources */,
 				CE6655FE295D912300C64E12 /* calculateTopInset.swift in Sources */,
 				CEEC6B492961C5E200D00E1E /* SplashVC.swift in Sources */,
