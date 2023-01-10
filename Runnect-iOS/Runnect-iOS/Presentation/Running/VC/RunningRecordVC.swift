@@ -7,11 +7,18 @@
 
 import UIKit
 
+import Moya
+
 final class RunningRecordVC: UIViewController {
     
     // MARK: - Properties
     
     private var runningModel: RunningModel?
+    
+    private let runningProvider = MoyaProvider<RunningRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
+
     private let courseTitleMaxLength = 20
     
     // MARK: - UI Components
@@ -95,6 +102,8 @@ final class RunningRecordVC: UIViewController {
 extension RunningRecordVC {
     private func setAddTarget() {
         self.courseTitleTextField.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
+        
+        self.saveButton.addTarget(self, action: #selector(saveButtonDidTap), for: .touchUpInside)
     }
     
     // 키보드가 올라오면 scrollView 위치 조정
@@ -162,6 +171,10 @@ extension RunningRecordVC {
         let contentInset = UIEdgeInsets.zero
         scrollView.contentInset = contentInset
         scrollView.scrollIndicatorInsets = contentInset
+    }
+    
+    @objc private func saveButtonDidTap() {
+        self.recordRunning()
     }
 }
 
@@ -260,5 +273,44 @@ extension RunningRecordVC {
     
     private func setTextFieldBottomBorder() {
         courseTitleTextField.addBottomBorder(height: 2)
+    }
+}
+
+// MARK: - Network
+
+extension RunningRecordVC {
+    private func recordRunning() {
+        guard let runningModel = self.runningModel else { return }
+        guard let courseId = runningModel.courseId else { return }
+        guard let titleText = courseTitleTextField.text else { return }
+        guard let time = runningModel.getFormattedTotalTime() else { return }
+        guard let secondsPerKm = runningModel.getIntPace() else { return }
+        let pace = RNTimeFormatter.secondsToHHMMSS(seconds: secondsPerKm)
+        
+        let requestDto = RunningRecordRequestDto(courseId: courseId,
+                                                 publicCourseId: runningModel.publicCourseId,
+                                                 title: titleText,
+                                                 time: time,
+                                                 pace: pace)
+        
+        LoadingIndicator.showLoading()
+        runningProvider.request(.recordRunning(param: requestDto)) { [weak self] response in
+            guard let self = self else { return }
+            LoadingIndicator.hideLoading()
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
     }
 }

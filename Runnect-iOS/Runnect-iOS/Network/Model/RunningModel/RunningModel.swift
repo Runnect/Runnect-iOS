@@ -25,11 +25,17 @@ struct RunningModel {
     
     /// mm'ss'' 형식으로 반환
     func getFormattedAveragePage() -> String? {
+        guard let averagePaceSecondsInt = getIntPace() else { return nil }
+        let formattedAveragePace = "\(averagePaceSecondsInt / 60)'\(averagePaceSecondsInt % 60)''"
+        return formattedAveragePace
+    }
+    
+    // Pace를 Int(초)형식으로 반환
+    func getIntPace() -> Int? {
         guard let distance = distance, let totalTime = self.totalTime else { return nil }
         guard let floatDistance = Float(distance) else { return nil }
         let averagePaceSeconds = round(Float(totalTime) / floatDistance)
         let averagePaceSecondsInt = Int(averagePaceSeconds)
-        let formattedAveragePace = "\(averagePaceSecondsInt / 60)'\(averagePaceSecondsInt % 60)''"
-        return formattedAveragePace
+        return averagePaceSecondsInt
     }
 }
