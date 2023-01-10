@@ -54,11 +54,14 @@
 		CE4545CD295D7AF4003201E1 /* TaBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CC295D7AF4003201E1 /* TaBarController.swift */; };
 		CE4545D2295D7AF5003201E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE4545D1295D7AF5003201E1 /* Assets.xcassets */; };
 		CE4545D5295D7AF5003201E1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE4545D3295D7AF5003201E1 /* LaunchScreen.storyboard */; };
+		CE55BC11296D4EA600E8CD69 /* RunningRecordRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE55BC10296D4EA600E8CD69 /* RunningRecordRequestDto.swift */; };
 		CE5645162961B72E000A2856 /* ImageLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5645152961B72E000A2856 /* ImageLiterals.swift */; };
 		CE58759E29601476005D967E /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE58759D29601476005D967E /* LoadingIndicator.swift */; };
 		CE5875A029601500005D967E /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE58759F29601500005D967E /* Toast.swift */; };
 		CE5875A2296015A2005D967E /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5875A1296015A2005D967E /* NetworkLoggerPlugin.swift */; };
 		CE5875A4296015D2005D967E /* Encodable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5875A3296015D2005D967E /* Encodable+.swift */; };
+		CE591E9C296D4F69000FCBB3 /* RunningRecordResonseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE591E9B296D4F69000FCBB3 /* RunningRecordResonseDto.swift */; };
+		CE591E9E296D5140000FCBB3 /* RunningRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE591E9D296D5140000FCBB3 /* RunningRouter.swift */; };
 		CE6655BF295D82E200C64E12 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = CE6655BE295D82E200C64E12 /* .gitkeep */; };
 		CE6655C8295D849F00C64E12 /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6655C7295D849F00C64E12 /* StringLiterals.swift */; };
 		CE6655CA295D84DD00C64E12 /* UserDefaultKeyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6655C9295D84DD00C64E12 /* UserDefaultKeyList.swift */; };
@@ -151,12 +154,10 @@
 		CE10063C29680C7000FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10063D29680C8100FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10063E29680C8800FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		CE10063F29680C9800FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10064129680CA700FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10064229680CAD00FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10064329680CB400FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10064429680CBC00FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		CE10064529680CC300FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10064D29680D2500FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10064F29680D3300FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10065029680D3800FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
@@ -195,11 +196,14 @@
 		CE4545D1295D7AF5003201E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE4545D4295D7AF5003201E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CE4545D6295D7AF5003201E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE55BC10296D4EA600E8CD69 /* RunningRecordRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningRecordRequestDto.swift; sourceTree = "<group>"; };
 		CE5645152961B72E000A2856 /* ImageLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLiterals.swift; sourceTree = "<group>"; };
 		CE58759D29601476005D967E /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		CE58759F29601500005D967E /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		CE5875A1296015A2005D967E /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
 		CE5875A3296015D2005D967E /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
+		CE591E9B296D4F69000FCBB3 /* RunningRecordResonseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningRecordResonseDto.swift; sourceTree = "<group>"; };
+		CE591E9D296D5140000FCBB3 /* RunningRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningRouter.swift; sourceTree = "<group>"; };
 		CE6655BE295D82E200C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE6655C0295D82F000C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE6655C1295D82F700C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
@@ -375,7 +379,8 @@
 		CE10063229680BEB00FD31FB /* RunningDto */ = {
 			isa = PBXGroup;
 			children = (
-				CE10063F29680C9800FD31FB /* .gitkeep */,
+				CE55BC12296D4EB300E8CD69 /* RequestDto */,
+				CE55BC13296D4F3900E8CD69 /* ResponseDto */,
 			);
 			path = RunningDto;
 			sourceTree = "<group>";
@@ -738,7 +743,7 @@
 		CE40BB2B296808500030ABCA /* RunningRouter */ = {
 			isa = PBXGroup;
 			children = (
-				CE10064529680CC300FD31FB /* .gitkeep */,
+				CE591E9D296D5140000FCBB3 /* RunningRouter.swift */,
 			);
 			path = RunningRouter;
 			sourceTree = "<group>";
@@ -771,6 +776,33 @@
 				CE4545D6295D7AF5003201E1 /* Info.plist */,
 			);
 			path = "Runnect-iOS";
+			sourceTree = "<group>";
+		};
+		CE55BC0F296D4E5500E8CD69 /* RNUtils */ = {
+			isa = PBXGroup;
+			children = (
+				CEC2A68F2962B06C00160BF7 /* convertLocationObject.swift */,
+				CE14677729658C7200DCEA1B /* Stopwatch.swift */,
+				CE9291282965E01D0010959C /* RNTimeFormatter.swift */,
+				CE3A53C4296C6017003D518C /* KeychainManager.swift */,
+			);
+			path = RNUtils;
+			sourceTree = "<group>";
+		};
+		CE55BC12296D4EB300E8CD69 /* RequestDto */ = {
+			isa = PBXGroup;
+			children = (
+				CE55BC10296D4EA600E8CD69 /* RunningRecordRequestDto.swift */,
+			);
+			path = RequestDto;
+			sourceTree = "<group>";
+		};
+		CE55BC13296D4F3900E8CD69 /* ResponseDto */ = {
+			isa = PBXGroup;
+			children = (
+				CE591E9B296D4F69000FCBB3 /* RunningRecordResonseDto.swift */,
+			);
+			path = ResponseDto;
 			sourceTree = "<group>";
 		};
 		CE6655A8295D7F7D00C64E12 /* Presentation */ = {
@@ -890,6 +922,7 @@
 		CE6655B1295D801700C64E12 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				CE55BC0F296D4E5500E8CD69 /* RNUtils */,
 				CE6655F5295D90B600C64E12 /* addToolBar.swift */,
 				CE6655F7295D90CF00C64E12 /* adjusted+.swift */,
 				CE6655F9295D90E000C64E12 /* applyShadow.swift */,
@@ -907,11 +940,7 @@
 				CE58759D29601476005D967E /* LoadingIndicator.swift */,
 				CE58759F29601500005D967E /* Toast.swift */,
 				CE6655C9295D84DD00C64E12 /* UserDefaultKeyList.swift */,
-				CEC2A68F2962B06C00160BF7 /* convertLocationObject.swift */,
 				CE29D583296416D800F47542 /* caculateStatusBarHeight.swift */,
-				CE14677729658C7200DCEA1B /* Stopwatch.swift */,
-				CE9291282965E01D0010959C /* RNTimeFormatter.swift */,
-				CE3A53C4296C6017003D518C /* KeychainManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1221,6 +1250,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE40BB20296805F70030ABCA /* NetworkResult.swift in Sources */,
+				CE55BC11296D4EA600E8CD69 /* RunningRecordRequestDto.swift in Sources */,
 				CE665604295D91B100C64E12 /* makeAlert.swift in Sources */,
 				A3BC2F2F2962C40A00198261 /* UploadedCourseInfoVC.swift in Sources */,
 				CE6655EA295D88B200C64E12 /* UITabBar+.swift in Sources */,
@@ -1286,6 +1316,7 @@
 				CEB841702963360800BF8080 /* CountDownVC.swift in Sources */,
 				CE320F38296C8FAB009F89A7 /* CourseDrawingResponseData.swift in Sources */,
 				CE18E894296C79B900FEB569 /* CourseDrawingRequestDto.swift in Sources */,
+				CE591E9E296D5140000FCBB3 /* RunningRouter.swift in Sources */,
 				DA20D84E2966A9B300F1581F /* CourseSearchVC.swift in Sources */,
 				CE1006572968230800FD31FB /* DepartureLocationModel.swift in Sources */,
 				CE6655EC295D88D000C64E12 /* UITableView+.swift in Sources */,
@@ -1329,6 +1360,7 @@
 				CE9291252965C9FB0010959C /* CourseDetailInfoView.swift in Sources */,
 				CE665600295D915D00C64E12 /* getClassName.swift in Sources */,
 				A3BC2F2D2962C3F200198261 /* ActivityRecordInfoVC.swift in Sources */,
+				CE591E9C296D4F69000FCBB3 /* RunningRecordResonseDto.swift in Sources */,
 				CE6655FC295D90F500C64E12 /* calculatePastTime.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
