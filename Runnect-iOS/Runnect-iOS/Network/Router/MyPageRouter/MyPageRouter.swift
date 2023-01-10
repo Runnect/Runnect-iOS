@@ -11,6 +11,7 @@ import Moya
 
 enum MyPageRouter {
     case getMyPageInfo
+    case getUploadedCourseInfo
 }
 
 extension MyPageRouter: TargetType {
@@ -26,12 +27,16 @@ extension MyPageRouter: TargetType {
         switch self {
         case .getMyPageInfo:
             return "/user"
+        case .getUploadedCourseInfo:
+            return "/public-course/user"
         }
     }
     
     var method: Moya.Method {
         switch self {
         case .getMyPageInfo:
+            return .get
+        case .getUploadedCourseInfo:
             return .get
         }
     }
@@ -40,13 +45,19 @@ extension MyPageRouter: TargetType {
         switch self {
         case .getMyPageInfo:
             return .requestPlain
+        case .getUploadedCourseInfo:
+            return .requestPlain
         }
     }
     
     var headers: [String: String]? {
         switch self {
         case .getMyPageInfo:
-            return Config.headerWithDeviceId
+            return ["Content-Type": "application/json",
+                    "machineId": "1"]
+        case .getUploadedCourseInfo:
+            return ["Content-Type": "application/json",
+                    "machineId": "1"]
         }
     }
 }

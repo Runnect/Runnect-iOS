@@ -6,8 +6,11 @@
 //
 
 import UIKit
+
 import SnapKit
 import Then
+import Moya
+import Kingfisher
 
 final class UploadedCourseInfoCVC: UICollectionViewCell {
     
@@ -22,10 +25,7 @@ final class UploadedCourseInfoCVC: UICollectionViewCell {
         $0.font = .b4
     }
     
-    private let uploadedCoursePlaceLabel = UILabel().then {
-        $0.textColor = .g2
-        $0.font = .b6
-    }
+    private let uploadedCoursePlaceLabel = UILabel()
     
     // MARK: - Life Cycles
     
@@ -37,6 +37,24 @@ final class UploadedCourseInfoCVC: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: - Methods
+
+extension UploadedCourseInfoCVC {
+    func setData(model: PublicCourse) {
+        guard let imageURL = URL(string: model.image) else { return }
+        
+        uploadedCourseTitleLabel.text = model.title
+        setUploadedCoursePlaceLabel(model: model, label: uploadedCoursePlaceLabel)
+        self.uploadedCourseMapImage.kf.setImage(with: imageURL)
+    }
+    
+    func setUploadedCoursePlaceLabel(model: PublicCourse, label: UILabel) {
+        let attributedString = NSMutableAttributedString(string: String(model.departure.region) + " ", attributes: [.font: UIFont.b6, .foregroundColor: UIColor.g2])
+        attributedString.append(NSAttributedString(string: String(model.departure.city), attributes: [.font: UIFont.b6, .foregroundColor: UIColor.g2]))
+        label.attributedText = attributedString
     }
 }
 
