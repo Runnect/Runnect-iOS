@@ -44,7 +44,7 @@ public class Toast {
         toastContainer.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview().inset(safeAreaBottomInset+40)
-            $0.width.equalTo(100)
+            $0.width.equalTo(200)
             $0.height.equalTo(44)
         }
         
