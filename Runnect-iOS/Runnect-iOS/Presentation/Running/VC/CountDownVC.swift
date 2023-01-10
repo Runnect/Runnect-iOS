@@ -12,10 +12,8 @@ final class CountDownVC: UIViewController {
     
     // MARK: - Properties
     
+    private var runningModel: RunningModel?
     private var count = 3
-    var locations = [NMGLatLng]()
-    var distance: String?
-    var pathImage: UIImage?
     
     // MARK: - UI Components
     
@@ -59,9 +57,9 @@ extension CountDownVC {
             if self.count > 0 {
                 self.animateTimeLabel()
             } else {
+                guard let runningModel = self.runningModel else { return }
                 let runTrackingVC = RunTrackingVC()
-                runTrackingVC.makePath(locations: self.locations, distance: self.distance ?? "0.0")
-                runTrackingVC.pathImage = self.pathImage
+                runTrackingVC.setData(runningModel: runningModel)
                 self.navigationController?.pushViewController(runTrackingVC, animated: true)
                 
                 // CountDownVC를 navigationController 스택에서 제거하여 pop 하였을 때 더 이전 뷰로 넘어가지도록 함
@@ -72,10 +70,8 @@ extension CountDownVC {
         })
     }
     
-    func setData(locations: [NMGLatLng], distance: String?, pathImage: UIImage?) {
-        self.locations = locations
-        self.distance = distance
-        self.pathImage = pathImage
+    func setData(runningModel: RunningModel) {
+        self.runningModel = runningModel
     }
 }
 

@@ -101,7 +101,10 @@ extension CourseDetailVC {
     
     @objc private func pushToCountDownVC() {
         let countDownVC = CountDownVC()
-        countDownVC.setData(locations: [], distance: "1.0", pathImage: UIImage())
+        let runningModel = RunningModel(locations: [],
+                                        distance: "1.0",
+                                        pathImage: UIImage())
+        countDownVC.setData(runningModel: runningModel)
         self.navigationController?.pushViewController(countDownVC, animated: true)
     }
 }
