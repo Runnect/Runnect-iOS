@@ -120,7 +120,6 @@
 		CEEC6B402961C55000D00E1E /* MyPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B3F2961C55000D00E1E /* MyPageVC.swift */; };
 		CEEC6B492961C5E200D00E1E /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B482961C5E200D00E1E /* SplashVC.swift */; };
 		CEEC6B4B2961D89700D00E1E /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B4A2961D89700D00E1E /* CustomNavigationBar.swift */; };
-		DA20D83F296696A000F1581F /* MapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D83E296696A000F1581F /* MapModel.swift */; };
 		DA20D847296697A600F1581F /* MyCourseSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D846296697A600F1581F /* MyCourseSelectVC.swift */; };
 		DA20D849296697B400F1581F /* CourseUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D848296697B400F1581F /* CourseUploadVC.swift */; };
 		DA20D84E2966A9B300F1581F /* CourseSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D84D2966A9B300F1581F /* CourseSearchVC.swift */; };
@@ -269,7 +268,6 @@
 		CEEC6B462961C5BB00D00E1E /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CEEC6B482961C5E200D00E1E /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		CEEC6B4A2961D89700D00E1E /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
-		DA20D83E296696A000F1581F /* MapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModel.swift; sourceTree = "<group>"; };
 		DA20D846296697A600F1581F /* MyCourseSelectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCourseSelectVC.swift; sourceTree = "<group>"; };
 		DA20D848296697B400F1581F /* CourseUploadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseUploadVC.swift; sourceTree = "<group>"; };
 		DA20D84D2966A9B300F1581F /* CourseSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseSearchVC.swift; sourceTree = "<group>"; };
@@ -555,9 +553,7 @@
 		CE17F03C2961C32C00E1DED0 /* CourseDiscovery */ = {
 			isa = PBXGroup;
 			children = (
-				DA20D83D2966968500F1581F /* Reuse */,
 				CE17F0442961C3D900E1DED0 /* Views */,
-				CE17F0432961C3D600E1DED0 /* VC */,
 			);
 			path = CourseDiscovery;
 			sourceTree = "<group>";
@@ -618,6 +614,9 @@
 		CE17F0432961C3D600E1DED0 /* VC */ = {
 			isa = PBXGroup;
 			children = (
+				DA20D846296697A600F1581F /* MyCourseSelectVC.swift */,
+				DA20D848296697B400F1581F /* CourseUploadVC.swift */,
+				DA20D84D2966A9B300F1581F /* CourseSearchVC.swift */,
 				CEEC6B3D2961C53700D00E1E /* CourseDiscoveryVC.swift */,
 			);
 			path = VC;
@@ -626,10 +625,11 @@
 		CE17F0442961C3D900E1DED0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DAD5A3DB296C6DB800C8166B /* MapCollectionViewCell.swift */,
+				DAD5A3D9296C6DA500C8166B /* TitleCollectionViewCell.swift */,
+				DAD5A3D7296C6D9600C8166B /* AdImageCollectionViewCell.swift */,
 				CEEC6B432961C59F00D00E1E /* .gitkeep */,
-				DA20D846296697A600F1581F /* MyCourseSelectVC.swift */,
-				DA20D848296697B400F1581F /* CourseUploadVC.swift */,
-				DA20D84D2966A9B300F1581F /* CourseSearchVC.swift */,
+				CE17F0432961C3D600E1DED0 /* VC */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1081,17 +1081,6 @@
 			path = VC;
 			sourceTree = "<group>";
 		};
-		DA20D83D2966968500F1581F /* Reuse */ = {
-			isa = PBXGroup;
-			children = (
-				DA20D83E296696A000F1581F /* MapModel.swift */,
-				DAD5A3D7296C6D9600C8166B /* AdImageCollectionViewCell.swift */,
-				DAD5A3D9296C6DA500C8166B /* TitleCollectionViewCell.swift */,
-				DAD5A3DB296C6DB800C8166B /* MapCollectionViewCell.swift */,
-			);
-			path = Reuse;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1287,7 +1276,6 @@
 				CE6655FE295D912300C64E12 /* calculateTopInset.swift in Sources */,
 				CEEC6B492961C5E200D00E1E /* SplashVC.swift in Sources */,
 				CE6655D0295D85FF00C64E12 /* CancelBag.swift in Sources */,
-				DA20D83F296696A000F1581F /* MapModel.swift in Sources */,
 				A3BC2F432966A93100198261 /* CourseDetailVC.swift in Sources */,
 				DAD5A3D8296C6D9600C8166B /* AdImageCollectionViewCell.swift in Sources */,
 				CE18E890296C76C100FEB569 /* RNLocationModel.swift in Sources */,

@@ -20,7 +20,7 @@ class CourseUploadVC: UIViewController {
     private let buttonContainerView = UIView()
     private let uploadButton = CustomButton(title: "업로드하기").setEnabled(false)
     
-    private lazy var containerView = UIScrollView()
+    private lazy var scrollView = UIScrollView()
     private let mapImageView = UIImageView().then {
         $0.image = UIImage(named: "")
     }
@@ -145,15 +145,15 @@ extension CourseUploadVC {
             left: 0.0,
             bottom: keyboardFrame.size.height,
             right: 0.0)
-        containerView.contentInset = contentInset
-        containerView.scrollIndicatorInsets = contentInset
+        scrollView.contentInset = contentInset
+        scrollView.scrollIndicatorInsets = contentInset
         
     }
     
     @objc private func keyboardWillHide() {
         let contentInset = UIEdgeInsets.zero
-        containerView.contentInset = contentInset
-        containerView.scrollIndicatorInsets = contentInset
+        scrollView.contentInset = contentInset
+        scrollView.scrollIndicatorInsets = contentInset
     }
 }
 
@@ -171,7 +171,7 @@ extension CourseUploadVC {
     
     private func setUI() {
         view.backgroundColor = .w1
-        containerView.backgroundColor = .clear
+        scrollView.backgroundColor = .clear
         buttonContainerView.backgroundColor = .w1
         mapImageView.backgroundColor = .systemGray4
         
@@ -194,17 +194,17 @@ extension CourseUploadVC {
             make.height.equalTo(44)
             make.bottom.equalToSuperview().inset(34)
         }
-        view.addSubview(containerView)
+        view.addSubview(scrollView)
         [mapImageView,
          courseTitleTextField,
          dividerView,
          distanceInfoView,
          departureInfoView,
          activityTextView].forEach {
-            containerView.addSubview($0)
+            scrollView.addSubview($0)
         }
         
-        containerView.snp.makeConstraints {
+        scrollView.snp.makeConstraints {
             $0.top.equalTo(navibar.snp.bottom)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.bottom.equalTo(uploadButton.snp.top).inset(-25)
@@ -282,4 +282,3 @@ extension CourseUploadVC: UITextViewDelegate {
         }
     }
   }
-

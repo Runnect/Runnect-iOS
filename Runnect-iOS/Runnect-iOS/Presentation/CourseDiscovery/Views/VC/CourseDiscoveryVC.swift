@@ -12,12 +12,9 @@ import SnapKit
 import Combine
 
 final class CourseDiscoveryVC: UIViewController {
-    
-    let adImageCellId = "AdImageCollectionViewCell"
-    let titleCellId = "TitleCollectionViewCell"
-    let collectionViewId = "CollectionViewCell"
   
     // MARK: - UIComponents
+    
     private lazy var navibar = CustomNavigationBar(self, type: .title).setTitle("코스 발견")
     private let searchButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icSearch, for: .normal)
@@ -28,6 +25,7 @@ final class CourseDiscoveryVC: UIViewController {
     }
    
     // MARK: - collectionview
+    
     private lazy var mapCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -49,7 +47,13 @@ final class CourseDiscoveryVC: UIViewController {
         layout()
         setAddTarget()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.hideTabBar(wantsToHide: false)
+    }
 }
+
 // MARK: - Methods
 
 extension CourseDiscoveryVC {
@@ -58,11 +62,13 @@ extension CourseDiscoveryVC {
         mapCollectionView.delegate = self
         mapCollectionView.dataSource = self
     }
+    
     private func register() {
-        self.mapCollectionView.register(AdImageCollectionViewCell.self, forCellWithReuseIdentifier: adImageCellId)
-        self.mapCollectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: titleCellId)
-        self.mapCollectionView.register(MapCollectionViewCell.self, forCellWithReuseIdentifier: collectionViewId)
+        self.mapCollectionView.register(AdImageCollectionViewCell.self, forCellWithReuseIdentifier: AdImageCollectionViewCell.className)
+        self.mapCollectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: TitleCollectionViewCell.className)
+        self.mapCollectionView.register(CourseListCVC.self, forCellWithReuseIdentifier: CourseListCVC.className)
     }
+    
     private func setAddTarget() {
         
         self.searchButton.addTarget(self, action: #selector(pushToSearchVC), for: .touchUpInside)
@@ -96,23 +102,21 @@ extension CourseDiscoveryVC {
         }
         searchButton.snp.makeConstraints { make in
             make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(16)
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(12)
+            make.centerY.equalTo(navibar)
         }
     }
     
     private func layout() {
         view.backgroundColor = .w1
         mapCollectionView.backgroundColor = .w1
-        self.tabBarController?.tabBar.isHidden = false
         view.addSubviews(plusButton, mapCollectionView)
         view.bringSubviewToFront(plusButton)
 
         mapCollectionView.snp.makeConstraints {
-            $0.top.equalTo(self.navibar.snp.bottom).offset(10)
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.bottom.equalToSuperview()
-            $0.height.equalTo(1000)
+            $0.top.equalTo(self.navibar.snp.bottom)
+            $0.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
         }
+        
         plusButton.snp.makeConstraints { make in
             make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(16)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(20)
@@ -126,32 +130,81 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         3
     }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        1
+        switch section {
+        case 0, 1:
+            return 1
+        case 2:
+            return 15
+        default:
+            return 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var cell = UICollectionViewCell()
-               
-               if indexPath.section == 0 {
-                   cell = collectionView.dequeueReusableCell(withReuseIdentifier: adImageCellId, for: indexPath) as! AdImageCollectionViewCell
-               } else if indexPath.section == 1 {
-                   cell = collectionView.dequeueReusableCell(withReuseIdentifier: titleCellId, for: indexPath) as! TitleCollectionViewCell
-               } else {
-                   cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionViewId, for: indexPath) as! MapCollectionViewCell
-               }
-               
-        return cell
+        if indexPath.section == 0 {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdImageCollectionViewCell.className, for: indexPath) as? AdImageCollectionViewCell else { return UICollectionViewCell() }
+            return cell
+        } else if indexPath.section == 1 {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TitleCollectionViewCell.className, for: indexPath) as? TitleCollectionViewCell else { return UICollectionViewCell() }
+            return cell
+        } else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath) as? CourseListCVC else { return UICollectionViewCell() }
+            cell.setCellType(type: .all)
+            return cell
+        }
     }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         _ = UICollectionViewCell()
-           return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
-       }
-
+        
+        let screenWidth = UIScreen.main.bounds.width
+        
+        switch indexPath.section {
+        case 0:
+            return CGSize(width: screenWidth, height: screenWidth * (183/390))
+        case 1:
+            return CGSize(width: screenWidth, height: 80)
+        case 2:
+            let cellWidth = (screenWidth - 42) / 2
+            let cellHeight = CourseListCVCType.getCellHeight(type: .all, cellWidth: cellWidth)
+            return CGSize(width: cellWidth, height: cellHeight)
+        default:
+            return CGSize(width: 0, height: 0)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        if section == 2 {
+            return 20
+        }
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        if section == 2 {
+            return 10
+        }
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        if section == 2 {
+            return UIEdgeInsets(top: 0, left: 16, bottom: 20, right: 16)
+        }
+        return .zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == 2 {
+            let courseDetailVC = CourseDetailVC()
+            self.navigationController?.pushViewController(courseDetailVC, animated: true)
+        }
+    }
 }

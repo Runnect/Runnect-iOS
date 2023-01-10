@@ -12,10 +12,14 @@ import Then
 
 class TitleCollectionViewCell: UICollectionViewCell {
     
-    // MARK: - Identifier
-    static let titleCellId = "TitleCollectionViewCell"
     // MARK: - UI Components
-    private let titleView = UIView()
+    
+    private lazy var titleStackView = UIStackView(arrangedSubviews: [mainLabel, subLabel]).then {
+        $0.axis = .vertical
+        $0.spacing = 4
+        $0.alignment = .leading
+    }
+    
     private let mainLabel: UILabel = {
         let label = UILabel()
         label.text = "코스 추천"
@@ -49,22 +53,11 @@ extension TitleCollectionViewCell {
     
     func layout() {
         contentView.backgroundColor = .clear
-        contentView.addSubview(titleView)
-        
-        titleView.addSubviews(mainLabel, subLabel)
-        titleView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.trailing.equalTo(contentView.safeAreaLayoutGuide)
-                $0.height.equalTo(60)
-        }
-            mainLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(9)
-            $0.leading.equalToSuperview().offset(16)
-        }
-        
-        subLabel.snp.makeConstraints {
-            $0.top.equalTo(self.mainLabel.snp.bottom).offset(4)
-            $0.leading.equalToSuperview().offset(16)
+        contentView.addSubview(titleStackView)
+                
+        titleStackView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().inset(16)
         }
     }
 }

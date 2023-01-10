@@ -12,9 +12,8 @@ import Then
 
 class MapCollectionViewCell: UICollectionViewCell {
     
-    // MARK: - Identifier
-    static let collectionViewId = "CollectionViewCell"
     // MARK: - collectionview
+    
     private lazy var mapCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -26,6 +25,7 @@ class MapCollectionViewCell: UICollectionViewCell {
         collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
+    
     // MARK: - Constants
     
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
