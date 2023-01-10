@@ -41,7 +41,6 @@ extension SplashVC {
     private func checkDidSignIn() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             let deviceId = KeychainManager.shared.getDeviceId()
-            
             if deviceId.isEmpty {
                 let deviceIdStoreSuccess = KeychainManager.shared.storeDeviceId()
                 guard deviceIdStoreSuccess else { return }

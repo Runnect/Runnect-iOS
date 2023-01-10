@@ -6,11 +6,19 @@
 //
 
 import UIKit
+
 import SnapKit
 import Then
+import Moya
 
 final class MyPageVC: UIViewController {
     
+    // MARK: - Properties
+    
+    private var myPageProvider = MoyaProvider<MyPageRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
+        
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .title).setTitle("마이페이지")
@@ -25,7 +33,6 @@ final class MyPageVC: UIViewController {
     }
     
     private let myProfileNameLabel = UILabel().then {
-        $0.text = "말랑콩떡"
         $0.textColor = .m1
         $0.font = .h4
     }
@@ -44,15 +51,11 @@ final class MyPageVC: UIViewController {
         $0.addGestureRecognizer(tap)
     }
     
-    private let myRunningLevelLavel = UILabel().then {
-        $0.text = "LV 3"
-        $0.textColor = .g1
-        $0.font = .h5
-    }
+    private let myRunningLevelLavel = UILabel()
     
-    private let myRunningProgressBar = UIProgressView(progressViewStyle: .bar).then {
+    private lazy var myRunningProgressBar = UIProgressView(progressViewStyle: .bar).then {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.setProgress(0.25, animated: false)
+        $0.setProgress(0, animated: false)
         $0.progressTintColor = .m1
         $0.trackTintColor = .m3
         $0.layer.cornerRadius = 6
@@ -61,11 +64,7 @@ final class MyPageVC: UIViewController {
         $0.subviews[1].clipsToBounds = true
     }
     
-    private let myRunnigProgressPercentLabel = UILabel().then {
-        let attributedString = NSMutableAttributedString(string: "25", attributes: [.font: UIFont.b5, .foregroundColor: UIColor.g1])
-        attributedString.append(NSAttributedString(string: " /100", attributes: [.font: UIFont.b5, .foregroundColor: UIColor.g2]))
-        $0.attributedText = attributedString
-    }
+    private let myRunnigProgressPercentLabel = UILabel()
     
     private lazy var goalRewardInfoView = makeInfoView(title: "목표 보상").then {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpGoalRewardInfoView))
@@ -89,6 +88,7 @@ final class MyPageVC: UIViewController {
         setNavigationBar()
         setUI()
         setLayout()
+        getMyPageInfo()
     }
 }
 
@@ -153,6 +153,26 @@ extension MyPageVC {
         nicknameEditorVC.modalPresentationStyle = .overFullScreen
         self.present(nicknameEditorVC, animated: false)
     }
+    
+    private func setData(model: MyPageDto) {
+        self.myProfileNameLabel.text = model.user.nickname
+        self.myRunningProgressBar.setProgress(Float(model.user.levelPercent)/100, animated: false)
+        setMyRunningProgressPercentLabel(label: myRunnigProgressPercentLabel, model: model)
+        setMyRunningLevelLavel(label: myRunningLevelLavel, model: model)
+    }
+    
+    private func setMyRunningProgressPercentLabel(label: UILabel, model: MyPageDto) {
+        let attributedString = NSMutableAttributedString(string: String(model.user.levelPercent), attributes: [.font: UIFont.b5, .foregroundColor: UIColor.g1])
+        attributedString.append(NSAttributedString(string: " /100", attributes: [.font: UIFont.b5, .foregroundColor: UIColor.g2]))
+        label.attributedText = attributedString
+    }
+    
+    private func setMyRunningLevelLavel(label: UILabel, model: MyPageDto) {
+        let attributedString = NSMutableAttributedString(string: "LV ", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1])
+        attributedString.append(NSAttributedString(string: String(model.user.level), attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1]))
+        label.attributedText = attributedString
+    }
+    
 }
 
 // MARK: - @objc Function
@@ -303,4 +323,36 @@ extension MyPageVC {
             make.height.equalTo(60)
         }
     }    
+}
+
+// MARK: - Network
+
+extension MyPageVC {
+    func getMyPageInfo() {
+        LoadingIndicator.showLoading()
+        myPageProvider.request(.getMyPageInfo) { [weak self] response in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    do {
+                        let responseDto = try result.map(BaseResponse<MyPageDto>.self)
+                        guard let data = responseDto.data else { return }
+                        self.setData(model: data)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
+    }
 }
