@@ -11,6 +11,7 @@ import Moya
 
 enum CourseStorageRouter {
     case getAllPrivateCourse
+    case getPrivateCourseNotUploaded
 }
 
 extension CourseStorageRouter: TargetType {
@@ -26,26 +27,28 @@ extension CourseStorageRouter: TargetType {
         switch self {
         case .getAllPrivateCourse:
             return "/course/user"
+        case .getPrivateCourseNotUploaded:
+            return "/course/private/user"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .getAllPrivateCourse:
+        case .getAllPrivateCourse, .getPrivateCourseNotUploaded:
             return .get
         }
     }
     
     var task: Moya.Task {
         switch self {
-        case .getAllPrivateCourse:
+        case .getAllPrivateCourse, .getPrivateCourseNotUploaded:
             return .requestPlain
         }
     }
     
     var headers: [String: String]? {
         switch self {
-        case .getAllPrivateCourse:
+        case .getAllPrivateCourse, .getPrivateCourseNotUploaded:
             return Config.headerWithDeviceId
         }
     }
