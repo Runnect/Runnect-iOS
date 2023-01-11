@@ -6,3 +6,28 @@
 //
 
 import Foundation
+
+// MARK: - ActivityRecordInfoDto
+
+struct ActivityRecordInfoDto: Codable {
+    let records: [Record]
+}
+
+// MARK: - Record
+
+struct Record: Codable {
+    let id, courseId: Int
+    let publicCourseId: Int?
+    let machineId, title: String
+    let image: String
+    let createdAt: String
+    let distance: Double
+    let time, pace: String
+    let departure: ActivityRecordDeparture
+}
+
+// MARK: - Departure
+
+struct ActivityRecordDeparture: Codable {
+    let region, city: String
+}

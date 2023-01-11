@@ -6,8 +6,10 @@
 //
 
 import UIKit
+
 import SnapKit
 import Then
+import Kingfisher
 
 final class ActivityRecordInfoTVC: UITableViewCell {
     
@@ -23,7 +25,7 @@ final class ActivityRecordInfoTVC: UITableViewCell {
     private let firstVerticalDivideLine = UIView()
     private let secondVerticalDivideLine = UIView()
     
-    private let activityRecordMapImage = UIView().then {
+    private let activityRecordMapImage = UIImageView().then {
         $0.layer.cornerRadius = 10
     }
     
@@ -90,30 +92,51 @@ final class ActivityRecordInfoTVC: UITableViewCell {
 // MARK: - Methods
 
 extension ActivityRecordInfoTVC {
-    
-    // MARK: - General Helpers
-    
-    func dataBind(model: ActivityRecordInfoModel) {
-        activityRecordTitleLabel.text = model.title
-        activityRecordPlaceLabel.text = model.place
-        activityRecordDateLabel.text = model.date
-        activityRecordTotalDistanceValueLabel.text = model.distance
-        activityRecordRunningTimeValueLabel.text = model.runningTime
-        activityRecordAveragePaceValueLabel.text = model.averagePace
-    }
-    
-    private func setData(model: Record) {
+    func setData(model: Record) {
+        guard let imageURL = URL(string: model.image) else { return }
+        
+        // 날짜 바꾸기
+        let activityRecordDate = model.createdAt.prefix(10)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let convertDate = dateFormatter.date(from: String(activityRecordDate))
+        guard let convertDate = convertDate else { return }
+        
+        let resultDateFormatter = DateFormatter()
+        resultDateFormatter.dateFormat = "yyyy.MM.dd"
+        let resultDate = resultDateFormatter.string(from: convertDate)
+        
+        // 이동 시간 바꾸기
+        let activityRecordRunningTime = model.time.suffix(7)
+        
+        // 평균 페이스 바꾸기
+        let activityRecordAveragePace = model.pace
+        let array = activityRecordAveragePace.split(separator: ":").map { String($0) }
+        
         activityRecordTitleLabel.text = model.title
         setUpActivityRecordPlaceLabel(model: model, label: activityRecordPlaceLabel)
-        activityRecordDateLabel.text = model.createdAt
-        activityRecordTotalDistanceValueLabel.text = model.distance
-        activityRecordRunningTimeValueLabel.text = model.time
-        activityRecordAveragePaceValueLabel.text = model.pace
+        activityRecordDateLabel.text = resultDate
+        setUpactivityRecordTotalDistanceValueLabel(model: model, label: activityRecordTotalDistanceValueLabel)
+        activityRecordRunningTimeValueLabel.text = String(activityRecordRunningTime)
+        setUpActivityRecordAveragePaceValueLabel(array: array, label: activityRecordAveragePaceValueLabel)
+        self.activityRecordMapImage.kf.setImage(with: imageURL)
     }
     
     private func setUpActivityRecordPlaceLabel(model: Record, label: UILabel) {
         let attributedString = NSMutableAttributedString(string: String(model.departure.region) + " ", attributes: [.font: UIFont.b8, .foregroundColor: UIColor.g2])
         attributedString.append(NSAttributedString(string: String(model.departure.city), attributes: [.font: UIFont.b8, .foregroundColor: UIColor.g2]))
+        label.attributedText = attributedString
+    }
+    
+    private func setUpactivityRecordTotalDistanceValueLabel(model: Record, label: UILabel) {
+        let attributedString = NSMutableAttributedString(string: String(model.distance) + " ", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1])
+        attributedString.append(NSAttributedString(string: "km", attributes: [.font: UIFont.b4, .foregroundColor: UIColor.g1]))
+        label.attributedText = attributedString
+    }
+    
+    private func setUpActivityRecordAveragePaceValueLabel(array: [String], label: UILabel) {
+        let attributedString = NSMutableAttributedString(string: String(array[1]) + "’", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1])
+        attributedString.append(NSAttributedString(string: String(array[2]) + "”", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1]))
         label.attributedText = attributedString
     }
 }
@@ -196,6 +219,18 @@ extension ActivityRecordInfoTVC {
         
         secondVerticalDivideLine.snp.makeConstraints { make in
             make.width.equalTo(1)
+        }
+        
+        activityRecordTotalDistanceStackView.snp.makeConstraints { make in
+            make.width.equalTo(activityRecordContainerView.snp.width).dividedBy(3)
+        }
+        
+        activityRecordRunningTimeStackView.snp.makeConstraints { make in
+            make.width.equalTo(activityRecordContainerView.snp.width).dividedBy(3)
+        }
+        
+        activityRecordAveragePaceStackView.snp.makeConstraints { make in
+            make.width.equalTo(activityRecordContainerView.snp.width).dividedBy(3)
         }
         
         activityRecordSubInfoStackView.snp.makeConstraints { make in
