@@ -6,24 +6,20 @@
 //
 
 import UIKit
+
 import SnapKit
 import Then
+import Moya
 
 final class UploadedCourseInfoVC: UIViewController {
     
     // MARK: - Properties
     
-    var UploadedCourseList: [UploadedCourseInfoModel] = [
-        UploadedCourseInfoModel(title: "행복한 날들", place: "수원시 장안구"),
-        UploadedCourseInfoModel(title: "몽이랑 산책", place: "수원시 장안구"),
-        UploadedCourseInfoModel(title: "패스트파이브", place: "수원시 장안구"),
-        UploadedCourseInfoModel(title: "행복한 날들", place: "수원시 장안구"),
-        UploadedCourseInfoModel(title: "몽이랑 산책", place: "수원시 장안구"),
-        UploadedCourseInfoModel(title: "패스트파이브", place: "수원시 장안구"),
-        UploadedCourseInfoModel(title: "행복한 날들", place: "수원시 장안구"),
-        UploadedCourseInfoModel(title: "몽이랑 산책", place: "수원시 장안구"),
-        UploadedCourseInfoModel(title: "패스트파이브", place: "수원시 장안구")
-    ]
+    private var uploadedCourseProvider = MoyaProvider<MyPageRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
+    
+    private var uploadedCourseList = [PublicCourse]()
     
     // MARK: - Constants
     
@@ -43,8 +39,6 @@ final class UploadedCourseInfoVC: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.isScrollEnabled = true
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.delegate = self
-        collectionView.dataSource = self
         
         return collectionView
     }()
@@ -57,6 +51,27 @@ final class UploadedCourseInfoVC: UIViewController {
         setUI()
         setLayout()
         register()
+        setDelegate()
+        getUploadedCourseInfo()
+    }
+}
+
+// MARK: - Methods
+
+extension UploadedCourseInfoVC {
+    private func setData(courseList: [PublicCourse]) {
+        self.uploadedCourseList = courseList
+        UploadedCourseInfoCollectionView.reloadData()
+    }
+    
+    private func setDelegate() {
+        self.UploadedCourseInfoCollectionView.delegate = self
+        self.UploadedCourseInfoCollectionView.dataSource = self
+    }
+    
+    private func register() {
+        UploadedCourseInfoCollectionView.register(UploadedCourseInfoCVC.self,
+                                     forCellWithReuseIdentifier: UploadedCourseInfoCVC.className)
     }
 }
 
@@ -87,13 +102,6 @@ extension UploadedCourseInfoVC {
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
-    
-    // MARK: - General Helpers
-
-    private func register() {
-        UploadedCourseInfoCollectionView.register(UploadedCourseInfoCVC.self,
-                                     forCellWithReuseIdentifier: UploadedCourseInfoCVC.className)
-    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -119,12 +127,44 @@ extension UploadedCourseInfoVC: UICollectionViewDelegateFlowLayout {
 
 extension UploadedCourseInfoVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return UploadedCourseList.count
+        return uploadedCourseList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let uploadedCourseCell = collectionView.dequeueReusableCell(withReuseIdentifier: UploadedCourseInfoCVC.className, for: indexPath) as? UploadedCourseInfoCVC else { return UICollectionViewCell()}
-        uploadedCourseCell.dataBind(model: UploadedCourseList[indexPath.item])
+        uploadedCourseCell.setData(model: uploadedCourseList[indexPath.item])
         return uploadedCourseCell
+    }
+}
+
+// MARK: - Network
+
+extension UploadedCourseInfoVC {
+    func getUploadedCourseInfo() {
+        LoadingIndicator.showLoading()
+        uploadedCourseProvider.request(.getUploadedCourseInfo) { [weak self] response in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    do {
+                        let responseDto = try result.map(BaseResponse<PickedMapListResponseDto>.self)
+                        guard let data = responseDto.data else { return }
+                        self.setData(courseList: data.publicCourses)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
     }
 }

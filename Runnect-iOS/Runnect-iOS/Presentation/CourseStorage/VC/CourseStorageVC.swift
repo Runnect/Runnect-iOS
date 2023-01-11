@@ -70,6 +70,7 @@ extension CourseStorageVC {
         privateCourseListView.cellDidTapped.sink { [weak self] index in
             guard let self = self else { return }
             let runningWaitingVC = RunningWaitingVC()
+            runningWaitingVC.setData(courseId: self.privateCourseList[index].id, publicCourseId: nil)
             runningWaitingVC.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(runningWaitingVC, animated: true)
         }.store(in: cancelBag)

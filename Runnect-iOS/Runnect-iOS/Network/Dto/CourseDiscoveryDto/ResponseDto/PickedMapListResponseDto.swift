@@ -19,7 +19,7 @@ struct PublicCourse: Codable {
     let id, courseId: Int
     let title: String
     let image: String
-    let scarp: Bool
+    let scarp: Bool?
     let departure: CourseDiscoveryDeparture
 }
 
