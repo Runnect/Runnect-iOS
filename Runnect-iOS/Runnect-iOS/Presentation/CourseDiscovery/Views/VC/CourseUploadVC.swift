@@ -11,9 +11,12 @@ import SnapKit
 import Then
 
 class CourseUploadVC: UIViewController {
+    
     // MARK: - Properties
     
+    private var courseModel: Course?
     private let courseTitleMaxLength = 20
+    
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("코스 업로드")
@@ -74,6 +77,15 @@ class CourseUploadVC: UIViewController {
 // MARK: - Methods
 
 extension CourseUploadVC {
+    
+    func setData(courseModel: Course) {
+        self.courseModel = courseModel
+        self.mapImageView.setImage(with: courseModel.image)
+        
+        guard let distance = courseModel.distance else { return }
+        self.distanceInfoView.setDescriptionText(description: "\(String(distance))km")
+        self.departureInfoView.setDescriptionText(description: "\(courseModel.departure.region) \(courseModel.departure.city)")
+    }
     
     private func setAddTarget() {
         self.uploadButton.addTarget(self, action: #selector(pushToCourseDiscoveryVC), for: .touchUpInside)
