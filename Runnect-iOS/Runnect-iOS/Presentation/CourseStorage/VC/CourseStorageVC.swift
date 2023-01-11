@@ -86,6 +86,8 @@ extension CourseStorageVC {
         scrapCourseListView.cellDidTapped.sink { [weak self] index in
             guard let self = self else { return }
             let courseDetailVC = CourseDetailVC()
+            let model = self.scrapCourseList[index]
+            courseDetailVC.setCourseId(courseId: model.courseId, publicCourseId: model.publicCourseId)
             courseDetailVC.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(courseDetailVC, animated: true)
         }.store(in: cancelBag)
