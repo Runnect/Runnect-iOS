@@ -73,7 +73,7 @@ final class ActivityRecordInfoTVC: UITableViewCell {
     
     private lazy var activityRecordSubInfoStackView = UIStackView(arrangedSubviews: [activityRecordTotalDistanceStackView, firstVerticalDivideLine, activityRecordRunningTimeStackView, secondVerticalDivideLine, activityRecordAveragePaceStackView]).then {
         $0.axis = .horizontal
-        $0.distribution = .fillProportionally
+        $0.distribution = .fill
     }
     
     // MARK: - Life Cycles
@@ -221,21 +221,28 @@ extension ActivityRecordInfoTVC {
             make.width.equalTo(1)
         }
         
+        setActivityRecordSubInfoStackView()
+    }
+    
+    private func setActivityRecordSubInfoStackView() {
+        let screenWidth = UIScreen.main.bounds.width
+        let containerViewWidth = screenWidth - 32
+        let stackViewWidth = Int(containerViewWidth - 2) / 3
+        
         activityRecordTotalDistanceStackView.snp.makeConstraints { make in
-            make.width.equalTo(activityRecordContainerView.snp.width).dividedBy(3)
+            make.width.equalTo(stackViewWidth)
         }
-        
+
         activityRecordRunningTimeStackView.snp.makeConstraints { make in
-            make.width.equalTo(activityRecordContainerView.snp.width).dividedBy(3)
+            make.width.equalTo(stackViewWidth)
         }
-        
+
         activityRecordAveragePaceStackView.snp.makeConstraints { make in
-            make.width.equalTo(activityRecordContainerView.snp.width).dividedBy(3)
+            make.width.equalTo(stackViewWidth)
         }
-        
+
         activityRecordSubInfoStackView.snp.makeConstraints { make in
             make.top.equalTo(horizontalDivideLine.snp.bottom).offset(15)
-            make.width.equalToSuperview()
             make.centerX.equalToSuperview()
         }
     }

@@ -133,7 +133,7 @@ extension ActivityRecordInfoVC {
                         print(error.localizedDescription)
                     }
                 }
-                if 400 >= status {
+                if status >= 400 {
                     print("400 error")
                     self.showNetworkFailureToast()
                 }
