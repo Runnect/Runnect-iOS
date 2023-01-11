@@ -1,19 +1,19 @@
 //
-//  pickedMapListRouter.swift
+//  CourseSearchingRouter.swift
 //  Runnect-iOS
 //
-//  Created by YEONOO on 2023/01/10.
+//  Created by YEONOO on 2023/01/11.
 //
 
 import Foundation
 
 import Moya
 
-enum pickedMapListRouter {
-    case getCourseData
+enum CourseSearchingRouter {
+    case getCourseData(keyword: String)
 }
 
-extension pickedMapListRouter: TargetType {
+extension CourseSearchingRouter: TargetType {
     var baseURL: URL {
         guard let url = URL(string: Config.baseURL) else {
             fatalError("baseURL could not be configured")
@@ -24,7 +24,7 @@ extension pickedMapListRouter: TargetType {
     var path: String {
         switch self {
         case .getCourseData:
-            return "/public-course"
+            return "/public-course/search"
         }
     }
     
@@ -37,8 +37,8 @@ extension pickedMapListRouter: TargetType {
     
     var task: Moya.Task {
         switch self {
-        case .getCourseData:
-            return .requestPlain
+        case .getCourseData(let keyword):
+            return .requestParameters(parameters: ["keyword": keyword], encoding: URLEncoding.default)
         }
     }
     

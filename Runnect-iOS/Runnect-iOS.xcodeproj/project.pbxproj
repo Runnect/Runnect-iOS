@@ -131,6 +131,7 @@
 		DA20D847296697A600F1581F /* MyCourseSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D846296697A600F1581F /* MyCourseSelectVC.swift */; };
 		DA20D849296697B400F1581F /* CourseUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D848296697B400F1581F /* CourseUploadVC.swift */; };
 		DA20D84E2966A9B300F1581F /* CourseSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D84D2966A9B300F1581F /* CourseSearchVC.swift */; };
+		DA97A02F296DC3300086760E /* CourseSearchingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA97A02E296DC3300086760E /* CourseSearchingRouter.swift */; };
 		DAD5A3D8296C6D9600C8166B /* AdImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A3D7296C6D9600C8166B /* AdImageCollectionViewCell.swift */; };
 		DAD5A3DA296C6DA500C8166B /* TitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A3D9296C6DA500C8166B /* TitleCollectionViewCell.swift */; };
 		DAD5A3DC296C6DB800C8166B /* MapCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A3DB296C6DB800C8166B /* MapCollectionViewCell.swift */; };
@@ -282,6 +283,7 @@
 		DA20D846296697A600F1581F /* MyCourseSelectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCourseSelectVC.swift; sourceTree = "<group>"; };
 		DA20D848296697B400F1581F /* CourseUploadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseUploadVC.swift; sourceTree = "<group>"; };
 		DA20D84D2966A9B300F1581F /* CourseSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseSearchVC.swift; sourceTree = "<group>"; };
+		DA97A02E296DC3300086760E /* CourseSearchingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseSearchingRouter.swift; sourceTree = "<group>"; };
 		DAD5A3D7296C6D9600C8166B /* AdImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		DAD5A3D9296C6DA500C8166B /* TitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCell.swift; sourceTree = "<group>"; };
 		DAD5A3DB296C6DB800C8166B /* MapCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 		CE10063529680C0F00FD31FB /* CourseDiscoveryDto */ = {
 			isa = PBXGroup;
 			children = (
+				DA97A029296DC2020086760E /* RequestDto */,
 				DAD5A3E0296D4C2A00C8166B /* ResponseDto */,
 			);
 			path = CourseDiscoveryDto;
@@ -730,6 +733,7 @@
 			isa = PBXGroup;
 			children = (
 				DAD5A3E3296D526D00C8166B /* CourseDiscoveryRouter.swift */,
+				DA97A02E296DC3300086760E /* CourseSearchingRouter.swift */,
 			);
 			path = CourseDiscoveryRouter;
 			sourceTree = "<group>";
@@ -1129,6 +1133,13 @@
 			path = VC;
 			sourceTree = "<group>";
 		};
+		DA97A029296DC2020086760E /* RequestDto */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RequestDto;
+			sourceTree = "<group>";
+		};
 		DAD5A3E0296D4C2A00C8166B /* ResponseDto */ = {
 			isa = PBXGroup;
 			children = (
@@ -1312,6 +1323,7 @@
 				DAD5A3E4296D526D00C8166B /* CourseDiscoveryRouter.swift in Sources */,
 				CEEC6B3E2961C53700D00E1E /* CourseDiscoveryVC.swift in Sources */,
 				CE6655E0295D87D200C64E12 /* UIDevice+.swift in Sources */,
+				DA97A02F296DC3300086760E /* CourseSearchingRouter.swift in Sources */,
 				CE40BB242968068E0030ABCA /* Config.swift in Sources */,
 				CE17F0382961BF8B00E1DED0 /* FontLiterals.swift in Sources */,
 				CE6655E8295D889600C64E12 /* UISwitch+.swift in Sources */,
