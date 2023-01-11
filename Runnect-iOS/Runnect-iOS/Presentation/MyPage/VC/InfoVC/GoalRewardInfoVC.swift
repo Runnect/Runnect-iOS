@@ -14,18 +14,18 @@ final class GoalRewardInfoVC: UIViewController {
     // MARK: - Properties
     
     var stampList: [GoalRewardInfoModel] = [
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampC1, stampStandard: "그리기 스타터"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampC2, stampStandard: "그리기 중수"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampC3, stampStandard: "그리기 마스터"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS1, stampStandard: "스크랩 베이비"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS2, stampStandard: "스크랩 어린이"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS3, stampStandard: "스크랩 어른이"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampP1, stampStandard: "새싹 업로더"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampP2, stampStandard: "중수 업로더"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampP3, stampStandard: "인플루언서"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampR1, stampStandard: "달리기 유망주"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampR2, stampStandard: "아마추어 선수"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampR2, stampStandard: "마라톤 선수")
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampC1, stampStandard: "그린 코스 1개"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampC2, stampStandard: "그린 코스 5개"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampC3, stampStandard: "그린 코스 10개"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS1, stampStandard: "스크랩 1회"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS2, stampStandard: "스크랩 5회"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS3, stampStandard: "스크랩 10회"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampP1, stampStandard: "업로드 1회"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampP2, stampStandard: "업로드 5회"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampP3, stampStandard: "업로드 10회"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampR1, stampStandard: "달리기 1회"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampR2, stampStandard: "달리기 5회"),
+        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampR2, stampStandard: "달리기 10회")
     ]
     
     // MARK: - Constants
