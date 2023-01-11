@@ -12,4 +12,12 @@ struct DepartureLocationModel {
     let departureAddress: String
     let latitude: String
     let longitude: String
+    
+    var region: String {
+        departureAddress.split(separator: " ").map {String($0)}[0]
+    }
+    
+    var city: String {
+        departureAddress.split(separator: " ").map {String($0)}[1]
+    }
 }

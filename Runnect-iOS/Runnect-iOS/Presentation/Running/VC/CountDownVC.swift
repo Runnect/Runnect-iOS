@@ -80,6 +80,7 @@ extension CountDownVC {
 extension CountDownVC {
     private func setUI() {
         view.backgroundColor = .m1
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     private func setLayout() {
