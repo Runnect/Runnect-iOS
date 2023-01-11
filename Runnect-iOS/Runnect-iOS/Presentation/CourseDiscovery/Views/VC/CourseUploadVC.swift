@@ -9,11 +9,17 @@ import UIKit
 
 import SnapKit
 import Then
+import Moya
 
-class CourseUploadVC: UIViewController {
+final class CourseUploadVC: UIViewController {
     // MARK: - Properties
+    private var runningModel: RunningModel?
     
+    private let CourseUploadingProvider = MoyaProvider<CourseUploadingRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
     private let courseTitleMaxLength = 20
+    
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("코스 업로드")
@@ -76,8 +82,8 @@ class CourseUploadVC: UIViewController {
 extension CourseUploadVC {
     
     private func setAddTarget() {
-        self.uploadButton.addTarget(self, action: #selector(pushToCourseDiscoveryVC), for: .touchUpInside)
         self.courseTitleTextField.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
+        self.uploadButton.addTarget(self, action: #selector(uploadButtonDidTap), for: .touchUpInside)
     }
     
     // 키보드가 올라오면 scrollView 위치 조정
@@ -114,20 +120,34 @@ extension CourseUploadVC {
             name: UIResponder.keyboardWillHideNotification,
             object: nil)
     }
+    
+    func setData(runningModel: RunningModel) {
+        self.runningModel = runningModel
+        self.mapImageView.image = runningModel.pathImage
+        guard let region = runningModel.region, let city = runningModel.city else { return }
+        self.departureInfoView.setDescriptionText(description: "\(region) \(city)")
+        guard let imageUrl = runningModel.imageUrl else { return }
+        self.mapImageView.setImage(with: imageUrl)
+    }
+    
+    private func pushToCourseDiscoveryVC() {
+        let nextVC = CourseDiscoveryVC()
+        self.navigationController?.pushViewController(nextVC, animated: true)
+        
+    }
 }
-
 // MARK: - @objc Function
 
 extension CourseUploadVC {
     
-    @objc private func pushToCourseDiscoveryVC() {
-        let nextVC = CourseDiscoveryVC()
-        self.navigationController?.pushViewController(nextVC, animated: true)
-    }
+//    @objc private func pushToCourseDiscoveryVC() {
+//        let nextVC = CourseDiscoveryVC()
+//        self.navigationController?.pushViewController(nextVC, animated: true)
+//    }
     
     @objc private func textFieldTextDidChange() {
         guard let text = courseTitleTextField.text else { return }
-                
+        
         if text.count > courseTitleMaxLength {
             let index = text.index(text.startIndex, offsetBy: courseTitleMaxLength)
             let newString = text[text.startIndex..<index]
@@ -169,6 +189,10 @@ extension CourseUploadVC {
         let contentInset = UIEdgeInsets.zero
         scrollView.contentInset = contentInset
         scrollView.scrollIndicatorInsets = contentInset
+    }
+    
+    @objc func uploadButtonDidTap() {
+        self.uploadCourse()
     }
 }
 
@@ -299,6 +323,48 @@ extension CourseUploadVC: UITextViewDelegate {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || textView.text == placeholder {
             activityTextView.textColor = .g3
             activityTextView.text = placeholder
+        }
+    }
+}
+
+// MARK: - Network
+
+extension CourseUploadVC {
+    private func uploadCourse() {
+        self.pushToCourseDiscoveryVC()
+        guard let runningModel = self.runningModel else { return }
+        guard let courseId = runningModel.courseId else { return }
+        guard let titletext = courseTitleTextField.text else { return }
+        guard let descriptiontext = activityTextView.text else { return }
+        let requsetDto = CourseUploadingRequestDto(courseID: courseId, title: titletext, description: descriptiontext)
+        
+        LoadingIndicator.showLoading()
+        CourseUploadingProvider.request(.courseUploadingData(param: requsetDto)) { [weak self] response in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    do {
+                        let responseDto = try result.map(BaseResponse<RunningRecordResonseData>.self)
+                        if responseDto.status == 200 {
+                            self.pushToCourseDiscoveryVC()
+                        } else {
+                            self.showToast(message: responseDto.message)
+                        }
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
         }
     }
 }
