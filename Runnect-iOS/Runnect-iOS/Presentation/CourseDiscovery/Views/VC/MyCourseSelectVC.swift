@@ -6,13 +6,27 @@
 //
 
 import UIKit
+
 import Then
+import Moya
 
 class MyCourseSelectVC: UIViewController {
     
     // MARK: - Properties
     
-    private var selectedIndex: Int?
+    private let courseStorageProvider = MoyaProvider<CourseStorageRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
+    
+    private var courseList = [Course]()
+    
+    private var selectedIndex: Int? {
+        didSet {
+            if selectedIndex == nil {
+                selectButton.setEnabled(false)
+            }
+        }
+    }
     
     // MARK: - UI Components
     
@@ -24,7 +38,7 @@ class MyCourseSelectVC: UIViewController {
     private lazy var mapCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-
+        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -38,7 +52,7 @@ class MyCourseSelectVC: UIViewController {
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
     final let itemSpacing: CGFloat = 10
     final let lineSpacing: CGFloat = 20
-
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -53,11 +67,18 @@ class MyCourseSelectVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.hideTabBar(wantsToHide: true)
+        self.getPrivateCourseNotUploaded()
     }
 }
+
 // MARK: - Methods
 
 extension MyCourseSelectVC {
+    private func setData(courseList: [Course]) {
+        self.courseList = courseList
+        mapCollectionView.reloadData()
+    }
+    
     private func setDelegate() {
         mapCollectionView.delegate = self
         mapCollectionView.dataSource = self
@@ -65,23 +86,26 @@ extension MyCourseSelectVC {
     
     private func register() {
         mapCollectionView.register(CourseListCVC.self,
-                                          forCellWithReuseIdentifier: CourseListCVC.className)
+                                   forCellWithReuseIdentifier: CourseListCVC.className)
     }
     
     private func setAddTarget() {
         self.selectButton.addTarget(self, action: #selector(pushToUploadVC), for: .touchUpInside)
     }
 }
-    // MARK: - @objc Function
 
-    extension MyCourseSelectVC {
-        @objc private func pushToUploadVC() {
-            let nextVC = CourseUploadVC()
-            self.navigationController?.pushViewController(nextVC, animated: true)
-        }
+// MARK: - @objc Function
+
+extension MyCourseSelectVC {
+    @objc private func pushToUploadVC() {
+        guard let selectedIndex = self.selectedIndex else { return }
+        let courseUploadVC = CourseUploadVC()
+        courseUploadVC.setData(courseModel: courseList[selectedIndex])
+        self.navigationController?.pushViewController(courseUploadVC, animated: true)
     }
+}
 
-    // MARK: - naviVar Layout
+// MARK: - UI & Layout
 
 extension MyCourseSelectVC {
     private func setNavigationBar() {
@@ -89,17 +113,14 @@ extension MyCourseSelectVC {
         navibar.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(48)
+        }
     }
-}
-    // MARK: - setUI
     
     private func setUI() {
         view.backgroundColor = .w1
         self.tabBarController?.tabBar.isHidden = true
     }
-    
-    // MARK: - Layout Helpers
-    
+        
     private func setLayout() {
         view.addSubviews(selectButton, mapCollectionView)
         self.view.bringSubviewToFront(selectButton)
@@ -109,7 +130,7 @@ extension MyCourseSelectVC {
             make.height.equalTo(44)
             make.bottom.equalToSuperview().inset(34)
         }
-    
+        
         mapCollectionView.snp.makeConstraints { make in
             make.top.equalTo(navibar.snp.bottom)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -121,14 +142,16 @@ extension MyCourseSelectVC {
 
 extension MyCourseSelectVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        return courseList.count
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else { return }
         self.selectedIndex = indexPath.item
         self.selectButton.setEnabled(true)
         cell.selectCell(didSelect: true)
     }
+    
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else { return }
         self.selectedIndex = nil
@@ -139,13 +162,22 @@ extension MyCourseSelectVC: UICollectionViewDelegate, UICollectionViewDataSource
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className,
                                                             for: indexPath)
                 as? CourseListCVC else { return UICollectionViewCell() }
-        cell.setCellType(type: .titleWithLocation)
+        cell.setCellType(type: .title)
         
         if let selectedIndex = selectedIndex, selectedIndex == indexPath.item {
             cell.selectCell(didSelect: true)
         } else {
             cell.selectCell(didSelect: false)
         }
+        
+        let model = courseList[indexPath.item]
+        
+        var title = "\(model.departure.region) \(model.departure.city)"
+        if let town = model.departure.town {
+            title += " \(town)"
+        }
+
+        cell.setData(imageURL: model.image, title: title, location: nil, didLike: nil)
         
         return cell
     }
@@ -156,7 +188,7 @@ extension MyCourseSelectVC: UICollectionViewDelegate, UICollectionViewDataSource
 extension MyCourseSelectVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cellWidth = (UIScreen.main.bounds.width - (self.itemSpacing + 2*self.collectionViewInset.left)) / 2
-        let cellHeight = CourseListCVCType.getCellHeight(type: .titleWithLocation, cellWidth: cellWidth)
+        let cellHeight = CourseListCVCType.getCellHeight(type: .title, cellWidth: cellWidth)
         
         return CGSize(width: cellWidth, height: cellHeight)
     }
@@ -172,5 +204,37 @@ extension MyCourseSelectVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return self.lineSpacing
     }
-    
+}
+
+// MARK: - Network
+
+extension MyCourseSelectVC {
+    private func getPrivateCourseNotUploaded() {
+        self.selectedIndex = nil
+        LoadingIndicator.showLoading()
+        courseStorageProvider.request(.getPrivateCourseNotUploaded) { [weak self] response in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    do {
+                        let responseDto = try result.map(BaseResponse<PrivateCourseNotUploadedResponseDto>.self)
+                        guard let data = responseDto.data else { return }
+                        self.setData(courseList: data.privateCourses)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
+    }
 }

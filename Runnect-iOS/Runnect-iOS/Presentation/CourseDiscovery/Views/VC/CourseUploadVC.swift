@@ -11,13 +11,12 @@ import SnapKit
 import Then
 import Moya
 
-final class CourseUploadVC: UIViewController {
+class CourseUploadVC: UIViewController {
+    
     // MARK: - Properties
     private var runningModel: RunningModel?
     
-    private let CourseUploadingProvider = MoyaProvider<CourseUploadingRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private var courseModel: Course?
     private let courseTitleMaxLength = 20
     
     // MARK: - UI Components
@@ -80,6 +79,15 @@ final class CourseUploadVC: UIViewController {
 // MARK: - Methods
 
 extension CourseUploadVC {
+    
+    func setData(courseModel: Course) {
+        self.courseModel = courseModel
+        self.mapImageView.setImage(with: courseModel.image)
+        
+        guard let distance = courseModel.distance else { return }
+        self.distanceInfoView.setDescriptionText(description: "\(String(distance))km")
+        self.departureInfoView.setDescriptionText(description: "\(courseModel.departure.region) \(courseModel.departure.city)")
+    }
     
     private func setAddTarget() {
         self.courseTitleTextField.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)

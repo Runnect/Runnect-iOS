@@ -6,21 +6,20 @@
 //
 
 import UIKit
+
 import SnapKit
 import Then
+import Moya
 
 final class ActivityRecordInfoVC: UIViewController {
     
     // MARK: - Properties
     
-    var activityRecordList: [ActivityRecordInfoModel] = [
-        ActivityRecordInfoModel(title: "석촌 호수 한 바퀴", place: "서울시 강동구", date: "2022.12.28", distance: "4.01 km", runningTime: "0:27:36", averagePace: "6'45\""),
-        ActivityRecordInfoModel(title: "석촌 호수 한 바퀴", place: "서울시 강동구", date: "2022.12.29", distance: "4.01 km", runningTime: "0:27:36", averagePace: "6'45\""),
-        ActivityRecordInfoModel(title: "석촌 호수 한 바퀴", place: "서울시 강동구", date: "2022.12.30", distance: "4.01 km", runningTime: "0:27:36", averagePace: "6'45\""),
-        ActivityRecordInfoModel(title: "석촌 호수 한 바퀴", place: "서울시 강동구", date: "2022.12.31", distance: "4.01 km", runningTime: "0:27:36", averagePace: "6'45\""),
-        ActivityRecordInfoModel(title: "석촌 호수 한 바퀴", place: "서울시 강동구", date: "2022.12.28", distance: "4.01 km", runningTime: "0:27:36", averagePace: "6'45\""),
-        ActivityRecordInfoModel(title: "석촌 호수 한 바퀴", place: "서울시 강동구", date: "2022.12.28", distance: "4.01 km", runningTime: "0:27:36", averagePace: "6'45\"")
-    ]
+    private var activityRecordProvider = MoyaProvider<MyPageRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
+    
+    private var activityRecordList = [ActivityRecord]()
     
     // MARK: - UI Components
     
@@ -29,8 +28,6 @@ final class ActivityRecordInfoVC: UIViewController {
     private lazy var activityRecordTableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
         $0.separatorStyle = .none
-        $0.delegate = self
-        $0.dataSource = self
     }
 
     // MARK: - View Life Cycle
@@ -40,7 +37,27 @@ final class ActivityRecordInfoVC: UIViewController {
         setNavigationBar()
         setUI()
         setLayout()
+        setDelegate()
         register()
+        getActivityRecordInfo()
+    }
+}
+
+// MARK: - Methods
+
+extension ActivityRecordInfoVC {
+    private func setData(activityRecordList: [ActivityRecord]) {
+        self.activityRecordList = activityRecordList
+        activityRecordTableView.reloadData()
+    }
+    
+    private func setDelegate() {
+        self.activityRecordTableView.delegate = self
+        self.activityRecordTableView.dataSource = self
+    }
+    
+    private func register() {
+        self.activityRecordTableView.register(ActivityRecordInfoTVC.self, forCellReuseIdentifier: ActivityRecordInfoTVC.className)
     }
 }
 
@@ -71,12 +88,6 @@ extension ActivityRecordInfoVC {
             make.bottom.equalToSuperview()
         }
     }
-    
-    // MARK: - General Helpers
-
-    private func register() {
-        activityRecordTableView.register(ActivityRecordInfoTVC.self, forCellReuseIdentifier: ActivityRecordInfoTVC.className)
-    }
 }
 
 // MARK: - UITableViewDelegate
@@ -97,7 +108,39 @@ extension ActivityRecordInfoVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let activityRecordCell = tableView.dequeueReusableCell(withIdentifier: ActivityRecordInfoTVC.className, for: indexPath) as? ActivityRecordInfoTVC else { return UITableViewCell()}
         activityRecordCell.selectionStyle = .none
-        activityRecordCell.dataBind(model: activityRecordList[indexPath.item])
+        activityRecordCell.setData(model: activityRecordList[indexPath.item])
         return activityRecordCell
+    }
+}
+
+// MARK: - Network
+
+extension ActivityRecordInfoVC {
+    func getActivityRecordInfo() {
+        LoadingIndicator.showLoading()
+        activityRecordProvider.request(.getActivityRecordInfo) { [weak self] response in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    do {
+                        let responseDto = try result.map(BaseResponse<ActivityRecordInfoDto>.self)
+                        guard let data = responseDto.data else { return }
+                        self.setData(activityRecordList: data.records)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
     }
 }

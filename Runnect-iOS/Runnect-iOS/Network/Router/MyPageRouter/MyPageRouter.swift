@@ -12,6 +12,7 @@ import Moya
 enum MyPageRouter {
     case getMyPageInfo
     case getUploadedCourseInfo
+    case getActivityRecordInfo
 }
 
 extension MyPageRouter: TargetType {
@@ -29,6 +30,8 @@ extension MyPageRouter: TargetType {
             return "/user"
         case .getUploadedCourseInfo:
             return "/public-course/user"
+        case .getActivityRecordInfo:
+            return "/record/user"
         }
     }
     
@@ -37,6 +40,8 @@ extension MyPageRouter: TargetType {
         case .getMyPageInfo:
             return .get
         case .getUploadedCourseInfo:
+            return .get
+        case .getActivityRecordInfo:
             return .get
         }
     }
@@ -47,6 +52,8 @@ extension MyPageRouter: TargetType {
             return .requestPlain
         case .getUploadedCourseInfo:
             return .requestPlain
+        case .getActivityRecordInfo:
+            return .requestPlain
         }
     }
     
@@ -56,6 +63,9 @@ extension MyPageRouter: TargetType {
             return ["Content-Type": "application/json",
                     "machineId": "1"]
         case .getUploadedCourseInfo:
+            return ["Content-Type": "application/json",
+                    "machineId": "1"]
+        case .getActivityRecordInfo:
             return ["Content-Type": "application/json",
                     "machineId": "1"]
         }

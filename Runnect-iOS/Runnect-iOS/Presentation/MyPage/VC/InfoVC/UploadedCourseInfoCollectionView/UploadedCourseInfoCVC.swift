@@ -84,12 +84,4 @@ extension UploadedCourseInfoCVC {
             make.leading.equalToSuperview()
         }
     }
-    
-    // MARK: - General Helpers
-    
-    func dataBind(model: UploadedCourseInfoModel) {
-        uploadedCourseTitleLabel.text = model.title
-        uploadedCoursePlaceLabel.text = model.place
-    }
-    
 }

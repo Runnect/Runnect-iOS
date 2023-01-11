@@ -18,7 +18,7 @@ struct PrivateCourseResponseDto: Codable {
 struct PrivateCourse: Codable {
     let id: Int
     let image, createdAt: String
-    let distance: String?
+    let distance: Float?
     let path: [[Double]]?
     let departure: PrivateCourseDeparture
 }
