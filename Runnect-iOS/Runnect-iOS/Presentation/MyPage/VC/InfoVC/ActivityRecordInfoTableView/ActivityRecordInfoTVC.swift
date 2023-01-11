@@ -6,8 +6,10 @@
 //
 
 import UIKit
+
 import SnapKit
 import Then
+import Kingfisher
 
 final class ActivityRecordInfoTVC: UITableViewCell {
     
@@ -23,7 +25,7 @@ final class ActivityRecordInfoTVC: UITableViewCell {
     private let firstVerticalDivideLine = UIView()
     private let secondVerticalDivideLine = UIView()
     
-    private let activityRecordMapImage = UIView().then {
+    private let activityRecordMapImage = UIImageView().then {
         $0.layer.cornerRadius = 10
     }
     
@@ -71,7 +73,7 @@ final class ActivityRecordInfoTVC: UITableViewCell {
     
     private lazy var activityRecordSubInfoStackView = UIStackView(arrangedSubviews: [activityRecordTotalDistanceStackView, firstVerticalDivideLine, activityRecordRunningTimeStackView, secondVerticalDivideLine, activityRecordAveragePaceStackView]).then {
         $0.axis = .horizontal
-        $0.distribution = .fillProportionally
+        $0.distribution = .fill
     }
     
     // MARK: - Life Cycles
@@ -84,6 +86,57 @@ final class ActivityRecordInfoTVC: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: - Methods
+
+extension ActivityRecordInfoTVC {
+    func setData(model: ActivityRecord) {
+        guard let imageURL = URL(string: model.image) else { return }
+        
+        // 날짜 바꾸기
+        let activityRecordDate = model.createdAt.prefix(10)
+        let resultDate = RNTimeFormatter.changeDateSplit(date: String(activityRecordDate))
+        
+        // 이동 시간 바꾸기
+        let activityRecordRunningTime = model.time.suffix(7)
+        
+        // 평균 페이스 바꾸기
+        let activityRecordAveragePace = model.pace
+        let array = spiltActivityRecordAveragePace(model: model)
+        
+        activityRecordTitleLabel.text = model.title
+        setUpActivityRecordPlaceLabel(model: model, label: activityRecordPlaceLabel)
+        activityRecordDateLabel.text = resultDate
+        setUpactivityRecordTotalDistanceValueLabel(model: model, label: activityRecordTotalDistanceValueLabel)
+        activityRecordRunningTimeValueLabel.text = String(activityRecordRunningTime)
+        setUpActivityRecordAveragePaceValueLabel(array: array, label: activityRecordAveragePaceValueLabel)
+        self.activityRecordMapImage.kf.setImage(with: imageURL)
+    }
+    
+    private func setUpActivityRecordPlaceLabel(model: ActivityRecord, label: UILabel) {
+        let attributedString = NSMutableAttributedString(string: String(model.departure.region) + " ", attributes: [.font: UIFont.b8, .foregroundColor: UIColor.g2])
+        attributedString.append(NSAttributedString(string: String(model.departure.city), attributes: [.font: UIFont.b8, .foregroundColor: UIColor.g2]))
+        label.attributedText = attributedString
+    }
+    
+    private func setUpactivityRecordTotalDistanceValueLabel(model: ActivityRecord, label: UILabel) {
+        let attributedString = NSMutableAttributedString(string: String(model.distance) + " ", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1])
+        attributedString.append(NSAttributedString(string: "km", attributes: [.font: UIFont.b4, .foregroundColor: UIColor.g1]))
+        label.attributedText = attributedString
+    }
+    
+    private func setUpActivityRecordAveragePaceValueLabel(array: [String], label: UILabel) {
+        let attributedString = NSMutableAttributedString(string: String(array[1]) + "’", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1])
+        attributedString.append(NSAttributedString(string: String(array[2]) + "”", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1]))
+        label.attributedText = attributedString
+    }
+    
+    private func spiltActivityRecordAveragePace(model: ActivityRecord) -> [String] {
+        let activityRecordAveragePace = model.pace
+        let array = activityRecordAveragePace.split(separator: ":").map { String($0) }
+        return array
     }
 }
 
@@ -167,9 +220,28 @@ extension ActivityRecordInfoTVC {
             make.width.equalTo(1)
         }
         
+        setActivityRecordSubInfoStackView()
+    }
+    
+    private func setActivityRecordSubInfoStackView() {
+        let screenWidth = UIScreen.main.bounds.width
+        let containerViewWidth = screenWidth - 32
+        let stackViewWidth = Int(containerViewWidth - 2) / 3
+        
+        activityRecordTotalDistanceStackView.snp.makeConstraints { make in
+            make.width.equalTo(stackViewWidth)
+        }
+
+        activityRecordRunningTimeStackView.snp.makeConstraints { make in
+            make.width.equalTo(stackViewWidth)
+        }
+
+        activityRecordAveragePaceStackView.snp.makeConstraints { make in
+            make.width.equalTo(stackViewWidth)
+        }
+
         activityRecordSubInfoStackView.snp.makeConstraints { make in
             make.top.equalTo(horizontalDivideLine.snp.bottom).offset(15)
-            make.width.equalToSuperview()
             make.centerX.equalToSuperview()
         }
     }
@@ -177,16 +249,5 @@ extension ActivityRecordInfoTVC {
     override func layoutSubviews() {
         super.layoutSubviews()
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
-    }
-    
-    // MARK: - General Helpers
-    
-    func dataBind(model: ActivityRecordInfoModel) {
-        activityRecordTitleLabel.text = model.title
-        activityRecordPlaceLabel.text = model.place
-        activityRecordDateLabel.text = model.date
-        activityRecordTotalDistanceValueLabel.text = model.distance
-        activityRecordRunningTimeValueLabel.text = model.runningTime
-        activityRecordAveragePaceValueLabel.text = model.averagePace
     }
 }
