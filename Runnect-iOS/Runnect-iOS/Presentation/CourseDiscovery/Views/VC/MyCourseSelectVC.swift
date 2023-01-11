@@ -20,7 +20,13 @@ class MyCourseSelectVC: UIViewController {
     
     private var courseList = [Course]()
     
-    private var selectedIndex: Int?
+    private var selectedIndex: Int? {
+        didSet {
+            if selectedIndex == nil {
+                selectButton.setEnabled(false)
+            }
+        }
+    }
     
     // MARK: - UI Components
     
@@ -92,8 +98,10 @@ extension MyCourseSelectVC {
 
 extension MyCourseSelectVC {
     @objc private func pushToUploadVC() {
-        let nextVC = CourseUploadVC()
-        self.navigationController?.pushViewController(nextVC, animated: true)
+        guard let selectedIndex = self.selectedIndex else { return }
+        let courseUploadVC = CourseUploadVC()
+        courseUploadVC.setData(courseModel: courseList[selectedIndex])
+        self.navigationController?.pushViewController(courseUploadVC, animated: true)
     }
 }
 
@@ -154,7 +162,7 @@ extension MyCourseSelectVC: UICollectionViewDelegate, UICollectionViewDataSource
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className,
                                                             for: indexPath)
                 as? CourseListCVC else { return UICollectionViewCell() }
-        cell.setCellType(type: .titleWithLocation)
+        cell.setCellType(type: .title)
         
         if let selectedIndex = selectedIndex, selectedIndex == indexPath.item {
             cell.selectCell(didSelect: true)
@@ -168,11 +176,7 @@ extension MyCourseSelectVC: UICollectionViewDelegate, UICollectionViewDataSource
         if let town = model.departure.town {
             title += " \(town)"
         }
-        
-        if let name = model.departure.name {
-            title += " \(name)"
-        }
-        
+
         cell.setData(imageURL: model.image, title: title, location: nil, didLike: nil)
         
         return cell
@@ -184,7 +188,7 @@ extension MyCourseSelectVC: UICollectionViewDelegate, UICollectionViewDataSource
 extension MyCourseSelectVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cellWidth = (UIScreen.main.bounds.width - (self.itemSpacing + 2*self.collectionViewInset.left)) / 2
-        let cellHeight = CourseListCVCType.getCellHeight(type: .titleWithLocation, cellWidth: cellWidth)
+        let cellHeight = CourseListCVCType.getCellHeight(type: .title, cellWidth: cellWidth)
         
         return CGSize(width: cellWidth, height: cellHeight)
     }
@@ -206,7 +210,7 @@ extension MyCourseSelectVC: UICollectionViewDelegateFlowLayout {
 
 extension MyCourseSelectVC {
     private func getPrivateCourseNotUploaded() {
-        // self.selectedIndex = nil
+        self.selectedIndex = nil
         LoadingIndicator.showLoading()
         courseStorageProvider.request(.getPrivateCourseNotUploaded) { [weak self] response in
             LoadingIndicator.hideLoading()
