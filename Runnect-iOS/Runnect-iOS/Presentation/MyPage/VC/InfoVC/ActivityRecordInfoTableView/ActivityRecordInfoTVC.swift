@@ -87,6 +87,37 @@ final class ActivityRecordInfoTVC: UITableViewCell {
     }
 }
 
+// MARK: - Methods
+
+extension ActivityRecordInfoTVC {
+    
+    // MARK: - General Helpers
+    
+    func dataBind(model: ActivityRecordInfoModel) {
+        activityRecordTitleLabel.text = model.title
+        activityRecordPlaceLabel.text = model.place
+        activityRecordDateLabel.text = model.date
+        activityRecordTotalDistanceValueLabel.text = model.distance
+        activityRecordRunningTimeValueLabel.text = model.runningTime
+        activityRecordAveragePaceValueLabel.text = model.averagePace
+    }
+    
+    private func setData(model: Record) {
+        activityRecordTitleLabel.text = model.title
+        setUpActivityRecordPlaceLabel(model: model, label: activityRecordPlaceLabel)
+        activityRecordDateLabel.text = model.createdAt
+        activityRecordTotalDistanceValueLabel.text = model.distance
+        activityRecordRunningTimeValueLabel.text = model.time
+        activityRecordAveragePaceValueLabel.text = model.pace
+    }
+    
+    private func setUpActivityRecordPlaceLabel(model: Record, label: UILabel) {
+        let attributedString = NSMutableAttributedString(string: String(model.departure.region) + " ", attributes: [.font: UIFont.b8, .foregroundColor: UIColor.g2])
+        attributedString.append(NSAttributedString(string: String(model.departure.city), attributes: [.font: UIFont.b8, .foregroundColor: UIColor.g2]))
+        label.attributedText = attributedString
+    }
+}
+
 extension ActivityRecordInfoTVC {
     
     // MARK: - Method
@@ -177,16 +208,5 @@ extension ActivityRecordInfoTVC {
     override func layoutSubviews() {
         super.layoutSubviews()
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
-    }
-    
-    // MARK: - General Helpers
-    
-    func dataBind(model: ActivityRecordInfoModel) {
-        activityRecordTitleLabel.text = model.title
-        activityRecordPlaceLabel.text = model.place
-        activityRecordDateLabel.text = model.date
-        activityRecordTotalDistanceValueLabel.text = model.distance
-        activityRecordRunningTimeValueLabel.text = model.runningTime
-        activityRecordAveragePaceValueLabel.text = model.averagePace
     }
 }
