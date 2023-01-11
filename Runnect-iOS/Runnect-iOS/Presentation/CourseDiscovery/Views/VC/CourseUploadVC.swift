@@ -15,7 +15,9 @@ class CourseUploadVC: UIViewController {
     
     // MARK: - Properties
     private var runningModel: RunningModel?
-    
+    private let courseUploadingProvider = MoyaProvider<CourseUploadingRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
     private var courseModel: Course?
     private let courseTitleMaxLength = 20
     
@@ -347,7 +349,7 @@ extension CourseUploadVC {
         let requsetDto = CourseUploadingRequestDto(courseID: courseId, title: titletext, description: descriptiontext)
         
         LoadingIndicator.showLoading()
-        CourseUploadingProvider.request(.courseUploadingData(param: requsetDto)) { [weak self] response in
+        courseUploadingProvider.request(.courseUploadingData(param: requsetDto)) { [weak self] response in
             LoadingIndicator.hideLoading()
             guard let self = self else { return }
             switch response {
