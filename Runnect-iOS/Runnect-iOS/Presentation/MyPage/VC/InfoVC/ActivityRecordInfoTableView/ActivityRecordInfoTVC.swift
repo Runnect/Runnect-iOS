@@ -92,26 +92,19 @@ final class ActivityRecordInfoTVC: UITableViewCell {
 // MARK: - Methods
 
 extension ActivityRecordInfoTVC {
-    func setData(model: Record) {
+    func setData(model: ActivityRecord) {
         guard let imageURL = URL(string: model.image) else { return }
         
         // 날짜 바꾸기
         let activityRecordDate = model.createdAt.prefix(10)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let convertDate = dateFormatter.date(from: String(activityRecordDate))
-        guard let convertDate = convertDate else { return }
-        
-        let resultDateFormatter = DateFormatter()
-        resultDateFormatter.dateFormat = "yyyy.MM.dd"
-        let resultDate = resultDateFormatter.string(from: convertDate)
+        let resultDate = RNTimeFormatter.changeDateSplit(date: String(activityRecordDate))
         
         // 이동 시간 바꾸기
         let activityRecordRunningTime = model.time.suffix(7)
         
         // 평균 페이스 바꾸기
         let activityRecordAveragePace = model.pace
-        let array = activityRecordAveragePace.split(separator: ":").map { String($0) }
+        let array = spiltActivityRecordAveragePace(model: model)
         
         activityRecordTitleLabel.text = model.title
         setUpActivityRecordPlaceLabel(model: model, label: activityRecordPlaceLabel)
@@ -122,13 +115,13 @@ extension ActivityRecordInfoTVC {
         self.activityRecordMapImage.kf.setImage(with: imageURL)
     }
     
-    private func setUpActivityRecordPlaceLabel(model: Record, label: UILabel) {
+    private func setUpActivityRecordPlaceLabel(model: ActivityRecord, label: UILabel) {
         let attributedString = NSMutableAttributedString(string: String(model.departure.region) + " ", attributes: [.font: UIFont.b8, .foregroundColor: UIColor.g2])
         attributedString.append(NSAttributedString(string: String(model.departure.city), attributes: [.font: UIFont.b8, .foregroundColor: UIColor.g2]))
         label.attributedText = attributedString
     }
     
-    private func setUpactivityRecordTotalDistanceValueLabel(model: Record, label: UILabel) {
+    private func setUpactivityRecordTotalDistanceValueLabel(model: ActivityRecord, label: UILabel) {
         let attributedString = NSMutableAttributedString(string: String(model.distance) + " ", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1])
         attributedString.append(NSAttributedString(string: "km", attributes: [.font: UIFont.b4, .foregroundColor: UIColor.g1]))
         label.attributedText = attributedString
@@ -138,6 +131,12 @@ extension ActivityRecordInfoTVC {
         let attributedString = NSMutableAttributedString(string: String(array[1]) + "’", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1])
         attributedString.append(NSAttributedString(string: String(array[2]) + "”", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1]))
         label.attributedText = attributedString
+    }
+    
+    private func spiltActivityRecordAveragePace(model: ActivityRecord) -> [String] {
+        let activityRecordAveragePace = model.pace
+        let array = activityRecordAveragePace.split(separator: ":").map { String($0) }
+        return array
     }
 }
 

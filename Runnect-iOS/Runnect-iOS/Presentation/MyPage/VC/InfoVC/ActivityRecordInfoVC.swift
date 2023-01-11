@@ -19,7 +19,7 @@ final class ActivityRecordInfoVC: UIViewController {
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
-    private var activityRecordList = [Record]()
+    private var activityRecordList = [ActivityRecord]()
     
     // MARK: - UI Components
     
@@ -46,7 +46,7 @@ final class ActivityRecordInfoVC: UIViewController {
 // MARK: - Methods
 
 extension ActivityRecordInfoVC {
-    private func setData(activityRecordList: [Record]) {
+    private func setData(activityRecordList: [ActivityRecord]) {
         self.activityRecordList = activityRecordList
         activityRecordTableView.reloadData()
     }

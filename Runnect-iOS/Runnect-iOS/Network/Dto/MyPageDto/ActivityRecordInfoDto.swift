@@ -10,12 +10,12 @@ import Foundation
 // MARK: - ActivityRecordInfoDto
 
 struct ActivityRecordInfoDto: Codable {
-    let records: [Record]
+    let records: [ActivityRecord]
 }
 
 // MARK: - Record
 
-struct Record: Codable {
+struct ActivityRecord: Codable {
     let id, courseId: Int
     let publicCourseId: Int?
     let machineId, title: String

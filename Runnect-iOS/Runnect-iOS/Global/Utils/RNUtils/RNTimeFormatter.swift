@@ -30,4 +30,15 @@ class RNTimeFormatter {
         
         return formatter.string(from: date)
     }
+    
+    static func changeDateSplit(date: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let convertDate = dateFormatter.date(from: date)
+        
+        let resultDateFormatter = DateFormatter()
+        resultDateFormatter.dateFormat = "yyyy.MM.dd"
+        
+        return resultDateFormatter.string(from: convertDate!)
+    }
 }
