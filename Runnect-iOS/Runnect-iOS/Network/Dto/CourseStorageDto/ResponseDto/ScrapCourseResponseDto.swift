@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - ScrapCourseResponseDto
 
-struct ScrapCourseResponseDto {
+struct ScrapCourseResponseDto: Codable {
     let scraps: [ScrapCourse]
 
     enum CodingKeys: String, CodingKey {

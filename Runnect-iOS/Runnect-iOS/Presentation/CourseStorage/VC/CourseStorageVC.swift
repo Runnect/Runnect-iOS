@@ -22,6 +22,8 @@ final class CourseStorageVC: UIViewController {
     
     private var privateCourseList = [PrivateCourse]()
     
+    private var scrapCourseList = [ScrapCourse]()
+    
     // MARK: - UI Components
     
     private lazy var naviBar = CustomNavigationBar(self, type: .title).setTitle("보관함")
@@ -45,6 +47,7 @@ final class CourseStorageVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.getPrivateCourseList()
+        self.getScrapCourseList()
     }
 }
 
@@ -54,6 +57,11 @@ extension CourseStorageVC {
     private func setPrivateCourseData(courseList: [PrivateCourse]) {
         self.privateCourseList = courseList
         self.privateCourseListView.setData(courseList: courseList)
+    }
+    
+    private func setScrapCourseData(courseList: [ScrapCourse]) {
+        self.scrapCourseList = courseList
+        self.scrapCourseListView.setData(courseList: courseList)
     }
     
     private func bindUI() {
@@ -122,6 +130,34 @@ extension CourseStorageVC {
                         let responseDto = try result.map(BaseResponse<PrivateCourseResponseDto>.self)
                         guard let data = responseDto.data else { return }
                         self.setPrivateCourseData(courseList: data.courses)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
+    }
+    
+    private func getScrapCourseList() {
+        LoadingIndicator.showLoading()
+        courseStorageProvider.request(.getScrapCourse) { [weak self] response in
+            guard let self = self else { return }
+            LoadingIndicator.hideLoading()
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    do {
+                        let responseDto = try result.map(BaseResponse<ScrapCourseResponseDto>.self)
+                        guard let data = responseDto.data else { return }
+                        self.setScrapCourseData(courseList: data.scraps)
                     } catch {
                         print(error.localizedDescription)
                     }
