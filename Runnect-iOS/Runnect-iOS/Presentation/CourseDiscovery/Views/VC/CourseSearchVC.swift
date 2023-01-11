@@ -9,8 +9,16 @@ import UIKit
 
 import Then
 import SnapKit
+import Moya
 
 final class CourseSearchVC: UIViewController {
+    
+    // MARK: - Properties
+    
+    private let CourseSearchingRouter = MoyaProvider<CourseSearchingRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)])
+    
+    private var courseList = [PublicCourse]()
     
     // MARK: - UI Components
     
@@ -62,7 +70,7 @@ final class CourseSearchVC: UIViewController {
         setDelegate()
         layout()
         setTabBar()
-    
+        
     }
 }
 // MARK: - Methods
@@ -70,6 +78,7 @@ final class CourseSearchVC: UIViewController {
 extension CourseSearchVC {
     
     private func setDelegate() {
+        self.naviBar.delegate = self
         self.mapCollectionView.delegate = self
         self.mapCollectionView.dataSource = self
     }
@@ -79,7 +88,11 @@ extension CourseSearchVC {
         
     }
     private func setTabBar() {
-            self.tabBarController?.tabBar.isHidden = true
+        self.tabBarController?.tabBar.isHidden = true
+    }
+    private func setData(data: [PublicCourse]) {
+        self.courseList = data
+        mapCollectionView.reloadData()
     }
 }
 
@@ -116,14 +129,17 @@ extension CourseSearchVC {
 
 extension CourseSearchVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
-    }
-
+        return courseList.count
+            }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className,
                                                             for: indexPath)
                 as? CourseListCVC else { return UICollectionViewCell() }
         cell.setCellType(type: .all)
+        let model = self.courseList[indexPath.item]
+        let location = "\(model.departure.region) \(model.departure.city)"
+        cell.setData(imageURL: model.image, title: model.title, location: location, didLike: model.scarp)
         return cell
     }
 }
@@ -151,5 +167,42 @@ extension CourseSearchVC: UICollectionViewDelegateFlowLayout {
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.naviBar.hideKeyboard()
+    }
+}
+// MARK: - CustomNavigationBarDelegate
+
+extension CourseSearchVC: CustomNavigationBarDelegate {
+    func searchButtonDidTap(text: String) {
+        searchCourseWithKeyword(keyword: text)
+    }
+}
+// MARK: - Network
+
+extension CourseSearchVC {
+    private func searchCourseWithKeyword(keyword: String) {
+        LoadingIndicator.showLoading()
+        CourseSearchingRouter.request(.getCourseData(keyword: keyword)) { response in
+            LoadingIndicator.hideLoading()
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    do {
+                        let responseDto = try result.map(BaseResponse<PickedMapListResponseDto>.self)
+                        guard let data = responseDto.data else { return }
+                        self.setData(data: data.publicCourses)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
     }
 }
