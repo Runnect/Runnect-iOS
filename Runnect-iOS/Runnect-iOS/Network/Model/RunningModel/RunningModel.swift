@@ -19,7 +19,6 @@ struct RunningModel {
     var totalTime: Int?
     var region: String?
     var city: String?
-    var discription: String?
     
     /// HH:MM:SS 형식으로 반환
     func getFormattedTotalTime() -> String? {

@@ -14,7 +14,7 @@ import Moya
 class CourseUploadVC: UIViewController {
     
     // MARK: - Properties
-    private var runningModel: RunningModel?
+//    private var runningModel: RunningModel?
     private let courseUploadingProvider = MoyaProvider<CourseUploadingRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
@@ -130,31 +130,10 @@ extension CourseUploadVC {
             name: UIResponder.keyboardWillHideNotification,
             object: nil)
     }
-    
-    func setData(runningModel: RunningModel) {
-        self.runningModel = runningModel
-        self.mapImageView.image = runningModel.pathImage
-        guard let region = runningModel.region, let city = runningModel.city else { return }
-        self.departureInfoView.setDescriptionText(description: "\(region) \(city)")
-        guard let imageUrl = runningModel.imageUrl else { return }
-        self.mapImageView.setImage(with: imageUrl)
-    }
-    
-    private func pushToCourseDiscoveryVC() {
-        let nextVC = CourseDiscoveryVC()
-        self.navigationController?.pushViewController(nextVC, animated: true)
-        
-    }
 }
 // MARK: - @objc Function
 
 extension CourseUploadVC {
-    
-//    @objc private func pushToCourseDiscoveryVC() {
-//        let nextVC = CourseDiscoveryVC()
-//        self.navigationController?.pushViewController(nextVC, animated: true)
-//    }
-    
     @objc private func textFieldTextDidChange() {
         guard let text = courseTitleTextField.text else { return }
         
@@ -341,12 +320,10 @@ extension CourseUploadVC: UITextViewDelegate {
 
 extension CourseUploadVC {
     private func uploadCourse() {
-        self.pushToCourseDiscoveryVC()
-        guard let runningModel = self.runningModel else { return }
-        guard let courseId = runningModel.courseId else { return }
+        guard let courseId = courseModel?.id else { return }
         guard let titletext = courseTitleTextField.text else { return }
         guard let descriptiontext = activityTextView.text else { return }
-        let requsetDto = CourseUploadingRequestDto(courseID: courseId, title: titletext, description: descriptiontext)
+        let requsetDto = CourseUploadingRequestDto(courseId: courseId, title: titletext, description: descriptiontext)
         
         LoadingIndicator.showLoading()
         courseUploadingProvider.request(.courseUploadingData(param: requsetDto)) { [weak self] response in
@@ -356,16 +333,7 @@ extension CourseUploadVC {
             case .success(let result):
                 let status = result.statusCode
                 if 200..<300 ~= status {
-                    do {
-                        let responseDto = try result.map(BaseResponse<RunningRecordResonseData>.self)
-                        if responseDto.status == 200 {
-                            self.pushToCourseDiscoveryVC()
-                        } else {
-                            self.showToast(message: responseDto.message)
-                        }
-                    } catch {
-                        print(error.localizedDescription)
-                    }
+                    self.navigationController?.popToRootViewController(animated: true)
                 }
                 if status >= 400 {
                     print("400 error")

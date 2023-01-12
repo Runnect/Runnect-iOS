@@ -10,6 +10,6 @@ import Foundation
 // MARK: - CourseUploadingRequestDto
 
 struct CourseUploadingRequestDto: Codable {
-    let courseID: Int
+    let courseId: Int
     let title, description: String
 }
