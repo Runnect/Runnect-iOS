@@ -32,6 +32,7 @@ final class CourseSearchVC: UIViewController {
     private let dividerView = UIView().then {
         $0.backgroundColor = .g5
     }
+    
     private lazy var mapCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -103,6 +104,7 @@ extension CourseSearchVC {
     }
     private func setData(data: [PublicCourse]) {
         self.courseList = data
+        self.emptyDataView.isHidden = !data.isEmpty
         mapCollectionView.reloadData()
     }
 }
@@ -130,7 +132,9 @@ extension CourseSearchVC {
             make.top.equalTo(self.dividerView.snp.bottom)
             make.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
+        
         mapCollectionView.addSubview(emptyDataView)
+        
         emptyDataView.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
@@ -194,6 +198,7 @@ extension CourseSearchVC: UICollectionViewDelegateFlowLayout {
 
 extension CourseSearchVC: CustomNavigationBarDelegate {
     func searchButtonDidTap(text: String) {
+        guard !text.isEmpty else { return }
         searchCourseWithKeyword(keyword: text)
         self.keyword = text
     }
@@ -224,6 +229,7 @@ extension CourseSearchVC {
                         guard let data = responseDto.data else { return }
                         self.setData(data: data.publicCourses)
                     } catch {
+                        self.setData(data: [])
                         print(error.localizedDescription)
                     }
                 }
