@@ -27,6 +27,7 @@ final class ActivityRecordInfoTVC: UITableViewCell {
     
     private let activityRecordMapImage = UIImageView().then {
         $0.layer.cornerRadius = 10
+        $0.clipsToBounds = true
     }
     
     private lazy var activityRecordTitleLabel = setBlackTitle()
@@ -93,8 +94,6 @@ final class ActivityRecordInfoTVC: UITableViewCell {
 
 extension ActivityRecordInfoTVC {
     func setData(model: ActivityRecord) {
-        guard let imageURL = URL(string: model.image) else { return }
-        
         // 날짜 바꾸기
         let activityRecordDate = model.createdAt.prefix(10)
         let resultDate = RNTimeFormatter.changeDateSplit(date: String(activityRecordDate))
@@ -103,7 +102,6 @@ extension ActivityRecordInfoTVC {
         let activityRecordRunningTime = model.time.suffix(7)
         
         // 평균 페이스 바꾸기
-        let activityRecordAveragePace = model.pace
         let array = spiltActivityRecordAveragePace(model: model)
         
         activityRecordTitleLabel.text = model.title
@@ -112,7 +110,7 @@ extension ActivityRecordInfoTVC {
         setUpactivityRecordTotalDistanceValueLabel(model: model, label: activityRecordTotalDistanceValueLabel)
         activityRecordRunningTimeValueLabel.text = String(activityRecordRunningTime)
         setUpActivityRecordAveragePaceValueLabel(array: array, label: activityRecordAveragePaceValueLabel)
-        self.activityRecordMapImage.kf.setImage(with: imageURL)
+        activityRecordMapImage.setImage(with: model.image)
     }
     
     private func setUpActivityRecordPlaceLabel(model: ActivityRecord, label: UILabel) {
