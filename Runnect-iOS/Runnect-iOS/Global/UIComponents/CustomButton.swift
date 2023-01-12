@@ -38,6 +38,18 @@ extension CustomButton {
         return self
     }
     
+    @discardableResult
+    public func setTitle(title: String) -> Self {
+        self.setAttributedTitle(
+            NSAttributedString(
+                string: title,
+                attributes: [.font: UIFont.h5, .foregroundColor: UIColor.white]
+            ),
+            for: .normal
+        )
+        return self
+    }
+    
     /// 버튼의 backgroundColor, textColor 변경
     @discardableResult
     public func setColor(bgColor: UIColor, disableColor: UIColor, textColor: UIColor = .white) -> Self {
