@@ -14,6 +14,7 @@ enum MyPageRouter {
     case getUploadedCourseInfo
     case getActivityRecordInfo
     case getGoalRewardInfo
+    case updateUserNickname(nickname: String)
 }
 
 extension MyPageRouter: TargetType {
@@ -27,7 +28,7 @@ extension MyPageRouter: TargetType {
     
     var path: String {
         switch self {
-        case .getMyPageInfo:
+        case .getMyPageInfo, .updateUserNickname:
             return "/user"
         case .getUploadedCourseInfo:
             return "/public-course/user"
@@ -42,6 +43,8 @@ extension MyPageRouter: TargetType {
         switch self {
         case .getMyPageInfo, .getUploadedCourseInfo, .getActivityRecordInfo, .getGoalRewardInfo:
             return .get
+        case .updateUserNickname:
+            return .patch
         }
     }
     
@@ -49,12 +52,14 @@ extension MyPageRouter: TargetType {
         switch self {
         case .getMyPageInfo, .getUploadedCourseInfo, .getActivityRecordInfo, .getGoalRewardInfo:
             return .requestPlain
+        case .updateUserNickname(let nickname):
+            return .requestParameters(parameters: ["nickname": nickname], encoding: JSONEncoding.default)
         }
     }
     
     var headers: [String: String]? {
         switch self {
-        case .getMyPageInfo, .getUploadedCourseInfo, .getActivityRecordInfo, .getGoalRewardInfo:
+        case .getMyPageInfo, .getUploadedCourseInfo, .getActivityRecordInfo, .getGoalRewardInfo, .updateUserNickname:
             return ["Content-Type": "application/json",
                     "machineId": "1"]
         }

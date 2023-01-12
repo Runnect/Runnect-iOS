@@ -150,6 +150,7 @@ extension MyPageVC {
     
     private func pushToNicknameEditorVC() {
         let nicknameEditorVC = NicknameEditorVC()
+        nicknameEditorVC.delegate = self
         nicknameEditorVC.modalPresentationStyle = .overFullScreen
         self.present(nicknameEditorVC, animated: false)
     }
@@ -328,6 +329,12 @@ extension MyPageVC {
             make.height.equalTo(60)
         }
     }    
+}
+
+extension MyPageVC: NicknameEditorVCDelegate {
+    func nicknameEditDidSuccess() {
+        getMyPageInfo()
+    }
 }
 
 // MARK: - Network
