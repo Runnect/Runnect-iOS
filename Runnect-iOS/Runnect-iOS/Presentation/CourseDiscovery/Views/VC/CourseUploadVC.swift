@@ -9,11 +9,15 @@ import UIKit
 
 import SnapKit
 import Then
+import Moya
 
 class CourseUploadVC: UIViewController {
     
     // MARK: - Properties
-    
+//    private var runningModel: RunningModel?
+    private let courseUploadingProvider = MoyaProvider<CourseUploadingRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
     private var courseModel: Course?
     private let courseTitleMaxLength = 20
     
@@ -88,8 +92,8 @@ extension CourseUploadVC {
     }
     
     private func setAddTarget() {
-        self.uploadButton.addTarget(self, action: #selector(pushToCourseDiscoveryVC), for: .touchUpInside)
         self.courseTitleTextField.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
+        self.uploadButton.addTarget(self, action: #selector(uploadButtonDidTap), for: .touchUpInside)
     }
     
     // 키보드가 올라오면 scrollView 위치 조정
@@ -127,19 +131,12 @@ extension CourseUploadVC {
             object: nil)
     }
 }
-
 // MARK: - @objc Function
 
 extension CourseUploadVC {
-    
-    @objc private func pushToCourseDiscoveryVC() {
-        let nextVC = CourseDiscoveryVC()
-        self.navigationController?.pushViewController(nextVC, animated: true)
-    }
-    
     @objc private func textFieldTextDidChange() {
         guard let text = courseTitleTextField.text else { return }
-                
+        
         if text.count > courseTitleMaxLength {
             let index = text.index(text.startIndex, offsetBy: courseTitleMaxLength)
             let newString = text[text.startIndex..<index]
@@ -181,6 +178,10 @@ extension CourseUploadVC {
         let contentInset = UIEdgeInsets.zero
         scrollView.contentInset = contentInset
         scrollView.scrollIndicatorInsets = contentInset
+    }
+    
+    @objc func uploadButtonDidTap() {
+        self.uploadCourse()
     }
 }
 
@@ -311,6 +312,37 @@ extension CourseUploadVC: UITextViewDelegate {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || textView.text == placeholder {
             activityTextView.textColor = .g3
             activityTextView.text = placeholder
+        }
+    }
+}
+
+// MARK: - Network
+
+extension CourseUploadVC {
+    private func uploadCourse() {
+        guard let courseId = courseModel?.id else { return }
+        guard let titletext = courseTitleTextField.text else { return }
+        guard let descriptiontext = activityTextView.text else { return }
+        let requsetDto = CourseUploadingRequestDto(courseId: courseId, title: titletext, description: descriptiontext)
+        
+        LoadingIndicator.showLoading()
+        courseUploadingProvider.request(.courseUploadingData(param: requsetDto)) { [weak self] response in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
         }
     }
 }

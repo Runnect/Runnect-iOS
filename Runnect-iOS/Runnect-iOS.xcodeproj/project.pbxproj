@@ -136,6 +136,8 @@
 		DA20D849296697B400F1581F /* CourseUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D848296697B400F1581F /* CourseUploadVC.swift */; };
 		DA20D84E2966A9B300F1581F /* CourseSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D84D2966A9B300F1581F /* CourseSearchVC.swift */; };
 		DA97A02F296DC3300086760E /* CourseSearchingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA97A02E296DC3300086760E /* CourseSearchingRouter.swift */; };
+		DA97A033296E65D80086760E /* CourseUploadingRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA97A032296E65D80086760E /* CourseUploadingRequestDto.swift */; };
+		DA97A035296E685C0086760E /* CourseUploadingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA97A034296E685C0086760E /* CourseUploadingRouter.swift */; };
 		DAD5A3D8296C6D9600C8166B /* AdImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A3D7296C6D9600C8166B /* AdImageCollectionViewCell.swift */; };
 		DAD5A3DA296C6DA500C8166B /* TitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A3D9296C6DA500C8166B /* TitleCollectionViewCell.swift */; };
 		DAD5A3DC296C6DB800C8166B /* MapCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A3DB296C6DB800C8166B /* MapCollectionViewCell.swift */; };
@@ -292,6 +294,8 @@
 		DA20D848296697B400F1581F /* CourseUploadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseUploadVC.swift; sourceTree = "<group>"; };
 		DA20D84D2966A9B300F1581F /* CourseSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseSearchVC.swift; sourceTree = "<group>"; };
 		DA97A02E296DC3300086760E /* CourseSearchingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseSearchingRouter.swift; sourceTree = "<group>"; };
+		DA97A032296E65D80086760E /* CourseUploadingRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseUploadingRequestDto.swift; sourceTree = "<group>"; };
+		DA97A034296E685C0086760E /* CourseUploadingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseUploadingRouter.swift; sourceTree = "<group>"; };
 		DAD5A3D7296C6D9600C8166B /* AdImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		DAD5A3D9296C6DA500C8166B /* TitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCell.swift; sourceTree = "<group>"; };
 		DAD5A3DB296C6DB800C8166B /* MapCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -744,6 +748,7 @@
 			children = (
 				DAD5A3E3296D526D00C8166B /* CourseDiscoveryRouter.swift */,
 				DA97A02E296DC3300086760E /* CourseSearchingRouter.swift */,
+				DA97A034296E685C0086760E /* CourseUploadingRouter.swift */,
 			);
 			path = CourseDiscoveryRouter;
 			sourceTree = "<group>";
@@ -1148,6 +1153,7 @@
 		DA97A029296DC2020086760E /* RequestDto */ = {
 			isa = PBXGroup;
 			children = (
+				DA97A032296E65D80086760E /* CourseUploadingRequestDto.swift */,
 			);
 			path = RequestDto;
 			sourceTree = "<group>";
@@ -1307,6 +1313,7 @@
 				CE9291272965D0ED0010959C /* StatsInfoView.swift in Sources */,
 				CEC2A68729629B9B00160BF7 /* SignInVC.swift in Sources */,
 				CE665602295D918000C64E12 /* JsonCoder.swift in Sources */,
+				DA97A033296E65D80086760E /* CourseUploadingRequestDto.swift in Sources */,
 				CE4545CD295D7AF4003201E1 /* TaBarController.swift in Sources */,
 				A3305A97296EF58C000B1A10 /* GoalRewardInfoDto.swift in Sources */,
 				CE6655F4295D898400C64E12 /* UIViewController+.swift in Sources */,
@@ -1416,6 +1423,7 @@
 				A3BC2F382963CE3700198261 /* ActivityRecordInfoModel.swift in Sources */,
 				CE6655E6295D887F00C64E12 /* UIStackView+.swift in Sources */,
 				A3BC2F34296303A600198261 /* GoalRewardInfoCVC.swift in Sources */,
+				DA97A035296E685C0086760E /* CourseUploadingRouter.swift in Sources */,
 				CEB8416E2962C45300BF8080 /* LocationSearchResultTVC.swift in Sources */,
 				CE6655CA295D84DD00C64E12 /* UserDefaultKeyList.swift in Sources */,
 				CE6655F2295D894D00C64E12 /* UIView+.swift in Sources */,

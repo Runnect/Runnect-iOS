@@ -16,7 +16,8 @@ final class CourseSearchVC: UIViewController {
     // MARK: - Properties
     
     private let CourseSearchingRouter = MoyaProvider<CourseSearchingRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)])
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
     
     private var courseList = [PublicCourse]()
     
