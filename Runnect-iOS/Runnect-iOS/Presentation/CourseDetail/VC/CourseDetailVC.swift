@@ -60,26 +60,26 @@ final class CourseDetailVC: UIViewController {
     }
     
     private let profileNameLabel = UILabel().then {
-        $0.text = "말랑콩떡"
+        $0.text = "닉네임"
         $0.textColor = .g1
         $0.font = .h5
     }
     
     private let runningLevelLabel = UILabel().then {
-        $0.text = "Lv. 3"
+        $0.text = "Lv. 0"
         $0.textColor = .m1
         $0.font = .b5
     }
     
     private let courseTitleLabel = UILabel().then {
-        $0.text = "잠실 석촌호수 한 바퀴 러닝"
+        $0.text = "제목"
         $0.textColor = .g1
         $0.font = .h4
     }
 
-    private let courseDistanceInfoView = CourseDetailInfoView(title: "거리", description: "2.3km")
+    private let courseDistanceInfoView = CourseDetailInfoView(title: "거리", description: "0.0km")
     
-    private let courseDepartureInfoView = CourseDetailInfoView(title: "출발지", description: "패스트파이브 을지로점")
+    private let courseDepartureInfoView = CourseDetailInfoView(title: "출발지", description: "위치")
     
     private lazy var courseDetailStackView = UIStackView(arrangedSubviews: [courseDistanceInfoView, courseDepartureInfoView]).then {
         $0.axis = .vertical
@@ -88,7 +88,7 @@ final class CourseDetailVC: UIViewController {
     }
     
     private lazy var courseExplanationTextView = UITextView().then {
-        $0.text = "석촌 호수 한 바퀴 뛰는 코스에요! 평탄한 길과 느린 페이스, 난이도 하 코스입니다! 롯데월드 야경 감상 하면서 뛰기에 좋은 야간 코스에요! 석촌 호수 한 바퀴 뛰는 코스에요! 평탄한 길과 느린 페이스, 난이도 하 코스입니다! 롯데월드 야경 감상 하면서 뛰기에 좋은"
+        $0.text = "설명"
         $0.isEditable = false
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 10
