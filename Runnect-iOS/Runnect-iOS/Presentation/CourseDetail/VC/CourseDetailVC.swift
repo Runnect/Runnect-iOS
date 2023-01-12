@@ -9,6 +9,7 @@ import UIKit
 
 import SnapKit
 import Then
+import NMapsMap
 import Moya
 
 final class CourseDetailVC: UIViewController {
@@ -18,6 +19,12 @@ final class CourseDetailVC: UIViewController {
     private let courseDetailProvider = MoyaProvider<UploadedCourseDetailRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
+    
+    private let runningProvider = MoyaProvider<RunningRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
+    
+    private var courseModel: Course?
     
     private var courseId: Int?
     private var publicCourseId: Int?
@@ -41,7 +48,7 @@ final class CourseDetailVC: UIViewController {
     }
     
     private lazy var startButton = CustomButton(title: "시작하기").then {
-        $0.addTarget(self, action: #selector(pushToCountDownVC), for: .touchUpInside)
+        $0.addTarget(self, action: #selector(startButtonDidTap), for: .touchUpInside)
     }
     
     private let mapImageView = UIImageView()
@@ -111,11 +118,28 @@ extension CourseDetailVC {
         sender.isSelected.toggle()
     }
     
-    @objc private func pushToCountDownVC() {
+    @objc func startButtonDidTap() {
+        guard let courseId = self.courseId else { return }
+        getCourseDetailWithPath(courseId: courseId)
+    }
+    
+    private func pushToCountDownVC() {
+        guard let courseModel = self.courseModel,
+              let path = courseModel.path,
+              let distance = courseModel.distance
+        else { return }
+
         let countDownVC = CountDownVC()
-        let runningModel = RunningModel(locations: [],
-                                        distance: "1.0",
-                                        pathImage: UIImage())
+        let locations = path.map { NMGLatLng(lat: $0[0], lng: $0[1]) }
+
+        let runningModel = RunningModel(courseId: self.courseId,
+                                        publicCourseId: self.publicCourseId,
+                                        locations: locations,
+                                        distance: String(distance),
+                                        imageUrl: courseModel.image,
+                                        region: courseModel.departure.region,
+                                        city: courseModel.departure.city)
+        
         countDownVC.setData(runningModel: runningModel)
         self.navigationController?.pushViewController(countDownVC, animated: true)
     }
@@ -279,6 +303,36 @@ extension CourseDetailVC {
                         let responseDto = try result.map(BaseResponse<UploadedCourseDetailResponseDto>.self)
                         guard let data = responseDto.data else { return }
                         self.setData(model: data)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
+    }
+    
+    private func getCourseDetailWithPath(courseId: Int) {
+        LoadingIndicator.showLoading()
+        
+        runningProvider.request(.getCourseDetail(courseId: courseId)) { [weak self] response in
+            guard let self = self else { return }
+            LoadingIndicator.hideLoading()
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    do {
+                        let responseDto = try result.map(BaseResponse<CourseDetailResponseDto>.self)
+                        guard let data = responseDto.data else { return }
+                        self.courseModel = data.course
+                        self.pushToCountDownVC()
                     } catch {
                         print(error.localizedDescription)
                     }
