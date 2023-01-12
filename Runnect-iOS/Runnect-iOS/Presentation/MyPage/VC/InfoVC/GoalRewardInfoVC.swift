@@ -34,7 +34,7 @@ final class GoalRewardInfoVC: UIViewController {
     ]
     
     private var goalRewardList = [GoalRewardStamp]()
-    private var isStampExistList = [Bool]()
+    var isStampExistList = Array(repeating: false, count: 12)
     
     // MARK: - Constants
     
@@ -76,6 +76,7 @@ final class GoalRewardInfoVC: UIViewController {
         setNavigationBar()
         setUI()
         setLayout()
+        setDelegate()
         register()
         getGoalRewardInfo()
     }
@@ -84,12 +85,6 @@ final class GoalRewardInfoVC: UIViewController {
 // MARK: - Methods
 
 extension GoalRewardInfoVC {
-    private func setData(goalRewardList: [GoalRewardStamp]) {
-        self.goalRewardList = goalRewardList
-        print(self.goalRewardList)
-        stampCollectionView.reloadData()
-    }
-    
     private func setDelegate() {
         stampCollectionView.delegate = self
         stampCollectionView.dataSource = self
@@ -100,25 +95,20 @@ extension GoalRewardInfoVC {
                                      forCellWithReuseIdentifier: GoalRewardInfoCVC.className)
     }
     
-    private func setIsStampExistList(list: [GoalRewardStamp]) -> [Bool] {
-        let resultList = [Bool]()
-        let stampNameList = ["c1", "c2", "c3",
-                             "s1", "s2", "s3",
-                             "u1", "u2", "u3",
-                             "r1", "r2", "r3"]
-        var i = 0
+    func setIsStampExistList(list: [GoalRewardStamp]) {
+        let stampNameDictionary: [String: Int] = ["c1": 0, "c2": 1, "c3": 2,
+                                                  "s1": 3, "s2": 4, "s3": 5,
+                                                  "u1": 6, "u2": 7, "u3": 8,
+                                                  "r1": 9, "r2": 10, "r3": 11]
         
-//        while i < 15 {
-//            if list.contains() {
-//                resultList[i] = true
-//                i += 1
-//            } else {
-//                resultList[i] = false
-//                i += 1
-//            }
-//        }
-//
-        return resultList
+        for stamp in list {
+            guard let index = stampNameDictionary[stamp.id] else { return }
+            self.isStampExistList[index] = true
+        }
+        
+        print(isStampExistList)
+        
+        stampCollectionView.reloadData()
     }
 }
 
@@ -199,7 +189,9 @@ extension GoalRewardInfoVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let stampCell = collectionView.dequeueReusableCell(withReuseIdentifier: GoalRewardInfoCVC.className, for: indexPath) as? GoalRewardInfoCVC else { return UICollectionViewCell()}
-        stampCell.setData(model: goalRewardList[indexPath.item])
+        stampCell.setStampImageView(model: stampNameList[indexPath.item], item: isStampExistList[indexPath.item])
+        print(indexPath.item)
+        stampCell.setStampNameLabel(model: stampNameList[indexPath.item])
         return stampCell
     }
 }
@@ -219,7 +211,7 @@ extension GoalRewardInfoVC {
                     do {
                         let responseDto = try result.map(BaseResponse<GoalRewardInfoDto>.self)
                         guard let data = responseDto.data else { return }
-                        self.setData(goalRewardList: data.stamps)
+                        self.setIsStampExistList(list: data.stamps)
                     } catch {
                         print(error.localizedDescription)
                     }

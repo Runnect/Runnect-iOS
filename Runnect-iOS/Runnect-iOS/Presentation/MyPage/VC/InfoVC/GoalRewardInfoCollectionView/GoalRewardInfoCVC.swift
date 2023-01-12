@@ -38,24 +38,13 @@ final class GoalRewardInfoCVC: UICollectionViewCell {
 // MARK: - Methods
 
 extension GoalRewardInfoCVC {
-    func setData(model: GoalRewardStamp) {
-        stampStandardLabel.text = model.id
-        setStampImageView(model: model, image: stampImageView)
-    }
-    
-    func setStampImageView(model: GoalRewardStamp, image: UIImageView) {
-        let userStampList = model.id
-        print(userStampList)
-        print("엥")
-        let stampNameList = ["c1", "c2", "c3",
-                             "s1", "s2", "s3",
-                             "u1", "u2", "u3",
-                             "r1", "r2", "r3"]
-        
-        if userStampList.contains(stampNameList[0]) {
-            image.image = ImageLiterals.imgLock
+    func setStampImageView(model: GoalRewardInfoModel, item: Bool) {
+        print(item)
+        if item == true {
+            stampImageView.image = model.stampImg
+            
         } else {
-            image.image = ImageLiterals.imgStamp
+            stampImageView.image = ImageLiterals.imgLock
         }
     }
     
@@ -67,7 +56,7 @@ extension GoalRewardInfoCVC {
 extension GoalRewardInfoCVC {
     
     // MARK: - Layout Helpers
-    
+   
     private func setLayout() {
         contentView.addSubviews(stampImageView, stampStandardLabel)
         
