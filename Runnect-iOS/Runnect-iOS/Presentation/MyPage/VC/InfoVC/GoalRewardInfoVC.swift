@@ -18,22 +18,13 @@ final class GoalRewardInfoVC: UIViewController {
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
-    var stampNameList: [GoalRewardInfoModel] = [
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampC1, stampStandard: "그린 코스 1개"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampC2, stampStandard: "그린 코스 5개"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampC3, stampStandard: "그린 코스 10개"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS1, stampStandard: "스크랩 1회"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS2, stampStandard: "스크랩 5회"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS3, stampStandard: "스크랩 10회"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampP1, stampStandard: "업로드 1회"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampP2, stampStandard: "업로드 5회"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampP3, stampStandard: "업로드 10회"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampR1, stampStandard: "달리기 1회"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampR2, stampStandard: "달리기 5회"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampR2, stampStandard: "달리기 10회")
-    ]
+    var stampNameList: [GoalRewardInfoModel] = GoalRewardInfoModel.stampNameList
     
     private var goalRewardList = [GoalRewardStamp]()
+    let stampNameDictionary: [String: Int] = ["c1": 0, "c2": 1, "c3": 2,
+                                              "s1": 3, "s2": 4, "s3": 5,
+                                              "u1": 6, "u2": 7, "u3": 8,
+                                              "r1": 9, "r2": 10, "r3": 11]
     var isStampExistList = Array(repeating: false, count: 12)
     
     // MARK: - Constants
@@ -96,17 +87,10 @@ extension GoalRewardInfoVC {
     }
     
     func setIsStampExistList(list: [GoalRewardStamp]) {
-        let stampNameDictionary: [String: Int] = ["c1": 0, "c2": 1, "c3": 2,
-                                                  "s1": 3, "s2": 4, "s3": 5,
-                                                  "u1": 6, "u2": 7, "u3": 8,
-                                                  "r1": 9, "r2": 10, "r3": 11]
-        
         for stamp in list {
             guard let index = stampNameDictionary[stamp.id] else { return }
             self.isStampExistList[index] = true
         }
-        
-        print(isStampExistList)
         
         stampCollectionView.reloadData()
     }
