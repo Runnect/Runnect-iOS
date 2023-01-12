@@ -14,7 +14,7 @@ class AdImageCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Components
     private let adImageView = UIImageView().then {
-        $0.image = UIImage(named: "adimage")
+        $0.image = ImageLiterals.imgAd
     }
     // MARK: - Life cycle
     override init(frame: CGRect) {
