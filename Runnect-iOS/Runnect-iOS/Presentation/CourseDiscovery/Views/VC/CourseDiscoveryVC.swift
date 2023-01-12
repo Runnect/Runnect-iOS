@@ -222,6 +222,9 @@ extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 2 {
             let courseDetailVC = CourseDetailVC()
+            let courseModel = courseList[indexPath.item]
+            courseDetailVC.setCourseId(courseId: courseModel.courseId, publicCourseId: courseModel.id)
+            courseDetailVC.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(courseDetailVC, animated: true)
         }
     }

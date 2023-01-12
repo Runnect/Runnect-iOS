@@ -20,6 +20,8 @@ struct PublicCourse: Codable {
     let title: String
     let image: String
     let scarp: Bool?
+    let description: String?
+    let distance: Float?
     let departure: CourseDiscoveryDeparture
 }
 
@@ -28,4 +30,6 @@ struct PublicCourse: Codable {
 struct CourseDiscoveryDeparture: Codable {
     let region: String
     let city: String
+    let town: String?
+    let name: String?
 }
