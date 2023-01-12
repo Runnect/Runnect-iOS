@@ -6,10 +6,24 @@
 //
 
 import UIKit
+
 import SnapKit
 import Then
+import Moya
+
+protocol NicknameEditorVCDelegate: AnyObject {
+    func nicknameEditDidSuccess()
+}
 
 final class NicknameEditorVC: UIViewController {
+    
+    // MARK: - Properties
+    
+    private var nicknameEditorProvider = MoyaProvider<MyPageRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
+    
+    weak var delegate: NicknameEditorVCDelegate?
     
     // MARK: - UI Components
     
@@ -54,11 +68,11 @@ final class NicknameEditorVC: UIViewController {
 // MARK: - Method
 
 extension NicknameEditorVC {
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         if let touch = touches.first, touch.view == self.view {
             dismiss(animated: false)
+            didNicknameReturn()
         }
     }
     
@@ -80,6 +94,11 @@ extension NicknameEditorVC {
 extension NicknameEditorVC {
     @objc private func popToPreviousVC() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc private func didNicknameReturn() {
+        guard let nickname = nickNameTextField.text else { return }
+        self.updateUserNickname(nickname: nickname)
     }
 }
 
@@ -126,8 +145,35 @@ extension NicknameEditorVC {
 extension NicknameEditorVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == self.nickNameTextField {
-            self.dismiss(animated: false)
+            didNicknameReturn()
         }
         return true
+    }
+}
+
+// MARK: - Network
+
+extension NicknameEditorVC {
+    func updateUserNickname(nickname: String) {
+        LoadingIndicator.showLoading()
+        nicknameEditorProvider.request(.updateUserNickname(nickname: nickname)) { [weak self] response in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    self.delegate?.nicknameEditDidSuccess()
+                    self.dismiss(animated: false)
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
     }
 }
