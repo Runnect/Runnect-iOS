@@ -52,23 +52,22 @@ final class RNMapView: UIView {
     
     public init() {
         super.init(frame: .zero)
-        setUI()
-        setLayout()
-        setDelegate()
-        setMap()
-        getLocationAuth()
-        setPathOverlay()
+        self.mapInit()
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.mapInit()
+        setLocationOverlay()
+    }
+    
+    private func mapInit() {
         setUI()
         setLayout()
         setDelegate()
         setMap()
         getLocationAuth()
         setPathOverlay()
-        setLocationOverlay()
     }
     
     required init?(coder: NSCoder) {
@@ -148,7 +147,6 @@ extension RNMapView {
         locations[1...].forEach { location in
             makeMarker(at: location)
         }
-        
         return self
     }
     
@@ -191,7 +189,6 @@ extension RNMapView {
     @discardableResult
     func moveToLocation(location: NMGLatLng) -> Self {
         let cameraUpdate = NMFCameraUpdate(scrollTo: location)
-        
         DispatchQueue.main.async { [self] in
             cameraUpdate.animation = .easeIn
             self.map.mapView.moveCamera(cameraUpdate)
@@ -305,7 +302,6 @@ extension RNMapView {
         map.showLocationButton = false
         map.showScaleBar = false
         map.showZoomControls = false
-        
         map.mapView.logoAlign = .rightTop
     }
     

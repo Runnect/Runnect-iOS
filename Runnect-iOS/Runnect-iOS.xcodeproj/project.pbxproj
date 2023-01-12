@@ -284,7 +284,6 @@
 		CEEC6B3B2961C51A00D00E1E /* CourseStorageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseStorageVC.swift; sourceTree = "<group>"; };
 		CEEC6B3D2961C53700D00E1E /* CourseDiscoveryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDiscoveryVC.swift; sourceTree = "<group>"; };
 		CEEC6B3F2961C55000D00E1E /* MyPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageVC.swift; sourceTree = "<group>"; };
-		CEEC6B432961C59F00D00E1E /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CEEC6B442961C5A800D00E1E /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CEEC6B452961C5B200D00E1E /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CEEC6B482961C5E200D00E1E /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
@@ -661,7 +660,6 @@
 				DAD5A3DB296C6DB800C8166B /* MapCollectionViewCell.swift */,
 				DAD5A3D9296C6DA500C8166B /* TitleCollectionViewCell.swift */,
 				DAD5A3D7296C6D9600C8166B /* AdImageCollectionViewCell.swift */,
-				CEEC6B432961C59F00D00E1E /* .gitkeep */,
 				CE17F0432961C3D600E1DED0 /* VC */,
 			);
 			path = Views;

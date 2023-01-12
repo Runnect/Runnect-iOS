@@ -44,7 +44,7 @@ class CourseUploadVC: UIViewController {
         $0.backgroundColor = .g5
     }
     private let distanceInfoView = CourseDetailInfoView(title: "거리", description: "0.0km")
-    private let departureInfoView = CourseDetailInfoView(title: "출발지", description: "패스트파이브 을지로점")
+    private let departureInfoView = CourseDetailInfoView(title: "출발지", description: "")
     private let placeholder = "코스에 대한 소개를 적어주세요.(난이도/풍경/지형)"
     
     let activityTextView = UITextView().then {

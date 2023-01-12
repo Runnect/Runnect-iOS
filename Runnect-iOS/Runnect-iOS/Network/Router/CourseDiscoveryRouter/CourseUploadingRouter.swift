@@ -39,7 +39,11 @@ extension CourseUploadingRouter: TargetType {
     var task: Moya.Task {
         switch self {
         case .courseUploadingData(param: let param):
-            return .requestParameters(parameters: try! param.asParameter(), encoding: JSONEncoding.default)
+            do {
+                return .requestParameters(parameters: try param.asParameter(), encoding: JSONEncoding.default)
+            } catch {
+                fatalError("Encoding 실패")
+            }
         }
     }
     
