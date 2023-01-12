@@ -60,8 +60,7 @@ extension MyPageRouter: TargetType {
     var headers: [String: String]? {
         switch self {
         case .getMyPageInfo, .getUploadedCourseInfo, .getActivityRecordInfo, .getGoalRewardInfo, .updateUserNickname:
-            return ["Content-Type": "application/json",
-                    "machineId": "1"]
+            return Config.headerWithDeviceId
         }
     }
 }
