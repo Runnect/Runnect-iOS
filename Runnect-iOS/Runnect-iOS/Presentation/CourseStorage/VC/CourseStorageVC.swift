@@ -14,6 +14,10 @@ final class CourseStorageVC: UIViewController {
     
     // MARK: - Properties
     
+    private let courseDetailProvider = MoyaProvider<UploadedCourseDetailRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
+    
     private let courseStorageProvider = MoyaProvider<CourseStorageRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
@@ -42,6 +46,7 @@ final class CourseStorageVC: UIViewController {
         self.setUI()
         self.setLayout()
         self.bindUI()
+        self.setDelegate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -92,6 +97,10 @@ extension CourseStorageVC {
             self.navigationController?.pushViewController(courseDetailVC, animated: true)
         }.store(in: cancelBag)
     }
+    
+    private func setDelegate() {
+        scrapCourseListView.delegate = self
+    }
 }
 
 // MARK: - UI & Layout
@@ -113,6 +122,14 @@ extension CourseStorageVC {
             make.top.equalTo(naviBar.snp.bottom)
             make.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+}
+
+// MARK: - ScrapCourseListViewDelegate
+
+extension CourseStorageVC: ScrapCourseListViewDelegate {
+    func likeButtonTapped(wantsTolike: Bool, publicCourseId: Int) {
+        scrapCourse(publicCourseId: publicCourseId, scrapTF: wantsTolike)
     }
 }
 
@@ -163,6 +180,26 @@ extension CourseStorageVC {
                     } catch {
                         print(error.localizedDescription)
                     }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
+    }
+    
+    private func scrapCourse(publicCourseId: Int, scrapTF: Bool) {
+        courseDetailProvider.request(.createAndDeleteScrap(publicCourseId: publicCourseId, scrapTF: scrapTF)) { [weak self] response in
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    self.getScrapCourseList()
                 }
                 if status >= 400 {
                     print("400 error")

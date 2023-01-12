@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CourseListCVCDeleagte: AnyObject {
-    func likeButtonTapped(wantsTolike: Bool)
+    func likeButtonTapped(wantsTolike: Bool, index: Int)
 }
 
 @frozen
@@ -33,6 +33,8 @@ final class CourseListCVC: UICollectionViewCell {
     // MARK: - Properties
     
     weak var delegate: CourseListCVCDeleagte?
+    
+    private var indexPath: Int?
     
     // MARK: - UI Components
     
@@ -90,9 +92,10 @@ extension CourseListCVC {
         likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
     }
     
-    func setData(imageURL: String, title: String, location: String?, didLike: Bool?) {
+    func setData(imageURL: String, title: String, location: String?, didLike: Bool?, indexPath: Int? = nil) {
         self.courseImageView.setImage(with: imageURL)
         self.titleLabel.text = title
+        self.indexPath = indexPath
         
         if let location = location {
             self.locationLabel.text = location
@@ -117,8 +120,9 @@ extension CourseListCVC {
 
 extension CourseListCVC {
     @objc func likeButtonDidTap(_ sender: UIButton) {
+        guard let indexPath = self.indexPath else { return }
         sender.isSelected.toggle()
-        delegate?.likeButtonTapped(wantsTolike: (sender.isSelected == true))
+        delegate?.likeButtonTapped(wantsTolike: (sender.isSelected == true), index: indexPath)
     }
 }
 

@@ -8,6 +8,10 @@
 import UIKit
 import Combine
 
+protocol ScrapCourseListViewDelegate: AnyObject {
+    func likeButtonTapped(wantsTolike: Bool, publicCourseId: Int)
+}
+
 final class ScrapCourseListView: UIView {
     
     // MARK: - Properties
@@ -16,6 +20,7 @@ final class ScrapCourseListView: UIView {
     var cellDidTapped = PassthroughSubject<Int, Never>()
     
     private var courseList = [ScrapCourse]()
+    weak var delegate: ScrapCourseListViewDelegate?
     
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
     final let itemSpacing: CGFloat = 10
@@ -110,12 +115,12 @@ extension ScrapCourseListView: UICollectionViewDelegate, UICollectionViewDataSou
                                                             for: indexPath)
                 as? CourseListCVC else { return UICollectionViewCell() }
         cell.setCellType(type: .all)
-        
+        cell.delegate = self
         let model = courseList[indexPath.item]
         
         let location = "\(model.departure.region) \(model.departure.city)"
         
-        cell.setData(imageURL: model.image, title: model.title, location: location, didLike: true)
+        cell.setData(imageURL: model.image, title: model.title, location: location, didLike: true, indexPath: indexPath.item)
         return cell
     }
 }
@@ -152,5 +157,12 @@ extension ScrapCourseListView: UICollectionViewDelegateFlowLayout {
 extension ScrapCourseListView: ListEmptyViewDelegate {
     func emptyViewButtonTapped() {
         self.scrapButtonTapped.send()
+    }
+}
+
+extension ScrapCourseListView: CourseListCVCDeleagte {
+    func likeButtonTapped(wantsTolike: Bool, index: Int) {
+        let publicCourseId = courseList[index].publicCourseId
+        delegate?.likeButtonTapped(wantsTolike: wantsTolike, publicCourseId: publicCourseId)
     }
 }
