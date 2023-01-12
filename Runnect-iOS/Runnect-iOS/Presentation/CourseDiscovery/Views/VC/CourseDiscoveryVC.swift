@@ -15,7 +15,11 @@ import Moya
 final class CourseDiscoveryVC: UIViewController {
     // MARK: - Properties
     
-    let pickedMapListProvider = MoyaProvider<pickedMapListRouter>(
+    private let pickedMapListProvider = MoyaProvider<pickedMapListRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
+    
+    private let courseDetailProvider = MoyaProvider<UploadedCourseDetailRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
@@ -167,9 +171,10 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
         } else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath) as? CourseListCVC else { return UICollectionViewCell() }
             cell.setCellType(type: .all)
+            cell.delegate = self
             let model = self.courseList[indexPath.item]
             let location = "\(model.departure.region) \(model.departure.city)"
-            cell.setData(imageURL: model.image, title: model.title, location: location, didLike: model.scarp)
+            cell.setData(imageURL: model.image, title: model.title, location: location, didLike: model.scrap, indexPath: indexPath.item)
             return cell
         }
     }
@@ -230,6 +235,15 @@ extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - CourseListCVCDeleagte
+
+extension CourseDiscoveryVC: CourseListCVCDeleagte {
+    func likeButtonTapped(wantsTolike: Bool, index: Int) {
+        let publicCourseId = courseList[index].id
+        scrapCourse(publicCourseId: publicCourseId, scrapTF: wantsTolike)
+    }
+}
+
 // MARK: - Network
 
 extension CourseDiscoveryVC {
@@ -248,6 +262,28 @@ extension CourseDiscoveryVC {
                     } catch {
                         print(error.localizedDescription)
                     }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
+    }
+    
+    private func scrapCourse(publicCourseId: Int, scrapTF: Bool) {
+        LoadingIndicator.showLoading()
+        courseDetailProvider.request(.createAndDeleteScrap(publicCourseId: publicCourseId, scrapTF: scrapTF)) { [weak self] response in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    self.getCourseData()
                 }
                 if status >= 400 {
                     print("400 error")

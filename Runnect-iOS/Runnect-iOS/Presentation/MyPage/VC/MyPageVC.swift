@@ -90,6 +90,11 @@ final class MyPageVC: UIViewController {
         setLayout()
         getMyPageInfo()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.getMyPageInfo()
+    }
 }
 
 // MARK: - Methods

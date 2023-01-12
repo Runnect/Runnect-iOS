@@ -115,7 +115,7 @@ final class CourseDetailVC: UIViewController {
 
 extension CourseDetailVC {
     @objc func likeButtonDidTap(_ sender: UIButton) {
-        sender.isSelected.toggle()
+        scrapCourse(scrapTF: !sender.isSelected)
     }
     
     @objc func startButtonDidTap() {
@@ -159,6 +159,9 @@ extension CourseDetailVC {
         self.profileNameLabel.text = model.user.nickname
         self.runningLevelLabel.text = "Lv. \(model.user.level)"
         self.courseTitleLabel.text = model.publicCourse.title
+        
+        guard let scrap = model.publicCourse.scrap else { return }
+        self.likeButton.isSelected = scrap
         
         guard let distance = model.publicCourse.distance else { return }
         self.courseDistanceInfoView.setDescriptionText(description: String(distance))
@@ -320,7 +323,6 @@ extension CourseDetailVC {
     
     private func getCourseDetailWithPath(courseId: Int) {
         LoadingIndicator.showLoading()
-        
         runningProvider.request(.getCourseDetail(courseId: courseId)) { [weak self] response in
             guard let self = self else { return }
             LoadingIndicator.hideLoading()
@@ -336,6 +338,29 @@ extension CourseDetailVC {
                     } catch {
                         print(error.localizedDescription)
                     }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
+    }
+    
+    private func scrapCourse(scrapTF: Bool) {
+        guard let publicCourseId = self.publicCourseId else { return }
+        LoadingIndicator.showLoading()
+        courseDetailProvider.request(.createAndDeleteScrap(publicCourseId: publicCourseId, scrapTF: scrapTF)) { [weak self] response in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    self.likeButton.isSelected.toggle()
                 }
                 if status >= 400 {
                     print("400 error")
