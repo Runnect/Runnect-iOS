@@ -58,6 +58,8 @@
 		CE4545CD295D7AF4003201E1 /* TaBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CC295D7AF4003201E1 /* TaBarController.swift */; };
 		CE4545D2295D7AF5003201E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE4545D1295D7AF5003201E1 /* Assets.xcassets */; };
 		CE4545D5295D7AF5003201E1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE4545D3295D7AF5003201E1 /* LaunchScreen.storyboard */; };
+		CE4942AA296FCCFC00736701 /* UploadedCourseDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4942A9296FCCFC00736701 /* UploadedCourseDetailRouter.swift */; };
+		CE4942AD296FCD2300736701 /* UploadedCourseDetailResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4942AC296FCD2300736701 /* UploadedCourseDetailResponseDto.swift */; };
 		CE55BC11296D4EA600E8CD69 /* RunningRecordRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE55BC10296D4EA600E8CD69 /* RunningRecordRequestDto.swift */; };
 		CE5645162961B72E000A2856 /* ImageLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5645152961B72E000A2856 /* ImageLiterals.swift */; };
 		CE58759E29601476005D967E /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE58759D29601476005D967E /* LoadingIndicator.swift */; };
@@ -166,9 +168,7 @@
 		CE0D9FD229648DA300CEB5CD /* CustomAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertVC.swift; sourceTree = "<group>"; };
 		CE10063929680C5700FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10063D29680C8100FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		CE10063E29680C8800FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10064329680CB400FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		CE10064429680CBC00FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10064D29680D2500FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10064F29680D3300FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10065029680D3800FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
@@ -207,6 +207,8 @@
 		CE4545D1295D7AF5003201E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE4545D4295D7AF5003201E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CE4545D6295D7AF5003201E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE4942A9296FCCFC00736701 /* UploadedCourseDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedCourseDetailRouter.swift; sourceTree = "<group>"; };
+		CE4942AC296FCD2300736701 /* UploadedCourseDetailResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedCourseDetailResponseDto.swift; sourceTree = "<group>"; };
 		CE55BC10296D4EA600E8CD69 /* RunningRecordRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningRecordRequestDto.swift; sourceTree = "<group>"; };
 		CE5645152961B72E000A2856 /* ImageLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLiterals.swift; sourceTree = "<group>"; };
 		CE58759D29601476005D967E /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
@@ -405,7 +407,7 @@
 		CE10063329680BFD00FD31FB /* CourseDetailDto */ = {
 			isa = PBXGroup;
 			children = (
-				CE10063E29680C8800FD31FB /* .gitkeep */,
+				CE4942AB296FCD1000736701 /* ResponseDto */,
 			);
 			path = CourseDetailDto;
 			sourceTree = "<group>";
@@ -757,7 +759,7 @@
 		CE40BB2A296808440030ABCA /* CourseDetailRouter */ = {
 			isa = PBXGroup;
 			children = (
-				CE10064429680CBC00FD31FB /* .gitkeep */,
+				CE4942A9296FCCFC00736701 /* UploadedCourseDetailRouter.swift */,
 			);
 			path = CourseDetailRouter;
 			sourceTree = "<group>";
@@ -798,6 +800,14 @@
 				CE4545D6295D7AF5003201E1 /* Info.plist */,
 			);
 			path = "Runnect-iOS";
+			sourceTree = "<group>";
+		};
+		CE4942AB296FCD1000736701 /* ResponseDto */ = {
+			isa = PBXGroup;
+			children = (
+				CE4942AC296FCD2300736701 /* UploadedCourseDetailResponseDto.swift */,
+			);
+			path = ResponseDto;
 			sourceTree = "<group>";
 		};
 		CE55BC0F296D4E5500E8CD69 /* RNUtils */ = {
@@ -1310,6 +1320,7 @@
 				CE14677829658C7200DCEA1B /* Stopwatch.swift in Sources */,
 				CE40BB22296806140030ABCA /* NetworkHelper.swift in Sources */,
 				CE5645162961B72E000A2856 /* ImageLiterals.swift in Sources */,
+				CE4942AD296FCD2300736701 /* UploadedCourseDetailResponseDto.swift in Sources */,
 				CE6655CD295D856300C64E12 /* KeyPathFindable.swift in Sources */,
 				CE29D582296402B500F47542 /* CourseDrawingVC.swift in Sources */,
 				CE6655E4295D884600C64E12 /* UILabel+.swift in Sources */,
@@ -1409,6 +1420,7 @@
 				CE17F02D2961BBA100E1DED0 /* ColorLiterals.swift in Sources */,
 				CEC2A68E2962AF2C00160BF7 /* RNMarker.swift in Sources */,
 				CE6655D2295D862A00C64E12 /* Publisher+Driver.swift in Sources */,
+				CE4942AA296FCCFC00736701 /* UploadedCourseDetailRouter.swift in Sources */,
 				A3BC2F382963CE3700198261 /* ActivityRecordInfoModel.swift in Sources */,
 				CE6655E6295D887F00C64E12 /* UIStackView+.swift in Sources */,
 				A3BC2F34296303A600198261 /* GoalRewardInfoCVC.swift in Sources */,
