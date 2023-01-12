@@ -189,9 +189,7 @@ extension GoalRewardInfoVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let stampCell = collectionView.dequeueReusableCell(withReuseIdentifier: GoalRewardInfoCVC.className, for: indexPath) as? GoalRewardInfoCVC else { return UICollectionViewCell()}
-        stampCell.setStampImageView(model: stampNameList[indexPath.item], item: isStampExistList[indexPath.item])
-        print(indexPath.item)
-        stampCell.setStampNameLabel(model: stampNameList[indexPath.item])
+        stampCell.setData(model: stampNameList[indexPath.item], item: isStampExistList[indexPath.item])
         return stampCell
     }
 }

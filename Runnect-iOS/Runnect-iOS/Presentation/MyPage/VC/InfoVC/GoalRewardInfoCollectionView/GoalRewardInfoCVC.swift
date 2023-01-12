@@ -38,17 +38,13 @@ final class GoalRewardInfoCVC: UICollectionViewCell {
 // MARK: - Methods
 
 extension GoalRewardInfoCVC {
-    func setStampImageView(model: GoalRewardInfoModel, item: Bool) {
-        print(item)
+    func setData(model: GoalRewardInfoModel, item: Bool) {
         if item == true {
             stampImageView.image = model.stampImg
             
         } else {
             stampImageView.image = ImageLiterals.imgLock
         }
-    }
-    
-    func setStampNameLabel(model: GoalRewardInfoModel) {
         stampStandardLabel.text = model.stampStandard
     }
 }
