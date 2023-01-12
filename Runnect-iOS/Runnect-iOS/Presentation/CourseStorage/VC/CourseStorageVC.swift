@@ -193,7 +193,9 @@ extension CourseStorageVC {
     }
     
     private func scrapCourse(publicCourseId: Int, scrapTF: Bool) {
+        LoadingIndicator.showLoading()
         courseDetailProvider.request(.createAndDeleteScrap(publicCourseId: publicCourseId, scrapTF: scrapTF)) { [weak self] response in
+            LoadingIndicator.hideLoading()
             guard let self = self else { return }
             switch response {
             case .success(let result):

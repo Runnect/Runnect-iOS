@@ -160,6 +160,9 @@ extension CourseDetailVC {
         self.runningLevelLabel.text = "Lv. \(model.user.level)"
         self.courseTitleLabel.text = model.publicCourse.title
         
+        guard let scrap = model.publicCourse.scrap else { return }
+        self.likeButton.isSelected = scrap
+        
         guard let distance = model.publicCourse.distance else { return }
         self.courseDistanceInfoView.setDescriptionText(description: String(distance))
         let location = "\(model.publicCourse.departure.region) \(model.publicCourse.departure.city)"
@@ -320,7 +323,6 @@ extension CourseDetailVC {
     
     private func getCourseDetailWithPath(courseId: Int) {
         LoadingIndicator.showLoading()
-        
         runningProvider.request(.getCourseDetail(courseId: courseId)) { [weak self] response in
             guard let self = self else { return }
             LoadingIndicator.hideLoading()
@@ -350,7 +352,9 @@ extension CourseDetailVC {
     
     private func scrapCourse(scrapTF: Bool) {
         guard let publicCourseId = self.publicCourseId else { return }
+        LoadingIndicator.showLoading()
         courseDetailProvider.request(.createAndDeleteScrap(publicCourseId: publicCourseId, scrapTF: scrapTF)) { [weak self] response in
+            LoadingIndicator.hideLoading()
             guard let self = self else { return }
             switch response {
             case .success(let result):

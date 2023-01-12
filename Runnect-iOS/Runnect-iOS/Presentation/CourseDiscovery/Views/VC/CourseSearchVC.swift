@@ -19,7 +19,12 @@ final class CourseSearchVC: UIViewController {
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
+    private let courseDetailProvider = MoyaProvider<UploadedCourseDetailRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
+    
     private var courseList = [PublicCourse]()
+    private var keyword: String?
     
     // MARK: - UI Components
     
@@ -71,7 +76,12 @@ final class CourseSearchVC: UIViewController {
         setDelegate()
         layout()
         setTabBar()
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        guard let keyword = self.keyword else { return }
+        searchCourseWithKeyword(keyword: keyword)
     }
 }
 // MARK: - Methods
@@ -138,9 +148,10 @@ extension CourseSearchVC: UICollectionViewDelegate, UICollectionViewDataSource {
                                                             for: indexPath)
                 as? CourseListCVC else { return UICollectionViewCell() }
         cell.setCellType(type: .all)
+        cell.delegate = self
         let model = self.courseList[indexPath.item]
         let location = "\(model.departure.region) \(model.departure.city)"
-        cell.setData(imageURL: model.image, title: model.title, location: location, didLike: model.scarp)
+        cell.setData(imageURL: model.image, title: model.title, location: location, didLike: model.scrap, indexPath: indexPath.item)
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -184,8 +195,19 @@ extension CourseSearchVC: UICollectionViewDelegateFlowLayout {
 extension CourseSearchVC: CustomNavigationBarDelegate {
     func searchButtonDidTap(text: String) {
         searchCourseWithKeyword(keyword: text)
+        self.keyword = text
     }
 }
+
+// MARK: - CourseListCVCDeleagte
+
+extension CourseSearchVC: CourseListCVCDeleagte {
+    func likeButtonTapped(wantsTolike: Bool, index: Int) {
+        let pubilcCourseId = courseList[index].id
+        scrapCourse(publicCourseId: pubilcCourseId, scrapTF: wantsTolike)
+    }
+}
+
 // MARK: - Network
 
 extension CourseSearchVC {
@@ -205,6 +227,25 @@ extension CourseSearchVC {
                         print(error.localizedDescription)
                     }
                 }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
+    }
+    
+    private func scrapCourse(publicCourseId: Int, scrapTF: Bool) {
+        LoadingIndicator.showLoading()
+        courseDetailProvider.request(.createAndDeleteScrap(publicCourseId: publicCourseId, scrapTF: scrapTF)) { [weak self] response in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
                 if status >= 400 {
                     print("400 error")
                     self.showNetworkFailureToast()

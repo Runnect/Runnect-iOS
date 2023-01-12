@@ -174,7 +174,7 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
             cell.delegate = self
             let model = self.courseList[indexPath.item]
             let location = "\(model.departure.region) \(model.departure.city)"
-            cell.setData(imageURL: model.image, title: model.title, location: location, didLike: model.scarp, indexPath: indexPath.item)
+            cell.setData(imageURL: model.image, title: model.title, location: location, didLike: model.scrap, indexPath: indexPath.item)
             return cell
         }
     }
@@ -235,6 +235,8 @@ extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - CourseListCVCDeleagte
+
 extension CourseDiscoveryVC: CourseListCVCDeleagte {
     func likeButtonTapped(wantsTolike: Bool, index: Int) {
         let publicCourseId = courseList[index].id
@@ -273,7 +275,9 @@ extension CourseDiscoveryVC {
     }
     
     private func scrapCourse(publicCourseId: Int, scrapTF: Bool) {
+        LoadingIndicator.showLoading()
         courseDetailProvider.request(.createAndDeleteScrap(publicCourseId: publicCourseId, scrapTF: scrapTF)) { [weak self] response in
+            LoadingIndicator.hideLoading()
             guard let self = self else { return }
             switch response {
             case .success(let result):
