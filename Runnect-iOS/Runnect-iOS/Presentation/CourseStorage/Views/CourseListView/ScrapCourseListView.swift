@@ -15,6 +15,8 @@ final class ScrapCourseListView: UIView {
     var scrapButtonTapped = PassthroughSubject<Void, Never>()
     var cellDidTapped = PassthroughSubject<Int, Never>()
     
+    private var courseList = [ScrapCourse]()
+    
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
     final let itemSpacing: CGFloat = 10
     final let lineSpacing: CGFloat = 20
@@ -53,6 +55,12 @@ final class ScrapCourseListView: UIView {
 // MARK: - Methods
 
 extension ScrapCourseListView {
+    func setData(courseList: [ScrapCourse]) {
+        self.courseList = courseList
+        self.courseListCollectionView.reloadData()
+        self.emptyView.isHidden = !courseList.isEmpty
+    }
+    
     private func setDelegate() {
         courseListCollectionView.delegate = self
         courseListCollectionView.dataSource = self
@@ -94,7 +102,7 @@ extension ScrapCourseListView {
 
 extension ScrapCourseListView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        return courseList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -102,6 +110,12 @@ extension ScrapCourseListView: UICollectionViewDelegate, UICollectionViewDataSou
                                                             for: indexPath)
                 as? CourseListCVC else { return UICollectionViewCell() }
         cell.setCellType(type: .all)
+        
+        let model = courseList[indexPath.item]
+        
+        let location = "\(model.departure.region) \(model.departure.city)"
+        
+        cell.setData(imageURL: model.image, title: model.title, location: location, didLike: true)
         return cell
     }
 }

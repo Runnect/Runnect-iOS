@@ -11,6 +11,11 @@ import Then
 
 final class CourseDetailVC: UIViewController {
     
+    // MARK: - Properties
+    
+    private var courseId: Int?
+    private var publicCourseId: Int?
+    
     // MARK: - UI Components
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton)
     private lazy var middleScorollView = UIScrollView().then {
@@ -112,6 +117,11 @@ extension CourseDetailVC {
 // MARK: - Method
 
 extension CourseDetailVC {
+    func setCourseId(courseId: Int?, publicCourseId: Int?) {
+        self.courseId = courseId
+        self.publicCourseId = publicCourseId
+    }
+    
     private func setAddTarget() {
         likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
     }

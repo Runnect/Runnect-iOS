@@ -78,7 +78,7 @@ extension ListEmptyView {
         self.backgroundColor = .clear
         
         self.descriptionLabel.text = description
-        self.bottomButton.titleLabel?.text = buttonTitle
+        self.bottomButton.setTitle(title: buttonTitle)
     }
     
     private func setLayout() {
