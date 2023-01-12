@@ -30,7 +30,8 @@ extension GoalRewardInfoModel {
     ]
     }
     
-    static var stampNameImageDictionary: [String: UIImage] { ["c1": ImageLiterals.imgStampC1, "c2": ImageLiterals.imgStampC2, "c3": ImageLiterals.imgStampC3,
+    static var stampNameImageDictionary: [String: UIImage] { ["CSPR0": ImageLiterals.imgPerson,
+                                                              "c1": ImageLiterals.imgStampC1, "c2": ImageLiterals.imgStampC2, "c3": ImageLiterals.imgStampC3,
                                                               "s1": ImageLiterals.imgStampS1, "s2": ImageLiterals.imgStampS2, "s3": ImageLiterals.imgStampS3,
                                                               "u1": ImageLiterals.imgStampU1, "u2": ImageLiterals.imgStampU2, "u3": ImageLiterals.imgStampU3,
                                                               "r1": ImageLiterals.imgStampR1, "r2": ImageLiterals.imgStampR2, "r3": ImageLiterals.imgStampR3]
