@@ -11,6 +11,7 @@ import Moya
 
 enum UploadedCourseDetailRouter {
     case getUploadedCourseDetail(publicCourseId: Int)
+    case createAndDeleteScrap(publicCourseId: Int, scrapTF: Bool)
 }
 
 extension UploadedCourseDetailRouter: TargetType {
@@ -26,6 +27,8 @@ extension UploadedCourseDetailRouter: TargetType {
         switch self {
         case .getUploadedCourseDetail(let publicCourseId):
             return "/public-course/detail/\(publicCourseId)"
+        case .createAndDeleteScrap:
+            return "/scrap"
         }
     }
     
@@ -33,6 +36,8 @@ extension UploadedCourseDetailRouter: TargetType {
         switch self {
         case .getUploadedCourseDetail:
             return .get
+        case .createAndDeleteScrap:
+            return .post
         }
     }
     
@@ -40,12 +45,14 @@ extension UploadedCourseDetailRouter: TargetType {
         switch self {
         case .getUploadedCourseDetail:
             return .requestPlain
+        case .createAndDeleteScrap(let publicCourseId, let scrapTF):
+            return .requestParameters(parameters: ["publicCourseId": publicCourseId, "scrapTF": scrapTF], encoding: JSONEncoding.default)
         }
     }
     
     var headers: [String: String]? {
         switch self {
-        case .getUploadedCourseDetail:
+        case .getUploadedCourseDetail, .createAndDeleteScrap:
             return Config.headerWithDeviceId
         }
     }

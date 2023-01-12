@@ -115,7 +115,7 @@ final class CourseDetailVC: UIViewController {
 
 extension CourseDetailVC {
     @objc func likeButtonDidTap(_ sender: UIButton) {
-        sender.isSelected.toggle()
+        scrapCourse(scrapTF: !sender.isSelected)
     }
     
     @objc func startButtonDidTap() {
@@ -336,6 +336,27 @@ extension CourseDetailVC {
                     } catch {
                         print(error.localizedDescription)
                     }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
+    }
+    
+    private func scrapCourse(scrapTF: Bool) {
+        guard let publicCourseId = self.publicCourseId else { return }
+        courseDetailProvider.request(.createAndDeleteScrap(publicCourseId: publicCourseId, scrapTF: scrapTF)) { [weak self] response in
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    self.likeButton.isSelected.toggle()
                 }
                 if status >= 400 {
                     print("400 error")
