@@ -131,7 +131,7 @@ extension CourseSearchVC {
 extension CourseSearchVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return courseList.count
-            }
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className,
@@ -143,6 +143,15 @@ extension CourseSearchVC: UICollectionViewDelegate, UICollectionViewDataSource {
         cell.setData(imageURL: model.image, title: model.title, location: location, didLike: model.scarp)
         return cell
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let courseDetailVC = CourseDetailVC()
+        let courseModel = courseList[indexPath.item]
+        courseDetailVC.setCourseId(courseId: courseModel.courseId, publicCourseId: courseModel.id)
+        courseDetailVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(courseDetailVC, animated: true)
+    }
+    
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
