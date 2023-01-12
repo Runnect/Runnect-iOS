@@ -120,6 +120,7 @@ extension CourseDrawingVC {
     func setData(model: DepartureLocationModel) {
         self.departureLocationModel = model
         
+        self.naviBar.setTextFieldText(text: model.departureName)
         self.mapView.makeStartMarker(at: model.toNMGLatLng(), withCameraMove: true)
         self.departureLocationLabel.text = model.departureName
         self.departureDetailLocationLabel.text = model.departureAddress
