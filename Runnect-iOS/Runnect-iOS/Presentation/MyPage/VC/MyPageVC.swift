@@ -18,6 +18,8 @@ final class MyPageVC: UIViewController {
     private var myPageProvider = MoyaProvider<MyPageRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
+    
+    let stampNameImageDictionary: [String: UIImage] = GoalRewardInfoModel.stampNameImageDictionary
         
     // MARK: - UI Components
     
@@ -28,9 +30,7 @@ final class MyPageVC: UIViewController {
     private let secondDivideView = UIView()
     private let thirdDivideView = UIView()
     
-    private let myProfileImage = UIImageView().then {
-        $0.image = ImageLiterals.imgStampR2
-    }
+    private let myProfileImage = UIImageView()
     
     private let myProfileNameLabel = UILabel().then {
         $0.textColor = .m1
@@ -159,6 +159,7 @@ extension MyPageVC {
         self.myRunningProgressBar.setProgress(Float(model.user.levelPercent)/100, animated: false)
         setMyRunningProgressPercentLabel(label: myRunnigProgressPercentLabel, model: model)
         setMyRunningLevelLavel(label: myRunningLevelLavel, model: model)
+        setMyProfileImage(model: model)
     }
     
     private func setMyRunningProgressPercentLabel(label: UILabel, model: MyPageDto) {
@@ -173,6 +174,10 @@ extension MyPageVC {
         label.attributedText = attributedString
     }
     
+    private func setMyProfileImage(model: MyPageDto) {
+        guard let profileImage = stampNameImageDictionary[model.user.latestStamp] else { return }
+        myProfileImage.image = profileImage
+    }
 }
 
 // MARK: - @objc Function

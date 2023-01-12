@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0AEBD608F3973389E8E1C6D6 /* Pods_Runnect_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */; };
+		A3305A97296EF58C000B1A10 /* GoalRewardInfoDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */; };
 		A3BC2F2B2962C3D500198261 /* GoalRewardInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */; };
 		A3BC2F2D2962C3F200198261 /* ActivityRecordInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F2C2962C3F200198261 /* ActivityRecordInfoVC.swift */; };
 		A3BC2F2F2962C40A00198261 /* UploadedCourseInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F2E2962C40A00198261 /* UploadedCourseInfoVC.swift */; };
@@ -145,6 +146,7 @@
 /* Begin PBXFileReference section */
 		015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runnect_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C3033C911343B5C57EB68E7 /* Pods-Runnect-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runnect-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardInfoDto.swift; sourceTree = "<group>"; };
 		A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardInfoVC.swift; sourceTree = "<group>"; };
 		A3BC2F2C2962C3F200198261 /* ActivityRecordInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRecordInfoVC.swift; sourceTree = "<group>"; };
 		A3BC2F2E2962C40A00198261 /* UploadedCourseInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedCourseInfoVC.swift; sourceTree = "<group>"; };
@@ -416,6 +418,7 @@
 				CE10063D29680C8100FD31FB /* .gitkeep */,
 				A3F67AE1296D33AC001598A2 /* MyPageDto.swift */,
 				A3F67AE9296E4936001598A2 /* ActivityRecordInfoDto.swift */,
+				A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */,
 			);
 			path = MyPageDto;
 			sourceTree = "<group>";
@@ -1305,6 +1308,7 @@
 				CEC2A68729629B9B00160BF7 /* SignInVC.swift in Sources */,
 				CE665602295D918000C64E12 /* JsonCoder.swift in Sources */,
 				CE4545CD295D7AF4003201E1 /* TaBarController.swift in Sources */,
+				A3305A97296EF58C000B1A10 /* GoalRewardInfoDto.swift in Sources */,
 				CE6655F4295D898400C64E12 /* UIViewController+.swift in Sources */,
 				CE320F36296C8EAB009F89A7 /* CourseDrawingRouter.swift in Sources */,
 				CE14677829658C7200DCEA1B /* Stopwatch.swift in Sources */,

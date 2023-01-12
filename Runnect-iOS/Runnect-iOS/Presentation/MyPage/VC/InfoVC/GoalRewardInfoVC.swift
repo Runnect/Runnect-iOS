@@ -6,27 +6,26 @@
 //
 
 import UIKit
+
 import SnapKit
 import Then
+import Moya
 
 final class GoalRewardInfoVC: UIViewController {
     
     // MARK: - Properties
+    private var goalRewardProvider = MoyaProvider<MyPageRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
     
-    var stampList: [GoalRewardInfoModel] = [
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampC1, stampStandard: "그리기 스타터"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampC2, stampStandard: "그리기 중수"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampC3, stampStandard: "그리기 마스터"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS1, stampStandard: "스크랩 베이비"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS2, stampStandard: "스크랩 어린이"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampS3, stampStandard: "스크랩 어른이"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampP1, stampStandard: "새싹 업로더"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampP2, stampStandard: "중수 업로더"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampP3, stampStandard: "인플루언서"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampR1, stampStandard: "달리기 유망주"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampR2, stampStandard: "아마추어 선수"),
-        GoalRewardInfoModel(stampImg: ImageLiterals.imgStampR2, stampStandard: "마라톤 선수")
-    ]
+    var stampNameList: [GoalRewardInfoModel] = GoalRewardInfoModel.stampNameList
+    
+    private var goalRewardList = [GoalRewardStamp]()
+    let stampNameDictionary: [String: Int] = ["c1": 0, "c2": 1, "c3": 2,
+                                              "s1": 3, "s2": 4, "s3": 5,
+                                              "u1": 6, "u2": 7, "u3": 8,
+                                              "r1": 9, "r2": 10, "r3": 11]
+    var isStampExistList = Array(repeating: false, count: 12)
     
     // MARK: - Constants
     
@@ -57,8 +56,6 @@ final class GoalRewardInfoVC: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.isScrollEnabled = true
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.delegate = self
-        collectionView.dataSource = self
         
         return collectionView
     }()
@@ -70,7 +67,32 @@ final class GoalRewardInfoVC: UIViewController {
         setNavigationBar()
         setUI()
         setLayout()
+        setDelegate()
         register()
+        getGoalRewardInfo()
+    }
+}
+
+// MARK: - Methods
+
+extension GoalRewardInfoVC {
+    private func setDelegate() {
+        stampCollectionView.delegate = self
+        stampCollectionView.dataSource = self
+    }
+
+    private func register() {
+        stampCollectionView.register(GoalRewardInfoCVC.self,
+                                     forCellWithReuseIdentifier: GoalRewardInfoCVC.className)
+    }
+    
+    func setIsStampExistList(list: [GoalRewardStamp]) {
+        for stamp in list {
+            guard let index = stampNameDictionary[stamp.id] else { return }
+            self.isStampExistList[index] = true
+        }
+        
+        stampCollectionView.reloadData()
     }
 }
 
@@ -121,13 +143,6 @@ extension GoalRewardInfoVC {
             make.bottom.equalToSuperview()
         }
     }
-    
-    // MARK: - General Helpers
-
-    private func register() {
-        stampCollectionView.register(GoalRewardInfoCVC.self,
-                                     forCellWithReuseIdentifier: GoalRewardInfoCVC.className)
-    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -153,12 +168,44 @@ extension GoalRewardInfoVC: UICollectionViewDelegateFlowLayout {
 
 extension GoalRewardInfoVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return stampList.count
+        return stampNameList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let stampCell = collectionView.dequeueReusableCell(withReuseIdentifier: GoalRewardInfoCVC.className, for: indexPath) as? GoalRewardInfoCVC else { return UICollectionViewCell()}
-        stampCell.dataBind(model: stampList[indexPath.item])
+        stampCell.setData(model: stampNameList[indexPath.item], item: isStampExistList[indexPath.item])
         return stampCell
+    }
+}
+
+// MARK: - Network
+
+extension GoalRewardInfoVC {
+    func getGoalRewardInfo() {
+        LoadingIndicator.showLoading()
+        goalRewardProvider.request(.getGoalRewardInfo) { [weak self] response in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    do {
+                        let responseDto = try result.map(BaseResponse<GoalRewardInfoDto>.self)
+                        guard let data = responseDto.data else { return }
+                        self.setIsStampExistList(list: data.stamps)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
     }
 }
