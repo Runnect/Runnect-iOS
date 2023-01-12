@@ -48,9 +48,9 @@ enum ImageLiterals {
     static var imgStampC1: UIImage { .load(named: "img_stamp_c1") }
     static var imgStampC2: UIImage { .load(named: "img_stamp_c2") }
     static var imgStampC3: UIImage { .load(named: "img_stamp_c3") }
-    static var imgStampP1: UIImage { .load(named: "img_stamp_p1") }
-    static var imgStampP2: UIImage { .load(named: "img_stamp_p2") }
-    static var imgStampP3: UIImage { .load(named: "img_stamp_p3") }
+    static var imgStampU1: UIImage { .load(named: "img_stamp_u1") }
+    static var imgStampU2: UIImage { .load(named: "img_stamp_u2") }
+    static var imgStampU3: UIImage { .load(named: "img_stamp_u3") }
     static var imgStampR1: UIImage { .load(named: "img_stamp_r1") }
     static var imgStampR2: UIImage { .load(named: "img_stamp_r2") }
     static var imgStampR3: UIImage { .load(named: "img_stamp_r3") }

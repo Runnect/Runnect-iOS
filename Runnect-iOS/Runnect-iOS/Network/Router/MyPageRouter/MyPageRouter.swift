@@ -13,6 +13,7 @@ enum MyPageRouter {
     case getMyPageInfo
     case getUploadedCourseInfo
     case getActivityRecordInfo
+    case getGoalRewardInfo
 }
 
 extension MyPageRouter: TargetType {
@@ -32,40 +33,28 @@ extension MyPageRouter: TargetType {
             return "/public-course/user"
         case .getActivityRecordInfo:
             return "/record/user"
+        case .getGoalRewardInfo:
+            return "/stamp/user"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .getMyPageInfo:
-            return .get
-        case .getUploadedCourseInfo:
-            return .get
-        case .getActivityRecordInfo:
+        case .getMyPageInfo, .getUploadedCourseInfo, .getActivityRecordInfo, .getGoalRewardInfo:
             return .get
         }
     }
     
     var task: Moya.Task {
         switch self {
-        case .getMyPageInfo:
-            return .requestPlain
-        case .getUploadedCourseInfo:
-            return .requestPlain
-        case .getActivityRecordInfo:
+        case .getMyPageInfo, .getUploadedCourseInfo, .getActivityRecordInfo, .getGoalRewardInfo:
             return .requestPlain
         }
     }
     
     var headers: [String: String]? {
         switch self {
-        case .getMyPageInfo:
-            return ["Content-Type": "application/json",
-                    "machineId": "1"]
-        case .getUploadedCourseInfo:
-            return ["Content-Type": "application/json",
-                    "machineId": "1"]
-        case .getActivityRecordInfo:
+        case .getMyPageInfo, .getUploadedCourseInfo, .getActivityRecordInfo, .getGoalRewardInfo:
             return ["Content-Type": "application/json",
                     "machineId": "1"]
         }
