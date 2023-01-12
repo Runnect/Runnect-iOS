@@ -283,7 +283,7 @@ extension CourseDiscoveryVC {
             case .success(let result):
                 let status = result.statusCode
                 if 200..<300 ~= status {
-                    self.getCourseData()
+                    print("스크랩 성공")
                 }
                 if status >= 400 {
                     print("400 error")

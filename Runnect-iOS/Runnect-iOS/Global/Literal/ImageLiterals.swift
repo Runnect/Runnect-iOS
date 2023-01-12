@@ -63,6 +63,7 @@ enum ImageLiterals {
     static var imgTelescope: UIImage { .load(named: "img_telescope") }
     static var imgSpaceship: UIImage { .load(named: "img_spaceship") }
     static var imgAppIcon: UIImage { .load(named: "img_app_icon") }
+    static var imgAd: UIImage { .load(named: "img_ad") }
 }
 
 extension UIImage {

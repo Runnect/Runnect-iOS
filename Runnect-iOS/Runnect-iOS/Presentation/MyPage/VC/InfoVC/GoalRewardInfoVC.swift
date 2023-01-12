@@ -29,7 +29,7 @@ final class GoalRewardInfoVC: UIViewController {
     
     // MARK: - Constants
     
-    final let stampInset: UIEdgeInsets = UIEdgeInsets(top: 32, left: 34, bottom: 10, right: 34)
+    final let stampInset: UIEdgeInsets = UIEdgeInsets(top: 32, left: 34, bottom: 32, right: 34)
     final let stampLineSpacing: CGFloat = 20
     final let stampItemSpacing: CGFloat = 26
     final let stampCellHeight: CGFloat = 112

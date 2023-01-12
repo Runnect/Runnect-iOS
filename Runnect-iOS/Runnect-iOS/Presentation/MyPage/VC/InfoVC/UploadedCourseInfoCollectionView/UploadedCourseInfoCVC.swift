@@ -18,6 +18,7 @@ final class UploadedCourseInfoCVC: UICollectionViewCell {
     
     private let uploadedCourseMapImage = UIImageView().then {
         $0.layer.cornerRadius = 5
+        $0.clipsToBounds = true
     }
     
     private let uploadedCourseTitleLabel = UILabel().then {
@@ -44,11 +45,9 @@ final class UploadedCourseInfoCVC: UICollectionViewCell {
 
 extension UploadedCourseInfoCVC {
     func setData(model: PublicCourse) {
-        guard let imageURL = URL(string: model.image) else { return }
-        
+        uploadedCourseMapImage.setImage(with: model.image)
         uploadedCourseTitleLabel.text = model.title
         setUploadedCoursePlaceLabel(model: model, label: uploadedCoursePlaceLabel)
-        self.uploadedCourseMapImage.kf.setImage(with: imageURL)
     }
     
     func setUploadedCoursePlaceLabel(model: PublicCourse, label: UILabel) {

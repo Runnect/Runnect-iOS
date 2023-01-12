@@ -14,7 +14,7 @@ class AdImageCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Components
     private let adImageView = UIImageView().then {
-        $0.image = UIImage(named: "adimage")
+        $0.image = ImageLiterals.imgAd
     }
     // MARK: - Life cycle
     override init(frame: CGRect) {
@@ -34,11 +34,8 @@ extension AdImageCollectionViewCell {
     func layout() {
         contentView.backgroundColor = .clear
         contentView.addSubview(adImageView)
-        adImageView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.trailing.equalTo(self.contentView.safeAreaLayoutGuide)
-            $0.height.equalTo(183)
+        adImageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
-      
     }
 }

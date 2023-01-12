@@ -44,7 +44,7 @@ class CourseUploadVC: UIViewController {
         $0.backgroundColor = .g5
     }
     private let distanceInfoView = CourseDetailInfoView(title: "거리", description: "0.0km")
-    private let departureInfoView = CourseDetailInfoView(title: "출발지", description: "패스트파이브 을지로점")
+    private let departureInfoView = CourseDetailInfoView(title: "출발지", description: "")
     private let placeholder = "코스에 대한 소개를 적어주세요.(난이도/풍경/지형)"
     
     let activityTextView = UITextView().then {
@@ -246,28 +246,29 @@ extension CourseUploadVC {
         mapImageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
-            make.height.equalTo(313)
-        }
-        courseTitleTextField.snp.makeConstraints { make in
-            make.top.equalTo(mapImageView.snp.bottom).offset(28)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(35)
+            make.height.equalTo(mapImageView.snp.width).multipliedBy(0.75)
         }
         
+        courseTitleTextField.snp.makeConstraints { make in
+            make.top.equalTo(mapImageView.snp.bottom).offset(28)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            make.height.equalTo(35)
+        }
+                
         dividerView.snp.makeConstraints { make in
             make.top.equalTo(courseTitleTextField.snp.bottom).offset(0)
-            make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(16)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
             make.height.equalTo(2)
         }
         
         distanceInfoView.snp.makeConstraints { make in
             make.top.equalTo(courseTitleTextField.snp.bottom).offset(22)
-            make.leading.trailing.equalToSuperview().inset(16)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
             make.height.equalTo(16)
         }
         departureInfoView.snp.makeConstraints { make in
             make.top.equalTo(distanceInfoView.snp.bottom).offset(6)
-            make.leading.trailing.equalToSuperview().inset(16)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
             make.height.equalTo(16)
         }
         activityTextView.snp.makeConstraints { make in
