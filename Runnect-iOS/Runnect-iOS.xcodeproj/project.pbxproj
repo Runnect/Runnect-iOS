@@ -14,9 +14,7 @@
 		A3BC2F2F2962C40A00198261 /* UploadedCourseInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F2E2962C40A00198261 /* UploadedCourseInfoVC.swift */; };
 		A3BC2F322962E0DB00198261 /* GoalRewardInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F312962E0DB00198261 /* GoalRewardInfoModel.swift */; };
 		A3BC2F34296303A600198261 /* GoalRewardInfoCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F33296303A600198261 /* GoalRewardInfoCVC.swift */; };
-		A3BC2F382963CE3700198261 /* ActivityRecordInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F372963CE3700198261 /* ActivityRecordInfoModel.swift */; };
 		A3BC2F3A2963D0ED00198261 /* ActivityRecordInfoTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F392963D0ED00198261 /* ActivityRecordInfoTVC.swift */; };
-		A3BC2F3D296468E500198261 /* UploadedCourseInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F3C296468E500198261 /* UploadedCourseInfoModel.swift */; };
 		A3BC2F3F2964706100198261 /* UploadedCourseInfoCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F3E2964706100198261 /* UploadedCourseInfoCVC.swift */; };
 		A3BC2F4129667A0D00198261 /* NicknameEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F4029667A0D00198261 /* NicknameEditorVC.swift */; };
 		A3BC2F432966A93100198261 /* CourseDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F422966A93100198261 /* CourseDetailVC.swift */; };
@@ -156,9 +154,7 @@
 		A3BC2F2E2962C40A00198261 /* UploadedCourseInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedCourseInfoVC.swift; sourceTree = "<group>"; };
 		A3BC2F312962E0DB00198261 /* GoalRewardInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardInfoModel.swift; sourceTree = "<group>"; };
 		A3BC2F33296303A600198261 /* GoalRewardInfoCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardInfoCVC.swift; sourceTree = "<group>"; };
-		A3BC2F372963CE3700198261 /* ActivityRecordInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRecordInfoModel.swift; sourceTree = "<group>"; };
 		A3BC2F392963D0ED00198261 /* ActivityRecordInfoTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRecordInfoTVC.swift; sourceTree = "<group>"; };
-		A3BC2F3C296468E500198261 /* UploadedCourseInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedCourseInfoModel.swift; sourceTree = "<group>"; };
 		A3BC2F3E2964706100198261 /* UploadedCourseInfoCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedCourseInfoCVC.swift; sourceTree = "<group>"; };
 		A3BC2F4029667A0D00198261 /* NicknameEditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditorVC.swift; sourceTree = "<group>"; };
 		A3BC2F422966A93100198261 /* CourseDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailVC.swift; sourceTree = "<group>"; };
@@ -176,7 +172,6 @@
 		CE10064D29680D2500FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10064F29680D3300FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10065029680D3800FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		CE10065129680D3F00FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10065229680D4400FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10065429680F7000FD31FB /* DepartureSearchingResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureSearchingResponseDto.swift; sourceTree = "<group>"; };
 		CE1006562968230800FD31FB /* DepartureLocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureLocationModel.swift; sourceTree = "<group>"; };
@@ -349,7 +344,6 @@
 		A3BC2F302962E08400198261 /* GoalRewardInfoCollectionView */ = {
 			isa = PBXGroup;
 			children = (
-				A3BC2F312962E0DB00198261 /* GoalRewardInfoModel.swift */,
 				A3BC2F33296303A600198261 /* GoalRewardInfoCVC.swift */,
 			);
 			path = GoalRewardInfoCollectionView;
@@ -358,7 +352,6 @@
 		A3BC2F362963CD2100198261 /* ActivityRecordInfoTableView */ = {
 			isa = PBXGroup;
 			children = (
-				A3BC2F372963CE3700198261 /* ActivityRecordInfoModel.swift */,
 				A3BC2F392963D0ED00198261 /* ActivityRecordInfoTVC.swift */,
 			);
 			path = ActivityRecordInfoTableView;
@@ -367,7 +360,6 @@
 		A3BC2F3B2964671D00198261 /* UploadedCourseInfoCollectionView */ = {
 			isa = PBXGroup;
 			children = (
-				A3BC2F3C296468E500198261 /* UploadedCourseInfoModel.swift */,
 				A3BC2F3E2964706100198261 /* UploadedCourseInfoCVC.swift */,
 			);
 			path = UploadedCourseInfoCollectionView;
@@ -480,7 +472,7 @@
 		CE10064829680CF200FD31FB /* MyPageModel */ = {
 			isa = PBXGroup;
 			children = (
-				CE10065129680D3F00FD31FB /* .gitkeep */,
+				A3BC2F312962E0DB00198261 /* GoalRewardInfoModel.swift */,
 			);
 			path = MyPageModel;
 			sourceTree = "<group>";
@@ -1382,7 +1374,6 @@
 				A3BC2F432966A93100198261 /* CourseDetailVC.swift in Sources */,
 				DAD5A3D8296C6D9600C8166B /* AdImageCollectionViewCell.swift in Sources */,
 				CE18E890296C76C100FEB569 /* RNLocationModel.swift in Sources */,
-				A3BC2F3D296468E500198261 /* UploadedCourseInfoModel.swift in Sources */,
 				CE6655DC295D873500C64E12 /* UIButton+.swift in Sources */,
 				CE6655D4295D865B00C64E12 /* Publisher+UIControl.swift in Sources */,
 				CE0D9FD329648DA300CEB5CD /* CustomAlertVC.swift in Sources */,
@@ -1428,7 +1419,6 @@
 				CEC2A68E2962AF2C00160BF7 /* RNMarker.swift in Sources */,
 				CE6655D2295D862A00C64E12 /* Publisher+Driver.swift in Sources */,
 				CE4942AA296FCCFC00736701 /* UploadedCourseDetailRouter.swift in Sources */,
-				A3BC2F382963CE3700198261 /* ActivityRecordInfoModel.swift in Sources */,
 				CE6655E6295D887F00C64E12 /* UIStackView+.swift in Sources */,
 				A3BC2F34296303A600198261 /* GoalRewardInfoCVC.swift in Sources */,
 				DA97A035296E685C0086760E /* CourseUploadingRouter.swift in Sources */,
