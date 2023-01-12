@@ -304,6 +304,7 @@ extension RNMapView {
         map.mapView.extent = NMGLatLngBounds(southWestLat: 31.43, southWestLng: 122.37, northEastLat: 44.35, northEastLng: 132)
         map.showLocationButton = false
         map.showScaleBar = false
+        map.showZoomControls = false
         
         map.mapView.logoAlign = .rightTop
     }
