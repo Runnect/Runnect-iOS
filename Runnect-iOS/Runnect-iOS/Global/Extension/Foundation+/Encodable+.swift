@@ -17,7 +17,6 @@ extension Encodable {
             as? [String: Any] else {
         throw NSError()
     }
-    
     return dictionary
   }
 }
