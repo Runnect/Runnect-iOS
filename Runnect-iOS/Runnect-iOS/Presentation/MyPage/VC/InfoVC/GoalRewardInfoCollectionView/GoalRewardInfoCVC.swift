@@ -6,8 +6,10 @@
 //
 
 import UIKit
+
 import SnapKit
 import Then
+import Kingfisher
 
 // MARK: - GoalRewardInfoCVC
 
@@ -33,6 +35,35 @@ final class GoalRewardInfoCVC: UICollectionViewCell {
     }
 }
 
+// MARK: - Methods
+
+extension GoalRewardInfoCVC {
+    func setData(model: GoalRewardStamp) {
+        stampStandardLabel.text = model.id
+        setStampImageView(model: model, image: stampImageView)
+    }
+    
+    func setStampImageView(model: GoalRewardStamp, image: UIImageView) {
+        let userStampList = model.id
+        print(userStampList)
+        print("엥")
+        let stampNameList = ["c1", "c2", "c3",
+                             "s1", "s2", "s3",
+                             "u1", "u2", "u3",
+                             "r1", "r2", "r3"]
+        
+        if userStampList.contains(stampNameList[0]) {
+            image.image = ImageLiterals.imgLock
+        } else {
+            image.image = ImageLiterals.imgStamp
+        }
+    }
+    
+    func setStampNameLabel(model: GoalRewardInfoModel) {
+        stampStandardLabel.text = model.stampStandard
+    }
+}
+
 extension GoalRewardInfoCVC {
     
     // MARK: - Layout Helpers
@@ -49,12 +80,5 @@ extension GoalRewardInfoCVC {
             make.top.equalTo(stampImageView.snp.bottom).offset(8)
             make.centerX.equalToSuperview()
         }
-    }
-    
-    // MARK: - General Helpers
-    
-    func dataBind(model: GoalRewardInfoModel) {
-        stampImageView.image = model.stampImg
-        stampStandardLabel.text = model.stampStandard
     }
 }
