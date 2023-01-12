@@ -6,12 +6,18 @@
 //
 
 import UIKit
+
 import SnapKit
 import Then
+import Moya
 
 final class CourseDetailVC: UIViewController {
     
     // MARK: - Properties
+    
+    private let courseDetailProvider = MoyaProvider<UploadedCourseDetailRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
     
     private var courseId: Int?
     private var publicCourseId: Int?
@@ -38,8 +44,8 @@ final class CourseDetailVC: UIViewController {
         $0.addTarget(self, action: #selector(pushToCountDownVC), for: .touchUpInside)
     }
     
-    private let mapImage = UIImageView()
-    private let profileImage = UIImageView().then {
+    private let mapImageView = UIImageView()
+    private let profileImageView = UIImageView().then {
         $0.image = ImageLiterals.imgStampC3
         $0.layer.cornerRadius = 20
         $0.layer.borderWidth = 1
@@ -64,11 +70,11 @@ final class CourseDetailVC: UIViewController {
         $0.font = .h4
     }
 
-    private let courseDistanceLabel = CourseDetailInfoView(title: "거리", description: "2.3km")
+    private let courseDistanceInfoView = CourseDetailInfoView(title: "거리", description: "2.3km")
     
-    private let courseDepartureLabel = CourseDetailInfoView(title: "출발지", description: "패스트파이브 을지로점")
+    private let courseDepartureInfoView = CourseDetailInfoView(title: "출발지", description: "패스트파이브 을지로점")
     
-    private lazy var courseDetailStackView = UIStackView(arrangedSubviews: [courseDistanceLabel, courseDepartureLabel]).then {
+    private lazy var courseDetailStackView = UIStackView(arrangedSubviews: [courseDistanceInfoView, courseDepartureInfoView]).then {
         $0.axis = .vertical
         $0.spacing = 6
         $0.distribution = .fillEqually
@@ -94,6 +100,7 @@ final class CourseDetailVC: UIViewController {
         setUI()
         setLayout()
         setAddTarget()
+        getUploadedCourseDetail()
     }
 }
 
@@ -122,6 +129,20 @@ extension CourseDetailVC {
         self.publicCourseId = publicCourseId
     }
     
+    func setData(model: UploadedCourseDetailResponseDto) {
+        self.mapImageView.setImage(with: model.publicCourse.image)
+        self.profileImageView.image = GoalRewardInfoModel.stampNameImageDictionary[model.user.image]
+        self.profileNameLabel.text = model.user.nickname
+        self.runningLevelLabel.text = "Lv. \(model.user.level)"
+        self.courseTitleLabel.text = model.publicCourse.title
+        
+        guard let distance = model.publicCourse.distance else { return }
+        self.courseDistanceInfoView.setDescriptionText(description: String(distance))
+        let location = "\(model.publicCourse.departure.region) \(model.publicCourse.departure.city)"
+        self.courseDepartureInfoView.setDescriptionText(description: location)
+        self.courseExplanationTextView.text = model.publicCourse.description
+    }
+    
     private func setAddTarget() {
         likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
     }
@@ -143,7 +164,7 @@ extension CourseDetailVC {
         view.backgroundColor = .w1
         bottomView.backgroundColor = .w1
         middleScorollView.backgroundColor = .w1
-        mapImage.backgroundColor = .g3
+        mapImageView.backgroundColor = .g3
         firstHorizontalDivideLine.backgroundColor = .g3
         secondHorizontalDivideLine.backgroundColor = .g5
         thirdHorizontalDivideLine.backgroundColor = .g3
@@ -189,23 +210,23 @@ extension CourseDetailVC {
             make.bottom.equalTo(thirdHorizontalDivideLine.snp.top)
         }
         
-        middleScorollView.addSubviews(mapImage, profileImage, profileNameLabel, runningLevelLabel, firstHorizontalDivideLine, courseTitleLabel, courseDetailStackView, secondHorizontalDivideLine, courseExplanationTextView)
+        middleScorollView.addSubviews(mapImageView, profileImageView, profileNameLabel, runningLevelLabel, firstHorizontalDivideLine, courseTitleLabel, courseDetailStackView, secondHorizontalDivideLine, courseExplanationTextView)
         
-        mapImage.snp.makeConstraints { make in
+        mapImageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(middleScorollView.snp.width).multipliedBy(0.7)
         }
         
-        profileImage.snp.makeConstraints { make in
-            make.top.equalTo(mapImage.snp.bottom).offset(14)
+        profileImageView.snp.makeConstraints { make in
+            make.top.equalTo(mapImageView.snp.bottom).offset(14)
             make.leading.equalToSuperview().offset(14)
             make.width.height.equalTo(34)
         }
         
         profileNameLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(profileImage.snp.centerY)
-            make.leading.equalTo(profileImage.snp.trailing).offset(12)
+            make.centerY.equalTo(profileImageView.snp.centerY)
+            make.leading.equalTo(profileImageView.snp.trailing).offset(12)
         }
         
         runningLevelLabel.snp.makeConstraints { make in
@@ -214,7 +235,7 @@ extension CourseDetailVC {
         }
         
         firstHorizontalDivideLine.snp.makeConstraints { make in
-            make.top.equalTo(mapImage.snp.bottom).offset(62)
+            make.top.equalTo(mapImageView.snp.bottom).offset(62)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(14)
             make.height.equalTo(0.5)
         }
@@ -239,6 +260,37 @@ extension CourseDetailVC {
             make.top.equalTo(secondHorizontalDivideLine.snp.bottom).offset(17)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
             make.bottom.equalToSuperview().inset(20)
+        }
+    }
+}
+
+extension CourseDetailVC {
+    private func getUploadedCourseDetail() {
+        guard let publicCourseId = self.publicCourseId else { return }
+        LoadingIndicator.showLoading()
+        courseDetailProvider.request(.getUploadedCourseDetail(publicCourseId: publicCourseId)) { [weak self] response in
+            guard let self = self else { return }
+            LoadingIndicator.hideLoading()
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    do {
+                        let responseDto = try result.map(BaseResponse<UploadedCourseDetailResponseDto>.self)
+                        guard let data = responseDto.data else { return }
+                        self.setData(model: data)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
         }
     }
 }
