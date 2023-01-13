@@ -45,6 +45,12 @@ final class CourseListCVC: UICollectionViewCell {
         $0.clipsToBounds = true
     }
     
+    private let imageCoverView = UIImageView().then {
+        $0.backgroundColor = .m1.withAlphaComponent(0.2)
+        $0.layer.cornerRadius = 5
+        $0.isHidden = true
+    }
+    
     private let titleLabel = UILabel().then {
         $0.text = "제목"
         $0.font = .b4
@@ -109,8 +115,10 @@ extension CourseListCVC {
         if didSelect {
             courseImageView.layer.borderColor = UIColor.m1.cgColor
             courseImageView.layer.borderWidth = 2
+            imageCoverView.isHidden = false
         } else {
             courseImageView.layer.borderColor = UIColor.clear.cgColor
+            imageCoverView.isHidden = true
         }
     }
 }
@@ -133,12 +141,16 @@ extension CourseListCVC {
     }
     
     private func setLayout() {
-        self.contentView.addSubviews(courseImageView, labelStackView, likeButton)
+        self.contentView.addSubviews(courseImageView, imageCoverView, labelStackView, likeButton)
     
         courseImageView.snp.makeConstraints { make in
             make.leading.top.trailing.equalToSuperview()
             let imageHeight = contentView.frame.width * (124/174)
             make.height.equalTo(imageHeight)
+        }
+        
+        imageCoverView.snp.makeConstraints { make in
+            make.edges.equalTo(courseImageView)
         }
         
         likeButton.snp.makeConstraints { make in
