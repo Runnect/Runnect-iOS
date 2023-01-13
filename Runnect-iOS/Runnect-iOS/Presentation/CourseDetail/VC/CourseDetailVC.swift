@@ -54,7 +54,7 @@ final class CourseDetailVC: UIViewController {
     private let mapImageView = UIImageView()
     private let profileImageView = UIImageView().then {
         $0.image = ImageLiterals.imgStampC3
-        $0.layer.cornerRadius = 20
+        $0.layer.cornerRadius = 17
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.m3.cgColor
     }
@@ -164,7 +164,7 @@ extension CourseDetailVC {
         self.likeButton.isSelected = scrap
         
         guard let distance = model.publicCourse.distance else { return }
-        self.courseDistanceInfoView.setDescriptionText(description: String(distance))
+        self.courseDistanceInfoView.setDescriptionText(description: "\(distance)km")
         let location = "\(model.publicCourse.departure.region) \(model.publicCourse.departure.city)"
         self.courseDepartureInfoView.setDescriptionText(description: location)
         self.courseExplanationTextView.text = model.publicCourse.description
