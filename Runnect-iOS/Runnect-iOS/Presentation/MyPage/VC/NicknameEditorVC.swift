@@ -77,7 +77,7 @@ extension NicknameEditorVC {
         }
     }
     
-    private func setAddTarget(){
+    private func setAddTarget() {
         nickNameTextField.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
     }
     
