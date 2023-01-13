@@ -242,7 +242,41 @@
 
 <details>
  <summary> ⭐️ 연우 </summary>
- <div markdown="1">    
+ <div markdown="1">
+ 
+   ![%E1%84%8F%E1%85%A9%E1%84%89%E1%85%B3%E1%84%87%E1%85%A1%E1%86%AF%E1%84%80%E1%85%A7%E1%86%AB_ios](https://user-images.githubusercontent.com/77267404/212248971-e7d9d6dd-39d2-475e-ba57-014ba776cfd3.png)
+
+   `코스 발견` 탭에 있는 뷰들을 구현했습니다. 
+
+   네비게이션바와 탭바는 세진이가 프로젝트 세팅 시에 구현해놓았던 뷰를 재사용했습니다.
+
+   1. **CourseDiscoveryVC UI**
+   - `CollectionView`를 활용하여 구현했습니다. 3개의 섹션으로 나누어 각 섹션에 UIViewCell을 만들어 Cell안에 View가 들어가도록 했습니다. 즉, 이 View에는 CollectionView 하나만 존재하며, 1번째 섹션에는 광고 이미지뷰가, 2번째 섹션에는 헤더가, 3번째 섹션에는 MapListCell들이 들어가있습니다. MapListCell 은 CourseListCVC를 재사용하여 구현했습니다.
+   - API 연결
+   이 View 에는 MapListCell을 View에 뿌려주는 API와 스크랩이 되었는지 안되었는지를 보여주는 API , 2개를 연결해놓았습니다. `Moya` 를 사용하여 Provider를 통해 서버와 통신시켜놓았습니다.
+
+   2. **SearchVC UI**
+   - 기능명세서대로 CourseDiscoveryVC에서 돋보기 버튼을 누르면 이 뷰가 Push 되도록 구현했습니다. - 프로젝트 세팅 시에 구현해놓은 NavigationBar 에 검색 타입으로 뷰를 재사용 하였고, `PlaceHolder`를 추가해주었습니다. 검색버튼을 누르면 CourseListCVC를 또 재사용하여 collectionView를 불러오는 방식으로 구현했습니다.
+   - API 연결
+   이 View 에는 검색을 하면 `keword`에 맞는 MapListCell을 보여주는 API를 연결했습니다. API 명세서대로 파라미터를 keword로 설정해놓고 서버와 통신시켜놓는 방식으로 구현했습니다.
+
+   3. **MyCourseSelectVC UI**
+
+    1) 코스그리기 뷰에서 그렸던 코스들을 불러와, 이 중에서 업로드하고 싶은 코스 1개를 select 하고,
+
+    2) 선택하기 버튼을 누르면,
+
+    3) CourseUploadVC UI로 push 되게 구현했습니다.
+
+   - 뷰는 CourseListCVC를 재사용하여 `CollectionView`로 구현했습니다. 그리고 컬렉션뷰 셀에서 셀을 선택하면 셀 내 imageView에 bounder가 생기게 함수를 구현했습니다. 이 때 cell 을 선택하면 그 전에 선택한 cell은 취소가 되게 구현했습니다. 그리고 추가로 cell을 1개 선택하면 업로드하기 버튼이 보라색이 되는 방식으로 구현했습니다.
+   - API 연결
+   내가 그렸던 코스들을 불러와 view에 뿌려주는 API를 연결했습니다.
+
+   4. **CourseUploadVC UI**
+   - 사용자가 select한 코스에 Title과 description을 작성하는 View입니다. 제목을 적는 `TitleTextField`와 설명을 적는 `UITextView`를 활용하여 구현했습니다.
+   - 각각 기능명세서에 명시된대로 글자수 제한 함수를 걸어놓고, 디자인해놓은 대로 PlaceHolder를 구현했습니다. 그리고 사용자가 Text를 입력하기 시작할 때와 끝날 때 함수를 구현해놓아 Text를 입력하기 시작하면, 1) Placeholder가 사라지고 2) 업로드하기 버튼이 보라색으로 활성화되고  2) 키보드가 올라오되 View를 키보드를 올린만큼 올려서 View가 키보드에 의해 가려지지 않게 구현했습니다. Upload버튼을 누르면 Discovery VC로 돌아가게 해주었습니다.
+   - API 연결
+   `POST` 메소드를 이용한 API를 연결해놓았습니다.
 
  </div>
 </details>
