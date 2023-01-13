@@ -25,6 +25,8 @@ final class NicknameEditorVC: UIViewController {
     
     weak var delegate: NicknameEditorVCDelegate?
     
+    private let nicknameMaxLength: Int = 7
+    
     // MARK: - UI Components
     
     private let editorContentView = UIView().then {
@@ -55,13 +57,12 @@ final class NicknameEditorVC: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tabBarController?.tabBar.isHidden = true
         nickNameTextField.delegate = self
         isTextExist(textField: nickNameTextField)
-        view.backgroundColor = .black.withAlphaComponent(0.8)
         setUI()
         setLayout()
         showKeyboard()
+        setAddTarget()
     }
 }
 
@@ -74,6 +75,10 @@ extension NicknameEditorVC {
             dismiss(animated: false)
             didNicknameReturn()
         }
+    }
+    
+    private func setAddTarget(){
+        nickNameTextField.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
     }
     
     func showKeyboard() {
@@ -100,6 +105,16 @@ extension NicknameEditorVC {
         guard let nickname = nickNameTextField.text else { return }
         self.updateUserNickname(nickname: nickname)
     }
+    
+    @objc private func textFieldTextDidChange() {
+        guard let text = nickNameTextField.text else { return }
+                
+        if text.count > nicknameMaxLength {
+            let index = text.index(text.startIndex, offsetBy: nicknameMaxLength)
+            let newString = text[text.startIndex..<index]
+            self.nickNameTextField.text = String(newString)
+        }
+    }
 }
 
 extension NicknameEditorVC {
@@ -107,6 +122,8 @@ extension NicknameEditorVC {
     // MARK: - Layout Helpers
     
     private func setUI() {
+        self.tabBarController?.tabBar.isHidden = true
+        view.backgroundColor = .black.withAlphaComponent(0.8)
         editorContentView.backgroundColor = .w1
         horizontalDivideLine.backgroundColor = .g3
     }
