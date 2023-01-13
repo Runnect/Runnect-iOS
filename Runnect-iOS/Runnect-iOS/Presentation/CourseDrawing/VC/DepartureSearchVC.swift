@@ -22,7 +22,7 @@ final class DepartureSearchVC: UIViewController {
     // MARK: - UI Components
     
     private lazy var naviBar = CustomNavigationBar(self, type: .search)
-        .setTextFieldPlaceholder(placeholder: "지역과 키워드 위주로 검색해보세요")
+        .setTextFieldPlaceholder(placeholder: "출발지를 설정해주세요")
         .showKeyboard()
     
     private let dividerView = UIView().then {
