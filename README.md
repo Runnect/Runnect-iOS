@@ -284,6 +284,29 @@
 <details>
  <summary> ⭐️ 재현 </summary>
  <div markdown="1">    
+   <img width="905" alt="%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2023-01-13_%EC%98%A4%ED%9B%84_1 46 30" src="https://user-images.githubusercontent.com/77267404/212249228-a2eacb8c-e4ac-4c31-80bb-34f726d47e37.png">
+
+   저는 마이페이지 뷰를 담당했습니다. 
+
+   - `마이페이지` - `메인` : MyPageVC
+       - 사용자의 진척도를 나타내기 위해 UIProgressView를 처음 사용해보았습니다 .. 🥴
+       - UI가 반복되는 목표 보상, 활동 기록, 업로드한 코스의 레이아웃을 그리는 함수를 만들어 활용해보았습니다.
+   - `마이페이지` - `메인` - `닉네임 수정` : NicknameEditorVC
+       - 텍스트가 입력 되었을 때만 return 키가 활성화되도록 구현했습니다.
+       - 키보드의 return 키가 눌렸을 때, 팝업창 뒷쪽의 백그라운드 뷰를 눌렀을 때 값이 return 될 수 있도록 구현했습니다.
+       - 백그라운드 뷰에 투명도가 설정되어 있어 viewWillAppear를 쓸 수 없었고, delegate를 사용했습니다.
+   - `마이페이지` - `목표 보상` : GoalRewardInfoVC
+       - UICollectionView를 활용해 스탬프를 나타냈습니다.
+       - 시뮬레이터 화면의 크기가 커졌을 때 콜렉션뷰가 깨지는 이유와, 이를 해결하기 위해 셀의 너비값 대비 비율을 활용해서 크기를 유동적으로 설정하는 법을 배웠습니다.
+       - 서버에서 보내주는 스탬프 id만 스탬프 사진을 나타내고, 나머지는 잠금 이미지로 나타낼 수 있도록 구현했습니다. (어려웠습니다..)
+   - `마이페이지` - `활동 기록` : ActivityRecordInfoVC
+       - UITableView를 활용해 활동 기록을 나타냈습니다.
+       - 셀 안에 들어가는 요소들을 일정한 간격으로 배치하기 위해 UIStackView를 활용했습니다.
+       - DateFormatter를 활용해 서버에서 보내주는 날짜 데이터를 UI에 맞추어 변경하는 법을 배우고, NSMutableAttributedString를 처음 써보았습니다 ~.~
+   - `마이페이지` - `업로드한 코스` : UploadedCourseInfoVC
+       - UICollectionView를 활용해 업로드한 코스를 나타냈습니다.
+   - `코스 발견` - `추천 코스 상세 페이지` : CourseDetailVC
+
 
  </div>
 </details>
