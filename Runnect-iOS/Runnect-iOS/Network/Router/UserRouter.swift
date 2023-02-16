@@ -11,6 +11,8 @@ import Moya
 
 enum UserRouter {
     case signUp(nickname: String)
+    case getMyPageInfo
+    case updateUserNickname(nickname: String)
 }
 
 extension UserRouter: TargetType {
@@ -24,7 +26,7 @@ extension UserRouter: TargetType {
     
     var path: String {
         switch self {
-        case .signUp:
+        case .signUp, .getMyPageInfo, .updateUserNickname:
             return "/user"
         }
     }
@@ -33,6 +35,10 @@ extension UserRouter: TargetType {
         switch self {
         case .signUp:
             return .post
+        case .getMyPageInfo:
+            return .get
+        case .updateUserNickname:
+            return .patch
         }
     }
     
@@ -40,13 +46,14 @@ extension UserRouter: TargetType {
         switch self {
         case .signUp(let nickname):
             return .requestParameters(parameters: ["nickname": nickname], encoding: JSONEncoding.default)
+        case .getMyPageInfo:
+            return .requestPlain
+        case .updateUserNickname(let nickname):
+            return .requestParameters(parameters: ["nickname": nickname], encoding: JSONEncoding.default)
         }
     }
     
     var headers: [String: String]? {
-        switch self {
-        case .signUp:
-            return Config.headerWithDeviceId
-        }
+        return Config.headerWithDeviceId
     }
 }
