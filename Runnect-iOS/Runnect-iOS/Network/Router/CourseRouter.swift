@@ -12,6 +12,7 @@ import Moya
 enum CourseRouter {
     case uploadCourseDrawing(param: CourseDrawingRequestDto)
     case getAllPrivateCourse
+    case getPrivateCourseNotUploaded
 }
 
 extension CourseRouter: TargetType {
@@ -29,6 +30,8 @@ extension CourseRouter: TargetType {
             return "/course"
         case .getAllPrivateCourse:
             return "/course/user"
+        case .getPrivateCourseNotUploaded:
+            return "/course/private/user"
         }
     }
     
@@ -36,7 +39,7 @@ extension CourseRouter: TargetType {
         switch self {
         case .uploadCourseDrawing:
             return .post
-        case .getAllPrivateCourse:
+        case .getAllPrivateCourse, .getPrivateCourseNotUploaded:
             return .get
         }
     }
@@ -75,7 +78,7 @@ extension CourseRouter: TargetType {
             }
             
             return .uploadMultipart(multipartFormData)
-        case .getAllPrivateCourse:
+        case .getAllPrivateCourse, .getPrivateCourseNotUploaded:
             return .requestPlain
         }
     }
@@ -85,7 +88,7 @@ extension CourseRouter: TargetType {
         case .uploadCourseDrawing:
             return ["Content-Type": "multipart/form-data",
                     "machineId": Config.deviceId]
-        case .getAllPrivateCourse:
+        default:
             return Config.headerWithDeviceId
         }
     }
