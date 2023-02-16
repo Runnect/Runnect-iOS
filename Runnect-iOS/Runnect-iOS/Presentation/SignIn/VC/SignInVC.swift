@@ -13,7 +13,7 @@ final class SignInVC: UIViewController {
     
     // MARK: - Properties
     
-    private var signInProvider = MoyaProvider<SignInRouter>(
+    private var userProvider = MoyaProvider<UserRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
@@ -152,7 +152,7 @@ extension SignInVC: UITextFieldDelegate {
 extension SignInVC {
     func signIn(nickname: String) {
         LoadingIndicator.showLoading()
-        signInProvider.request(.signUp(nickname: nickname)) { [weak self] response in
+        userProvider.request(.signUp(nickname: nickname)) { [weak self] response in
             LoadingIndicator.hideLoading()
             guard let self = self else { return }
             switch response {
