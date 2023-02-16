@@ -18,6 +18,10 @@ final class RunningWaitingVC: UIViewController {
     private var publicCourseId: Int?
     private var courseModel: Course?
     
+    private let courseProvider = MoyaProvider<CourseRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
+    
     private let runningProvider = MoyaProvider<RunningRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
@@ -181,7 +185,7 @@ extension RunningWaitingVC {
     private func getCourseDetail(courseId: Int) {
         LoadingIndicator.showLoading()
         
-        runningProvider.request(.getCourseDetail(courseId: courseId)) { [weak self] response in
+        courseProvider.request(.getCourseDetail(courseId: courseId)) { [weak self] response in
             guard let self = self else { return }
             LoadingIndicator.hideLoading()
             switch response {

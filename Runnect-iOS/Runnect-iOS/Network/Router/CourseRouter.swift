@@ -13,6 +13,7 @@ enum CourseRouter {
     case uploadCourseDrawing(param: CourseDrawingRequestDto)
     case getAllPrivateCourse
     case getPrivateCourseNotUploaded
+    case getCourseDetail(courseId: Int)
 }
 
 extension CourseRouter: TargetType {
@@ -32,6 +33,8 @@ extension CourseRouter: TargetType {
             return "/course/user"
         case .getPrivateCourseNotUploaded:
             return "/course/private/user"
+        case .getCourseDetail(let courseId):
+            return "/course/detail/\(courseId)"
         }
     }
     
@@ -39,7 +42,7 @@ extension CourseRouter: TargetType {
         switch self {
         case .uploadCourseDrawing:
             return .post
-        case .getAllPrivateCourse, .getPrivateCourseNotUploaded:
+        case .getAllPrivateCourse, .getPrivateCourseNotUploaded, .getCourseDetail:
             return .get
         }
     }
@@ -78,7 +81,7 @@ extension CourseRouter: TargetType {
             }
             
             return .uploadMultipart(multipartFormData)
-        case .getAllPrivateCourse, .getPrivateCourseNotUploaded:
+        case .getAllPrivateCourse, .getPrivateCourseNotUploaded, .getCourseDetail:
             return .requestPlain
         }
     }
