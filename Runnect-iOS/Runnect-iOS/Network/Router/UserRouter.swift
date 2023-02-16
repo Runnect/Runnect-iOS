@@ -1,19 +1,21 @@
 //
-//  SignInRouter.swift
+//  UserRouter.swift
 //  Runnect-iOS
 //
-//  Created by sejin on 2023/01/09.
+//  Created by sejin on 2023/02/16.
 //
 
 import Foundation
 
 import Moya
 
-enum SignInRouter {
+enum UserRouter {
     case signUp(nickname: String)
+    case getMyPageInfo
+    case updateUserNickname(nickname: String)
 }
 
-extension SignInRouter: TargetType {
+extension UserRouter: TargetType {
     var baseURL: URL {
         guard let url = URL(string: Config.baseURL) else {
             fatalError("baseURL could not be configured")
@@ -24,7 +26,7 @@ extension SignInRouter: TargetType {
     
     var path: String {
         switch self {
-        case .signUp:
+        case .signUp, .getMyPageInfo, .updateUserNickname:
             return "/user"
         }
     }
@@ -33,6 +35,10 @@ extension SignInRouter: TargetType {
         switch self {
         case .signUp:
             return .post
+        case .getMyPageInfo:
+            return .get
+        case .updateUserNickname:
+            return .patch
         }
     }
     
@@ -40,13 +46,14 @@ extension SignInRouter: TargetType {
         switch self {
         case .signUp(let nickname):
             return .requestParameters(parameters: ["nickname": nickname], encoding: JSONEncoding.default)
+        case .getMyPageInfo:
+            return .requestPlain
+        case .updateUserNickname(let nickname):
+            return .requestParameters(parameters: ["nickname": nickname], encoding: JSONEncoding.default)
         }
     }
     
     var headers: [String: String]? {
-        switch self {
-        case .signUp:
-            return Config.headerWithDeviceId
-        }
+        return Config.headerWithDeviceId
     }
 }

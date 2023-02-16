@@ -15,7 +15,7 @@ final class MyPageVC: UIViewController {
     
     // MARK: - Properties
     
-    private var myPageProvider = MoyaProvider<MyPageRouter>(
+    private var userProvider = MoyaProvider<UserRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
@@ -347,7 +347,7 @@ extension MyPageVC: NicknameEditorVCDelegate {
 extension MyPageVC {
     func getMyPageInfo() {
         LoadingIndicator.showLoading()
-        myPageProvider.request(.getMyPageInfo) { [weak self] response in
+        userProvider.request(.getMyPageInfo) { [weak self] response in
             LoadingIndicator.hideLoading()
             guard let self = self else { return }
             switch response {

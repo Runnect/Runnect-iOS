@@ -19,7 +19,7 @@ final class NicknameEditorVC: UIViewController {
     
     // MARK: - Properties
     
-    private var nicknameEditorProvider = MoyaProvider<MyPageRouter>(
+    private var userProvider = MoyaProvider<UserRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
@@ -173,7 +173,7 @@ extension NicknameEditorVC: UITextFieldDelegate {
 extension NicknameEditorVC {
     func updateUserNickname(nickname: String) {
         LoadingIndicator.showLoading()
-        nicknameEditorProvider.request(.updateUserNickname(nickname: nickname)) { [weak self] response in
+        userProvider.request(.updateUserNickname(nickname: nickname)) { [weak self] response in
             LoadingIndicator.hideLoading()
             guard let self = self else { return }
             switch response {

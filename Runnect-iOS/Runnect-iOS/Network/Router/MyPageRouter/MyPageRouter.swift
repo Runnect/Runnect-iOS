@@ -10,11 +10,9 @@ import Foundation
 import Moya
 
 enum MyPageRouter {
-    case getMyPageInfo
     case getUploadedCourseInfo
     case getActivityRecordInfo
     case getGoalRewardInfo
-    case updateUserNickname(nickname: String)
 }
 
 extension MyPageRouter: TargetType {
@@ -28,8 +26,6 @@ extension MyPageRouter: TargetType {
     
     var path: String {
         switch self {
-        case .getMyPageInfo, .updateUserNickname:
-            return "/user"
         case .getUploadedCourseInfo:
             return "/public-course/user"
         case .getActivityRecordInfo:
@@ -41,25 +37,21 @@ extension MyPageRouter: TargetType {
     
     var method: Moya.Method {
         switch self {
-        case .getMyPageInfo, .getUploadedCourseInfo, .getActivityRecordInfo, .getGoalRewardInfo:
+        case .getUploadedCourseInfo, .getActivityRecordInfo, .getGoalRewardInfo:
             return .get
-        case .updateUserNickname:
-            return .patch
         }
     }
     
     var task: Moya.Task {
         switch self {
-        case .getMyPageInfo, .getUploadedCourseInfo, .getActivityRecordInfo, .getGoalRewardInfo:
+        case .getUploadedCourseInfo, .getActivityRecordInfo, .getGoalRewardInfo:
             return .requestPlain
-        case .updateUserNickname(let nickname):
-            return .requestParameters(parameters: ["nickname": nickname], encoding: JSONEncoding.default)
         }
     }
     
     var headers: [String: String]? {
         switch self {
-        case .getMyPageInfo, .getUploadedCourseInfo, .getActivityRecordInfo, .getGoalRewardInfo, .updateUserNickname:
+        case .getUploadedCourseInfo, .getActivityRecordInfo, .getGoalRewardInfo:
             return Config.headerWithDeviceId
         }
     }

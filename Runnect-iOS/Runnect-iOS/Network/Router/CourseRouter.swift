@@ -1,19 +1,22 @@
 //
-//  CourseDrawingRouter.swift
+//  CourseRouter.swift
 //  Runnect-iOS
 //
-//  Created by sejin on 2023/01/10.
+//  Created by sejin on 2023/02/16.
 //
 
 import Foundation
 
 import Moya
 
-enum CourseDrawingRouter {
+enum CourseRouter {
     case uploadCourseDrawing(param: CourseDrawingRequestDto)
+    case getAllPrivateCourse
+    case getPrivateCourseNotUploaded
+    case getCourseDetail(courseId: Int)
 }
 
-extension CourseDrawingRouter: TargetType {
+extension CourseRouter: TargetType {
     var baseURL: URL {
         guard let url = URL(string: Config.baseURL) else {
             fatalError("baseURL could not be configured")
@@ -26,6 +29,12 @@ extension CourseDrawingRouter: TargetType {
         switch self {
         case .uploadCourseDrawing:
             return "/course"
+        case .getAllPrivateCourse:
+            return "/course/user"
+        case .getPrivateCourseNotUploaded:
+            return "/course/private/user"
+        case .getCourseDetail(let courseId):
+            return "/course/detail/\(courseId)"
         }
     }
     
@@ -33,6 +42,8 @@ extension CourseDrawingRouter: TargetType {
         switch self {
         case .uploadCourseDrawing:
             return .post
+        case .getAllPrivateCourse, .getPrivateCourseNotUploaded, .getCourseDetail:
+            return .get
         }
     }
     
@@ -56,7 +67,7 @@ extension CourseDrawingRouter: TargetType {
                     let locationData = try location.asParameter()
                     path.append(locationData)
                 }
-                
+
                 content["path"] = path
                 content["distance"] = param.data.distance
                 content["departureAddress"] = param.data.departureAddress
@@ -70,6 +81,8 @@ extension CourseDrawingRouter: TargetType {
             }
             
             return .uploadMultipart(multipartFormData)
+        case .getAllPrivateCourse, .getPrivateCourseNotUploaded, .getCourseDetail:
+            return .requestPlain
         }
     }
     
@@ -78,6 +91,8 @@ extension CourseDrawingRouter: TargetType {
         case .uploadCourseDrawing:
             return ["Content-Type": "multipart/form-data",
                     "machineId": Config.deviceId]
+        default:
+            return Config.headerWithDeviceId
         }
     }
 }

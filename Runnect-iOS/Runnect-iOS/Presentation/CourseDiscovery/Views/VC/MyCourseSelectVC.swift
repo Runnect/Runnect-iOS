@@ -14,7 +14,7 @@ class MyCourseSelectVC: UIViewController {
     
     // MARK: - Properties
     
-    private let courseStorageProvider = MoyaProvider<CourseStorageRouter>(
+    private let courseProvider = MoyaProvider<CourseRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
@@ -212,7 +212,7 @@ extension MyCourseSelectVC {
     private func getPrivateCourseNotUploaded() {
         self.selectedIndex = nil
         LoadingIndicator.showLoading()
-        courseStorageProvider.request(.getPrivateCourseNotUploaded) { [weak self] response in
+        courseProvider.request(.getPrivateCourseNotUploaded) { [weak self] response in
             LoadingIndicator.hideLoading()
             guard let self = self else { return }
             switch response {
