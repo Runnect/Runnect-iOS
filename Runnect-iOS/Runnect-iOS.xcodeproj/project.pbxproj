@@ -49,7 +49,6 @@
 		CE21C02E299E601700F62AF5 /* StampRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE21C02D299E601700F62AF5 /* StampRouter.swift */; };
 		CE29D582296402B500F47542 /* CourseDrawingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE29D581296402B500F47542 /* CourseDrawingVC.swift */; };
 		CE29D584296416D800F47542 /* caculateStatusBarHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE29D583296416D800F47542 /* caculateStatusBarHeight.swift */; };
-		CE320F36296C8EAB009F89A7 /* CourseDrawingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE320F35296C8EAB009F89A7 /* CourseDrawingRouter.swift */; };
 		CE320F38296C8FAB009F89A7 /* CourseDrawingResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE320F37296C8FAB009F89A7 /* CourseDrawingResponseData.swift */; };
 		CE3A53C5296C6017003D518C /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A53C4296C6017003D518C /* KeychainManager.swift */; };
 		CE40BB1C2967E4910030ABCA /* RunningWaitingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40BB1B2967E4910030ABCA /* RunningWaitingVC.swift */; };
@@ -201,7 +200,6 @@
 		CE21C02D299E601700F62AF5 /* StampRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StampRouter.swift; sourceTree = "<group>"; };
 		CE29D581296402B500F47542 /* CourseDrawingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDrawingVC.swift; sourceTree = "<group>"; };
 		CE29D583296416D800F47542 /* caculateStatusBarHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = caculateStatusBarHeight.swift; sourceTree = "<group>"; };
-		CE320F35296C8EAB009F89A7 /* CourseDrawingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDrawingRouter.swift; sourceTree = "<group>"; };
 		CE320F37296C8FAB009F89A7 /* CourseDrawingResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDrawingResponseData.swift; sourceTree = "<group>"; };
 		CE3A53C4296C6017003D518C /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		CE40BB1B2967E4910030ABCA /* RunningWaitingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningWaitingVC.swift; sourceTree = "<group>"; };
@@ -722,7 +720,6 @@
 			isa = PBXGroup;
 			children = (
 				CE40BB2C296808B00030ABCA /* DepartureSearchingRouter.swift */,
-				CE320F35296C8EAB009F89A7 /* CourseDrawingRouter.swift */,
 			);
 			path = CourseDrawingRouter;
 			sourceTree = "<group>";
@@ -1323,7 +1320,6 @@
 				A3305A97296EF58C000B1A10 /* GoalRewardInfoDto.swift in Sources */,
 				CE21C024299E5FE500F62AF5 /* UserRouter.swift in Sources */,
 				CE6655F4295D898400C64E12 /* UIViewController+.swift in Sources */,
-				CE320F36296C8EAB009F89A7 /* CourseDrawingRouter.swift in Sources */,
 				CE14677829658C7200DCEA1B /* Stopwatch.swift in Sources */,
 				CE21C026299E5FF300F62AF5 /* CourseRouter.swift in Sources */,
 				CE40BB22296806140030ABCA /* NetworkHelper.swift in Sources */,

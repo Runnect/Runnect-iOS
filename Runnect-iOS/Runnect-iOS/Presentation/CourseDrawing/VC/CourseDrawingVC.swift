@@ -14,7 +14,7 @@ final class CourseDrawingVC: UIViewController {
     
     // MARK: - Properties
     
-    private let courseDrawingProvider = MoyaProvider<CourseDrawingRouter>(
+    private let courseProvider = MoyaProvider<CourseRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
@@ -339,7 +339,7 @@ extension CourseDrawingVC {
         guard let requestDto = makecourseDrawingRequestDto() else { return }
         
         LoadingIndicator.showLoading()
-        courseDrawingProvider.request(.uploadCourseDrawing(param: requestDto)) {[weak self] response in
+        courseProvider.request(.uploadCourseDrawing(param: requestDto)) {[weak self] response in
             guard let self = self else { return }
             LoadingIndicator.hideLoading()
             switch response {
