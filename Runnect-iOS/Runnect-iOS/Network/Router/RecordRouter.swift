@@ -11,6 +11,7 @@ import Moya
 
 enum RecordRouter {
     case recordRunning(param: RunningRecordRequestDto)
+    case getActivityRecordInfo
 }
 
 extension RecordRouter: TargetType {
@@ -26,6 +27,8 @@ extension RecordRouter: TargetType {
         switch self {
         case .recordRunning:
             return "/record"
+        case .getActivityRecordInfo:
+            return "/record/user"
         }
     }
     
@@ -33,6 +36,8 @@ extension RecordRouter: TargetType {
         switch self {
         case .recordRunning:
             return .post
+        case .getActivityRecordInfo:
+            return .get
         }
     }
     
@@ -44,12 +49,14 @@ extension RecordRouter: TargetType {
             } catch {
                 fatalError(error.localizedDescription)
             }
+        case .getActivityRecordInfo:
+            return .requestPlain
         }
     }
     
-    var headers: [String : String]? {
+    var headers: [String: String]? {
         switch self {
-        case .recordRunning:
+        case .recordRunning, .getActivityRecordInfo:
             return Config.headerWithDeviceId
         }
     }
