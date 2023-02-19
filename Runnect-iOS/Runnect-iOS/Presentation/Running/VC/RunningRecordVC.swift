@@ -15,7 +15,7 @@ final class RunningRecordVC: UIViewController {
     
     private var runningModel: RunningModel?
     
-    private let runningProvider = MoyaProvider<RunningRouter>(
+    private let recordProvider = MoyaProvider<RecordRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
 
@@ -300,7 +300,7 @@ extension RunningRecordVC {
                                                  pace: pace)
         
         LoadingIndicator.showLoading()
-        runningProvider.request(.recordRunning(param: requestDto)) { [weak self] response in
+        recordProvider.request(.recordRunning(param: requestDto)) { [weak self] response in
             guard let self = self else { return }
             LoadingIndicator.hideLoading()
             switch response {

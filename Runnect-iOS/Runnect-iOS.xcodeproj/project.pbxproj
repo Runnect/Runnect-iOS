@@ -71,7 +71,6 @@
 		CE5875A2296015A2005D967E /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5875A1296015A2005D967E /* NetworkLoggerPlugin.swift */; };
 		CE5875A4296015D2005D967E /* Encodable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5875A3296015D2005D967E /* Encodable+.swift */; };
 		CE591E9C296D4F69000FCBB3 /* RunningRecordResonseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE591E9B296D4F69000FCBB3 /* RunningRecordResonseDto.swift */; };
-		CE591E9E296D5140000FCBB3 /* RunningRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE591E9D296D5140000FCBB3 /* RunningRouter.swift */; };
 		CE591EA1296D5EB5000FCBB3 /* PrivateCourseResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE591EA0296D5EB5000FCBB3 /* PrivateCourseResponseDto.swift */; };
 		CE6655BF295D82E200C64E12 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = CE6655BE295D82E200C64E12 /* .gitkeep */; };
 		CE6655C8295D849F00C64E12 /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6655C7295D849F00C64E12 /* StringLiterals.swift */; };
@@ -224,7 +223,6 @@
 		CE5875A1296015A2005D967E /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
 		CE5875A3296015D2005D967E /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
 		CE591E9B296D4F69000FCBB3 /* RunningRecordResonseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningRecordResonseDto.swift; sourceTree = "<group>"; };
-		CE591E9D296D5140000FCBB3 /* RunningRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningRouter.swift; sourceTree = "<group>"; };
 		CE591EA0296D5EB5000FCBB3 /* PrivateCourseResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateCourseResponseDto.swift; sourceTree = "<group>"; };
 		CE6655BE295D82E200C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE6655C1295D82F700C64E12 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
@@ -759,14 +757,6 @@
 			path = CourseDetailRouter;
 			sourceTree = "<group>";
 		};
-		CE40BB2B296808500030ABCA /* RunningRouter */ = {
-			isa = PBXGroup;
-			children = (
-				CE591E9D296D5140000FCBB3 /* RunningRouter.swift */,
-			);
-			path = RunningRouter;
-			sourceTree = "<group>";
-		};
 		CE4545BC295D7AF4003201E1 = {
 			isa = PBXGroup;
 			children = (
@@ -922,7 +912,6 @@
 				CE40BB28296808300030ABCA /* CourseDiscoveryRouter */,
 				CE40BB292968083B0030ABCA /* MyPageRouter */,
 				CE40BB2A296808440030ABCA /* CourseDetailRouter */,
-				CE40BB2B296808500030ABCA /* RunningRouter */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -1387,7 +1376,6 @@
 				CE320F38296C8FAB009F89A7 /* CourseDrawingResponseData.swift in Sources */,
 				CE21C028299E5FFC00F62AF5 /* PublicCourseRouter.swift in Sources */,
 				CE18E894296C79B900FEB569 /* CourseDrawingRequestDto.swift in Sources */,
-				CE591E9E296D5140000FCBB3 /* RunningRouter.swift in Sources */,
 				DA20D84E2966A9B300F1581F /* CourseSearchVC.swift in Sources */,
 				CE1006572968230800FD31FB /* DepartureLocationModel.swift in Sources */,
 				CECA695C296E61D6002AF05C /* PrivateCourseNotUploadedResponseDto.swift in Sources */,
