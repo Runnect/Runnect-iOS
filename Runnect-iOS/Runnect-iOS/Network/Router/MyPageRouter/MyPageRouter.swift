@@ -11,7 +11,6 @@ import Moya
 
 enum MyPageRouter {
     case getUploadedCourseInfo
-    case getGoalRewardInfo
 }
 
 extension MyPageRouter: TargetType {
@@ -27,28 +26,26 @@ extension MyPageRouter: TargetType {
         switch self {
         case .getUploadedCourseInfo:
             return "/public-course/user"
-        case .getGoalRewardInfo:
-            return "/stamp/user"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .getUploadedCourseInfo, .getGoalRewardInfo:
+        case .getUploadedCourseInfo:
             return .get
         }
     }
     
     var task: Moya.Task {
         switch self {
-        case .getUploadedCourseInfo, .getGoalRewardInfo:
+        case .getUploadedCourseInfo:
             return .requestPlain
         }
     }
     
     var headers: [String: String]? {
         switch self {
-        case .getUploadedCourseInfo, .getGoalRewardInfo:
+        case .getUploadedCourseInfo:
             return Config.headerWithDeviceId
         }
     }

@@ -14,7 +14,7 @@ import Moya
 final class GoalRewardInfoVC: UIViewController {
     
     // MARK: - Properties
-    private var goalRewardProvider = MoyaProvider<MyPageRouter>(
+    private var stampProvider = MoyaProvider<StampRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
@@ -183,7 +183,7 @@ extension GoalRewardInfoVC: UICollectionViewDataSource {
 extension GoalRewardInfoVC {
     func getGoalRewardInfo() {
         LoadingIndicator.showLoading()
-        goalRewardProvider.request(.getGoalRewardInfo) { [weak self] response in
+        stampProvider.request(.getGoalRewardInfo) { [weak self] response in
             LoadingIndicator.hideLoading()
             guard let self = self else { return }
             switch response {

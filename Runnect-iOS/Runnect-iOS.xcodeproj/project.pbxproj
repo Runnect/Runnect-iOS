@@ -133,7 +133,6 @@
 		CEEC6B402961C55000D00E1E /* MyPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B3F2961C55000D00E1E /* MyPageVC.swift */; };
 		CEEC6B492961C5E200D00E1E /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B482961C5E200D00E1E /* SplashVC.swift */; };
 		CEEC6B4B2961D89700D00E1E /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B4A2961D89700D00E1E /* CustomNavigationBar.swift */; };
-		CEF3CD98296D63B9002723A1 /* CourseStorageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3CD97296D63B9002723A1 /* CourseStorageRouter.swift */; };
 		CEF3CD9A296DB305002723A1 /* CourseDetailResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3CD99296DB305002723A1 /* CourseDetailResponseDto.swift */; };
 		DA20D847296697A600F1581F /* MyCourseSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D846296697A600F1581F /* MyCourseSelectVC.swift */; };
 		DA20D849296697B400F1581F /* CourseUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D848296697B400F1581F /* CourseUploadVC.swift */; };
@@ -289,7 +288,6 @@
 		CEEC6B452961C5B200D00E1E /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CEEC6B482961C5E200D00E1E /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		CEEC6B4A2961D89700D00E1E /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
-		CEF3CD97296D63B9002723A1 /* CourseStorageRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseStorageRouter.swift; sourceTree = "<group>"; };
 		CEF3CD99296DB305002723A1 /* CourseDetailResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailResponseDto.swift; sourceTree = "<group>"; };
 		DA20D846296697A600F1581F /* MyCourseSelectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCourseSelectVC.swift; sourceTree = "<group>"; };
 		DA20D848296697B400F1581F /* CourseUploadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseUploadVC.swift; sourceTree = "<group>"; };
@@ -722,14 +720,6 @@
 			path = CourseDrawingRouter;
 			sourceTree = "<group>";
 		};
-		CE40BB27296808290030ABCA /* CourseStorageRouter */ = {
-			isa = PBXGroup;
-			children = (
-				CEF3CD97296D63B9002723A1 /* CourseStorageRouter.swift */,
-			);
-			path = CourseStorageRouter;
-			sourceTree = "<group>";
-		};
 		CE40BB28296808300030ABCA /* CourseDiscoveryRouter */ = {
 			isa = PBXGroup;
 			children = (
@@ -908,7 +898,6 @@
 				CE21C02B299E601000F62AF5 /* ScrapRouter.swift */,
 				CE21C02D299E601700F62AF5 /* StampRouter.swift */,
 				CE40BB26296808020030ABCA /* CourseDrawingRouter */,
-				CE40BB27296808290030ABCA /* CourseStorageRouter */,
 				CE40BB28296808300030ABCA /* CourseDiscoveryRouter */,
 				CE40BB292968083B0030ABCA /* MyPageRouter */,
 				CE40BB2A296808440030ABCA /* CourseDetailRouter */,
@@ -1352,7 +1341,6 @@
 				CE6655F0295D891B00C64E12 /* UITextView+.swift in Sources */,
 				CEC2A6922962BE2900160BF7 /* DepartureSearchVC.swift in Sources */,
 				CE6655EE295D88E600C64E12 /* UITextField+.swift in Sources */,
-				CEF3CD98296D63B9002723A1 /* CourseStorageRouter.swift in Sources */,
 				CE40BB1C2967E4910030ABCA /* RunningWaitingVC.swift in Sources */,
 				CE6B63D6296731F9003F900F /* ScrapCourseListView.swift in Sources */,
 				CE6655F8295D90CF00C64E12 /* adjusted+.swift in Sources */,
