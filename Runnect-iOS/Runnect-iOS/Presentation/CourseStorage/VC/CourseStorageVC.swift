@@ -22,10 +22,6 @@ final class CourseStorageVC: UIViewController {
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
-    private let courseStorageProvider = MoyaProvider<CourseStorageRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
-    
     private let cancelBag = CancelBag()
     
     private var privateCourseList = [PrivateCourse]()
@@ -170,7 +166,7 @@ extension CourseStorageVC {
     
     private func getScrapCourseList() {
         LoadingIndicator.showLoading()
-        courseStorageProvider.request(.getScrapCourse) { [weak self] response in
+        scrapProvider.request(.getScrapCourse) { [weak self] response in
             guard let self = self else { return }
             LoadingIndicator.hideLoading()
             switch response {

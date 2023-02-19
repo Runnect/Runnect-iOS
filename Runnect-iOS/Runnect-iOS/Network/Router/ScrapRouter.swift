@@ -11,6 +11,7 @@ import Moya
 
 enum ScrapRouter {
     case createAndDeleteScrap(publicCourseId: Int, scrapTF: Bool)
+    case getScrapCourse
 }
 
 extension ScrapRouter: TargetType {
@@ -26,6 +27,8 @@ extension ScrapRouter: TargetType {
         switch self {
         case .createAndDeleteScrap:
             return "/scrap"
+        case .getScrapCourse:
+            return "/scrap/user"
         }
     }
     
@@ -33,6 +36,8 @@ extension ScrapRouter: TargetType {
         switch self {
         case .createAndDeleteScrap:
             return .post
+        case .getScrapCourse:
+            return .get
         }
     }
     
@@ -40,12 +45,14 @@ extension ScrapRouter: TargetType {
         switch self {
         case .createAndDeleteScrap(let publicCourseId, let scrapTF):
             return .requestParameters(parameters: ["publicCourseId": publicCourseId, "scrapTF": scrapTF], encoding: JSONEncoding.default)
+        case .getScrapCourse:
+            return .requestPlain
         }
     }
     
     var headers: [String: String]? {
         switch self {
-        case .createAndDeleteScrap:
+        case .createAndDeleteScrap, .getScrapCourse:
             return Config.headerWithDeviceId
         }
     }

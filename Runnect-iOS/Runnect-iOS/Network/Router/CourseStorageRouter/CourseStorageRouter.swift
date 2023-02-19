@@ -10,7 +10,6 @@ import Foundation
 import Moya
 
 enum CourseStorageRouter {
-    case getScrapCourse
 }
 
 extension CourseStorageRouter: TargetType {
@@ -24,29 +23,25 @@ extension CourseStorageRouter: TargetType {
     
     var path: String {
         switch self {
-        case .getScrapCourse:
-            return "/scrap/user"
+            
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .getScrapCourse:
-            return .get
+            
         }
     }
     
     var task: Moya.Task {
         switch self {
-        case .getScrapCourse:
-            return .requestPlain
+            
         }
     }
     
     var headers: [String: String]? {
         switch self {
-        case .getScrapCourse:
-            return Config.headerWithDeviceId
+            
         }
     }
 }
