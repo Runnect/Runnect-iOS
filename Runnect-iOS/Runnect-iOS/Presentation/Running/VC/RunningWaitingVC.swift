@@ -22,7 +22,7 @@ final class RunningWaitingVC: UIViewController {
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
-    private let runningProvider = MoyaProvider<RunningRouter>(
+    private let recordProvider = MoyaProvider<RecordRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     

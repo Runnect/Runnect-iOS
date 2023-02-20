@@ -15,7 +15,7 @@ final class ActivityRecordInfoVC: UIViewController {
     
     // MARK: - Properties
     
-    private var activityRecordProvider = MoyaProvider<MyPageRouter>(
+    private var recordProvider = MoyaProvider<RecordRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
@@ -118,7 +118,7 @@ extension ActivityRecordInfoVC: UITableViewDataSource {
 extension ActivityRecordInfoVC {
     func getActivityRecordInfo() {
         LoadingIndicator.showLoading()
-        activityRecordProvider.request(.getActivityRecordInfo) { [weak self] response in
+        recordProvider.request(.getActivityRecordInfo) { [weak self] response in
             LoadingIndicator.hideLoading()
             guard let self = self else { return }
             switch response {

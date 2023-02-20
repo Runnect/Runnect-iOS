@@ -18,11 +18,7 @@ final class CourseStorageVC: UIViewController {
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
-    private let courseDetailProvider = MoyaProvider<UploadedCourseDetailRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
-    
-    private let courseStorageProvider = MoyaProvider<CourseStorageRouter>(
+    private let scrapProvider = MoyaProvider<ScrapRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
@@ -170,7 +166,7 @@ extension CourseStorageVC {
     
     private func getScrapCourseList() {
         LoadingIndicator.showLoading()
-        courseStorageProvider.request(.getScrapCourse) { [weak self] response in
+        scrapProvider.request(.getScrapCourse) { [weak self] response in
             guard let self = self else { return }
             LoadingIndicator.hideLoading()
             switch response {
@@ -198,7 +194,7 @@ extension CourseStorageVC {
     
     private func scrapCourse(publicCourseId: Int, scrapTF: Bool) {
         LoadingIndicator.showLoading()
-        courseDetailProvider.request(.createAndDeleteScrap(publicCourseId: publicCourseId, scrapTF: scrapTF)) { [weak self] response in
+        scrapProvider.request(.createAndDeleteScrap(publicCourseId: publicCourseId, scrapTF: scrapTF)) { [weak self] response in
             LoadingIndicator.hideLoading()
             guard let self = self else { return }
             switch response {
