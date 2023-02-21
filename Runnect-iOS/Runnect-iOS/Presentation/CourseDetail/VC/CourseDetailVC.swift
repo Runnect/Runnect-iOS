@@ -20,7 +20,7 @@ final class CourseDetailVC: UIViewController {
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
-    private let courseDetailProvider = MoyaProvider<UploadedCourseDetailRouter>(
+    private let courseDetailProvider = MoyaProvider<PublicCourseRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     

@@ -15,7 +15,7 @@ class CourseUploadVC: UIViewController {
     
     // MARK: - Properties
 //    private var runningModel: RunningModel?
-    private let courseUploadingProvider = MoyaProvider<CourseUploadingRouter>(
+    private let courseUploadingProvider = MoyaProvider<PublicCourseRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     private var courseModel: Course?

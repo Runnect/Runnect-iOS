@@ -15,7 +15,7 @@ import Moya
 final class CourseDiscoveryVC: UIViewController {
     // MARK: - Properties
     
-    private let pickedMapListProvider = MoyaProvider<pickedMapListRouter>(
+    private let pickedMapListProvider = MoyaProvider<PublicCourseRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
