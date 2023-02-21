@@ -19,7 +19,6 @@
 		A3BC2F4129667A0D00198261 /* NicknameEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F4029667A0D00198261 /* NicknameEditorVC.swift */; };
 		A3BC2F432966A93100198261 /* CourseDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F422966A93100198261 /* CourseDetailVC.swift */; };
 		A3F67AE2296D33AC001598A2 /* MyPageDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F67AE1296D33AC001598A2 /* MyPageDto.swift */; };
-		A3F67AE4296D33E0001598A2 /* MyPageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F67AE3296D33E0001598A2 /* MyPageRouter.swift */; };
 		A3F67AEA296E4936001598A2 /* ActivityRecordInfoDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F67AE9296E4936001598A2 /* ActivityRecordInfoDto.swift */; };
 		CE09037D296E9ED900BEA710 /* ScrapCourseResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE09037C296E9ED900BEA710 /* ScrapCourseResponseDto.swift */; };
 		CE0C23742966D62A00B45063 /* PagedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C23732966D62A00B45063 /* PagedView.swift */; };
@@ -62,7 +61,6 @@
 		CE4545CD295D7AF4003201E1 /* TaBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CC295D7AF4003201E1 /* TaBarController.swift */; };
 		CE4545D2295D7AF5003201E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE4545D1295D7AF5003201E1 /* Assets.xcassets */; };
 		CE4545D5295D7AF5003201E1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE4545D3295D7AF5003201E1 /* LaunchScreen.storyboard */; };
-		CE4942AA296FCCFC00736701 /* UploadedCourseDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4942A9296FCCFC00736701 /* UploadedCourseDetailRouter.swift */; };
 		CE4942AD296FCD2300736701 /* UploadedCourseDetailResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4942AC296FCD2300736701 /* UploadedCourseDetailResponseDto.swift */; };
 		CE55BC11296D4EA600E8CD69 /* RunningRecordRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE55BC10296D4EA600E8CD69 /* RunningRecordRequestDto.swift */; };
 		CE5645162961B72E000A2856 /* ImageLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5645152961B72E000A2856 /* ImageLiterals.swift */; };
@@ -137,14 +135,11 @@
 		DA20D847296697A600F1581F /* MyCourseSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D846296697A600F1581F /* MyCourseSelectVC.swift */; };
 		DA20D849296697B400F1581F /* CourseUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D848296697B400F1581F /* CourseUploadVC.swift */; };
 		DA20D84E2966A9B300F1581F /* CourseSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D84D2966A9B300F1581F /* CourseSearchVC.swift */; };
-		DA97A02F296DC3300086760E /* CourseSearchingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA97A02E296DC3300086760E /* CourseSearchingRouter.swift */; };
 		DA97A033296E65D80086760E /* CourseUploadingRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA97A032296E65D80086760E /* CourseUploadingRequestDto.swift */; };
-		DA97A035296E685C0086760E /* CourseUploadingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA97A034296E685C0086760E /* CourseUploadingRouter.swift */; };
 		DAD5A3D8296C6D9600C8166B /* AdImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A3D7296C6D9600C8166B /* AdImageCollectionViewCell.swift */; };
 		DAD5A3DA296C6DA500C8166B /* TitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A3D9296C6DA500C8166B /* TitleCollectionViewCell.swift */; };
 		DAD5A3DC296C6DB800C8166B /* MapCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A3DB296C6DB800C8166B /* MapCollectionViewCell.swift */; };
 		DAD5A3E2296D4C6500C8166B /* PickedMapListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A3E1296D4C6500C8166B /* PickedMapListResponseDto.swift */; };
-		DAD5A3E4296D526D00C8166B /* CourseDiscoveryRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A3E3296D526D00C8166B /* CourseDiscoveryRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -161,7 +156,6 @@
 		A3BC2F4029667A0D00198261 /* NicknameEditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditorVC.swift; sourceTree = "<group>"; };
 		A3BC2F422966A93100198261 /* CourseDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailVC.swift; sourceTree = "<group>"; };
 		A3F67AE1296D33AC001598A2 /* MyPageDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageDto.swift; sourceTree = "<group>"; };
-		A3F67AE3296D33E0001598A2 /* MyPageRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageRouter.swift; sourceTree = "<group>"; };
 		A3F67AE9296E4936001598A2 /* ActivityRecordInfoDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRecordInfoDto.swift; sourceTree = "<group>"; };
 		CE09037C296E9ED900BEA710 /* ScrapCourseResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapCourseResponseDto.swift; sourceTree = "<group>"; };
 		CE0C23732966D62A00B45063 /* PagedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedView.swift; sourceTree = "<group>"; };
@@ -170,7 +164,6 @@
 		CE0D9FD229648DA300CEB5CD /* CustomAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertVC.swift; sourceTree = "<group>"; };
 		CE10063929680C5700FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10063D29680C8100FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		CE10064329680CB400FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10064D29680D2500FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10064F29680D3300FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10065029680D3800FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
@@ -213,7 +206,6 @@
 		CE4545D1295D7AF5003201E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE4545D4295D7AF5003201E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CE4545D6295D7AF5003201E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CE4942A9296FCCFC00736701 /* UploadedCourseDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedCourseDetailRouter.swift; sourceTree = "<group>"; };
 		CE4942AC296FCD2300736701 /* UploadedCourseDetailResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedCourseDetailResponseDto.swift; sourceTree = "<group>"; };
 		CE55BC10296D4EA600E8CD69 /* RunningRecordRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningRecordRequestDto.swift; sourceTree = "<group>"; };
 		CE5645152961B72E000A2856 /* ImageLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLiterals.swift; sourceTree = "<group>"; };
@@ -292,14 +284,11 @@
 		DA20D846296697A600F1581F /* MyCourseSelectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCourseSelectVC.swift; sourceTree = "<group>"; };
 		DA20D848296697B400F1581F /* CourseUploadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseUploadVC.swift; sourceTree = "<group>"; };
 		DA20D84D2966A9B300F1581F /* CourseSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseSearchVC.swift; sourceTree = "<group>"; };
-		DA97A02E296DC3300086760E /* CourseSearchingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseSearchingRouter.swift; sourceTree = "<group>"; };
 		DA97A032296E65D80086760E /* CourseUploadingRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseUploadingRequestDto.swift; sourceTree = "<group>"; };
-		DA97A034296E685C0086760E /* CourseUploadingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseUploadingRouter.swift; sourceTree = "<group>"; };
 		DAD5A3D7296C6D9600C8166B /* AdImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		DAD5A3D9296C6DA500C8166B /* TitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCell.swift; sourceTree = "<group>"; };
 		DAD5A3DB296C6DB800C8166B /* MapCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCollectionViewCell.swift; sourceTree = "<group>"; };
 		DAD5A3E1296D4C6500C8166B /* PickedMapListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickedMapListResponseDto.swift; sourceTree = "<group>"; };
-		DAD5A3E3296D526D00C8166B /* CourseDiscoveryRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDiscoveryRouter.swift; sourceTree = "<group>"; };
 		E837271A78E1C0A0C30789BF /* Pods-Runnect-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runnect-iOS.release.xcconfig"; path = "Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -720,33 +709,6 @@
 			path = CourseDrawingRouter;
 			sourceTree = "<group>";
 		};
-		CE40BB28296808300030ABCA /* CourseDiscoveryRouter */ = {
-			isa = PBXGroup;
-			children = (
-				DAD5A3E3296D526D00C8166B /* CourseDiscoveryRouter.swift */,
-				DA97A02E296DC3300086760E /* CourseSearchingRouter.swift */,
-				DA97A034296E685C0086760E /* CourseUploadingRouter.swift */,
-			);
-			path = CourseDiscoveryRouter;
-			sourceTree = "<group>";
-		};
-		CE40BB292968083B0030ABCA /* MyPageRouter */ = {
-			isa = PBXGroup;
-			children = (
-				CE10064329680CB400FD31FB /* .gitkeep */,
-				A3F67AE3296D33E0001598A2 /* MyPageRouter.swift */,
-			);
-			path = MyPageRouter;
-			sourceTree = "<group>";
-		};
-		CE40BB2A296808440030ABCA /* CourseDetailRouter */ = {
-			isa = PBXGroup;
-			children = (
-				CE4942A9296FCCFC00736701 /* UploadedCourseDetailRouter.swift */,
-			);
-			path = CourseDetailRouter;
-			sourceTree = "<group>";
-		};
 		CE4545BC295D7AF4003201E1 = {
 			isa = PBXGroup;
 			children = (
@@ -898,9 +860,6 @@
 				CE21C02B299E601000F62AF5 /* ScrapRouter.swift */,
 				CE21C02D299E601700F62AF5 /* StampRouter.swift */,
 				CE40BB26296808020030ABCA /* CourseDrawingRouter */,
-				CE40BB28296808300030ABCA /* CourseDiscoveryRouter */,
-				CE40BB292968083B0030ABCA /* MyPageRouter */,
-				CE40BB2A296808440030ABCA /* CourseDetailRouter */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -1322,11 +1281,9 @@
 				CEEC6B3C2961C51A00D00E1E /* CourseStorageVC.swift in Sources */,
 				CE4545C9295D7AF4003201E1 /* AppDelegate.swift in Sources */,
 				CE6655C8295D849F00C64E12 /* StringLiterals.swift in Sources */,
-				DAD5A3E4296D526D00C8166B /* CourseDiscoveryRouter.swift in Sources */,
 				CEEC6B3E2961C53700D00E1E /* CourseDiscoveryVC.swift in Sources */,
 				A3F67AEA296E4936001598A2 /* ActivityRecordInfoDto.swift in Sources */,
 				CE6655E0295D87D200C64E12 /* UIDevice+.swift in Sources */,
-				DA97A02F296DC3300086760E /* CourseSearchingRouter.swift in Sources */,
 				CE40BB242968068E0030ABCA /* Config.swift in Sources */,
 				CE17F0382961BF8B00E1DED0 /* FontLiterals.swift in Sources */,
 				CE6655E8295D889600C64E12 /* UISwitch+.swift in Sources */,
@@ -1344,7 +1301,6 @@
 				CE40BB1C2967E4910030ABCA /* RunningWaitingVC.swift in Sources */,
 				CE6B63D6296731F9003F900F /* ScrapCourseListView.swift in Sources */,
 				CE6655F8295D90CF00C64E12 /* adjusted+.swift in Sources */,
-				A3F67AE4296D33E0001598A2 /* MyPageRouter.swift in Sources */,
 				DAD5A3E2296D4C6500C8166B /* PickedMapListResponseDto.swift in Sources */,
 				CE4545CB295D7AF4003201E1 /* SceneDelegate.swift in Sources */,
 				A3F67AE2296D33AC001598A2 /* MyPageDto.swift in Sources */,
@@ -1401,11 +1357,9 @@
 				CE17F02D2961BBA100E1DED0 /* ColorLiterals.swift in Sources */,
 				CEC2A68E2962AF2C00160BF7 /* RNMarker.swift in Sources */,
 				CE6655D2295D862A00C64E12 /* Publisher+Driver.swift in Sources */,
-				CE4942AA296FCCFC00736701 /* UploadedCourseDetailRouter.swift in Sources */,
 				CE21C02E299E601700F62AF5 /* StampRouter.swift in Sources */,
 				CE6655E6295D887F00C64E12 /* UIStackView+.swift in Sources */,
 				A3BC2F34296303A600198261 /* GoalRewardInfoCVC.swift in Sources */,
-				DA97A035296E685C0086760E /* CourseUploadingRouter.swift in Sources */,
 				CEB8416E2962C45300BF8080 /* LocationSearchResultTVC.swift in Sources */,
 				CE6655CA295D84DD00C64E12 /* UserDefaultKeyList.swift in Sources */,
 				CE6655F2295D894D00C64E12 /* UIView+.swift in Sources */,
