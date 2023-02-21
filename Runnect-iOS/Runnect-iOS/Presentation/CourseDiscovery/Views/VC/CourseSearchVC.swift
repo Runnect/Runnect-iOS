@@ -15,7 +15,7 @@ final class CourseSearchVC: UIViewController {
     
     // MARK: - Properties
     
-    private let CourseSearchingRouter = MoyaProvider<PublicCourseRouter>(
+    private let PublicCourseRouter = MoyaProvider<PublicCourseRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
@@ -218,7 +218,7 @@ extension CourseSearchVC: CourseListCVCDeleagte {
 extension CourseSearchVC {
     private func searchCourseWithKeyword(keyword: String) {
         LoadingIndicator.showLoading()
-        CourseSearchingRouter.request(.getCourseSearchData(keyword: keyword)) { response in
+        PublicCourseRouter.request(.getCourseSearchData(keyword: keyword)) { response in
             LoadingIndicator.hideLoading()
             switch response {
             case .success(let result):

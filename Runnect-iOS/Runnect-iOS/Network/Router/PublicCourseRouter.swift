@@ -50,7 +50,6 @@ extension PublicCourseRouter: TargetType {
         case .courseUploadingData(param: let param):
             do {
                 return .requestParameters(parameters: try param.asParameter(), encoding: JSONEncoding.default)
-                
             } catch {
                 fatalError("Encoding 실패")}
         case .getCourseData, .getUploadedCourseDetail, .getUploadedCourseInfo:
@@ -59,9 +58,8 @@ extension PublicCourseRouter: TargetType {
     }
     var headers: [String: String]? {
         switch self {
-        case .getCourseData, .courseUploadingData, .getUploadedCourseInfo, .getUploadedCourseDetail, .getCourseSearchData:
+        default:
             return Config.headerWithDeviceId
-            
         }
     }
 }

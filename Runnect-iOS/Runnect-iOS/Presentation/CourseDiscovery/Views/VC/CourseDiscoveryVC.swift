@@ -15,7 +15,7 @@ import Moya
 final class CourseDiscoveryVC: UIViewController {
     // MARK: - Properties
     
-    private let pickedMapListProvider = MoyaProvider<PublicCourseRouter>(
+    private let PublicCourseProvider = MoyaProvider<PublicCourseRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
@@ -249,7 +249,7 @@ extension CourseDiscoveryVC: CourseListCVCDeleagte {
 extension CourseDiscoveryVC {
     private func getCourseData() {
         LoadingIndicator.showLoading()
-        pickedMapListProvider.request(.getCourseData) { response in
+        PublicCourseProvider.request(.getCourseData) { response in
             LoadingIndicator.hideLoading()
             switch response {
             case .success(let result):

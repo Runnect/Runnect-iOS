@@ -20,7 +20,7 @@ final class CourseDetailVC: UIViewController {
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
-    private let courseDetailProvider = MoyaProvider<PublicCourseRouter>(
+    private let PublicCourseProvider = MoyaProvider<PublicCourseRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
@@ -299,7 +299,7 @@ extension CourseDetailVC {
     private func getUploadedCourseDetail() {
         guard let publicCourseId = self.publicCourseId else { return }
         LoadingIndicator.showLoading()
-        courseDetailProvider.request(.getUploadedCourseDetail(publicCourseId: publicCourseId)) { [weak self] response in
+        PublicCourseProvider.request(.getUploadedCourseDetail(publicCourseId: publicCourseId)) { [weak self] response in
             guard let self = self else { return }
             LoadingIndicator.hideLoading()
             switch response {
