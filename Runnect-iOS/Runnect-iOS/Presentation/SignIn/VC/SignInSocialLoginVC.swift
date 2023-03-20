@@ -9,6 +9,7 @@ import UIKit
 
 import SnapKit
 import Then
+import AuthenticationServices
 
 final class SignInSocialLoginVC: UIViewController {
     
@@ -55,6 +56,34 @@ final class SignInSocialLoginVC: UIViewController {
         setUI()
         setNavigationBar()
         setLayout()
+        setAddTarget()
+    }
+}
+
+// MARK: - @objc Function
+
+extension SignInSocialLoginVC {
+    @objc func touchUpAppleLoginButton() {
+        pushToAppleLogin()
+    }
+    
+    @objc func pushToAppleLogin() {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+                
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+}
+
+// MARK: - Methods
+
+extension SignInSocialLoginVC {
+    private func setAddTarget() {
+        self.appleLoginButton.addTarget(self, action: #selector(touchUpAppleLoginButton), for: .touchUpInside)
     }
 }
 
@@ -91,5 +120,37 @@ extension SignInSocialLoginVC {
             make.height.equalTo(55)
             make.leading.trailing.equalToSuperview().inset(15)
         }
+    }
+}
+
+// MARK: - ASAuthorizationControllerPresentationContextProviding, ASAuthorizationControllerDelegate
+
+extension SignInSocialLoginVC: ASAuthorizationControllerPresentationContextProviding, ASAuthorizationControllerDelegate {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+    
+    /// Apple ID 연동 성공 시
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+            switch authorization.credential {
+                /// Apple ID
+            case let appleIDCredential as ASAuthorizationAppleIDCredential:
+                
+                /// 계정 정보 가져오기
+                let userIdentifier = appleIDCredential.user
+                let idToken = appleIDCredential.identityToken!
+                let tokeStr = String(data: idToken, encoding: .utf8)
+             
+                print("User ID : \(userIdentifier)")
+                print("token : \(String(describing: tokeStr))")
+                
+            default:
+                break
+        }
+    }
+    
+    /// Apple ID 연동 실패 시
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        print("Apple Login error")
     }
 }
