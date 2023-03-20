@@ -11,6 +11,10 @@ import SnapKit
 import Then
 
 final class SignInSocialLoginVC: UIViewController {
+    
+    // MARK: - Properties
+
+    let screenWidth = UIScreen.main.bounds.width
 
     // MARK: - UI Components
     
@@ -24,24 +28,26 @@ final class SignInSocialLoginVC: UIViewController {
         $0.contentMode = .scaleAspectFill
     }
     
-    private let kakaoLoginButton = UIButton(type: .system).then {
+    private lazy var kakaoLoginButton = UIButton(type: .system).then {
         $0.setTitle("카카오로 로그인", for: .normal)
         $0.titleLabel?.font = .b3
         $0.setTitleColor(.black, for: .normal)
         $0.setBackgroundColor(UIColor(hex: "FEE500"), for: .normal)
         $0.layer.cornerRadius = 7
         $0.setImage(ImageLiterals.icKakao, for: .normal)
-        $0.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 200)
+        $0.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: self.screenWidth * 0.5)
+        $0.tintColor = .black
     }
     
-    private let appleLoginButton = UIButton(type: .system).then {
+    private lazy var appleLoginButton = UIButton(type: .system).then {
         $0.setTitle("Apple로 로그인", for: .normal)
         $0.titleLabel?.font = .b3
         $0.setTitleColor(.white, for: .normal)
         $0.setBackgroundColor(.black, for: .normal)
         $0.layer.cornerRadius = 7
         $0.setImage(ImageLiterals.icApple, for: .normal)
-        $0.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 200)
+        $0.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: self.screenWidth * 0.5)
+        $0.tintColor = .white
     }
     
     override func viewDidLoad() {
