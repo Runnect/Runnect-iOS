@@ -18,6 +18,7 @@
 		A3BC2F3F2964706100198261 /* UploadedCourseInfoCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F3E2964706100198261 /* UploadedCourseInfoCVC.swift */; };
 		A3BC2F4129667A0D00198261 /* NicknameEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F4029667A0D00198261 /* NicknameEditorVC.swift */; };
 		A3BC2F432966A93100198261 /* CourseDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F422966A93100198261 /* CourseDetailVC.swift */; };
+		A3E55BA029C815B10000D85D /* SignInSocialLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E55B9F29C815B10000D85D /* SignInSocialLoginVC.swift */; };
 		A3F67AE2296D33AC001598A2 /* MyPageDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F67AE1296D33AC001598A2 /* MyPageDto.swift */; };
 		A3F67AEA296E4936001598A2 /* ActivityRecordInfoDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F67AE9296E4936001598A2 /* ActivityRecordInfoDto.swift */; };
 		CE09037D296E9ED900BEA710 /* ScrapCourseResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE09037C296E9ED900BEA710 /* ScrapCourseResponseDto.swift */; };
@@ -155,6 +156,7 @@
 		A3BC2F3E2964706100198261 /* UploadedCourseInfoCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedCourseInfoCVC.swift; sourceTree = "<group>"; };
 		A3BC2F4029667A0D00198261 /* NicknameEditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditorVC.swift; sourceTree = "<group>"; };
 		A3BC2F422966A93100198261 /* CourseDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailVC.swift; sourceTree = "<group>"; };
+		A3E55B9F29C815B10000D85D /* SignInSocialLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSocialLoginVC.swift; sourceTree = "<group>"; };
 		A3F67AE1296D33AC001598A2 /* MyPageDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageDto.swift; sourceTree = "<group>"; };
 		A3F67AE9296E4936001598A2 /* ActivityRecordInfoDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRecordInfoDto.swift; sourceTree = "<group>"; };
 		CE09037C296E9ED900BEA710 /* ScrapCourseResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapCourseResponseDto.swift; sourceTree = "<group>"; };
@@ -993,6 +995,7 @@
 			isa = PBXGroup;
 			children = (
 				CEC2A68629629B9B00160BF7 /* SignInVC.swift */,
+				A3E55B9F29C815B10000D85D /* SignInSocialLoginVC.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -1329,6 +1332,7 @@
 				CEC2A6852961F92C00160BF7 /* CustomButton.swift in Sources */,
 				CE6B63D3296725E6003F900F /* CourseListCVC.swift in Sources */,
 				CEF3CD9A296DB305002723A1 /* CourseDetailResponseDto.swift in Sources */,
+				A3E55BA029C815B10000D85D /* SignInSocialLoginVC.swift in Sources */,
 				CE29D584296416D800F47542 /* caculateStatusBarHeight.swift in Sources */,
 				CE66560C295D928300C64E12 /* setRootViewController.swift in Sources */,
 				CE6655D9295D871B00C64E12 /* URL+.swift in Sources */,

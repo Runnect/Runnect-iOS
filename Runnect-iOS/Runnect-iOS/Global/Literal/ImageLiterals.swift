@@ -10,6 +10,7 @@ import NMapsMap
 
 enum ImageLiterals {
     // icon
+    static var icArrowBack: UIImage { .load(named: "ic_apple") }
     static var icArrowBack: UIImage { .load(named: "ic_arrow_back") }
     static var icArrowMaximize: UIImage { .load(named: "ic_arrow_maximize") }
     static var icArrowPageback: UIImage { .load(named: "ic_arrow_pageback") }
@@ -23,6 +24,7 @@ enum ImageLiterals {
     static var icEdit: UIImage { .load(named: "ic_edit") }
     static var icHeartFill: UIImage { .load(named: "ic_heart_fill") }
     static var icHeart: UIImage { .load(named: "ic_heart") }
+    static var icHeart: UIImage { .load(named: "ic_kakao") }
     static var icMapDeparture: UIImage { .load(named: "ic_map_departure") }
     static var icMapLocation: UIImage { .load(named: "ic_map_location") }
     static var icMapPoint: UIImage { .load(named: "ic_map_point") }
