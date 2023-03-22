@@ -10,7 +10,8 @@ target 'Runnect-iOS' do
 	pod 'SnapKit', '~> 5.6.0'
 	pod 'Moya', '~> 15.0'
 	pod 'Then'
-	pod 'KakaoSDK'
+	pod 'KakaoSDKCommon'
+	pod 'KakaoSDKAuth'
 	
 
   # Pods for Runnect-iOS
