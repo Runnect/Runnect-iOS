@@ -12,6 +12,7 @@ target 'Runnect-iOS' do
 	pod 'Then'
 	pod 'KakaoSDKCommon'
 	pod 'KakaoSDKAuth'
+	pod 'KakaoSDKUser'
 	
 
   # Pods for Runnect-iOS

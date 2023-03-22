@@ -10,6 +10,9 @@ import UIKit
 import SnapKit
 import Then
 import AuthenticationServices
+import KakaoSDKAuth
+import KakaoSDKUser
+import KakaoSDKCommon
 
 final class SignInSocialLoginVC: UIViewController {
     
@@ -77,6 +80,36 @@ extension SignInSocialLoginVC {
         authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
     }
+    
+    @objc func kakaoLoginButtonDidTap(_ sender: Any) {
+        // isKakaoTalkLoginAvailable() : 카톡 설치 되어있으면 true
+        if (UserApi.isKakaoTalkLoginAvailable()) { //카톡 설치되어있으면 -> 카톡으로 로그인
+            UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
+                if let error = error {
+                    print(error)
+                } else {
+                    print("카카오 톡으로 로그인 성공")
+                    
+                    _ = oauthToken
+                    /// 로그인 관련 메소드 추가
+                    
+                }
+            }
+        } else {
+
+            // 카톡 없으면 -> 계정으로 로그인
+            UserApi.shared.loginWithKakaoAccount { (oauthToken, error) in
+                if let error = error {
+                    print(error)
+                } else {
+                    print("카카오 계정으로 로그인 성공")
+                    
+                    _ = oauthToken
+                    // 관련 메소드 추가
+                }
+            }
+        }
+    }
 }
 
 // MARK: - Methods
@@ -84,6 +117,7 @@ extension SignInSocialLoginVC {
 extension SignInSocialLoginVC {
     private func setAddTarget() {
         self.appleLoginButton.addTarget(self, action: #selector(touchUpAppleLoginButton), for: .touchUpInside)
+        self.kakaoLoginButton.addTarget(self, action: #selector(kakaoLoginButtonDidTap), for: .touchUpInside)
     }
 }
 
