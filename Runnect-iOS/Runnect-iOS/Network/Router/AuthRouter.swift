@@ -10,7 +10,7 @@ import Foundation
 import Moya
 
 enum AuthRouter {
-    case getUserInfo
+    case signIn(token: String, provider: String)
 }
 
 extension AuthRouter: TargetType {
@@ -24,28 +24,28 @@ extension AuthRouter: TargetType {
     
     var path: String {
         switch self {
-        case .getUserInfo:
-            return "api/auth"
+        case .signIn:
+            return "/auth"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .getUserInfo:
-            return .get
+        case .signIn:
+            return .post
         }
     }
     
     var task: Moya.Task {
         switch self {
-        case .getUserInfo:
-            return .requestPlain
+        case .signIn(let token, let provider):
+            return .requestParameters(parameters: ["token": token, "social": provider], encoding: JSONEncoding.default)
         }
     }
     
     var headers: [String: String]? {
         switch self {
-        case .getUserInfo:
+        case .signIn:
             return Config.headerWithDeviceId
         }
     }

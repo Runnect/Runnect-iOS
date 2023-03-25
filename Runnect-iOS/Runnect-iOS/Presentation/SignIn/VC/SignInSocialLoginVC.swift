@@ -19,10 +19,6 @@ final class SignInSocialLoginVC: UIViewController {
     
     // MARK: - Properties
 
-    private var signInProvider = MoyaProvider<AuthRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
-    
     let screenWidth = UIScreen.main.bounds.width
 
     // MARK: - UI Components
@@ -85,23 +81,37 @@ extension SignInSocialLoginVC {
                     print(error)
                 } else {
                     print("카카오 톡으로 로그인 성공")
-                    
-                    _ = oauthToken
-                    /// 로그인 관련 메소드 추가
-                    
+                    guard let oauthToken = oauthToken else { return }
+                    UserManager.shared.signIn(token: oauthToken.accessToken, provider: "KAKAO") { [weak self] result in
+                        switch result {
+                        case .success(let nickname):
+                            print(nickname)
+                            self?.pushToNickNameSetUpVC()
+                        case .failure(let error):
+                            print(error)
+                            self?.showNetworkFailureToast()
+                        }
+                    }
                 }
             }
         } else {
-
             // 카톡 없으면 -> 계정으로 로그인
             UserApi.shared.loginWithKakaoAccount { (oauthToken, error) in
                 if let error = error {
                     print(error)
                 } else {
                     print("카카오 계정으로 로그인 성공")
-                    
-                    _ = oauthToken
-                    // 관련 메소드 추가
+                    guard let oauthToken = oauthToken else { return }
+                    UserManager.shared.signIn(token: oauthToken.accessToken, provider: "KAKAO") { [weak self] result in
+                        switch result {
+                        case .success(let nickname):
+                            print(nickname)
+                            self?.pushToNickNameSetUpVC()
+                        case .failure(let error):
+                            print(error)
+                            self?.showNetworkFailureToast()
+                        }
+                    }
                 }
             }
         }
@@ -114,6 +124,11 @@ extension SignInSocialLoginVC {
     private func setAddTarget() {
         self.appleLoginButton.addTarget(self, action: #selector(touchUpAppleLoginButton), for: .touchUpInside)
         self.kakaoLoginButton.addTarget(self, action: #selector(kakaoLoginButtonDidTap), for: .touchUpInside)
+    }
+    
+    private func pushToNickNameSetUpVC() {
+        let nicknameSetUpVC = NickNameSetUpVC()
+        self.navigationController?.pushViewController(nicknameSetUpVC, animated: true)
     }
 }
 
@@ -169,11 +184,21 @@ extension SignInSocialLoginVC: ASAuthorizationControllerPresentationContextProvi
                 /// 계정 정보 가져오기
                 let userIdentifier = appleIDCredential.user
                 let idToken = appleIDCredential.identityToken!
-                let tokeStr = String(data: idToken, encoding: .utf8)
+                guard let tokeStr = String(data: idToken, encoding: .utf8) else { return }
              
                 print("User ID : \(userIdentifier)")
                 print("token : \(String(describing: tokeStr))")
                 
+                UserManager.shared.signIn(token: tokeStr, provider: "APPLE") { [weak self] result in
+                    switch result {
+                    case .success(let nickname):
+                        print(nickname)
+                        self?.pushToNickNameSetUpVC()
+                    case .failure(let error):
+                        print(error)
+                        self?.showNetworkFailureToast()
+                    }
+                }
             default:
                 break
         }
@@ -182,36 +207,5 @@ extension SignInSocialLoginVC: ASAuthorizationControllerPresentationContextProvi
     /// Apple ID 연동 실패 시
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         print("Apple Login error")
-    }
-}
-
-// MARK: - Network
-
-extension SignInSocialLoginVC {
-    func getUserInfo() {
-        LoadingIndicator.showLoading()
-        signInProvider.request(.getUserInfo) { [weak self] response in
-            LoadingIndicator.hideLoading()
-            guard let self = self else { return }
-            switch response {
-            case .success(let result):
-                let status = result.statusCode
-                if 200..<300 ~= status {
-                    do {
-                        let responseDto = try result.map(BaseResponse<SignInResponseDto>.self)
-                        guard let data = responseDto.data else { return }
-                    } catch {
-                        print(error.localizedDescription)
-                    }
-                }
-                if status >= 400 {
-                    print("400 error")
-                    self.showNetworkFailureToast()
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-                self.showNetworkFailureToast()
-            }
-        }
     }
 }
