@@ -57,7 +57,7 @@ extension RecordRouter: TargetType {
     var headers: [String: String]? {
         switch self {
         case .recordRunning, .getActivityRecordInfo:
-            return Config.headerWithDeviceId
+            return Config.headerWithAccessToken
         }
     }
 }

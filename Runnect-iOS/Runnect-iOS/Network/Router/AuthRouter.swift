@@ -46,7 +46,7 @@ extension AuthRouter: TargetType {
     var headers: [String: String]? {
         switch self {
         case .signIn:
-            return Config.headerWithDeviceId
+            return Config.headerWithAccessToken
         }
     }
 }

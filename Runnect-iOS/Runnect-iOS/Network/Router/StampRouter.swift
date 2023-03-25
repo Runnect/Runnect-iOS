@@ -46,7 +46,7 @@ extension StampRouter: TargetType {
     var headers: [String: String]? {
         switch self {
         case .getGoalRewardInfo:
-            return Config.headerWithDeviceId
+            return Config.headerWithAccessToken
         }
     } 
 }
