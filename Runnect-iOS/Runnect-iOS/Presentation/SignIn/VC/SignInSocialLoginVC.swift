@@ -9,6 +9,7 @@ import UIKit
 
 import SnapKit
 import Then
+import Moya
 import AuthenticationServices
 import KakaoSDKAuth
 import KakaoSDKUser
@@ -18,6 +19,10 @@ final class SignInSocialLoginVC: UIViewController {
     
     // MARK: - Properties
 
+    private var signInProvider = MoyaProvider<AuthRouter>(
+        plugins: [NetworkLoggerPlugin(verbose: true)]
+    )
+    
     let screenWidth = UIScreen.main.bounds.width
 
     // MARK: - UI Components
@@ -43,16 +48,7 @@ final class SignInSocialLoginVC: UIViewController {
         $0.tintColor = .black
     }
     
-    private lazy var appleLoginButton = UIButton(type: .system).then {
-        $0.setTitle("Apple로 로그인", for: .normal)
-        $0.titleLabel?.font = .b3
-        $0.setTitleColor(.white, for: .normal)
-        $0.setBackgroundColor(.black, for: .normal)
-        $0.layer.cornerRadius = 7
-        $0.setImage(ImageLiterals.icApple, for: .normal)
-        $0.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: self.screenWidth * 0.5)
-        $0.tintColor = .white
-    }
+    private let appleLoginButton = ASAuthorizationAppleIDButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,8 +78,8 @@ extension SignInSocialLoginVC {
     }
     
     @objc func kakaoLoginButtonDidTap(_ sender: Any) {
-        // isKakaoTalkLoginAvailable() : 카톡 설치 되어있으면 true
-        if (UserApi.isKakaoTalkLoginAvailable()) { //카톡 설치되어있으면 -> 카톡으로 로그인
+        // isKakaoTalkLoginAvailable(): 카톡 설치 되어있으면 true
+        if (UserApi.isKakaoTalkLoginAvailable()) { // 카톡 설치되어있으면 -> 카톡으로 로그인
             UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
                 if let error = error {
                     print(error)
@@ -186,5 +182,36 @@ extension SignInSocialLoginVC: ASAuthorizationControllerPresentationContextProvi
     /// Apple ID 연동 실패 시
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         print("Apple Login error")
+    }
+}
+
+// MARK: - Network
+
+extension SignInSocialLoginVC {
+    func getUserInfo() {
+        LoadingIndicator.showLoading()
+        signInProvider.request(.getUserInfo) { [weak self] response in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    do {
+                        let responseDto = try result.map(BaseResponse<SignInResponseDto>.self)
+                        guard let data = responseDto.data else { return }
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
     }
 }
