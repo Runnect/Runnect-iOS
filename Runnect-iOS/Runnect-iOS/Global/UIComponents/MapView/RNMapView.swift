@@ -19,10 +19,13 @@ final class RNMapView: UIView {
     @Published var pathDistance: Double = 0
     @Published var markerCount = 0
     
-    let pathImage = PassthroughSubject<UIImage?, Never>()
-    var cancelBag = Set<AnyCancellable>()
+    private let screenWidth = UIScreen.main.bounds.width
+    private let screenHeight = UIScreen.main.bounds.height
     
-    let locationManager = CLLocationManager()
+    let pathImage = PassthroughSubject<UIImage?, Never>()
+    private var cancelBag = Set<AnyCancellable>()
+    
+    private let locationManager = CLLocationManager()
     private var isDrawMode: Bool = false
     private var markers = [RNMarker]() {
         didSet {
@@ -37,17 +40,13 @@ final class RNMapView: UIView {
     private var bottomPadding: CGFloat = 0
     private let locationOverlayIcon = NMFOverlayImage(image: ImageLiterals.icLocationOverlay)
     
-    private lazy var dummyMap = RNMapView(frame: CGRect(x: 0, y: 0, width: 300, height: 300)).then {
-        $0.isUserInteractionEnabled = false
-    }
-    
     // MARK: - UI Components
     
     let map = NMFNaverMapView()
     private var startMarker = RNStartMarker()
     private let pathOverlay = NMFPath()
     private let locationButton = UIButton(type: .custom)
-
+    
     // MARK: - initialization
     
     public init() {
@@ -151,20 +150,18 @@ extension RNMapView {
     }
     
     /// 캡처를 위한 좌표 설정 및 카메라 이동
-    func makeDummyMarkerAndCameraMove(at locations: [NMGLatLng]) {
-        addSubview(dummyMap)
-        sendSubviewToBack(dummyMap)
-        dummyMap.makeMarkersWithStartMarker(at: locations, moveCameraToStartMarker: false)
+    func makeCameraMoveForCapture(at locations: [NMGLatLng]) {
+        map.mapView.contentInset = UIEdgeInsets(top: screenHeight/4, left: 0, bottom: screenHeight/4, right: 0)
         let bounds = makeMBR(at: locations)
         let cameraUpdate = NMFCameraUpdate(fit: bounds, padding: 100)
         cameraUpdate.animation = .none
-        dummyMap.map.mapView.moveCamera(cameraUpdate) { isCancelled in
+        LoadingIndicator.showLoading()
+        map.mapView.moveCamera(cameraUpdate) { isCancelled in
             if isCancelled {
                 print("카메라 이동 취소")
+                LoadingIndicator.hideLoading()
             } else {
-                LoadingIndicator.showLoading()
-                DispatchQueue.main.asyncAfter(deadline: .now()+2) {
-                    self.dummyMap.map.mapView.zoomLevel -= 1
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self.makePathImage()
                     LoadingIndicator.hideLoading()
                 }
@@ -243,26 +240,23 @@ extension RNMapView {
     
     /// 더미 뷰를 UIImage로 변환하여 pathImage에 send
     func makePathImage() {
-        self.pathImage.send(UIImage(view: dummyMap.map.mapView))
+        if let image = UIImage.imageFromView(view: map.mapView) {
+            guard let newImage = self.cropImage(inputImage: image) else {
+                print("이미지 생성 실패")
+                return
+            }
+            self.pathImage.send(newImage)
+        }
     }
     
     /// 현재 시점까지의 마커들을 캡쳐하여 pahImage에 send
     func capturePathImage() {
-         makeDummyMarkerAndCameraMove(at: self.markersLatLngs)
+        makeCameraMoveForCapture(at: self.markersLatLngs)
     }
     
     /// 바운더리(MBR) 생성
     func makeMBR(at locations: [NMGLatLng]) -> NMGLatLngBounds {
-        var latitudes = [Double]()
-        var longitudes = [Double]()
-        locations.forEach { latLng in
-            latitudes.append(latLng.lat)
-            longitudes.append(latLng.lng)
-        }
-        
-        let southWest = NMGLatLng(lat: latitudes.min() ?? 0, lng: longitudes.min() ?? 0)
-        let northEast = NMGLatLng(lat: latitudes.max() ?? 0, lng: longitudes.max() ?? 0)
-        return NMGLatLngBounds(southWest: southWest, northEast: northEast)
+        return NMGLatLngBounds(latLngs: locations)
     }
     
     /// 직전의 마커 생성을 취소하고 경로선도 제거
@@ -385,7 +379,7 @@ extension RNMapView: NMFMapViewCameraDelegate, NMFMapViewTouchDelegate {
         guard isDrawMode && markers.count < 19 else { return }
         self.makeMarker(at: latlng)
     }
-
+    
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
         let locationOverlay = map.mapView.locationOverlay
         if locationOverlay.icon != locationOverlayIcon {
@@ -395,3 +389,10 @@ extension RNMapView: NMFMapViewCameraDelegate, NMFMapViewTouchDelegate {
 }
 
 extension RNMapView: CLLocationManagerDelegate {}
+
+extension RNMapView {
+    func cropImage(inputImage image: UIImage) -> UIImage? {
+        let y = screenHeight > 800 ? screenHeight/4 + 150 : screenHeight/4 - 40
+        return UIImage.cropImage(image, toRect: CGRect(x: 0, y: y, width: screenWidth*2, height: 500.adjustedH), viewWidth: screenWidth, viewHeight: 400.adjustedH)
+    }
+}
