@@ -40,13 +40,15 @@ final class CourseDrawingVC: UIViewController {
             $0.alpha = 0
         }
     
+    private let guideView = GuideView(title: "지점과 지점을 연결해 코스를 완성하세요!")
+    
     private lazy var naviBarContainerStackView = UIStackView(
         arrangedSubviews: [notchCoverView, naviBar]
     ).then {
         $0.axis = .vertical
     }
     
-    private let mapView = RNMapView()
+    private let mapView = RNMapView().makeNaverLogoMargin(inset: UIEdgeInsets(top: 52, left: 0, bottom: 0, right: 0))
     
     private let departureLocationLabel = UILabel().then {
         $0.font = .b1
@@ -264,12 +266,18 @@ extension CourseDrawingVC {
     }
     
     private func setHiddenViewsLayout() {
-        view.addSubviews(naviBarForEditing, distanceContainerView, completeButton, undoButton)
+        view.addSubviews(naviBarForEditing, guideView, distanceContainerView, completeButton, undoButton)
         view.sendSubviewToBack(naviBarForEditing)
         
         naviBarForEditing.snp.makeConstraints { make in
             make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(48)
+        }
+        
+        guideView.snp.makeConstraints { make in
+            make.centerY.equalTo(naviBarForEditing.snp.centerY)
+            make.leading.equalTo(view.safeAreaLayoutGuide).inset(55)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(27)
         }
         
         distanceContainerView.snp.makeConstraints { make in
@@ -298,7 +306,7 @@ extension CourseDrawingVC {
     }
     
     private func showHiddenViews(withDuration: TimeInterval = 0) {
-        [naviBarForEditing, distanceContainerView, completeButton, undoButton].forEach { subView in
+        [naviBarForEditing, guideView, distanceContainerView, completeButton, undoButton].forEach { subView in
             view.bringSubviewToFront(subView)
         }
         
@@ -308,8 +316,11 @@ extension CourseDrawingVC {
             self.departureInfoContainerView.transform = CGAffineTransform(translationX: 0, y: 172)
         }
         
+        self.guideView.transform = CGAffineTransform(translationX: 0, y: -100)
+        
         UIView.animate(withDuration: withDuration) {
             self.naviBarForEditing.alpha = 1
+            self.guideView.transform = .identity
             self.distanceContainerView.transform = CGAffineTransform(translationX: 0, y: -151)
             self.completeButton.transform = CGAffineTransform(translationX: 0, y: -112)
             self.undoButton.transform = CGAffineTransform(translationX: 0, y: -(self.undoButton.frame.height+95))

@@ -77,7 +77,6 @@ final class RNMapView: UIView {
 // MARK: - Methods
 
 extension RNMapView {
-    
     /// isDrawMode (편집 모드) 설정
     @discardableResult
     func setDrawMode(to isDrawMode: Bool) -> Self {
@@ -218,6 +217,13 @@ extension RNMapView {
         map.mapView.contentInset = padding
         self.bottomPadding = padding.bottom
         updateSubviewsConstraints()
+        return self
+    }
+    
+    /// 네이버 지도 로고 Margin  설정
+    @discardableResult
+    func makeNaverLogoMargin(inset: UIEdgeInsets) -> Self {
+        map.mapView.logoMargin = inset
         return self
     }
     
