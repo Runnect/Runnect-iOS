@@ -12,8 +12,11 @@ final class GuideView: UIView {
     // MARK: - UI Components
     
     private let logoImageView = UIImageView().then {
-        $0.image = ImageLiterals.icLogoCircle
-        $0.backgroundColor = .clear
+        $0.image = ImageLiterals.imgAppIcon
+        $0.backgroundColor = .gray
+        $0.contentMode = .scaleAspectFit
+        $0.layer.cornerRadius = 22
+        $0.clipsToBounds = true
     }
     
     private let titleContainerView = UIView().then {
@@ -26,12 +29,16 @@ final class GuideView: UIView {
         $0.numberOfLines = 1
         $0.adjustsFontSizeToFitWidth = true
         $0.minimumScaleFactor = 0.7
+        $0.textAlignment = .center
     }
     
     // MARK: - initialization
     
     init(title: String) {
         super.init(frame: .zero)
+        setUI()
+        setLayout()
+        setTitle(title: title)
     }
     
     required init?(coder: NSCoder) {
@@ -45,7 +52,7 @@ final class GuideView: UIView {
 extension GuideView {
     private func setUI() {
         self.backgroundColor = .white
-        self.layer.cornerRadius = 30
+        self.layer.cornerRadius = 22
         self.clipsToBounds = true
         self.layer.applyShadow(color: .black, alpha: 0.12, x: 0, y: 2, blur: 11, spread: 0)
     }
@@ -55,21 +62,25 @@ extension GuideView {
         titleContainerView.addSubviews(titleLabel)
         
         self.snp.makeConstraints { make in
-            make.height.equalTo(43)
+            make.width.greaterThanOrEqualTo(200)
         }
         
         logoImageView.snp.makeConstraints { make in
             make.leading.top.bottom.equalToSuperview()
+            make.width.height.equalTo(44)
         }
         
         titleContainerView.snp.makeConstraints { make in
-            make.leading.equalTo(logoImageView.center)
+            make.leading.equalTo(logoImageView.snp.centerX)
             make.top.bottom.trailing.equalToSuperview()
         }
         
         titleLabel.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(20)
         }
+    }
+    
+    func setTitle(title: String) {
+        self.titleLabel.text = title
     }
 }

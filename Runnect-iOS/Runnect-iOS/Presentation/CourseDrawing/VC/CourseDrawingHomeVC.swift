@@ -15,6 +15,8 @@ final class CourseDrawingHomeVC: UIViewController {
     
     // MARK: - UI Components
     
+    private let guideView = GuideView(title: "코스그리기를 눌러 나만의 코스를 만들어봐요!")
+    
     private lazy var mapView = RNMapView()
         .setPositionMode(mode: .normal)
         .makeContentPadding(padding: UIEdgeInsets(top: -calculateTopInset(), left: 0, bottom: tabBarHeight, right: 0))
@@ -58,7 +60,7 @@ extension CourseDrawingHomeVC {
     }
     
     private func setLayout() {
-        view.addSubviews(mapView, drawCourseButton)
+        view.addSubviews(mapView, drawCourseButton, guideView)
         
         mapView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
@@ -69,6 +71,11 @@ extension CourseDrawingHomeVC {
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(75)
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(24)
             make.height.equalTo(44)
+        }
+        
+        guideView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(7)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(23)
         }
     }
 }
