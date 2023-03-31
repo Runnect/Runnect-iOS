@@ -54,6 +54,6 @@ extension UserRouter: TargetType {
     }
     
     var headers: [String: String]? {
-        return Config.headerWithDeviceId
+        return Config.headerWithAccessToken
     }
 }

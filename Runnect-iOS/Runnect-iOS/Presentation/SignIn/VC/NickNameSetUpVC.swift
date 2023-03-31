@@ -1,5 +1,5 @@
 //
-//  SignInVC.swift
+//  NickNameSetUpVC.swift
 //  Runnect-iOS
 //
 //  Created by sejin on 2023/01/02.
@@ -9,7 +9,7 @@ import UIKit
 
 import Moya
 
-final class SignInVC: UIViewController {
+final class NickNameSetUpVC: UIViewController {
     
     // MARK: - Properties
     
@@ -62,7 +62,7 @@ final class SignInVC: UIViewController {
 
 // MARK: - Methods
 
-extension SignInVC {
+extension NickNameSetUpVC {
     private func setDelegate() {
         self.nicknameTextField.delegate = self
     }
@@ -84,7 +84,7 @@ extension SignInVC {
 
 // MARK: - @objc Function
 
-extension SignInVC {
+extension NickNameSetUpVC {
     @objc private func textFieldTextDidChange() {
         guard let text = nicknameTextField.text else { return }
         
@@ -106,7 +106,7 @@ extension SignInVC {
 
 // MARK: - UI & Layout
 
-extension SignInVC {
+extension NickNameSetUpVC {
     private func setUI() {
         view.backgroundColor = .w1
     }
@@ -140,7 +140,7 @@ extension SignInVC {
 
 // MARK: - UITextFieldDelegate
 
-extension SignInVC: UITextFieldDelegate {
+extension NickNameSetUpVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -149,7 +149,7 @@ extension SignInVC: UITextFieldDelegate {
 
 // MARK: - Network
 
-extension SignInVC {
+extension NickNameSetUpVC {
     func signIn(nickname: String) {
         LoadingIndicator.showLoading()
         userProvider.request(.signUp(nickname: nickname)) { [weak self] response in

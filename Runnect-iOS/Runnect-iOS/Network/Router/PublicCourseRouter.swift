@@ -59,7 +59,7 @@ extension PublicCourseRouter: TargetType {
     var headers: [String: String]? {
         switch self {
         default:
-            return Config.headerWithDeviceId
+            return Config.headerWithAccessToken
         }
     }
 }
