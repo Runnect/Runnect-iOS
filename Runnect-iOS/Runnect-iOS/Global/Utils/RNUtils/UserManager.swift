@@ -44,10 +44,10 @@ final class UserManager {
                     do {
                         let responseDto = try result.map(BaseResponse<SignInResponseDto>.self)
                         guard let data = responseDto.data else { return }
-                        self.accessToken = data.data.accessToken
-                        self.refreshToken = data.data.refreshToken
+                        self.accessToken = data.accessToken
+                        self.refreshToken = data.refreshToken
                         self.isKakao = provider == "KAKAO" ? true : false
-                        completion(.success(data.data.nickname))
+                        completion(.success(data.nickname ?? ""))
                     } catch {
                         print(error.localizedDescription)
                         completion(.failure(.networkFail))
@@ -77,10 +77,10 @@ final class UserManager {
                     do {
                         let responseDto = try result.map(BaseResponse<SignInResponseDto>.self)
                         guard let data = responseDto.data else { return }
-                        self.accessToken = data.data.accessToken
-                        self.refreshToken = data.data.refreshToken
+                        self.accessToken = data.accessToken
+                        self.refreshToken = data.refreshToken
                         self.isKakao = provider == "KAKAO" ? true : false
-                        completion(.success(data.data.nickname))
+                        completion(.success(data.nickname ?? ""))
                     } catch {
                         print(error.localizedDescription)
                         completion(.failure(.networkFail))

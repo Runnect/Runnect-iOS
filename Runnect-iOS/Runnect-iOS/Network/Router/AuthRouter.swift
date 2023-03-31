@@ -39,14 +39,14 @@ extension AuthRouter: TargetType {
     var task: Moya.Task {
         switch self {
         case .signIn(let token, let provider):
-            return .requestParameters(parameters: ["token": token, "social": provider], encoding: JSONEncoding.default)
+            return .requestParameters(parameters: ["token": token, "provider": provider], encoding: JSONEncoding.default)
         }
     }
     
     var headers: [String: String]? {
         switch self {
         case .signIn:
-            return Config.headerWithAccessToken
+            return Config.defaultHeader
         }
     }
 }

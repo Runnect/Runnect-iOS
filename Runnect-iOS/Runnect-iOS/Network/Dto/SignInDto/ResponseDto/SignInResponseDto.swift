@@ -10,16 +10,8 @@ import Foundation
 // MARK: - SignInResponseDto
 
 struct SignInResponseDto: Codable {
-    let status: Int
-    let success: Bool
-    let message: String
-    let data: SignInResponseData
-}
-
-// MARK: - SignInResponseData
-
-struct SignInResponseData: Codable {
-    let type, nickname, accessToken: String
+    let type, accessToken: String
+    let nickname: String?
     let email: String?
     let refreshToken: String
 }
