@@ -9,6 +9,7 @@ import UIKit
 
 import SnapKit
 import Then
+import Moya
 import AuthenticationServices
 import KakaoSDKAuth
 import KakaoSDKUser
@@ -43,16 +44,7 @@ final class SignInSocialLoginVC: UIViewController {
         $0.tintColor = .black
     }
     
-    private lazy var appleLoginButton = UIButton(type: .system).then {
-        $0.setTitle("Apple로 로그인", for: .normal)
-        $0.titleLabel?.font = .b3
-        $0.setTitleColor(.white, for: .normal)
-        $0.setBackgroundColor(.black, for: .normal)
-        $0.layer.cornerRadius = 7
-        $0.setImage(ImageLiterals.icApple, for: .normal)
-        $0.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: self.screenWidth * 0.5)
-        $0.tintColor = .white
-    }
+    private let appleLoginButton = ASAuthorizationAppleIDButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,30 +74,44 @@ extension SignInSocialLoginVC {
     }
     
     @objc func kakaoLoginButtonDidTap(_ sender: Any) {
-        // isKakaoTalkLoginAvailable() : 카톡 설치 되어있으면 true
-        if (UserApi.isKakaoTalkLoginAvailable()) { //카톡 설치되어있으면 -> 카톡으로 로그인
+        // isKakaoTalkLoginAvailable(): 카톡 설치 되어있으면 true
+        if (UserApi.isKakaoTalkLoginAvailable()) { // 카톡 설치되어있으면 -> 카톡으로 로그인
             UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
                 if let error = error {
                     print(error)
                 } else {
                     print("카카오 톡으로 로그인 성공")
-                    
-                    _ = oauthToken
-                    /// 로그인 관련 메소드 추가
-                    
+                    guard let oauthToken = oauthToken else { return }
+                    UserManager.shared.signIn(token: oauthToken.accessToken, provider: "KAKAO") { [weak self] result in
+                        switch result {
+                        case .success(let nickname):
+                            print(nickname)
+                            self?.pushToNickNameSetUpVC()
+                        case .failure(let error):
+                            print(error)
+                            self?.showNetworkFailureToast()
+                        }
+                    }
                 }
             }
         } else {
-
             // 카톡 없으면 -> 계정으로 로그인
             UserApi.shared.loginWithKakaoAccount { (oauthToken, error) in
                 if let error = error {
                     print(error)
                 } else {
                     print("카카오 계정으로 로그인 성공")
-                    
-                    _ = oauthToken
-                    // 관련 메소드 추가
+                    guard let oauthToken = oauthToken else { return }
+                    UserManager.shared.signIn(token: oauthToken.accessToken, provider: "KAKAO") { [weak self] result in
+                        switch result {
+                        case .success(let nickname):
+                            print(nickname)
+                            self?.pushToNickNameSetUpVC()
+                        case .failure(let error):
+                            print(error)
+                            self?.showNetworkFailureToast()
+                        }
+                    }
                 }
             }
         }
@@ -118,6 +124,11 @@ extension SignInSocialLoginVC {
     private func setAddTarget() {
         self.appleLoginButton.addTarget(self, action: #selector(touchUpAppleLoginButton), for: .touchUpInside)
         self.kakaoLoginButton.addTarget(self, action: #selector(kakaoLoginButtonDidTap), for: .touchUpInside)
+    }
+    
+    private func pushToNickNameSetUpVC() {
+        let nicknameSetUpVC = NickNameSetUpVC()
+        self.navigationController?.pushViewController(nicknameSetUpVC, animated: true)
     }
 }
 
@@ -173,11 +184,21 @@ extension SignInSocialLoginVC: ASAuthorizationControllerPresentationContextProvi
                 /// 계정 정보 가져오기
                 let userIdentifier = appleIDCredential.user
                 let idToken = appleIDCredential.identityToken!
-                let tokeStr = String(data: idToken, encoding: .utf8)
+                guard let tokeStr = String(data: idToken, encoding: .utf8) else { return }
              
                 print("User ID : \(userIdentifier)")
                 print("token : \(String(describing: tokeStr))")
                 
+                UserManager.shared.signIn(token: tokeStr, provider: "APPLE") { [weak self] result in
+                    switch result {
+                    case .success(let nickname):
+                        print(nickname)
+                        self?.pushToNickNameSetUpVC()
+                    case .failure(let error):
+                        print(error)
+                        self?.showNetworkFailureToast()
+                    }
+                }
             default:
                 break
         }

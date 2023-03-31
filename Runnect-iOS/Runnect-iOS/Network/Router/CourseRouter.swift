@@ -92,7 +92,7 @@ extension CourseRouter: TargetType {
             return ["Content-Type": "multipart/form-data",
                     "machineId": Config.deviceId]
         default:
-            return Config.headerWithDeviceId
+            return Config.headerWithAccessToken
         }
     }
 }
