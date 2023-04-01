@@ -100,7 +100,7 @@ extension NickNameSetUpVC {
     
     @objc func startButtonDidTap() {
         guard let nickname = nicknameTextField.text else { return }
-        self.signIn(nickname: nickname)
+        self.updateUserNickname(nickname: nickname)
     }
 }
 
@@ -150,9 +150,9 @@ extension NickNameSetUpVC: UITextFieldDelegate {
 // MARK: - Network
 
 extension NickNameSetUpVC {
-    func signIn(nickname: String) {
+    func updateUserNickname(nickname: String) {
         LoadingIndicator.showLoading()
-        userProvider.request(.signUp(nickname: nickname)) { [weak self] response in
+        userProvider.request(.updateUserNickname(nickname: nickname)) { [weak self] response in
             LoadingIndicator.hideLoading()
             guard let self = self else { return }
             switch response {

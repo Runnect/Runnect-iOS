@@ -10,7 +10,6 @@ import Foundation
 import Moya
 
 enum UserRouter {
-    case signUp(nickname: String)
     case getMyPageInfo
     case updateUserNickname(nickname: String)
 }
@@ -26,15 +25,13 @@ extension UserRouter: TargetType {
     
     var path: String {
         switch self {
-        case .signUp, .getMyPageInfo, .updateUserNickname:
+        case .getMyPageInfo, .updateUserNickname:
             return "/user"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .signUp:
-            return .post
         case .getMyPageInfo:
             return .get
         case .updateUserNickname:
@@ -44,8 +41,6 @@ extension UserRouter: TargetType {
     
     var task: Moya.Task {
         switch self {
-        case .signUp(let nickname):
-            return .requestParameters(parameters: ["nickname": nickname], encoding: JSONEncoding.default)
         case .getMyPageInfo:
             return .requestPlain
         case .updateUserNickname(let nickname):
