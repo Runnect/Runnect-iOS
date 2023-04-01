@@ -119,6 +119,7 @@
 		CE9291252965C9FB0010959C /* CourseDetailInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9291242965C9FB0010959C /* CourseDetailInfoView.swift */; };
 		CE9291272965D0ED0010959C /* StatsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9291262965D0ED0010959C /* StatsInfoView.swift */; };
 		CE9291292965E01D0010959C /* RNTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9291282965E01D0010959C /* RNTimeFormatter.swift */; };
+		CEB0BCBC29D123350048CCD5 /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB0BCBB29D123350048CCD5 /* GuideView.swift */; };
 		CEB8416E2962C45300BF8080 /* LocationSearchResultTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB8416D2962C45300BF8080 /* LocationSearchResultTVC.swift */; };
 		CEB841702963360800BF8080 /* CountDownVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB8416F2963360800BF8080 /* CountDownVC.swift */; };
 		CEC2A6852961F92C00160BF7 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A6842961F92C00160BF7 /* CustomButton.swift */; };
@@ -271,6 +272,7 @@
 		CE9291242965C9FB0010959C /* CourseDetailInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailInfoView.swift; sourceTree = "<group>"; };
 		CE9291262965D0ED0010959C /* StatsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsInfoView.swift; sourceTree = "<group>"; };
 		CE9291282965E01D0010959C /* RNTimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNTimeFormatter.swift; sourceTree = "<group>"; };
+		CEB0BCBB29D123350048CCD5 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
 		CEB8416D2962C45300BF8080 /* LocationSearchResultTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchResultTVC.swift; sourceTree = "<group>"; };
 		CEB8416F2963360800BF8080 /* CountDownVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownVC.swift; sourceTree = "<group>"; };
 		CEC2A6842961F92C00160BF7 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -997,6 +999,7 @@
 				CE9291242965C9FB0010959C /* CourseDetailInfoView.swift */,
 				CE9291262965D0ED0010959C /* StatsInfoView.swift */,
 				CE6B63D729673450003F900F /* ListEmptyView.swift */,
+				CEB0BCBB29D123350048CCD5 /* GuideView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -1350,6 +1353,7 @@
 				CECA695C296E61D6002AF05C /* PrivateCourseNotUploadedResponseDto.swift in Sources */,
 				CE6655EC295D88D000C64E12 /* UITableView+.swift in Sources */,
 				CEEC6B3A2961C4F300D00E1E /* CourseDrawingHomeVC.swift in Sources */,
+				CEB0BCBC29D123350048CCD5 /* GuideView.swift in Sources */,
 				CEC2A6902962B06C00160BF7 /* convertLocationObject.swift in Sources */,
 				CEC2A6852961F92C00160BF7 /* CustomButton.swift in Sources */,
 				CE6B63D3296725E6003F900F /* CourseListCVC.swift in Sources */,

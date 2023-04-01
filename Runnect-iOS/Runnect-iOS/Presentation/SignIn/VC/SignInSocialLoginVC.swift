@@ -74,8 +74,9 @@ extension SignInSocialLoginVC {
     }
     
     @objc func kakaoLoginButtonDidTap(_ sender: Any) {
-        // isKakaoTalkLoginAvailable(): 카톡 설치 되어있으면 true
-        if (UserApi.isKakaoTalkLoginAvailable()) { // 카톡 설치되어있으면 -> 카톡으로 로그인
+        // isKakaoTalkLoginAvailable() : 카톡 설치 되어있으면 true
+        if UserApi.isKakaoTalkLoginAvailable() {
+            // 카톡 설치되어있으면 -> 카톡으로 로그인
             UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
                 if let error = error {
                     print(error)
