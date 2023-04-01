@@ -16,6 +16,6 @@ struct MyPageDto: Codable {
 // MARK: - User
 
 struct User: Codable {
-    let machineId, nickname, latestStamp: String
+    let nickname, latestStamp: String
     let level, levelPercent: Int
 }

@@ -18,7 +18,7 @@ struct ActivityRecordInfoDto: Codable {
 struct ActivityRecord: Codable {
     let id, courseId: Int
     let publicCourseId: Int?
-    let machineId, title: String
+    let title: String
     let image: String
     let createdAt: String
     let distance: Double
