@@ -44,7 +44,7 @@ extension PublicCourseRouter: TargetType {
         
     }
     var task: Moya.Task {
-        switch  self {
+        switch self {
         case .getCourseSearchData(let keyword):
             return .requestParameters(parameters: ["keyword": keyword], encoding: URLEncoding.default)
         case .courseUploadingData(param: let param):
@@ -59,7 +59,7 @@ extension PublicCourseRouter: TargetType {
     var headers: [String: String]? {
         switch self {
         default:
-            return Config.headerWithDeviceId
+            return Config.headerWithAccessToken
         }
     }
 }

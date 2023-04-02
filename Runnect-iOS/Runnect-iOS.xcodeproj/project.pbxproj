@@ -18,6 +18,10 @@
 		A3BC2F3F2964706100198261 /* UploadedCourseInfoCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F3E2964706100198261 /* UploadedCourseInfoCVC.swift */; };
 		A3BC2F4129667A0D00198261 /* NicknameEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F4029667A0D00198261 /* NicknameEditorVC.swift */; };
 		A3BC2F432966A93100198261 /* CourseDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F422966A93100198261 /* CourseDetailVC.swift */; };
+		A3D1A77929CF03D200DD54EC /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D1A77829CF03D200DD54EC /* AuthRouter.swift */; };
+		A3D1A77E29CF09B600DD54EC /* SignInResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D1A77D29CF09B600DD54EC /* SignInResponseDto.swift */; };
+		A3D1A78029CF142E00DD54EC /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D1A77F29CF142E00DD54EC /* UserManager.swift */; };
+		A3E55BA029C815B10000D85D /* SignInSocialLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E55B9F29C815B10000D85D /* SignInSocialLoginVC.swift */; };
 		A3F67AE2296D33AC001598A2 /* MyPageDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F67AE1296D33AC001598A2 /* MyPageDto.swift */; };
 		A3F67AEA296E4936001598A2 /* ActivityRecordInfoDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F67AE9296E4936001598A2 /* ActivityRecordInfoDto.swift */; };
 		CE09037D296E9ED900BEA710 /* ScrapCourseResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE09037C296E9ED900BEA710 /* ScrapCourseResponseDto.swift */; };
@@ -115,10 +119,11 @@
 		CE9291252965C9FB0010959C /* CourseDetailInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9291242965C9FB0010959C /* CourseDetailInfoView.swift */; };
 		CE9291272965D0ED0010959C /* StatsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9291262965D0ED0010959C /* StatsInfoView.swift */; };
 		CE9291292965E01D0010959C /* RNTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9291282965E01D0010959C /* RNTimeFormatter.swift */; };
+		CEB0BCBC29D123350048CCD5 /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB0BCBB29D123350048CCD5 /* GuideView.swift */; };
 		CEB8416E2962C45300BF8080 /* LocationSearchResultTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB8416D2962C45300BF8080 /* LocationSearchResultTVC.swift */; };
 		CEB841702963360800BF8080 /* CountDownVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB8416F2963360800BF8080 /* CountDownVC.swift */; };
 		CEC2A6852961F92C00160BF7 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A6842961F92C00160BF7 /* CustomButton.swift */; };
-		CEC2A68729629B9B00160BF7 /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A68629629B9B00160BF7 /* SignInVC.swift */; };
+		CEC2A68729629B9B00160BF7 /* NickNameSetUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A68629629B9B00160BF7 /* NickNameSetUpVC.swift */; };
 		CEC2A68A2962ADCD00160BF7 /* RNMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A6892962ADCD00160BF7 /* RNMapView.swift */; };
 		CEC2A68C2962AE1B00160BF7 /* RNStartMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A68B2962AE1B00160BF7 /* RNStartMarker.swift */; };
 		CEC2A68E2962AF2C00160BF7 /* RNMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A68D2962AF2C00160BF7 /* RNMarker.swift */; };
@@ -155,6 +160,11 @@
 		A3BC2F3E2964706100198261 /* UploadedCourseInfoCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedCourseInfoCVC.swift; sourceTree = "<group>"; };
 		A3BC2F4029667A0D00198261 /* NicknameEditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditorVC.swift; sourceTree = "<group>"; };
 		A3BC2F422966A93100198261 /* CourseDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailVC.swift; sourceTree = "<group>"; };
+		A3D1A77829CF03D200DD54EC /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
+		A3D1A77D29CF09B600DD54EC /* SignInResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInResponseDto.swift; sourceTree = "<group>"; };
+		A3D1A77F29CF142E00DD54EC /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		A3E55B9F29C815B10000D85D /* SignInSocialLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSocialLoginVC.swift; sourceTree = "<group>"; };
+		A3E55BA529C8AB0A0000D85D /* Runnect-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Runnect-iOS.entitlements"; sourceTree = "<group>"; };
 		A3F67AE1296D33AC001598A2 /* MyPageDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageDto.swift; sourceTree = "<group>"; };
 		A3F67AE9296E4936001598A2 /* ActivityRecordInfoDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRecordInfoDto.swift; sourceTree = "<group>"; };
 		CE09037C296E9ED900BEA710 /* ScrapCourseResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapCourseResponseDto.swift; sourceTree = "<group>"; };
@@ -262,10 +272,11 @@
 		CE9291242965C9FB0010959C /* CourseDetailInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailInfoView.swift; sourceTree = "<group>"; };
 		CE9291262965D0ED0010959C /* StatsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsInfoView.swift; sourceTree = "<group>"; };
 		CE9291282965E01D0010959C /* RNTimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNTimeFormatter.swift; sourceTree = "<group>"; };
+		CEB0BCBB29D123350048CCD5 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
 		CEB8416D2962C45300BF8080 /* LocationSearchResultTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchResultTVC.swift; sourceTree = "<group>"; };
 		CEB8416F2963360800BF8080 /* CountDownVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownVC.swift; sourceTree = "<group>"; };
 		CEC2A6842961F92C00160BF7 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
-		CEC2A68629629B9B00160BF7 /* SignInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInVC.swift; sourceTree = "<group>"; };
+		CEC2A68629629B9B00160BF7 /* NickNameSetUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameSetUpVC.swift; sourceTree = "<group>"; };
 		CEC2A6892962ADCD00160BF7 /* RNMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNMapView.swift; sourceTree = "<group>"; };
 		CEC2A68B2962AE1B00160BF7 /* RNStartMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNStartMarker.swift; sourceTree = "<group>"; };
 		CEC2A68D2962AF2C00160BF7 /* RNMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNMarker.swift; sourceTree = "<group>"; };
@@ -358,6 +369,14 @@
 			path = UploadedCourseInfoCollectionView;
 			sourceTree = "<group>";
 		};
+		A3D1A77C29CF099400DD54EC /* ResponseDto */ = {
+			isa = PBXGroup;
+			children = (
+				A3D1A77D29CF09B600DD54EC /* SignInResponseDto.swift */,
+			);
+			path = ResponseDto;
+			sourceTree = "<group>";
+		};
 		CE0C23712966D5FF00B45063 /* ViewPager */ = {
 			isa = PBXGroup;
 			children = (
@@ -441,6 +460,7 @@
 		CE10063829680C2A00FD31FB /* SignInDto */ = {
 			isa = PBXGroup;
 			children = (
+				A3D1A77C29CF099400DD54EC /* ResponseDto */,
 				CE10063929680C5700FD31FB /* .gitkeep */,
 			);
 			path = SignInDto;
@@ -731,6 +751,7 @@
 		CE4545C7295D7AF4003201E1 /* Runnect-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				A3E55BA529C8AB0A0000D85D /* Runnect-iOS.entitlements */,
 				CE6655AA295D7FAE00C64E12 /* Global */,
 				CE6655A9295D7FAA00C64E12 /* Network */,
 				CE6655A8295D7F7D00C64E12 /* Presentation */,
@@ -754,6 +775,7 @@
 				CE14677729658C7200DCEA1B /* Stopwatch.swift */,
 				CE9291282965E01D0010959C /* RNTimeFormatter.swift */,
 				CE3A53C4296C6017003D518C /* KeychainManager.swift */,
+				A3D1A77F29CF142E00DD54EC /* UserManager.swift */,
 			);
 			path = RNUtils;
 			sourceTree = "<group>";
@@ -853,6 +875,7 @@
 		CE6655AD295D7FEA00C64E12 /* Router */ = {
 			isa = PBXGroup;
 			children = (
+				A3D1A77829CF03D200DD54EC /* AuthRouter.swift */,
 				CE21C023299E5FE500F62AF5 /* UserRouter.swift */,
 				CE21C025299E5FF300F62AF5 /* CourseRouter.swift */,
 				CE21C027299E5FFC00F62AF5 /* PublicCourseRouter.swift */,
@@ -976,6 +999,7 @@
 				CE9291242965C9FB0010959C /* CourseDetailInfoView.swift */,
 				CE9291262965D0ED0010959C /* StatsInfoView.swift */,
 				CE6B63D729673450003F900F /* ListEmptyView.swift */,
+				CEB0BCBB29D123350048CCD5 /* GuideView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -992,7 +1016,8 @@
 		CE6655C3295D837800C64E12 /* VC */ = {
 			isa = PBXGroup;
 			children = (
-				CEC2A68629629B9B00160BF7 /* SignInVC.swift */,
+				CEC2A68629629B9B00160BF7 /* NickNameSetUpVC.swift */,
+				A3E55B9F29C815B10000D85D /* SignInSocialLoginVC.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -1250,7 +1275,7 @@
 				A3BC2F2F2962C40A00198261 /* UploadedCourseInfoVC.swift in Sources */,
 				CE6655EA295D88B200C64E12 /* UITabBar+.swift in Sources */,
 				CE9291272965D0ED0010959C /* StatsInfoView.swift in Sources */,
-				CEC2A68729629B9B00160BF7 /* SignInVC.swift in Sources */,
+				CEC2A68729629B9B00160BF7 /* NickNameSetUpVC.swift in Sources */,
 				CE665602295D918000C64E12 /* JsonCoder.swift in Sources */,
 				DA97A033296E65D80086760E /* CourseUploadingRequestDto.swift in Sources */,
 				CE4545CD295D7AF4003201E1 /* TaBarController.swift in Sources */,
@@ -1314,10 +1339,13 @@
 				CE18E890296C76C100FEB569 /* RNLocationModel.swift in Sources */,
 				CE6655DC295D873500C64E12 /* UIButton+.swift in Sources */,
 				CE21C02C299E601000F62AF5 /* ScrapRouter.swift in Sources */,
+				A3D1A78029CF142E00DD54EC /* UserManager.swift in Sources */,
+				A3D1A77929CF03D200DD54EC /* AuthRouter.swift in Sources */,
 				CE6655D4295D865B00C64E12 /* Publisher+UIControl.swift in Sources */,
 				CE0D9FD329648DA300CEB5CD /* CustomAlertVC.swift in Sources */,
 				CEB841702963360800BF8080 /* CountDownVC.swift in Sources */,
 				CE320F38296C8FAB009F89A7 /* CourseDrawingResponseData.swift in Sources */,
+				A3D1A77E29CF09B600DD54EC /* SignInResponseDto.swift in Sources */,
 				CE21C028299E5FFC00F62AF5 /* PublicCourseRouter.swift in Sources */,
 				CE18E894296C79B900FEB569 /* CourseDrawingRequestDto.swift in Sources */,
 				DA20D84E2966A9B300F1581F /* CourseSearchVC.swift in Sources */,
@@ -1325,10 +1353,12 @@
 				CECA695C296E61D6002AF05C /* PrivateCourseNotUploadedResponseDto.swift in Sources */,
 				CE6655EC295D88D000C64E12 /* UITableView+.swift in Sources */,
 				CEEC6B3A2961C4F300D00E1E /* CourseDrawingHomeVC.swift in Sources */,
+				CEB0BCBC29D123350048CCD5 /* GuideView.swift in Sources */,
 				CEC2A6902962B06C00160BF7 /* convertLocationObject.swift in Sources */,
 				CEC2A6852961F92C00160BF7 /* CustomButton.swift in Sources */,
 				CE6B63D3296725E6003F900F /* CourseListCVC.swift in Sources */,
 				CEF3CD9A296DB305002723A1 /* CourseDetailResponseDto.swift in Sources */,
+				A3E55BA029C815B10000D85D /* SignInSocialLoginVC.swift in Sources */,
 				CE29D584296416D800F47542 /* caculateStatusBarHeight.swift in Sources */,
 				CE66560C295D928300C64E12 /* setRootViewController.swift in Sources */,
 				CE6655D9295D871B00C64E12 /* URL+.swift in Sources */,
@@ -1505,6 +1535,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Runnect-iOS/Runnect-iOS.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1512,10 +1543,14 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9K86FQHDLU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Runnect-iOS/Info.plist";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 정보 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치 정보 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치 정보 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1537,6 +1572,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Runnect-iOS/Runnect-iOS.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1544,10 +1580,14 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9K86FQHDLU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Runnect-iOS/Info.plist";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 정보 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치 정보 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치 정보 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

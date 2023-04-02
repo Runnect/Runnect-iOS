@@ -90,9 +90,10 @@ extension CourseRouter: TargetType {
         switch self {
         case .uploadCourseDrawing:
             return ["Content-Type": "multipart/form-data",
-                    "machineId": Config.deviceId]
+                    "accessToken": Config.accessToken,
+                    "refreshToken": Config.refreshToken]
         default:
-            return Config.headerWithDeviceId
+            return Config.headerWithAccessToken
         }
     }
 }
