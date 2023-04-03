@@ -11,6 +11,7 @@ import Moya
 
 enum AuthRouter {
     case signIn(token: String, provider: String)
+    case getNewToken
 }
 
 extension AuthRouter: TargetType {
@@ -26,6 +27,8 @@ extension AuthRouter: TargetType {
         switch self {
         case .signIn:
             return "/auth"
+        case .getNewToken:
+            return "/auth/getNewToken"
         }
     }
     
@@ -33,6 +36,8 @@ extension AuthRouter: TargetType {
         switch self {
         case .signIn:
             return .post
+        case .getNewToken:
+            return .get
         }
     }
     
@@ -40,6 +45,8 @@ extension AuthRouter: TargetType {
         switch self {
         case .signIn(let token, let provider):
             return .requestParameters(parameters: ["token": token, "provider": provider], encoding: JSONEncoding.default)
+        case .getNewToken:
+            return .requestPlain
         }
     }
     
@@ -47,6 +54,8 @@ extension AuthRouter: TargetType {
         switch self {
         case .signIn:
             return Config.defaultHeader
+        case .getNewToken:
+            return Config.headerWithAccessToken
         }
     }
 }

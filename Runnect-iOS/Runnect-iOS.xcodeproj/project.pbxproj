@@ -31,6 +31,7 @@
 		CE0D9FD329648DA300CEB5CD /* CustomAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0D9FD229648DA300CEB5CD /* CustomAlertVC.swift */; };
 		CE10065529680F7000FD31FB /* DepartureSearchingResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10065429680F7000FD31FB /* DepartureSearchingResponseDto.swift */; };
 		CE1006572968230800FD31FB /* DepartureLocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1006562968230800FD31FB /* DepartureLocationModel.swift */; };
+		CE102C4829DB1D6B00E23E69 /* GetNewTokenResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE102C4729DB1D6B00E23E69 /* GetNewTokenResponseDto.swift */; };
 		CE146770296568DC00DCEA1B /* RunTrackingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14676F296568DC00DCEA1B /* RunTrackingVC.swift */; };
 		CE14677829658C7200DCEA1B /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14677729658C7200DCEA1B /* Stopwatch.swift */; };
 		CE14677A2965A80700DCEA1B /* CustomBottomSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1467792965A80700DCEA1B /* CustomBottomSheetVC.swift */; };
@@ -180,6 +181,7 @@
 		CE10065229680D4400FD31FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CE10065429680F7000FD31FB /* DepartureSearchingResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureSearchingResponseDto.swift; sourceTree = "<group>"; };
 		CE1006562968230800FD31FB /* DepartureLocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureLocationModel.swift; sourceTree = "<group>"; };
+		CE102C4729DB1D6B00E23E69 /* GetNewTokenResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNewTokenResponseDto.swift; sourceTree = "<group>"; };
 		CE14676F296568DC00DCEA1B /* RunTrackingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunTrackingVC.swift; sourceTree = "<group>"; };
 		CE14677729658C7200DCEA1B /* Stopwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
 		CE1467792965A80700DCEA1B /* CustomBottomSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheetVC.swift; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 			isa = PBXGroup;
 			children = (
 				A3D1A77D29CF09B600DD54EC /* SignInResponseDto.swift */,
+				CE102C4729DB1D6B00E23E69 /* GetNewTokenResponseDto.swift */,
 			);
 			path = ResponseDto;
 			sourceTree = "<group>";
@@ -1391,6 +1394,7 @@
 				CE6655E6295D887F00C64E12 /* UIStackView+.swift in Sources */,
 				A3BC2F34296303A600198261 /* GoalRewardInfoCVC.swift in Sources */,
 				CEB8416E2962C45300BF8080 /* LocationSearchResultTVC.swift in Sources */,
+				CE102C4829DB1D6B00E23E69 /* GetNewTokenResponseDto.swift in Sources */,
 				CE6655CA295D84DD00C64E12 /* UserDefaultKeyList.swift in Sources */,
 				CE6655F2295D894D00C64E12 /* UIView+.swift in Sources */,
 				CE9291252965C9FB0010959C /* CourseDetailInfoView.swift in Sources */,

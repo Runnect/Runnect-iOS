@@ -17,7 +17,7 @@ enum RNError: Error {
 final class UserManager {
     static let shared = UserManager()
     
-    private var signInProvider = MoyaProvider<AuthRouter>(
+    private var authProvider = MoyaProvider<AuthRouter>(
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
@@ -35,7 +35,7 @@ final class UserManager {
     }
     
     func signIn(token: String, provider: String, completion: @escaping(Result<String, RNError>) -> Void) {
-        signInProvider.request(.signIn(token: token, provider: provider)) { [weak self] response in
+        authProvider.request(.signIn(token: token, provider: provider)) { [weak self] response in
             guard let self = self else { return }
             switch response {
             case .success(let result):
@@ -64,23 +64,19 @@ final class UserManager {
         }
     }
     
-    func autoSignIn(completion: @escaping(Result<String, RNError>) -> Void) {
-        guard let accessToken = self.accessToken else { return }
-        guard let isKakao = self.isKakao else { return }
-        let provider = isKakao ? "KAKAO" : "APPLE"
-        signInProvider.request(.signIn(token: accessToken, provider: provider)) { [weak self] response in
+    func getNewToken(completion: @escaping(Result<Bool, RNError>) -> Void) {
+        authProvider.request(.getNewToken) { [weak self] response in
             guard let self = self else { return }
             switch response {
             case .success(let result):
                 let status = result.statusCode
                 if 200..<300 ~= status {
                     do {
-                        let responseDto = try result.map(BaseResponse<SignInResponseDto>.self)
+                        let responseDto = try result.map(BaseResponse<GetNewTokenResponseDto>.self)
                         guard let data = responseDto.data else { return }
                         self.accessToken = data.accessToken
                         self.refreshToken = data.refreshToken
-                        self.isKakao = provider == "KAKAO" ? true : false
-                        completion(.success(data.nickname ?? ""))
+                        completion(.success(true))
                     } catch {
                         print(error.localizedDescription)
                         completion(.failure(.networkFail))

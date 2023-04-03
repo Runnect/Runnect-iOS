@@ -193,9 +193,8 @@ extension SignInSocialLoginVC: ASAuthorizationControllerPresentationContextProvi
                 
                 UserManager.shared.signIn(token: tokeStr, provider: "APPLE") { [weak self] result in
                     switch result {
-                    case .success(let nickname):
-                        print(nickname)
-                        self?.pushToNickNameSetUpVC()
+                    case .success(let type):
+                        type == "Signup" ? self?.pushToNickNameSetUpVC() : self?.pushToTabBarController()
                     case .failure(let error):
                         print(error)
                         self?.showNetworkFailureToast()
