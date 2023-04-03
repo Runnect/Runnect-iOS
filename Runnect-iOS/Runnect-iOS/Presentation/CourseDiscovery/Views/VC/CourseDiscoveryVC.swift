@@ -32,8 +32,8 @@ final class CourseDiscoveryVC: UIViewController {
         $0.setImage(ImageLiterals.icSearch, for: .normal)
         $0.tintColor = .g1
     }
-    private let plusButton = UIButton(type: .system).then {
-        $0.setImage(ImageLiterals.icPlus, for: .normal)
+    private let uploadButton = CustomButton(title: "업로드하기").then {
+        $0.layer.cornerRadius = 20
     }
     
     // MARK: - collectionview
@@ -88,10 +88,8 @@ extension CourseDiscoveryVC {
     }
     
     private func setAddTarget() {
-        
         self.searchButton.addTarget(self, action: #selector(pushToSearchVC), for: .touchUpInside)
-        self.plusButton.addTarget(self, action: #selector(pushToDiscoveryVC), for: .touchUpInside)
-        
+        self.uploadButton.addTarget(self, action: #selector(pushToDiscoveryVC), for: .touchUpInside)
     }
 }
 
@@ -128,17 +126,19 @@ extension CourseDiscoveryVC {
     private func layout() {
         view.backgroundColor = .w1
         mapCollectionView.backgroundColor = .w1
-        view.addSubviews(plusButton, mapCollectionView)
-        view.bringSubviewToFront(plusButton)
+        view.addSubviews(uploadButton, mapCollectionView)
+        view.bringSubviewToFront(uploadButton)
         
         mapCollectionView.snp.makeConstraints {
             $0.top.equalTo(self.navibar.snp.bottom)
             $0.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
         }
         
-        plusButton.snp.makeConstraints { make in
+        uploadButton.snp.makeConstraints { make in
             make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(16)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(20)
+            make.height.equalTo(40)
+            make.width.equalTo(136)
         }
     }
 }
