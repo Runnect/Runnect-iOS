@@ -85,9 +85,8 @@ extension SignInSocialLoginVC {
                     guard let oauthToken = oauthToken else { return }
                     UserManager.shared.signIn(token: oauthToken.accessToken, provider: "KAKAO") { [weak self] result in
                         switch result {
-                        case .success(let nickname):
-                            print(nickname)
-                            self?.pushToNickNameSetUpVC()
+                        case .success(let type):
+                            type == "Signup" ? self?.pushToNickNameSetUpVC() : self?.pushToTabBarController()
                         case .failure(let error):
                             print(error)
                             self?.showNetworkFailureToast()
@@ -105,9 +104,8 @@ extension SignInSocialLoginVC {
                     guard let oauthToken = oauthToken else { return }
                     UserManager.shared.signIn(token: oauthToken.accessToken, provider: "KAKAO") { [weak self] result in
                         switch result {
-                        case .success(let nickname):
-                            print(nickname)
-                            self?.pushToNickNameSetUpVC()
+                        case .success(let type):
+                            type == "Signup" ? self?.pushToNickNameSetUpVC() : self?.pushToTabBarController()
                         case .failure(let error):
                             print(error)
                             self?.showNetworkFailureToast()
@@ -130,6 +128,12 @@ extension SignInSocialLoginVC {
     private func pushToNickNameSetUpVC() {
         let nicknameSetUpVC = NickNameSetUpVC()
         self.navigationController?.pushViewController(nicknameSetUpVC, animated: true)
+    }
+    
+    private func pushToTabBarController() {
+        let tabBarController = TabBarController()
+        guard let window = self.view.window else { return }
+        ViewControllerUtils.setRootViewController(window: window, viewController: tabBarController, withAnimation: true)
     }
 }
 

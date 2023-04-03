@@ -47,7 +47,7 @@ final class UserManager {
                         self.accessToken = data.accessToken
                         self.refreshToken = data.refreshToken
                         self.isKakao = provider == "KAKAO" ? true : false
-                        completion(.success(data.nickname ?? ""))
+                        completion(.success(data.type)) // 로그인인지 회원가입인지 전달
                     } catch {
                         print(error.localizedDescription)
                         completion(.failure(.networkFail))
