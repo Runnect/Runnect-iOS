@@ -33,18 +33,15 @@ final class SignInSocialLoginVC: UIViewController {
         $0.contentMode = .scaleAspectFill
     }
     
-    private lazy var kakaoLoginButton = UIButton(type: .system).then {
-        $0.setTitle("카카오로 로그인", for: .normal)
-        $0.titleLabel?.font = .b3
-        $0.setTitleColor(.black, for: .normal)
-        $0.setBackgroundColor(UIColor(hex: "FEE500"), for: .normal)
-        $0.layer.cornerRadius = 7
-        $0.setImage(ImageLiterals.icKakao, for: .normal)
-        $0.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: self.screenWidth * 0.5)
-        $0.tintColor = .black
+    private let appleLoginButton = UIButton(type: .custom).then {
+        $0.layer.cornerRadius = 8
+        $0.setImage(ImageLiterals.imgAppleLogin, for: .normal)
     }
     
-    private let appleLoginButton = ASAuthorizationAppleIDButton()
+    private let kakaoLoginButton = UIButton(type: .custom).then {
+        $0.layer.cornerRadius = 8
+        $0.setImage(ImageLiterals.imgKakaoLogin, for: .normal)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
