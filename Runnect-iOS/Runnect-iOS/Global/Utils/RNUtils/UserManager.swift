@@ -18,6 +18,7 @@ final class UserManager {
     static let shared = UserManager()
     
     private var authProvider = MoyaProvider<AuthRouter>(
+        session: Moya.Session(interceptor: AuthRetrier.shared),
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
