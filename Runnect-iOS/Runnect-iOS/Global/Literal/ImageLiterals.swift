@@ -42,6 +42,7 @@ enum ImageLiterals {
     static var icAlert: UIImage { .load(named: "ic_alert") }
     static var icLocationOverlay: UIImage { .load(named: "ic_location_overlay") }
     static var icLogoCircle: UIImage { .load(named: "ic_logo_circle") }
+    static var icMore: UIImage { .load(named: "ic_more") }
 
     // img
     static var imgBackground: UIImage { .load(named: "img_background") }
@@ -68,6 +69,7 @@ enum ImageLiterals {
     static var imgAppIcon: UIImage { .load(named: "img_app_icon") }
     static var imgAd: UIImage { .load(named: "img_ad") }
 }
+
 
 extension UIImage {
     static func load(named imageName: String) -> UIImage {

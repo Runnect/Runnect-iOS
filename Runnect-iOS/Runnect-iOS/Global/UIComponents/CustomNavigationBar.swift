@@ -283,7 +283,7 @@ extension CustomNavigationBar {
     }
     
     private func setReportButtonLayout() {
-        self.addSubviews(leftButton,reportButton)
+        self.addSubviews(leftButton, reportButton)
         leftButton.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.leading.equalToSuperview()
