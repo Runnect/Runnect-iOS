@@ -59,7 +59,11 @@ extension PublicCourseRouter: TargetType {
     var headers: [String: String]? {
         switch self {
         default:
-            return Config.headerWithAccessToken
+            return Config.defaultHeader
         }
+    }
+    
+    var validationType: ValidationType {
+        return .successCodes
     }
 }

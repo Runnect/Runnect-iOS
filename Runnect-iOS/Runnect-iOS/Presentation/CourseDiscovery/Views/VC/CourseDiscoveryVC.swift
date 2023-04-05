@@ -16,6 +16,7 @@ final class CourseDiscoveryVC: UIViewController {
     // MARK: - Properties
     
     private let PublicCourseProvider = MoyaProvider<PublicCourseRouter>(
+        session: Moya.Session(interceptor: AuthInterceptor.shared),
         plugins: [NetworkLoggerPlugin(verbose: true)]
     )
     
