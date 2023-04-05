@@ -13,9 +13,7 @@ final class DepartureSearchVC: UIViewController {
     
     // MARK: - Properties
     
-    private let departureSearchingProvider = MoyaProvider<DepartureSearchingRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private let departureSearchingProvider = Providers.departureSearchingProvider
     
     private var addressList = [KakaoAddressResult]()
     

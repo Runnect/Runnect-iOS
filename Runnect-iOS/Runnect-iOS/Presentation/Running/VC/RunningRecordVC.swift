@@ -15,9 +15,7 @@ final class RunningRecordVC: UIViewController {
     
     private var runningModel: RunningModel?
     
-    private let recordProvider = MoyaProvider<RecordRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private let recordProvider = Providers.recordProvider
 
     private let courseTitleMaxLength = 20
     

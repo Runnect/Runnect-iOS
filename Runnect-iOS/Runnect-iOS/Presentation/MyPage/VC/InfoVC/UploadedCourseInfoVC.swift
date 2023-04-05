@@ -15,9 +15,7 @@ final class UploadedCourseInfoVC: UIViewController {
     
     // MARK: - Properties
     
-    private var uploadedCourseProvider = MoyaProvider<PublicCourseRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private var uploadedCourseProvider = Providers.publicCourseProvider
     
     private var uploadedCourseList = [PublicCourse]()
     

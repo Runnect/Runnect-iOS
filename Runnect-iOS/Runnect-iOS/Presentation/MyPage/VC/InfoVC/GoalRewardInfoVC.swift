@@ -14,9 +14,7 @@ import Moya
 final class GoalRewardInfoVC: UIViewController {
     
     // MARK: - Properties
-    private var stampProvider = MoyaProvider<StampRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private var stampProvider = Providers.stampProvider
     
     var stampNameList: [GoalRewardInfoModel] = GoalRewardInfoModel.stampNameList
     

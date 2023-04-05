@@ -52,10 +52,12 @@ extension AuthRouter: TargetType {
     
     var headers: [String: String]? {
         switch self {
-        case .signIn:
+        case .signIn, .getNewToken:
             return Config.defaultHeader
-        case .getNewToken:
-            return Config.headerWithAccessToken
         }
+    }
+    
+    var validationType: ValidationType {
+        return .successCodes
     }
 }

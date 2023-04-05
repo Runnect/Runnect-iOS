@@ -15,14 +15,9 @@ import Moya
 final class CourseDiscoveryVC: UIViewController {
     // MARK: - Properties
     
-    private let PublicCourseProvider = MoyaProvider<PublicCourseRouter>(
-        session: Moya.Session(interceptor: AuthInterceptor.shared),
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private let PublicCourseProvider = Providers.publicCourseProvider
     
-    private let scrapProvider = MoyaProvider<ScrapRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private let scrapProvider = Providers.scrapProvider
     
     private var courseList = [PublicCourse]()
     

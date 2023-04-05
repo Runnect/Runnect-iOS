@@ -57,7 +57,11 @@ extension RecordRouter: TargetType {
     var headers: [String: String]? {
         switch self {
         case .recordRunning, .getActivityRecordInfo:
-            return Config.headerWithAccessToken
+            return Config.defaultHeader
         }
+    }
+    
+    var validationType: ValidationType {
+        return .successCodes
     }
 }

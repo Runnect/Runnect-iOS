@@ -7,6 +7,7 @@
 
 import Foundation
 import Moya
+
 enum PublicCourseRouter {
     case getCourseData
     case getCourseSearchData(keyword: String)
@@ -16,12 +17,14 @@ enum PublicCourseRouter {
 }
 
 extension PublicCourseRouter: TargetType {
+    
     var baseURL: URL {
         guard let url = URL(string: Config.baseURL) else {fatalError("baseURL could not be configured")
         }
         return url
         
     }
+    
     var path: String {
         switch self {
         case .getCourseData, .courseUploadingData:
@@ -34,6 +37,7 @@ extension PublicCourseRouter: TargetType {
             return "/public-course/user"
         }
     }
+    
     var method: Moya.Method {
         switch self {
         case .getCourseData, .getCourseSearchData, .getUploadedCourseDetail, .getUploadedCourseInfo:
@@ -41,8 +45,8 @@ extension PublicCourseRouter: TargetType {
         case .courseUploadingData:
             return .post
         }
-        
     }
+    
     var task: Moya.Task {
         switch self {
         case .getCourseSearchData(let keyword):
@@ -56,6 +60,7 @@ extension PublicCourseRouter: TargetType {
             return .requestPlain
         }
     }
+    
     var headers: [String: String]? {
         switch self {
         default:

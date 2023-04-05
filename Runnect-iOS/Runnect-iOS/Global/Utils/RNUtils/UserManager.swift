@@ -17,9 +17,7 @@ enum RNError: Error {
 final class UserManager {
     static let shared = UserManager()
     
-    private var authProvider = MoyaProvider<AuthRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private var authProvider = Providers.authProvider
     
     @UserDefaultWrapper<String>(key: "accessToken") public var accessToken
     @UserDefaultWrapper<String>(key: "refreshToken") public var refreshToken
