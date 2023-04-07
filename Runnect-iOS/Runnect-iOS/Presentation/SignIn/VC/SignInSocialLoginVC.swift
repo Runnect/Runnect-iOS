@@ -33,18 +33,15 @@ final class SignInSocialLoginVC: UIViewController {
         $0.contentMode = .scaleAspectFill
     }
     
-    private lazy var kakaoLoginButton = UIButton(type: .system).then {
-        $0.setTitle("카카오로 로그인", for: .normal)
-        $0.titleLabel?.font = .b3
-        $0.setTitleColor(.black, for: .normal)
-        $0.setBackgroundColor(UIColor(hex: "FEE500"), for: .normal)
-        $0.layer.cornerRadius = 7
-        $0.setImage(ImageLiterals.icKakao, for: .normal)
-        $0.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: self.screenWidth * 0.5)
-        $0.tintColor = .black
+    private let appleLoginButton = UIButton(type: .custom).then {
+        $0.layer.cornerRadius = 8
+        $0.setImage(ImageLiterals.imgAppleLogin, for: .normal)
     }
     
-    private let appleLoginButton = ASAuthorizationAppleIDButton()
+    private let kakaoLoginButton = UIButton(type: .custom).then {
+        $0.layer.cornerRadius = 8
+        $0.setImage(ImageLiterals.imgKakaoLogin, for: .normal)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,9 +82,8 @@ extension SignInSocialLoginVC {
                     guard let oauthToken = oauthToken else { return }
                     UserManager.shared.signIn(token: oauthToken.accessToken, provider: "KAKAO") { [weak self] result in
                         switch result {
-                        case .success(let nickname):
-                            print(nickname)
-                            self?.pushToNickNameSetUpVC()
+                        case .success(let type):
+                            type == "Signup" ? self?.pushToNickNameSetUpVC() : self?.pushToTabBarController()
                         case .failure(let error):
                             print(error)
                             self?.showNetworkFailureToast()
@@ -105,9 +101,8 @@ extension SignInSocialLoginVC {
                     guard let oauthToken = oauthToken else { return }
                     UserManager.shared.signIn(token: oauthToken.accessToken, provider: "KAKAO") { [weak self] result in
                         switch result {
-                        case .success(let nickname):
-                            print(nickname)
-                            self?.pushToNickNameSetUpVC()
+                        case .success(let type):
+                            type == "Signup" ? self?.pushToNickNameSetUpVC() : self?.pushToTabBarController()
                         case .failure(let error):
                             print(error)
                             self?.showNetworkFailureToast()
@@ -130,6 +125,12 @@ extension SignInSocialLoginVC {
     private func pushToNickNameSetUpVC() {
         let nicknameSetUpVC = NickNameSetUpVC()
         self.navigationController?.pushViewController(nicknameSetUpVC, animated: true)
+    }
+    
+    private func pushToTabBarController() {
+        let tabBarController = TabBarController()
+        guard let window = self.view.window else { return }
+        ViewControllerUtils.setRootViewController(window: window, viewController: tabBarController, withAnimation: true)
     }
 }
 
@@ -192,9 +193,8 @@ extension SignInSocialLoginVC: ASAuthorizationControllerPresentationContextProvi
                 
                 UserManager.shared.signIn(token: tokeStr, provider: "APPLE") { [weak self] result in
                     switch result {
-                    case .success(let nickname):
-                        print(nickname)
-                        self?.pushToNickNameSetUpVC()
+                    case .success(let type):
+                        type == "Signup" ? self?.pushToNickNameSetUpVC() : self?.pushToTabBarController()
                     case .failure(let error):
                         print(error)
                         self?.showNetworkFailureToast()

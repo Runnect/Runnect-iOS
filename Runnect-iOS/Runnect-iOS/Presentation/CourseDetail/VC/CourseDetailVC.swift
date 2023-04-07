@@ -16,17 +16,11 @@ final class CourseDetailVC: UIViewController {
     
     // MARK: - Properties
     
-    private let scrapProvider = MoyaProvider<ScrapRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private let scrapProvider = Providers.scrapProvider
     
-    private let PublicCourseProvider = MoyaProvider<PublicCourseRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private let PublicCourseProvider = Providers.publicCourseProvider
     
-    private let courseProvider = MoyaProvider<CourseRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private let courseProvider = Providers.courseProvider
     
     private var courseModel: Course?
     

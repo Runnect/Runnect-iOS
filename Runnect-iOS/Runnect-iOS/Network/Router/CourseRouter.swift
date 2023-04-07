@@ -89,11 +89,13 @@ extension CourseRouter: TargetType {
     var headers: [String: String]? {
         switch self {
         case .uploadCourseDrawing:
-            return ["Content-Type": "multipart/form-data",
-                    "accessToken": Config.accessToken,
-                    "refreshToken": Config.refreshToken]
+            return ["Content-Type": "multipart/form-data"]
         default:
-            return Config.headerWithAccessToken
+            return Config.defaultHeader
         }
+    }
+    
+    var validationType: ValidationType {
+        return .successCodes
     }
 }

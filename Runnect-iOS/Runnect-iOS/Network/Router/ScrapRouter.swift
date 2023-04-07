@@ -53,7 +53,11 @@ extension ScrapRouter: TargetType {
     var headers: [String: String]? {
         switch self {
         case .createAndDeleteScrap, .getScrapCourse:
-            return Config.headerWithAccessToken
+            return Config.defaultHeader
         }
+    }
+    
+    var validationType: ValidationType {
+        return .successCodes
     }
 }

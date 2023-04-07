@@ -19,9 +19,7 @@ final class NicknameEditorVC: UIViewController {
     
     // MARK: - Properties
     
-    private var userProvider = MoyaProvider<UserRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private var userProvider = Providers.userProvider
     
     weak var delegate: NicknameEditorVCDelegate?
     

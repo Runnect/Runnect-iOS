@@ -49,6 +49,10 @@ extension UserRouter: TargetType {
     }
     
     var headers: [String: String]? {
-        return Config.headerWithAccessToken
+        return Config.defaultHeader
+    }
+    
+    var validationType: ValidationType {
+        return .successCodes
     }
 }
