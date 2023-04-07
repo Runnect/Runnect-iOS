@@ -43,6 +43,8 @@ enum ImageLiterals {
     static var icLocationOverlay: UIImage { .load(named: "ic_location_overlay") }
     static var icLogoCircle: UIImage { .load(named: "ic_logo_circle") }
     static var icMore: UIImage { .load(named: "ic_more") }
+    static var icFrameEdit: UIImage { .load(named: "ic_frame_edit") }
+    
 
     // img
     static var imgBackground: UIImage { .load(named: "img_background") }

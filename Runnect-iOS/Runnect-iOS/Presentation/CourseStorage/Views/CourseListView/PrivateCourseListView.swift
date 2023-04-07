@@ -27,6 +27,11 @@ final class PrivateCourseListView: UIView {
         $0.scrollDirection = .vertical
     }
     
+    private let frameEditButton = UIButton(type: .system).then {
+        $0.setImage(ImageLiterals.icFrameEdit, for: .normal)
+        $0.tintColor = .g1
+    }
+    
     private lazy var courseListCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: collectionViewLayout
@@ -83,14 +88,20 @@ extension PrivateCourseListView {
     }
     
     private func setLayout() {
-        self.addSubviews(courseListCollectionView)
+        self.addSubviews(frameEditButton,courseListCollectionView)
         courseListCollectionView.addSubviews(emptyView)
-
-        courseListCollectionView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.bottom.trailing.equalToSuperview()
-        }
         
+        frameEditButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(11)
+            make.trailing.equalTo(self.safeAreaLayoutGuide).inset(16)
+            
+        }
+    
+        courseListCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(frameEditButton.snp.bottom)
+            make.leading.bottom.trailing.equalToSuperview()
+            
+        }
         emptyView.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(80)
