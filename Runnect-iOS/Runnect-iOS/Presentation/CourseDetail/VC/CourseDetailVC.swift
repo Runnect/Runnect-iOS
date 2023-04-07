@@ -35,6 +35,10 @@ final class CourseDetailVC: UIViewController {
     
     // MARK: - UI Components
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton)
+    private let moreButton = UIButton(type: .system).then {
+        $0.setImage(ImageLiterals.icMore, for: .normal)
+        $0.tintColor = .g1
+    }
     private lazy var middleScorollView = UIScrollView().then {
         $0.isScrollEnabled = true
         $0.showsVerticalScrollIndicator = false
@@ -127,6 +131,22 @@ extension CourseDetailVC {
         getCourseDetailWithPath(courseId: courseId)
     }
     
+    @objc func moreButtonDidTap() {
+           
+           let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+           
+           let saveAction = UIAlertAction(title: "저장하기", style: .default, handler: nil)
+           let reportAction = UIAlertAction(title: "신고하기", style: .destructive, handler: {(_: UIAlertAction!) in
+               //report action
+})
+           let cancelAction = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
+           
+           [ saveAction, reportAction, cancelAction ].forEach { alertController.addAction($0) }
+           
+           present(alertController, animated: true, completion: nil)
+           
+       }
+    
     private func pushToCountDownVC() {
         guard let courseModel = self.courseModel,
               let path = courseModel.path,
@@ -176,6 +196,8 @@ extension CourseDetailVC {
     
     private func setAddTarget() {
         likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
+        
+        moreButton.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
     }
 }
 
@@ -184,11 +206,16 @@ extension CourseDetailVC {
     // MARK: - Layout Helpers
     private func setNavigationBar() {
         view.addSubview(navibar)
-        
+        view.addSubview(moreButton)
         navibar.snp.makeConstraints {  make in
             make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(48)
         }
+        moreButton.snp.makeConstraints { make in
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(16)
+            make.centerY.equalTo(navibar)
+        }
+        
     }
     
     private func setUI() {
