@@ -19,6 +19,8 @@
 		A3BC2F4129667A0D00198261 /* NicknameEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F4029667A0D00198261 /* NicknameEditorVC.swift */; };
 		A3BC2F432966A93100198261 /* CourseDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F422966A93100198261 /* CourseDetailVC.swift */; };
 		A3C2CACE29E313CC00EC525B /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2CACD29E313CC00EC525B /* SettingVC.swift */; };
+		A3C2CAD329E4F77C00EC525B /* TermsOfServiceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2CAD229E4F77C00EC525B /* TermsOfServiceVC.swift */; };
+		A3C2CAD529E4F85400EC525B /* PersonalInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2CAD429E4F85400EC525B /* PersonalInfoVC.swift */; };
 		A3D1A77929CF03D200DD54EC /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D1A77829CF03D200DD54EC /* AuthRouter.swift */; };
 		A3D1A77E29CF09B600DD54EC /* SignInResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D1A77D29CF09B600DD54EC /* SignInResponseDto.swift */; };
 		A3D1A78029CF142E00DD54EC /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D1A77F29CF142E00DD54EC /* UserManager.swift */; };
@@ -165,6 +167,8 @@
 		A3BC2F4029667A0D00198261 /* NicknameEditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditorVC.swift; sourceTree = "<group>"; };
 		A3BC2F422966A93100198261 /* CourseDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailVC.swift; sourceTree = "<group>"; };
 		A3C2CACD29E313CC00EC525B /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
+		A3C2CAD229E4F77C00EC525B /* TermsOfServiceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceVC.swift; sourceTree = "<group>"; };
+		A3C2CAD429E4F85400EC525B /* PersonalInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfoVC.swift; sourceTree = "<group>"; };
 		A3D1A77829CF03D200DD54EC /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
 		A3D1A77D29CF09B600DD54EC /* SignInResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInResponseDto.swift; sourceTree = "<group>"; };
 		A3D1A77F29CF142E00DD54EC /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
@@ -375,6 +379,16 @@
 				A3BC2F3E2964706100198261 /* UploadedCourseInfoCVC.swift */,
 			);
 			path = UploadedCourseInfoCollectionView;
+			sourceTree = "<group>";
+		};
+		A3C2CACF29E4F72400EC525B /* SettingVC */ = {
+			isa = PBXGroup;
+			children = (
+				A3C2CACD29E313CC00EC525B /* SettingVC.swift */,
+				A3C2CAD229E4F77C00EC525B /* TermsOfServiceVC.swift */,
+				A3C2CAD429E4F85400EC525B /* PersonalInfoVC.swift */,
+			);
+			path = SettingVC;
 			sourceTree = "<group>";
 		};
 		A3D1A77C29CF099400DD54EC /* ResponseDto */ = {
@@ -682,10 +696,10 @@
 		CE17F0452961C3DD00E1DED0 /* VC */ = {
 			isa = PBXGroup;
 			children = (
+				A3C2CACF29E4F72400EC525B /* SettingVC */,
 				A3BC2F292962C39F00198261 /* InfoVC */,
 				CEEC6B3F2961C55000D00E1E /* MyPageVC.swift */,
 				A3BC2F4029667A0D00198261 /* NicknameEditorVC.swift */,
-				A3C2CACD29E313CC00EC525B /* SettingVC.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -1330,7 +1344,9 @@
 				CE40BB1E2968054F0030ABCA /* BaseResponse.swift in Sources */,
 				CE14677C2965C1B100DCEA1B /* RunningRecordVC.swift in Sources */,
 				CE6B63D829673450003F900F /* ListEmptyView.swift in Sources */,
+				A3C2CAD329E4F77C00EC525B /* TermsOfServiceVC.swift in Sources */,
 				CE6655F6295D90B600C64E12 /* addToolBar.swift in Sources */,
+				A3C2CAD529E4F85400EC525B /* PersonalInfoVC.swift in Sources */,
 				DAD5A3DA296C6DA500C8166B /* TitleCollectionViewCell.swift in Sources */,
 				CEC2A68A2962ADCD00160BF7 /* RNMapView.swift in Sources */,
 				CE6655F0295D891B00C64E12 /* UITextView+.swift in Sources */,
