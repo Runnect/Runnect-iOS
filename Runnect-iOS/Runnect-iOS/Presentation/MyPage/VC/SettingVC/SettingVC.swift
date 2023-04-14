@@ -13,10 +13,6 @@ import SafariServices
 
 final class SettingVC: UIViewController {
     
-    // MARK: - Properties
-    
-    
-
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("설정")
@@ -26,13 +22,13 @@ final class SettingVC: UIViewController {
     private let thirdDiviedView = UIView()
     
     let reportUrl = NSURL(string: "https://docs.google.com/forms/d/e/1FAIpQLSek2rkClKfGaz1zwTEHX3Oojbq_pbF3ifPYMYezBU0_pe-_Tg/viewform")
-    lazy var reportSafariView: SFSafariViewController = SFSafariViewController(url: self.reportUrl as! URL)
+    lazy var reportSafariView: SFSafariViewController = SFSafariViewController(url: self.reportUrl! as URL)
     
     private lazy var personalInfoView = makeInfoView(title: "계정 정보").then {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpPersonalInfoView))
         $0.addGestureRecognizer(tap)
     }
-    
+
     private lazy var reportView = makeInfoView(title: "문의 및 신고하기").then {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpReportView))
         $0.addGestureRecognizer(tap)

@@ -33,8 +33,14 @@ final class PersonalInfoVC: UIViewController {
         $0.text = "dlwogus0128@ajou.ac.kr"
     }
     
-    private lazy var logoutView = makeInfoView(title: "로그아웃")
-    private lazy var deleteAccountView = makeInfoView(title: "탈퇴하기")
+    private lazy var logoutView = makeInfoView(title: "로그아웃").then {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpLogoutView))
+        $0.addGestureRecognizer(tap)
+    }
+    private lazy var deleteAccountView = makeInfoView(title: "탈퇴하기").then {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpDeleteAccountView))
+        $0.addGestureRecognizer(tap)
+    }
     
     // MARK: - View Life Cycle
     
@@ -42,6 +48,20 @@ final class PersonalInfoVC: UIViewController {
         super.viewDidLoad()
         setUI()
         setLayout()
+    }
+}
+
+// MARK: - @objc Function
+
+extension PersonalInfoVC {
+    @objc
+    func touchUpLogoutView() {
+        pushToLogoutVC()
+    }
+    
+    @objc
+    func touchUpDeleteAccountView() {
+        pushToDeleteAccountVC()
     }
 }
 
@@ -74,6 +94,18 @@ extension PersonalInfoVC {
         }
         
         return containerView
+    }
+    
+    private func pushToLogoutVC() {
+        let logoutVC = LogoutVC()
+        logoutVC.modalPresentationStyle = .overFullScreen
+        self.present(logoutVC, animated: false)
+    }
+    
+    private func pushToDeleteAccountVC() {
+        let deleteAccountVC = DeleteAccountVC()
+        deleteAccountVC.modalPresentationStyle = .overFullScreen
+        self.present(deleteAccountVC, animated: false)
     }
 }
 
