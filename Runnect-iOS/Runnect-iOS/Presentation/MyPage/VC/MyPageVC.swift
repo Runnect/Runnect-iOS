@@ -15,9 +15,7 @@ final class MyPageVC: UIViewController {
     
     // MARK: - Properties
     
-    private var userProvider = MoyaProvider<UserRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private var userProvider = Providers.userProvider
     
     let stampNameImageDictionary: [String: UIImage] = GoalRewardInfoModel.stampNameImageDictionary
         

@@ -15,13 +15,9 @@ final class CourseSearchVC: UIViewController {
     
     // MARK: - Properties
     
-    private let PublicCourseRouter = MoyaProvider<PublicCourseRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private let PublicCourseRouter = Providers.publicCourseProvider
     
-    private let scrapProvider = MoyaProvider<ScrapRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private let scrapProvider = Providers.scrapProvider
     
     private var courseList = [PublicCourse]()
     private var keyword: String?

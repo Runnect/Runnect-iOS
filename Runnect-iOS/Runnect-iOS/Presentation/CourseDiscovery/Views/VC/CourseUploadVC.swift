@@ -15,9 +15,8 @@ class CourseUploadVC: UIViewController {
     
     // MARK: - Properties
 //    private var runningModel: RunningModel?
-    private let PublicCourseProvider = MoyaProvider<PublicCourseRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private let PublicCourseProvider = Providers.publicCourseProvider
+    
     private var courseModel: Course?
     private let courseTitleMaxLength = 20
     

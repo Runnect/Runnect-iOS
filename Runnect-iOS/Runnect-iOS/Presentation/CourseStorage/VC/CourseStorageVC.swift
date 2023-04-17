@@ -14,13 +14,9 @@ final class CourseStorageVC: UIViewController {
     
     // MARK: - Properties
     
-    private let courseProvider = MoyaProvider<CourseRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private let courseProvider = Providers.courseProvider
     
-    private let scrapProvider = MoyaProvider<ScrapRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private let scrapProvider = Providers.scrapProvider
     
     private let cancelBag = CancelBag()
     

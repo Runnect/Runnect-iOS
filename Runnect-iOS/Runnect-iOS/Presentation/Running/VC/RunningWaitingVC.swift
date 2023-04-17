@@ -18,13 +18,9 @@ final class RunningWaitingVC: UIViewController {
     private var publicCourseId: Int?
     private var courseModel: Course?
     
-    private let courseProvider = MoyaProvider<CourseRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private let courseProvider = Providers.courseProvider
     
-    private let recordProvider = MoyaProvider<RecordRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private let recordProvider = Providers.recordProvider
     
     // MARK: - UI Components
 

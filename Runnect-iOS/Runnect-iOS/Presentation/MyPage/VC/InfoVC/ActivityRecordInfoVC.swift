@@ -15,9 +15,7 @@ final class ActivityRecordInfoVC: UIViewController {
     
     // MARK: - Properties
     
-    private var recordProvider = MoyaProvider<RecordRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private var recordProvider = Providers.recordProvider
     
     private var activityRecordList = [ActivityRecord]()
     

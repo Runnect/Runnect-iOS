@@ -13,9 +13,7 @@ final class NickNameSetUpVC: UIViewController {
     
     // MARK: - Properties
     
-    private var userProvider = MoyaProvider<UserRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private var userProvider = Providers.userProvider
     
     private let nicknameMaxLength = 7
     

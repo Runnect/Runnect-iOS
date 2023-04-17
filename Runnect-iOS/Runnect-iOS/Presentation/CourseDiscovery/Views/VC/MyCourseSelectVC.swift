@@ -14,9 +14,7 @@ class MyCourseSelectVC: UIViewController {
     
     // MARK: - Properties
     
-    private let courseProvider = MoyaProvider<CourseRouter>(
-        plugins: [NetworkLoggerPlugin(verbose: true)]
-    )
+    private let courseProvider = Providers.courseProvider
     
     private var courseList = [Course]()
     
