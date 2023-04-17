@@ -11,6 +11,7 @@ import SnapKit
 import Then
 import NMapsMap
 import Moya
+import SafariServices
 
 final class CourseDetailVC: UIViewController {
     
@@ -100,7 +101,6 @@ final class CourseDetailVC: UIViewController {
         $0.isScrollEnabled = false
         $0.sizeToFit()
     }
-    
     // MARK: - View Life Cycle
 
     override func viewDidLoad() {
@@ -128,16 +128,15 @@ extension CourseDetailVC {
     @objc func moreButtonDidTap() {
            
            let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-           
-           let saveAction = UIAlertAction(title: "저장하기", style: .default, handler: nil)
-           let reportAction = UIAlertAction(title: "신고하기", style: .destructive, handler: {(_: UIAlertAction!) in
-               //report action
+        let formUrl = NSURL(string: "https://docs.google.com/forms/d/e/1FAIpQLSek2rkClKfGaz1zwTEHX3Oojbq_pbF3ifPYMYezBU0_pe-_Tg/viewform")
+        let formSafariView: SFSafariViewController = SFSafariViewController(url: formUrl! as URL)
+        let reportAction = UIAlertAction(title: "신고하기", style: .destructive, handler: {(_: UIAlertAction!) in
+            self.present(formSafariView, animated: true, completion: nil)
 })
-           let cancelAction = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
            
-           [ saveAction, reportAction, cancelAction ].forEach { alertController.addAction($0) }
-           
-           present(alertController, animated: true, completion: nil)
+           [ reportAction, cancelAction ].forEach { alertController.addAction($0) }
+        present(alertController, animated: true, completion: nil)
            
        }
     

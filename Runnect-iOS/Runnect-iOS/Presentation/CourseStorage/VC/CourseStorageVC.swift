@@ -34,9 +34,6 @@ final class CourseStorageVC: UIViewController {
     
     private lazy var viewPager = ViewPager(pageTitles: ["내가 그린 코스", "스크랩 코스"])
         .addPagedView(pagedView: [privateCourseListView, scrapCourseListView])
-    
-    
-    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -120,8 +117,6 @@ extension CourseStorageVC {
             make.top.equalTo(naviBar.snp.bottom)
             make.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
         }
-        
-        
     }
 }
 
