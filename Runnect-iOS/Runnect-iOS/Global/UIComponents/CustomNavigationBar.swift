@@ -19,6 +19,7 @@ enum NaviType {
     case title // 좌측 타이틀
     case titleWithLeftButton // 뒤로가기 버튼 + 중앙 타이틀
     case search // 검색창
+    case report // 신고
 }
 
 final class CustomNavigationBar: UIView {
@@ -30,6 +31,7 @@ final class CustomNavigationBar: UIView {
     private var vc: UIViewController?
     private var leftButtonClosure: (() -> Void)?
     private var rightButtonClosure: (() -> Void)?
+    private var reportButtonClosure: (() -> Void)?
     
     // MARK: - UI Components
     
@@ -37,6 +39,7 @@ final class CustomNavigationBar: UIView {
     private let centerTitleLabel = UILabel()
     private let leftButton = UIButton()
     private let rightButton = UIButton()
+    private let reportButton = UIButton()
     private let textField = UITextField()
     
     // MARK: - initialization
@@ -62,13 +65,14 @@ extension CustomNavigationBar {
         UIView.animate(withDuration: 0.1,
                        delay: 0,
                        options: .curveEaseInOut) {
-            [self.leftTitleLabel, self.centerTitleLabel, self.leftButton, self.rightButton].forEach { $0.alpha = isHidden ? 0 : 1 }
+            [self.leftTitleLabel, self.centerTitleLabel, self.leftButton, self.rightButton, self.reportButton].forEach { $0.alpha = isHidden ? 0 : 1 }
         }
     }
     
     private func setAddTarget() {
         self.leftButton.addTarget(self, action: #selector(popToPreviousVC), for: .touchUpInside)
         self.rightButton.addTarget(self, action: #selector(searchLocation), for: .touchUpInside)
+        self.reportButton.addTarget(self, action: #selector(reportLocation), for: .touchUpInside)
     }
     
     private func setDelegate() {
@@ -136,6 +140,24 @@ extension CustomNavigationBar {
         self.textField.resignFirstResponder()
         return self
     }
+    
+    @discardableResult
+    func resetReportButtonAction(_ closure: (() -> Void)? = nil) -> Self {
+        self.reportButtonClosure = closure
+        self.reportButton.removeTarget(self, action: nil, for: .touchUpInside)
+        if closure != nil {
+            self.reportButton.addTarget(self, action: #selector(reportButtonDidTap), for: .touchUpInside)
+        } else {
+            self.setAddTarget()
+        }
+        return self
+    }
+    
+    @discardableResult
+    func hideReportButton() -> Self {
+        self.reportButton.isHidden = true
+        return self
+    }
 }
 
 // MARK: - @objc Function
@@ -151,12 +173,20 @@ extension CustomNavigationBar {
         delegate?.searchButtonDidTap(text: text)
     }
     
+    @objc private func reportLocation() {
+        self.reportButtonClosure?()
+        
+    }
+    
     @objc private func rightButtonDidTap() {
         self.rightButtonClosure?()
     }
     
     @objc private func leftButtonDidTap() {
         self.leftButtonClosure?()
+    }
+    @objc private func reportButtonDidTap() {
+        self.reportButtonClosure?()
     }
 }
 
@@ -187,6 +217,10 @@ extension CustomNavigationBar {
             textField.textColor = .g1
             textField.addLeftPadding(width: 2)
             rightButton.setImage(ImageLiterals.icSearch, for: .normal)
+            
+        case .report:
+            reportButton.setImage(ImageLiterals.icArrowBack, for: .normal)
+            reportButton.isHidden = false
         }
     }
     
@@ -198,6 +232,8 @@ extension CustomNavigationBar {
             setTitleWithLeftButtonLayout()
         case .search:
             setSearchLayout()
+        case .report:
+            setReportButtonLayout()
         }
     }
     
@@ -244,6 +280,21 @@ extension CustomNavigationBar {
             make.leading.equalTo(leftButton.snp.trailing)
             make.trailing.equalTo(rightButton.snp.leading)
         }
+    }
+    
+    private func setReportButtonLayout() {
+        self.addSubviews(leftButton, reportButton)
+        leftButton.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.width.height.equalTo(48)
+        }
+        reportButton.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.width.height.equalTo(48)
+        }
+        
     }
 }
 

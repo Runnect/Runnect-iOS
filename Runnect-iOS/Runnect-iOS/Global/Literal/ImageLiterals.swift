@@ -42,6 +42,7 @@ enum ImageLiterals {
     static var icAlert: UIImage { .load(named: "ic_alert") }
     static var icLocationOverlay: UIImage { .load(named: "ic_location_overlay") }
     static var icLogoCircle: UIImage { .load(named: "ic_logo_circle") }
+    static var icMore: UIImage { .load(named: "ic_more") }
 
     // img
     static var imgBackground: UIImage { .load(named: "img_background") }
@@ -70,6 +71,7 @@ enum ImageLiterals {
     static var imgAppleLogin: UIImage { .load(named: "img_apple_login")}
     static var imgKakaoLogin: UIImage { .load(named: "img_kakao_login")}
 }
+
 
 extension UIImage {
     static func load(named imageName: String) -> UIImage {
