@@ -24,9 +24,13 @@ final class MyPageVC: UIViewController {
     private lazy var navibar = CustomNavigationBar(self, type: .title).setTitle("마이페이지")
     private let myProfileView = UIView()
     private let myRunningProgressView = UIView()
+    private let versionInfoView = UIView()
     private let firstDivideView = UIView()
     private let secondDivideView = UIView()
     private let thirdDivideView = UIView()
+    private let fourthDivideView = UIView()
+    private let topVersionDivideView = UIView()
+    private let bottomVersionDivideView = UIView()
     
     private let myProfileImage = UIImageView()
     
@@ -79,6 +83,23 @@ final class MyPageVC: UIViewController {
         $0.addGestureRecognizer(tap)
     }
 
+    private lazy var settingView = makeInfoView(title: "설정").then {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpSettingView))
+        $0.addGestureRecognizer(tap)
+    }
+    
+    private let versionInfoLabel = UILabel().then {
+        $0.textColor = .g2
+        $0.font = .b2
+        $0.text = "버전 정보"
+    }
+    
+    private let versionInfoValueLabel = UILabel().then {
+        $0.textColor = .g2
+        $0.font = .b2
+        $0.text = "v. 1.0.1"
+    }
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -130,7 +151,7 @@ extension MyPageVC {
         
         icArrowRight.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(18)
-            make.trailing.equalToSuperview().inset(8)
+            make.trailing.equalToSuperview().inset(10)
         }
         
         return containerView
@@ -156,6 +177,11 @@ extension MyPageVC {
         nicknameEditorVC.delegate = self
         nicknameEditorVC.modalPresentationStyle = .overFullScreen
         self.present(nicknameEditorVC, animated: false)
+    }
+    
+    private func pushToSettingVC() {
+        let settingVC = SettingVC()
+        self.navigationController?.pushViewController(settingVC, animated: true)
     }
     
     private func setData(model: MyPageDto) {
@@ -206,6 +232,11 @@ extension MyPageVC {
     private func touchUpNicknameEditorView() {
         pushToNicknameEditorVC()
     }
+    
+    @objc
+    private func touchUpSettingView() {
+        pushToSettingVC()
+    }
 }
 
 // MARK: - UI & Layout
@@ -226,12 +257,15 @@ extension MyPageVC {
         firstDivideView.backgroundColor = .g5
         secondDivideView.backgroundColor = .g4
         thirdDivideView.backgroundColor = .g4
+        fourthDivideView.backgroundColor = .g4
+        topVersionDivideView.backgroundColor = .g5
+        bottomVersionDivideView.backgroundColor = .g5
     }
     
     private func setLayout() {
         view.addSubviews(myProfileView, myRunningProgressView, firstDivideView,
             goalRewardInfoView, secondDivideView, activityRecordInfoView,
-            thirdDivideView, uploadedCourseInfoView)
+            thirdDivideView, uploadedCourseInfoView, fourthDivideView, settingView)
         
         myProfileView.snp.makeConstraints { make in
             make.top.equalTo(navibar.snp.bottom).offset(6)
@@ -249,6 +283,7 @@ extension MyPageVC {
         }
         
         setInfoButtonLayout()
+        setVersionInfoLayout()
     }
     
     private func setMyProfileLayout() {
@@ -274,9 +309,9 @@ extension MyPageVC {
         }
         
         myRunningProgressView.snp.makeConstraints { make in
-            make.top.equalTo(myProfileView.snp.bottom).offset(18)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(55)
+            make.top.equalTo(myProfileView.snp.bottom).offset(31)
+            make.leading.trailing.equalToSuperview().inset(32)
+            make.height.equalTo(61)
         }
     }
     
@@ -286,7 +321,7 @@ extension MyPageVC {
         
         myRunningLevelLavel.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.leading.equalToSuperview().offset(1)
+            make.leading.equalToSuperview().offset(3)
         }
         
         myRunningProgressBar.snp.makeConstraints { make in
@@ -331,7 +366,60 @@ extension MyPageVC {
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(60)
         }
-    }    
+        
+        activityRecordInfoView.snp.makeConstraints { make in
+            make.top.equalTo(secondDivideView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(60)
+        }
+        
+        fourthDivideView.snp.makeConstraints { make in
+            make.top.equalTo(uploadedCourseInfoView.snp.bottom).offset(1)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(0.5)
+        }
+        
+        settingView.snp.makeConstraints { make in
+            make.top.equalTo(fourthDivideView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(60)
+        }
+    
+    }
+    
+    private func setVersionInfoLayout() {
+        view.addSubviews(topVersionDivideView, versionInfoView, bottomVersionDivideView)
+        
+        topVersionDivideView.snp.makeConstraints { make in
+            make.top.equalTo(settingView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(4)
+        }
+        
+        versionInfoView.snp.makeConstraints { make in
+            make.top.equalTo(settingView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(62)
+        }
+        
+        bottomVersionDivideView.snp.makeConstraints { make in
+            make.top.equalTo(versionInfoView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(4)
+        }
+        
+        versionInfoView.addSubviews(versionInfoLabel, versionInfoValueLabel)
+        
+        versionInfoLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().offset(18)
+        }
+        
+        versionInfoValueLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().inset(18)
+        }
+    }
 }
 
 extension MyPageVC: NicknameEditorVCDelegate {
