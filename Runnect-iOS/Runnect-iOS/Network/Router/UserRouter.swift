@@ -12,6 +12,7 @@ import Moya
 enum UserRouter {
     case getMyPageInfo
     case updateUserNickname(nickname: String)
+    case deleteUser
 }
 
 extension UserRouter: TargetType {
@@ -25,7 +26,7 @@ extension UserRouter: TargetType {
     
     var path: String {
         switch self {
-        case .getMyPageInfo, .updateUserNickname:
+        case .getMyPageInfo, .updateUserNickname, .deleteUser:
             return "/user"
         }
     }
@@ -36,12 +37,14 @@ extension UserRouter: TargetType {
             return .get
         case .updateUserNickname:
             return .patch
+        case .deleteUser:
+            return .delete
         }
     }
     
     var task: Moya.Task {
         switch self {
-        case .getMyPageInfo:
+        case .getMyPageInfo, .deleteUser:
             return .requestPlain
         case .updateUserNickname(let nickname):
             return .requestParameters(parameters: ["nickname": nickname], encoding: JSONEncoding.default)

@@ -12,6 +12,10 @@ import Then
 
 final class PersonalInfoVC: UIViewController {
     
+    // MARK: - Properties
+    
+    private let userProvider = Providers.userProvider
+    
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("계정 정보")
@@ -106,7 +110,10 @@ extension PersonalInfoVC {
     }
     
     private func pushToDeleteAccountVC() {
-        let deleteAccountVC = DeleteAccountVC()
+        let deleteAccountVC = RNAlertVC(description: "정말로 탈퇴하시겠어요?")
+        deleteAccountVC.rightButtonTapAction = { [weak self] in
+            self?.deleteUser()
+        }
         deleteAccountVC.modalPresentationStyle = .overFullScreen
         self.present(deleteAccountVC, animated: false)
     }
@@ -114,6 +121,10 @@ extension PersonalInfoVC {
     private func logout() {
         UserManager.shared.logout()
         self.showSplashVC()
+    }
+    
+    private func deleteUserDidComplete() {
+        self.logout()
     }
     
     private func showSplashVC() {
@@ -219,6 +230,39 @@ extension PersonalInfoVC {
             make.top.equalTo(deleteAccountView.snp.bottom).offset(1)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(0.5)
+        }
+    }
+}
+
+// MARK: - Network
+
+extension PersonalInfoVC {
+    private func deleteUser() {
+        LoadingIndicator.showLoading()
+        self.userProvider.request(.deleteUser) { [weak self] result in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch result {
+            case .success(let response):
+                let status = response.statusCode
+                if 200..<300 ~= status {
+                    do {
+                        let responseDto = try response.map(BaseResponse<UserDeleteResponseDto>.self)
+                        guard let data = responseDto.data else { return }
+                        print("삭제된 유저 아이디: \(data.deletedUserId)")
+                        self.deleteUserDidComplete()
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error)
+                self.showNetworkFailureToast()
+            }
         }
     }
 }
