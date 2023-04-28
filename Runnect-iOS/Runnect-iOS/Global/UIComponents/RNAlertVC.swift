@@ -10,9 +10,11 @@ import UIKit
 import SnapKit
 import Then
 
-final class LogoutVC: UIViewController {
+final class RNAlertVC: UIViewController {
     
     // MARK: - Properties
+    
+    var rightButtonTapAction: (() -> Void)?
     
     // MARK: - UI Components
     
@@ -20,7 +22,7 @@ final class LogoutVC: UIViewController {
         $0.layer.cornerRadius = 15
     }
     
-    private let logoutQuestionLabel = UILabel().then {
+    private let DescriptionLabel = UILabel().then {
         $0.text = "로그아웃 하시겠어요?"
         $0.font = .b4
         $0.textColor = .g2
@@ -54,7 +56,7 @@ final class LogoutVC: UIViewController {
 
 // MARK: - Methods
 
-extension LogoutVC {
+extension RNAlertVC {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         if let touch = touches.first, touch.view == self.view {
@@ -64,20 +66,25 @@ extension LogoutVC {
     
     private func setAddTarget() {
         self.noButton.addTarget(self, action: #selector(touchUpNoButton), for: .touchUpInside)
+        self.yesButton.addTarget(self, action: #selector(touchYesButton), for: .touchUpInside)
     }
 }
 
 // MARK: - @objc Function
 
-extension LogoutVC {
-    @objc func touchUpNoButton() {
+extension RNAlertVC {
+    @objc private func touchUpNoButton() {
         dismiss(animated: false)
+    }
+    
+    @objc private func touchYesButton() {
+        self.rightButtonTapAction?()
     }
 }
 
 // MARK: - Layout Helpers
 
-extension LogoutVC {
+extension RNAlertVC {
     private func setUI() {
         view.backgroundColor = .black.withAlphaComponent(0.8)
         containerView.backgroundColor = .w1
@@ -93,9 +100,9 @@ extension LogoutVC {
             make.height.equalTo(126)
         }
         
-        containerView.addSubviews(logoutQuestionLabel, yesButton, noButton)
+        containerView.addSubviews(DescriptionLabel, yesButton, noButton)
         
-        logoutQuestionLabel.snp.makeConstraints { make in
+        DescriptionLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(26)
         }

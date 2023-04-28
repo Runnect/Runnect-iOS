@@ -21,7 +21,7 @@
 		A3C2CACE29E313CC00EC525B /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2CACD29E313CC00EC525B /* SettingVC.swift */; };
 		A3C2CAD329E4F77C00EC525B /* TermsOfServiceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2CAD229E4F77C00EC525B /* TermsOfServiceVC.swift */; };
 		A3C2CAD529E4F85400EC525B /* PersonalInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2CAD429E4F85400EC525B /* PersonalInfoVC.swift */; };
-		A3C2CAD729E53B2900EC525B /* LogoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2CAD629E53B2900EC525B /* LogoutVC.swift */; };
+		A3C2CAD729E53B2900EC525B /* RNAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2CAD629E53B2900EC525B /* RNAlertVC.swift */; };
 		A3C2CADB29E9A12400EC525B /* DeleteAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2CADA29E9A12400EC525B /* DeleteAccountVC.swift */; };
 		A3D1A77929CF03D200DD54EC /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D1A77829CF03D200DD54EC /* AuthRouter.swift */; };
 		A3D1A77E29CF09B600DD54EC /* SignInResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D1A77D29CF09B600DD54EC /* SignInResponseDto.swift */; };
@@ -171,7 +171,7 @@
 		A3C2CACD29E313CC00EC525B /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		A3C2CAD229E4F77C00EC525B /* TermsOfServiceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceVC.swift; sourceTree = "<group>"; };
 		A3C2CAD429E4F85400EC525B /* PersonalInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfoVC.swift; sourceTree = "<group>"; };
-		A3C2CAD629E53B2900EC525B /* LogoutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutVC.swift; sourceTree = "<group>"; };
+		A3C2CAD629E53B2900EC525B /* RNAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNAlertVC.swift; sourceTree = "<group>"; };
 		A3C2CADA29E9A12400EC525B /* DeleteAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountVC.swift; sourceTree = "<group>"; };
 		A3D1A77829CF03D200DD54EC /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
 		A3D1A77D29CF09B600DD54EC /* SignInResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInResponseDto.swift; sourceTree = "<group>"; };
@@ -391,7 +391,6 @@
 				A3C2CACD29E313CC00EC525B /* SettingVC.swift */,
 				A3C2CAD229E4F77C00EC525B /* TermsOfServiceVC.swift */,
 				A3C2CAD429E4F85400EC525B /* PersonalInfoVC.swift */,
-				A3C2CAD629E53B2900EC525B /* LogoutVC.swift */,
 				A3C2CADA29E9A12400EC525B /* DeleteAccountVC.swift */,
 			);
 			path = SettingVC;
@@ -1032,6 +1031,7 @@
 				CE9291262965D0ED0010959C /* StatsInfoView.swift */,
 				CE6B63D729673450003F900F /* ListEmptyView.swift */,
 				CEB0BCBB29D123350048CCD5 /* GuideView.swift */,
+				A3C2CAD629E53B2900EC525B /* RNAlertVC.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -1361,7 +1361,7 @@
 				CE40BB1C2967E4910030ABCA /* RunningWaitingVC.swift in Sources */,
 				CE6B63D6296731F9003F900F /* ScrapCourseListView.swift in Sources */,
 				CE6655F8295D90CF00C64E12 /* adjusted+.swift in Sources */,
-				A3C2CAD729E53B2900EC525B /* LogoutVC.swift in Sources */,
+				A3C2CAD729E53B2900EC525B /* RNAlertVC.swift in Sources */,
 				DAD5A3E2296D4C6500C8166B /* PickedMapListResponseDto.swift in Sources */,
 				CE4545CB295D7AF4003201E1 /* SceneDelegate.swift in Sources */,
 				A3F67AE2296D33AC001598A2 /* MyPageDto.swift in Sources */,

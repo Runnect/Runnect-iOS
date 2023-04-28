@@ -97,7 +97,10 @@ extension PersonalInfoVC {
     }
     
     private func pushToLogoutVC() {
-        let logoutVC = LogoutVC()
+        let logoutVC = RNAlertVC()
+        logoutVC.rightButtonTapAction = {
+            print("로그아웃 버튼 클릭!~~!")
+        }
         logoutVC.modalPresentationStyle = .overFullScreen
         self.present(logoutVC, animated: false)
     }
