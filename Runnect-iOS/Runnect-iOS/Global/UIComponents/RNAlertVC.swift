@@ -22,8 +22,7 @@ final class RNAlertVC: UIViewController {
         $0.layer.cornerRadius = 15
     }
     
-    private let DescriptionLabel = UILabel().then {
-        $0.text = "로그아웃 하시겠어요?"
+    private let descriptionLabel = UILabel().then {
         $0.font = .b4
         $0.textColor = .g2
     }
@@ -42,6 +41,15 @@ final class RNAlertVC: UIViewController {
         $0.setTitleColor(.m1, for: .normal)
         $0.layer.backgroundColor = UIColor.m3.cgColor
         $0.layer.cornerRadius = 10
+    }
+    
+    init(description: String) {
+        super.init(nibName: nil, bundle: nil)
+        self.descriptionLabel.text = description
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - View Life Cycle
@@ -100,9 +108,9 @@ extension RNAlertVC {
             make.height.equalTo(126)
         }
         
-        containerView.addSubviews(DescriptionLabel, yesButton, noButton)
+        containerView.addSubviews(descriptionLabel, yesButton, noButton)
         
-        DescriptionLabel.snp.makeConstraints { make in
+        descriptionLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(26)
         }

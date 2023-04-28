@@ -97,9 +97,9 @@ extension PersonalInfoVC {
     }
     
     private func pushToLogoutVC() {
-        let logoutVC = RNAlertVC()
-        logoutVC.rightButtonTapAction = {
-            print("로그아웃 버튼 클릭!~~!")
+        let logoutVC = RNAlertVC(description: "로그아웃 하시겠어요?")
+        logoutVC.rightButtonTapAction = { [weak self] in
+            self?.logout()
         }
         logoutVC.modalPresentationStyle = .overFullScreen
         self.present(logoutVC, animated: false)
@@ -109,6 +109,11 @@ extension PersonalInfoVC {
         let deleteAccountVC = DeleteAccountVC()
         deleteAccountVC.modalPresentationStyle = .overFullScreen
         self.present(deleteAccountVC, animated: false)
+    }
+    
+    private func logout() {
+        print("로그아웃 버튼 클릭!~~!")
+        
     }
 }
 
