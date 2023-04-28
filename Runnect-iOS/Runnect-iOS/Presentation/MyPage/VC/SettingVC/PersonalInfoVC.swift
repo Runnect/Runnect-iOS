@@ -112,8 +112,15 @@ extension PersonalInfoVC {
     }
     
     private func logout() {
-        print("로그아웃 버튼 클릭!~~!")
-        
+        UserManager.shared.logout()
+        self.showSplashVC()
+    }
+    
+    private func showSplashVC() {
+        let splashVC = SplashVC()
+        let navigationController = UINavigationController(rootViewController: splashVC)
+        guard let window = self.view.window else { return }
+        ViewControllerUtils.setRootViewController(window: window, viewController: navigationController, withAnimation: true)
     }
 }
 
