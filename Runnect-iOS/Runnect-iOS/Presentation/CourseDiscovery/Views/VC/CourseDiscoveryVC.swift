@@ -28,8 +28,11 @@ final class CourseDiscoveryVC: UIViewController {
         $0.setImage(ImageLiterals.icSearch, for: .normal)
         $0.tintColor = .g1
     }
-    private let uploadButton = CustomButton(title: "업로드하기").then {
+    private let uploadButton = CustomButton(title: "업로드").then {
         $0.layer.cornerRadius = 20
+        $0.setImage(ImageLiterals.icPlus, for: .normal)
+        $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
+        $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
     }
     
     // MARK: - collectionview
@@ -49,6 +52,7 @@ final class CourseDiscoveryVC: UIViewController {
     
     override func viewDidLoad () {
         super.viewDidLoad()
+        setUI()
         register()
         setNavigationBar()
         setDelegate()
@@ -105,6 +109,11 @@ extension CourseDiscoveryVC {
 // MARK: - UI & Layout
 
 extension CourseDiscoveryVC {
+    private func setUI() {
+        view.backgroundColor = .w1
+        mapCollectionView.backgroundColor = .w1
+    }
+    
     private func setNavigationBar() {
         view.addSubview(navibar)
         view.addSubview(searchButton)
@@ -120,8 +129,6 @@ extension CourseDiscoveryVC {
     }
     
     private func layout() {
-        view.backgroundColor = .w1
-        mapCollectionView.backgroundColor = .w1
         view.addSubviews(uploadButton, mapCollectionView)
         view.bringSubviewToFront(uploadButton)
         
@@ -134,7 +141,7 @@ extension CourseDiscoveryVC {
             make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(16)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(20)
             make.height.equalTo(40)
-            make.width.equalTo(136)
+            make.width.equalTo(92)
         }
     }
 }
