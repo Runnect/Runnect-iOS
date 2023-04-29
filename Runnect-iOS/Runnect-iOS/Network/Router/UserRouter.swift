@@ -12,7 +12,7 @@ import Moya
 enum UserRouter {
     case getMyPageInfo
     case updateUserNickname(nickname: String)
-    case deleteUser
+    case deleteUser(appleToken: String?)
 }
 
 extension UserRouter: TargetType {
@@ -52,7 +52,16 @@ extension UserRouter: TargetType {
     }
     
     var headers: [String: String]? {
-        return Config.defaultHeader
+        switch self {
+        case .deleteUser(let appleToken):
+            if let appleToken = appleToken {
+                return ["Content-Type": "application/json", "appleAccessToken": appleToken]
+            } else {
+                return Config.defaultHeader
+            }
+        default:
+            return Config.defaultHeader
+        }
     }
     
     var validationType: ValidationType {
