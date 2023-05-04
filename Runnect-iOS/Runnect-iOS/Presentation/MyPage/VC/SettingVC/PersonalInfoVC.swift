@@ -6,11 +6,16 @@
 //
 
 import UIKit
+import AuthenticationServices
 
 import SnapKit
 import Then
 
 final class PersonalInfoVC: UIViewController {
+    
+    // MARK: - Properties
+    
+    private let userProvider = Providers.userProvider
     
     // MARK: - UI Components
     
@@ -97,15 +102,54 @@ extension PersonalInfoVC {
     }
     
     private func pushToLogoutVC() {
-        let logoutVC = LogoutVC()
+        let logoutVC = RNAlertVC(description: "로그아웃 하시겠어요?")
+        logoutVC.rightButtonTapAction = { [weak self] in
+            self?.logout()
+        }
         logoutVC.modalPresentationStyle = .overFullScreen
         self.present(logoutVC, animated: false)
     }
     
     private func pushToDeleteAccountVC() {
-        let deleteAccountVC = DeleteAccountVC()
+        let deleteAccountVC = RNAlertVC(description: "정말로 탈퇴하시겠어요?")
+        deleteAccountVC.rightButtonTapAction = { [weak self] in
+            // 애플 유저가 탈퇴할 경우 애플로부터 토큰을 한번 더 받아서 보내주기
+            if let isKakao =  UserManager.shared.isKakao, !isKakao {
+                // 애플 토큰 받기
+                self?.requestAppleToken()
+            } else {
+                // 카카오 유저 탈퇴
+                self?.deleteUser(appleToken: nil)
+            }
+        }
         deleteAccountVC.modalPresentationStyle = .overFullScreen
         self.present(deleteAccountVC, animated: false)
+    }
+    
+    private func logout() {
+        UserManager.shared.logout()
+        self.showSplashVC()
+    }
+    
+    private func deleteUserDidComplete() {
+        self.logout()
+    }
+    
+    private func showSplashVC() {
+        let splashVC = SplashVC()
+        let navigationController = UINavigationController(rootViewController: splashVC)
+        guard let window = self.view.window else { return }
+        ViewControllerUtils.setRootViewController(window: window, viewController: navigationController, withAnimation: true)
+    }
+    
+    private func requestAppleToken() {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+                
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
     }
 }
 
@@ -205,5 +249,69 @@ extension PersonalInfoVC {
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(0.5)
         }
+    }
+}
+
+// MARK: - Network
+
+extension PersonalInfoVC {
+    private func deleteUser(appleToken: String?) {
+        LoadingIndicator.showLoading()
+        self.userProvider.request(.deleteUser(appleToken: appleToken)) { [weak self] result in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch result {
+            case .success(let response):
+                let status = response.statusCode
+                if 200..<300 ~= status {
+                    do {
+                        let responseDto = try response.map(BaseResponse<UserDeleteResponseDto>.self)
+                        guard let data = responseDto.data else { return }
+                        print("삭제된 유저 아이디: \(data.deletedUserId)")
+                        self.deleteUserDidComplete()
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error)
+                self.showNetworkFailureToast()
+            }
+        }
+    }
+}
+
+extension PersonalInfoVC: ASAuthorizationControllerPresentationContextProviding, ASAuthorizationControllerDelegate {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+    
+    /// Apple ID 연동 성공 시
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+            switch authorization.credential {
+                /// Apple ID
+            case let appleIDCredential as ASAuthorizationAppleIDCredential:
+                
+                /// 계정 정보 가져오기
+                let userIdentifier = appleIDCredential.user
+                let idToken = appleIDCredential.identityToken!
+                guard let tokenStr = String(data: idToken, encoding: .utf8) else { return }
+             
+                print("User ID : \(userIdentifier)")
+                print("token : \(String(describing: tokenStr))")
+                
+                self.deleteUser(appleToken: tokenStr)
+            default:
+                break
+        }
+    }
+    
+    /// Apple ID 연동 실패 시
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        print("Apple Login error")
     }
 }
