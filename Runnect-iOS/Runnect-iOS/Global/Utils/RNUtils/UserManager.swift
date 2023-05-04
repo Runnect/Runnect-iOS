@@ -90,4 +90,14 @@ final class UserManager {
             }
         }
     }
+    
+    func logout() {
+        self.resetTokens()
+    }
+    
+    private func resetTokens() {
+        self.accessToken = nil
+        self.refreshToken = nil
+        self.isKakao = nil
+    }
 }

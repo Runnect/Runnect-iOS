@@ -31,7 +31,7 @@ enum ImageLiterals {
     static var icMapStart: UIImage { .load(named: "ic_map_start") }
     static var icMypageFill: UIImage { .load(named: "ic_mypage_fill") }
     static var icMypage: UIImage { .load(named: "ic_mypage") }
-    static var icPlus: UIImage { .load(named: "ic_plus") }
+    static var icPlusButton: UIImage { .load(named: "ic_plus_button") }
     static var icSearch: UIImage { .load(named: "ic_search") }
     static var icStar: UIImage { .load(named: "ic_star") }
     static var icStar2: UIImage { .load(named: "ic_star2") }
@@ -43,6 +43,7 @@ enum ImageLiterals {
     static var icLocationOverlay: UIImage { .load(named: "ic_location_overlay") }
     static var icLogoCircle: UIImage { .load(named: "ic_logo_circle") }
     static var icMore: UIImage { .load(named: "ic_more") }
+    static var icPlus: UIImage { .load(named: "ic_plus") }
 
     // img
     static var imgBackground: UIImage { .load(named: "img_background") }

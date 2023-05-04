@@ -1,8 +1,8 @@
 //
-//  DeleteAccountVC.swift
+//  LogoutVC.swift
 //  Runnect-iOS
 //
-//  Created by 몽이 누나 on 2023/04/14.
+//  Created by 몽이 누나 on 2023/04/11.
 //
 
 import UIKit
@@ -10,9 +10,11 @@ import UIKit
 import SnapKit
 import Then
 
-final class DeleteAccountVC: UIViewController {
+final class RNAlertVC: UIViewController {
     
     // MARK: - Properties
+    
+    var rightButtonTapAction: (() -> Void)?
     
     // MARK: - UI Components
     
@@ -20,8 +22,7 @@ final class DeleteAccountVC: UIViewController {
         $0.layer.cornerRadius = 15
     }
     
-    private let logoutQuestionLabel = UILabel().then {
-        $0.text = "정말로 탈퇴하시겠어요?"
+    private let descriptionLabel = UILabel().then {
         $0.font = .b4
         $0.textColor = .g2
     }
@@ -42,6 +43,15 @@ final class DeleteAccountVC: UIViewController {
         $0.layer.cornerRadius = 10
     }
     
+    init(description: String) {
+        super.init(nibName: nil, bundle: nil)
+        self.descriptionLabel.text = description
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -54,7 +64,7 @@ final class DeleteAccountVC: UIViewController {
 
 // MARK: - Methods
 
-extension DeleteAccountVC {
+extension RNAlertVC {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         if let touch = touches.first, touch.view == self.view {
@@ -64,20 +74,25 @@ extension DeleteAccountVC {
     
     private func setAddTarget() {
         self.noButton.addTarget(self, action: #selector(touchUpNoButton), for: .touchUpInside)
+        self.yesButton.addTarget(self, action: #selector(touchYesButton), for: .touchUpInside)
     }
 }
 
 // MARK: - @objc Function
 
-extension DeleteAccountVC {
-    @objc func touchUpNoButton() {
+extension RNAlertVC {
+    @objc private func touchUpNoButton() {
         dismiss(animated: false)
+    }
+    
+    @objc private func touchYesButton() {
+        self.rightButtonTapAction?()
     }
 }
 
 // MARK: - Layout Helpers
 
-extension DeleteAccountVC {
+extension RNAlertVC {
     private func setUI() {
         view.backgroundColor = .black.withAlphaComponent(0.8)
         containerView.backgroundColor = .w1
@@ -93,9 +108,9 @@ extension DeleteAccountVC {
             make.height.equalTo(126)
         }
         
-        containerView.addSubviews(logoutQuestionLabel, yesButton, noButton)
+        containerView.addSubviews(descriptionLabel, yesButton, noButton)
         
-        logoutQuestionLabel.snp.makeConstraints { make in
+        descriptionLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(26)
         }
