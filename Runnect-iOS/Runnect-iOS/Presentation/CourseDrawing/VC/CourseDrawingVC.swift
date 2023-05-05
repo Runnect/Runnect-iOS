@@ -38,7 +38,7 @@ final class CourseDrawingVC: UIViewController {
             $0.alpha = 0
         }
     
-    private let guideView = GuideView(title: "지점과 지점을 연결해 코스를 완성하세요!")
+    private let guideView = GuideView(title: "지도를 눌러 코스를 그려주세요")
     
     private lazy var naviBarContainerStackView = UIStackView(
         arrangedSubviews: [notchCoverView, naviBar]

@@ -25,13 +25,14 @@ public class Toast {
         let toastContainer = UIView()
         let toastLabel = UILabel()
         
-        toastContainer.backgroundColor = .lightGray
-        toastContainer.alpha = 1
-        toastContainer.layer.cornerRadius = 9
+        toastContainer.backgroundColor = UIColor.g2.withAlphaComponent(0.8)
+        toastContainer.alpha = 1.0
+        toastContainer.layer.cornerRadius = 20
         toastContainer.clipsToBounds = true
         toastContainer.isUserInteractionEnabled = false
         
-        toastLabel.textColor = .white
+        toastLabel.textColor = .m4
+        toastLabel.font = .b4
         toastLabel.textAlignment = .center
         toastLabel.text = message
         toastLabel.clipsToBounds = true
@@ -41,10 +42,12 @@ public class Toast {
         toastContainer.addSubview(toastLabel)
         view.addSubview(toastContainer)
         
+        let toastConatinerWidth = toastLabel.intrinsicContentSize.width + 40.0
+        
         toastContainer.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(safeAreaBottomInset+80)
-            $0.width.equalTo(200)
+            $0.bottom.equalToSuperview().inset(safeAreaBottomInset+160)
+            $0.width.equalTo(toastConatinerWidth)
             $0.height.equalTo(44)
         }
         
@@ -52,10 +55,10 @@ public class Toast {
             $0.center.equalToSuperview()
         }
         
-        UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseIn, animations: {
+        UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseIn, animations: {
             toastContainer.alpha = 1.0
         }, completion: { _ in
-            UIView.animate(withDuration: 0.4, delay: 1.0, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 1.0, delay: 2.0, options: .curveEaseOut, animations: {
                 toastContainer.alpha = 0.0
             }, completion: {_ in
                 toastContainer.removeFromSuperview()

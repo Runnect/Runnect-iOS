@@ -30,11 +30,12 @@ final class CustomAlertVC: UIViewController {
     private let alertImageView = UIImageView().then {
         $0.image = ImageLiterals.imgPaper
     }
-    private let contentsLabel = UILabel().then {
-        $0.text = "코스를 만들었어요!"
+    private let contentsLabel: UILabel = UILabel().then {
+        $0.text = "코스를 만들었어요!\n지정한 코스는 보관함에서 볼 수 있어요."
         $0.font = .h5
         $0.textColor = .g2
         $0.textAlignment = .center
+        $0.numberOfLines = 2
     }
     
     private let leftButton = CustomButton(title: "보관함 가기")
