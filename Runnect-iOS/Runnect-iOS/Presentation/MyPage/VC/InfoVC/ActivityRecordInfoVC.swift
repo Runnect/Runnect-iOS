@@ -21,12 +21,14 @@ final class ActivityRecordInfoVC: UIViewController {
     
     // MARK: - UI Components
     
-    private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("활동 기록")
+    private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("러닝 기록")
     
     private lazy var activityRecordTableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
         $0.separatorStyle = .none
     }
+    
+    private let emptyView = ListEmptyView(description: "아직 러닝 기록이 없어요!\n코스를 그리고 달려보세요", buttonTitle: "코스 그리기")
 
     // MARK: - View Life Cycle
     
@@ -47,11 +49,13 @@ extension ActivityRecordInfoVC {
     private func setData(activityRecordList: [ActivityRecord]) {
         self.activityRecordList = activityRecordList
         activityRecordTableView.reloadData()
+        self.emptyView.isHidden = !activityRecordList.isEmpty
     }
     
     private func setDelegate() {
         self.activityRecordTableView.delegate = self
         self.activityRecordTableView.dataSource = self
+        self.emptyView.delegate = self
     }
     
     private func register() {
@@ -74,16 +78,21 @@ extension ActivityRecordInfoVC {
     
     private func setUI() {
         view.backgroundColor = .w1
-        activityRecordTableView.backgroundColor = .w1
+        activityRecordTableView.backgroundColor = .m3
     }
     
     private func setLayout() {
         view.addSubview(activityRecordTableView)
+        activityRecordTableView.addSubviews(emptyView)
         
         activityRecordTableView.snp.makeConstraints { make in
-            make.top.equalTo(navibar.snp.bottom).offset(16)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalToSuperview()
+            make.top.equalTo(navibar.snp.bottom)
+            make.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        emptyView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(80)
         }
     }
 }
@@ -108,6 +117,14 @@ extension ActivityRecordInfoVC: UITableViewDataSource {
         activityRecordCell.selectionStyle = .none
         activityRecordCell.setData(model: activityRecordList[indexPath.item])
         return activityRecordCell
+    }
+}
+
+// MARK: -  ListEmptyViewDelegate
+
+extension ActivityRecordInfoVC: ListEmptyViewDelegate {
+    func emptyViewButtonTapped() {
+        self.tabBarController?.selectedIndex = 0
     }
 }
 
@@ -142,3 +159,4 @@ extension ActivityRecordInfoVC {
         }
     }
 }
+

@@ -15,18 +15,21 @@ final class ActivityRecordInfoTVC: UITableViewCell {
     
     // MARK: - UI Components
     
-    private let activityRecordContainerView = UIView().then {
-        $0.layer.cornerRadius = 10
-        $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor.m5.cgColor
+    private let activityRecordContainerView = UIImageView().then {
+        $0.image = ImageLiterals.imgRecordContainer
     }
     
-    private let horizontalDivideLine = UIView()
+    private lazy var horizontalDivideLine = UIView().then {
+        setLineDot(view: $0)
+    }
+    
     private let firstVerticalDivideLine = UIView()
     private let secondVerticalDivideLine = UIView()
     
     private let activityRecordMapImage = UIImageView().then {
         $0.layer.cornerRadius = 10
+        $0.layer.borderWidth = 1.5
+        $0.layer.borderColor = UIColor.g4.cgColor
         $0.clipsToBounds = true
     }
     
@@ -83,6 +86,7 @@ final class ActivityRecordInfoTVC: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUI()
         setLayout()
+        setLineDot(view: self.horizontalDivideLine)
     }
     
     required init?(coder: NSCoder) {
@@ -163,6 +167,17 @@ extension ActivityRecordInfoTVC {
         label.font = .b8
         return label
     }
+    
+    func setLineDot(view: UIView) {
+        let borderLayer = CAShapeLayer()
+        borderLayer.strokeColor = UIColor.g4.cgColor
+        borderLayer.lineDashPattern = [4, 4]
+        borderLayer.frame = view.bounds
+        borderLayer.fillColor = nil
+        borderLayer.path = UIBezierPath(rect: view.bounds).cgPath
+        
+        view.layer.addSublayer(borderLayer)
+    }
 }
 
 extension ActivityRecordInfoTVC {
@@ -170,10 +185,10 @@ extension ActivityRecordInfoTVC {
     // MARK: - Layout Helpers
     
     func setUI() {
-        activityRecordMapImage.backgroundColor = .g3
         horizontalDivideLine.backgroundColor = .g4
         firstVerticalDivideLine.backgroundColor = .g4
         secondVerticalDivideLine.backgroundColor = .g4
+        
     }
     
     func setLayout() {
@@ -194,7 +209,7 @@ extension ActivityRecordInfoTVC {
         
         activityRecordMapImage.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(13)
-            make.leading.equalToSuperview().offset(15)
+            make.leading.equalToSuperview().offset(20)
             make.width.equalTo(86)
             make.height.equalTo(85)
         }
@@ -206,7 +221,7 @@ extension ActivityRecordInfoTVC {
         
         horizontalDivideLine.snp.makeConstraints { make in
             make.top.equalTo(activityRecordMapImage.snp.bottom).offset(8)
-            make.leading.trailing.equalToSuperview().inset(10)
+            make.leading.trailing.equalToSuperview().inset(20)
             make.height.equalTo(1)
         }
         

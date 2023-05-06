@@ -73,7 +73,7 @@ final class MyPageVC: UIViewController {
         $0.addGestureRecognizer(tap)
     }
     
-    private lazy var activityRecordInfoView = makeInfoView(title: "활동 기록").then {
+    private lazy var activityRecordInfoView = makeInfoView(title: "러닝 기록").then {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpActivityRecordInfoView))
         $0.addGestureRecognizer(tap)
     }
