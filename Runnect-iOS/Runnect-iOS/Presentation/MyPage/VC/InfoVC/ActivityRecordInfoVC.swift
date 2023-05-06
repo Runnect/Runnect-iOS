@@ -120,7 +120,7 @@ extension ActivityRecordInfoVC: UITableViewDataSource {
     }
 }
 
-// MARK: -  ListEmptyViewDelegate
+// MARK: - ListEmptyViewDelegate
 
 extension ActivityRecordInfoVC: ListEmptyViewDelegate {
     func emptyViewButtonTapped() {
@@ -159,4 +159,3 @@ extension ActivityRecordInfoVC {
         }
     }
 }
-
