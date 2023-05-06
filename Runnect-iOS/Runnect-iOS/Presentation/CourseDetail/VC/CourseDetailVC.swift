@@ -27,6 +27,7 @@ final class CourseDetailVC: UIViewController {
     
     private var courseId: Int?
     private var publicCourseId: Int?
+    private var userId: Int?
     
     // MARK: - UI Components
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton)
@@ -126,19 +127,33 @@ extension CourseDetailVC {
     }
     
     @objc func moreButtonDidTap() {
-           
-           let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let formUrl = NSURL(string: "https://docs.google.com/forms/d/e/1FAIpQLSek2rkClKfGaz1zwTEHX3Oojbq_pbF3ifPYMYezBU0_pe-_Tg/viewform")
-        let formSafariView: SFSafariViewController = SFSafariViewController(url: formUrl! as URL)
-        let reportAction = UIAlertAction(title: "신고하기", style: .destructive, handler: {(_: UIAlertAction!) in
-            self.present(formSafariView, animated: true, completion: nil)
-})
+           //Todo : case를 2개를 나눠서, userID가 나인경우에는 editAction,이외에는 신고액션
+        // 삭제 & 수정 올라오는거(유저아이디가 나인경우)
+        let userId = ""//본인아이디
         let cancelAction = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
-           
-           [ reportAction, cancelAction ].forEach { alertController.addAction($0) }
-        present(alertController, animated: true, completion: nil)
-           
-       }
+        if "유저아이디" == "본인아이디" {
+            let editAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let courseUploadVC = CourseUploadVC()
+            let editAction = UIAlertAction(title: "수정하기", style: .destructive, handler: {(_: UIAlertAction!) in
+                self.present(courseUploadVC, animated: true, completion: nil)
+    })
+            let delateAction = UIAlertAction(title: "삭제하기", style: .cancel, handler: nil)
+               [ editAction, delateAction, cancelAction].forEach { editAlertController.addAction($0) }
+            present(editAlertController, animated: true, completion: nil)
+               
+           } else {
+               // 신고폼 올라오는 거(유저아이디가 내가 아닌 경우)
+               let reportAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+               let formUrl = NSURL(string: "https://docs.google.com/forms/d/e/1FAIpQLSek2rkClKfGaz1zwTEHX3Oojbq_pbF3ifPYMYezBU0_pe-_Tg/viewform")
+               let formSafariView: SFSafariViewController = SFSafariViewController(url: formUrl! as URL)
+               let reportAction = UIAlertAction(title: "신고하기", style: .destructive, handler: {(_: UIAlertAction!) in
+                   self.present(formSafariView, animated: true, completion: nil)
+       })
+                  [ reportAction, cancelAction ].forEach { reportAlertController.addAction($0) }
+               present(reportAlertController, animated: true, completion: nil)
+           }
+    };
+        
     
     private func pushToCountDownVC() {
         guard let courseModel = self.courseModel,
@@ -173,10 +188,9 @@ extension CourseDetailVC {
     func setData(model: UploadedCourseDetailResponseDto) {
         self.mapImageView.setImage(with: model.publicCourse.image)
         self.profileImageView.image = GoalRewardInfoModel.stampNameImageDictionary[model.user.image]
-        self.profileNameLabel.text = model.user.nickname
+        self.profileNameLabel.text = model.user.nickname //유저닉네임
         self.runningLevelLabel.text = "Lv. \(model.user.level)"
         self.courseTitleLabel.text = model.publicCourse.title
-        
         guard let scrap = model.publicCourse.scrap else { return }
         self.likeButton.isSelected = scrap
         
