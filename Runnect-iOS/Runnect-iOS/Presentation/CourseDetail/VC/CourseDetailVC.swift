@@ -141,14 +141,15 @@ extension CourseDetailVC {
             let editAction = UIAlertAction(title: "수정하기", style: .default, handler: {(_: UIAlertAction!) in
                 self.navigationController?.pushViewController(courseEditVC, animated: false)
             })
-            let delateVC = RNAlertVC(description: "코스를 정말로 삭제하시겠어요?")
-            delateVC.rightButtonTapAction = { [weak self] in
-//                self?.delateCourse()
+            let deleteVC = RNAlertVC(description: "코스를 정말로 삭제하시겠어요?")
+            deleteVC.rightButtonTapAction = { [weak self] in
+                deleteVC.dismiss(animated: false)
+                self?.deleteCourse()
             }
-            delateVC.modalPresentationStyle = .overFullScreen
-            let delateAction = UIAlertAction(title: "삭제하기", style: .destructive, handler: {(_: UIAlertAction!) in
-                self.present(delateVC, animated: true, completion: nil)})
-            [ editAction, delateAction, cancelAction].forEach { editAlertController.addAction($0) }
+            deleteVC.modalPresentationStyle = .overFullScreen
+            let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive, handler: {(_: UIAlertAction!) in
+                self.present(deleteVC, animated: false, completion: nil)})
+            [ editAction, deleteAction, cancelAction].forEach { editAlertController.addAction($0) }
             present(editAlertController, animated: false, completion: nil)
         } else {
             // 신고폼 올라오는 거(유저아이디가 내가 아닌 경우)
@@ -423,30 +424,27 @@ extension CourseDetailVC {
 }
 
 extension CourseDetailVC {
-    private func delateCourse() {
-        //            guard let courseId = courseModel?.id else { return }
-        //            let requsetDto = CourseUploadingRequestDto(courseId: courseId, title: titletext, description: descriptiontext)
-        //
-        //            LoadingIndicator.showLoading()
-        //            PublicCourseProvider.request(.courseUploadingData(param: requsetDto)) { [weak self] response in
-        //                LoadingIndicator.hideLoading()
-        //                guard let self = self else { return }
-        //                switch response {
-        //                case .success(let result):
-        //                    let status = result.statusCode
-        //                    if 200..<300 ~= status {
-        //                        self.navigationController?.popToRootViewController(animated: true)
-        //                    }
-        //                    if status >= 400 {
-        //                        print("400 error")
-        //                        self.showNetworkFailureToast()
-        //                    }
-        //                case .failure(let error):
-        //                    print(error.localizedDescription)
-        //                    self.showNetworkFailureToast()
-        //                }
-        //            }
-        //        }
-        //    }
+    private func deleteCourse() {
+        guard let courseId = self.courseId else { return }
+        LoadingIndicator.showLoading()
+        courseProvider.request(.deleteCourse(courseIdList: [courseId])) { [weak self] response in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                print("리절트", result)
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    print("삭제 성공")
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
     }
 }
