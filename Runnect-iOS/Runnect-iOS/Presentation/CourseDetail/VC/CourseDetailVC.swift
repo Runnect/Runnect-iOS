@@ -129,6 +129,7 @@ extension CourseDetailVC {
     @objc func moreButtonDidTap() {
            //Todo : case를 2개를 나눠서, userID가 나인경우에는 editAction,이외에는 신고액션
         // 삭제 & 수정 올라오는거(유저아이디가 나인경우)
+        //UploadedCourseDetailResponseDto 에서 유저정보 가져오는 법
         let userId = ""//본인아이디
         let cancelAction = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
         if "유저아이디" == "본인아이디" {
