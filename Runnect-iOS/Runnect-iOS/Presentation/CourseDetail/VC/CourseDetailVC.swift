@@ -198,7 +198,7 @@ extension CourseDetailVC {
         self.uploadedCourseDetailModel = model
         self.mapImageView.setImage(with: model.publicCourse.image)
         self.profileImageView.image = GoalRewardInfoModel.stampNameImageDictionary[model.user.image]
-        self.profileNameLabel.text = model.user.nickname //유저닉네임
+        self.profileNameLabel.text = model.user.nickname 
         self.runningLevelLabel.text = "Lv. \(model.user.level)"
         self.courseTitleLabel.text = model.publicCourse.title
         self.isMyCourse = model.user.isNowUser

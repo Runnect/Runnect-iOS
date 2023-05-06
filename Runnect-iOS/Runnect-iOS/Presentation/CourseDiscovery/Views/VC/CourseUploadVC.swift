@@ -141,7 +141,7 @@ extension CourseUploadVC {
             self.courseTitleTextField.text = String(newString)
         }
         
-        if !text.isEmpty && activityTextView.text != self.placeholder {
+        if text.count == 0 && activityTextView.text != self.placeholder && activityTextView.text.count == 0 {
             uploadButton.setEnabled(true)
         } else {
             uploadButton.setEnabled(false)
