@@ -97,7 +97,8 @@ final class MyPageVC: UIViewController {
     private let versionInfoValueLabel = UILabel().then {
         $0.textColor = .g2
         $0.font = .b2
-        $0.text = "v. 1.0.1"
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+        $0.text = "v. \(version ?? "1.0.0")"
     }
     
     // MARK: - View Life Cycle
