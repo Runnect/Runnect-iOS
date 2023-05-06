@@ -9,6 +9,6 @@ import Foundation
 
 // MARK: - EditCourseReguestDto
 
-struct EditCourseReguestDto: Codable {
+struct EditCourseRequestDto: Codable {
     let title, description: String
 }

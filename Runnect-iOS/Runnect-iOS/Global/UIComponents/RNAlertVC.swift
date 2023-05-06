@@ -25,6 +25,8 @@ final class RNAlertVC: UIViewController {
     private let descriptionLabel = UILabel().then {
         $0.font = .b4
         $0.textColor = .g2
+        $0.numberOfLines = 0
+        $0.textAlignment = .center
     }
     
     private lazy var yesButton = UIButton(type: .custom).then {
@@ -105,7 +107,7 @@ extension RNAlertVC {
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(30)
-            make.height.equalTo(126)
+//            make.height.equalTo(126)
         }
         
         containerView.addSubviews(descriptionLabel, yesButton, noButton)
@@ -116,6 +118,7 @@ extension RNAlertVC {
         }
         
         noButton.snp.makeConstraints { make in
+            make.top.equalTo(descriptionLabel.snp.bottom).offset(20)
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalTo(containerView.snp.centerX).offset(-4)
             make.height.equalTo(44)
@@ -124,6 +127,7 @@ extension RNAlertVC {
         }
         
         yesButton.snp.makeConstraints { make in
+            make.top.equalTo(noButton.snp.top)
             make.trailing.equalToSuperview().inset(16)
             make.leading.equalTo(containerView.snp.centerX).offset(4)
             make.height.equalTo(44)

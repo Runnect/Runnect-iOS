@@ -127,7 +127,6 @@ extension UploadedCourseInfoVC: UICollectionViewDelegateFlowLayout {
             courseDetailVC.setCourseId(courseId: courseModel.courseId, publicCourseId: courseModel.id)
             courseDetailVC.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(courseDetailVC, animated: true)
-        
     }
 }
 

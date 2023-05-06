@@ -14,8 +14,8 @@ enum PublicCourseRouter {
     case courseUploadingData(param: CourseUploadingRequestDto)
     case getUploadedCourseDetail(publicCourseId: Int)
     case getUploadedCourseInfo
-    case updatePublicCourse(publicCousrseId: Int, param: EditCourseReguestDto)
-}
+    case updatePublicCourse(publicCourseId: Int, editCourseRequestDto: EditCourseRequestDto)
+}     
 
 extension PublicCourseRouter: TargetType {
     
@@ -36,7 +36,7 @@ extension PublicCourseRouter: TargetType {
             return "/public-course/detail/\(publicCourseId)"
         case .getUploadedCourseInfo:
             return "/public-course/user"
-        case .updatePublicCourse(let publicCourseId ):
+        case .updatePublicCourse(let publicCourseId, _):
             return "/public-course/\(publicCourseId)"
         }
     }
@@ -61,8 +61,11 @@ extension PublicCourseRouter: TargetType {
                 return .requestParameters(parameters: try param.asParameter(), encoding: JSONEncoding.default)
             } catch {
                 fatalError("Encoding 실패")}
-        case .updatePublicCourse(let publicCourseId):
-            return .requestJSONEncodable(publicCourseId)
+        case .updatePublicCourse(_, let param):
+            do {
+                return .requestParameters(parameters: try param.asParameter(), encoding: JSONEncoding.default)
+            } catch {
+                fatalError("Encoding 실패")}
         case .getCourseData, .getUploadedCourseDetail, .getUploadedCourseInfo:
             return .requestPlain
         }

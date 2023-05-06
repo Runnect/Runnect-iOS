@@ -25,9 +25,11 @@ final class CourseDetailVC: UIViewController {
     
     private var courseModel: Course?
     
+    private var uploadedCourseDetailModel: UploadedCourseDetailResponseDto?
+    
     private var courseId: Int?
     private var publicCourseId: Int?
-    private var userId: Int?
+    private var isMyCourse: Bool?
     
     // MARK: - UI Components
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton)
@@ -80,7 +82,7 @@ final class CourseDetailVC: UIViewController {
         $0.textColor = .g1
         $0.font = .h4
     }
-
+    
     private let courseDistanceInfoView = CourseDetailInfoView(title: "거리", description: "0.0km")
     
     private let courseDepartureInfoView = CourseDetailInfoView(title: "출발지", description: "위치")
@@ -103,7 +105,7 @@ final class CourseDetailVC: UIViewController {
         $0.sizeToFit()
     }
     // MARK: - View Life Cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
@@ -127,44 +129,49 @@ extension CourseDetailVC {
     }
     
     @objc func moreButtonDidTap() {
-           //Todo : case를 2개를 나눠서, userID가 나인경우에는 editAction,이외에는 신고액션
-        // 삭제 & 수정 올라오는거(유저아이디가 나인경우)
-        //UploadedCourseDetailResponseDto 에서 유저정보 가져오는 법
-        let userId = ""//본인아이디
-        let cancelAction = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
-        if "유저아이디" == "본인아이디" {
-            let editAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let courseUploadVC = CourseUploadVC()
-            let editAction = UIAlertAction(title: "수정하기", style: .destructive, handler: {(_: UIAlertAction!) in
-                self.present(courseUploadVC, animated: true, completion: nil)
-    })
-            let delateAction = UIAlertAction(title: "삭제하기", style: .cancel, handler: nil)
-               [ editAction, delateAction, cancelAction].forEach { editAlertController.addAction($0) }
-            present(editAlertController, animated: true, completion: nil)
-               
-           } else {
-               // 신고폼 올라오는 거(유저아이디가 내가 아닌 경우)
-               let reportAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-               let formUrl = NSURL(string: "https://docs.google.com/forms/d/e/1FAIpQLSek2rkClKfGaz1zwTEHX3Oojbq_pbF3ifPYMYezBU0_pe-_Tg/viewform")
-               let formSafariView: SFSafariViewController = SFSafariViewController(url: formUrl! as URL)
-               let reportAction = UIAlertAction(title: "신고하기", style: .destructive, handler: {(_: UIAlertAction!) in
-                   self.present(formSafariView, animated: true, completion: nil)
-       })
-                  [ reportAction, cancelAction ].forEach { reportAlertController.addAction($0) }
-               present(reportAlertController, animated: true, completion: nil)
-           }
-    };
+        guard let isMyCourse = self.isMyCourse, let uploadedCourseDetailModel = self.uploadedCourseDetailModel else { return }
         
+        let cancelAction = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
+        
+        if isMyCourse == true {
+            let editAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let courseEditVC = CourseEditVC()
+            courseEditVC.loadData(model: uploadedCourseDetailModel)
+            courseEditVC.publicCourseId = self.publicCourseId
+            let editAction = UIAlertAction(title: "수정하기", style: .default, handler: {(_: UIAlertAction!) in
+                self.navigationController?.pushViewController(courseEditVC, animated: false)
+            })
+            let delateVC = RNAlertVC(description: "코스를 정말로 삭제하시겠어요?")
+            delateVC.rightButtonTapAction = { [weak self] in
+//                self?.delateCourse()
+            }
+            delateVC.modalPresentationStyle = .overFullScreen
+            let delateAction = UIAlertAction(title: "삭제하기", style: .destructive, handler: {(_: UIAlertAction!) in
+                self.present(delateVC, animated: true, completion: nil)})
+            [ editAction, delateAction, cancelAction].forEach { editAlertController.addAction($0) }
+            present(editAlertController, animated: false, completion: nil)
+        } else {
+            // 신고폼 올라오는 거(유저아이디가 내가 아닌 경우)
+            let reportAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let formUrl = NSURL(string: "https://docs.google.com/forms/d/e/1FAIpQLSek2rkClKfGaz1zwTEHX3Oojbq_pbF3ifPYMYezBU0_pe-_Tg/viewform")
+            let formSafariView: SFSafariViewController = SFSafariViewController(url: formUrl! as URL)
+            let reportAction = UIAlertAction(title: "신고하기", style: .destructive, handler: {(_: UIAlertAction!) in
+                self.present(formSafariView, animated: true, completion: nil)
+            })
+            [ reportAction, cancelAction ].forEach { reportAlertController.addAction($0) }
+            present(reportAlertController, animated: true, completion: nil)
+        }
+    }
     
     private func pushToCountDownVC() {
         guard let courseModel = self.courseModel,
               let path = courseModel.path,
               let distance = courseModel.distance
         else { return }
-
+        
         let countDownVC = CountDownVC()
         let locations = path.map { NMGLatLng(lat: $0[0], lng: $0[1]) }
-
+        
         let runningModel = RunningModel(courseId: self.courseId,
                                         publicCourseId: self.publicCourseId,
                                         locations: locations,
@@ -187,11 +194,13 @@ extension CourseDetailVC {
     }
     
     func setData(model: UploadedCourseDetailResponseDto) {
+        self.uploadedCourseDetailModel = model
         self.mapImageView.setImage(with: model.publicCourse.image)
         self.profileImageView.image = GoalRewardInfoModel.stampNameImageDictionary[model.user.image]
         self.profileNameLabel.text = model.user.nickname //유저닉네임
         self.runningLevelLabel.text = "Lv. \(model.user.level)"
         self.courseTitleLabel.text = model.publicCourse.title
+        self.isMyCourse = model.user.isNowUser
         guard let scrap = model.publicCourse.scrap else { return }
         self.likeButton.isSelected = scrap
         
@@ -310,12 +319,12 @@ extension CourseDetailVC {
             make.top.equalTo(firstHorizontalDivideLine.snp.bottom).offset(16)
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(16)
         }
-
+        
         courseDetailStackView.snp.makeConstraints { make in
             make.top.equalTo(courseTitleLabel.snp.bottom).offset(19)
             make.leading.trailing.equalToSuperview().inset(16)
         }
-
+        
         secondHorizontalDivideLine.snp.makeConstraints { make in
             make.top.equalTo(courseDetailStackView.snp.bottom).offset(27)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -410,5 +419,34 @@ extension CourseDetailVC {
                 self.showNetworkFailureToast()
             }
         }
+    }
+}
+
+extension CourseDetailVC {
+    private func delateCourse() {
+        //            guard let courseId = courseModel?.id else { return }
+        //            let requsetDto = CourseUploadingRequestDto(courseId: courseId, title: titletext, description: descriptiontext)
+        //
+        //            LoadingIndicator.showLoading()
+        //            PublicCourseProvider.request(.courseUploadingData(param: requsetDto)) { [weak self] response in
+        //                LoadingIndicator.hideLoading()
+        //                guard let self = self else { return }
+        //                switch response {
+        //                case .success(let result):
+        //                    let status = result.statusCode
+        //                    if 200..<300 ~= status {
+        //                        self.navigationController?.popToRootViewController(animated: true)
+        //                    }
+        //                    if status >= 400 {
+        //                        print("400 error")
+        //                        self.showNetworkFailureToast()
+        //                    }
+        //                case .failure(let error):
+        //                    print(error.localizedDescription)
+        //                    self.showNetworkFailureToast()
+        //                }
+        //            }
+        //        }
+        //    }
     }
 }
