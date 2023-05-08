@@ -114,6 +114,7 @@ final class MyPageVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.getMyPageInfo()
+        self.hideTabBar(wantsToHide: false)
     }
 }
 

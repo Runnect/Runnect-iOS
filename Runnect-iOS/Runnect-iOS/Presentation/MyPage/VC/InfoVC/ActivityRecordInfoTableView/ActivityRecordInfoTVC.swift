@@ -15,7 +15,7 @@ final class ActivityRecordInfoTVC: UITableViewCell {
     
     // MARK: - UI Components
     
-    private let activityRecordContainerView = UIImageView().then {
+    var activityRecordContainerView = UIImageView().then {
         $0.image = ImageLiterals.imgRecordContainer
     }
     
@@ -91,6 +91,11 @@ final class ActivityRecordInfoTVC: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        self.activityRecordContainerView.image = selected ? ImageLiterals.imgRecordContainerSelected : ImageLiterals.imgRecordContainer
     }
 }
 
@@ -188,7 +193,7 @@ extension ActivityRecordInfoTVC {
         horizontalDivideLine.backgroundColor = .g4
         firstVerticalDivideLine.backgroundColor = .g4
         secondVerticalDivideLine.backgroundColor = .g4
-        
+        self.backgroundColor = .clear
     }
     
     func setLayout() {
