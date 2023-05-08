@@ -24,6 +24,11 @@ final class CustomAlertVC: UIViewController {
             .asDriver()
     }
     
+    var leftButtonTapAction: (() -> Void)?
+    var rightButtonTapAction: (() -> Void)?
+    
+    private var cancelBag = CancelBag()
+    
     // MARK: - UI Components
     
     private let alertView = UIView()
@@ -55,12 +60,22 @@ final class CustomAlertVC: UIViewController {
         super.viewDidLoad()
         self.setUI()
         self.setLayout()
+        self.bindViews()
     }
 }
 
 // MARK: - Methods
 
 extension CustomAlertVC {
+    /// 이미지 변경
+    public func setImage(_ image: UIImage, size: CGSize) {
+        self.alertImageView.image = image
+        self.alertImageView.snp.updateConstraints { make in
+            make.width.equalTo(size.width)
+            make.height.equalTo(size.height)
+        }
+    }
+    
     /// conentsLabel의 텍스트 변경
     @discardableResult
     public func setTitle(_ title: String) -> Self {
@@ -80,6 +95,16 @@ extension CustomAlertVC {
     public func setRightButtonTitle(_ title: NSAttributedString) -> Self {
         self.rightButton.changeTitle(attributedString: title)
         return self
+    }
+    
+    private func bindViews() {
+        self.leftButtonTapped.sink { _ in
+            self.leftButtonTapAction?()
+        }.store(in: cancelBag)
+        
+        self.rightButtonTapped.sink { _ in
+            self.rightButtonTapAction?()
+        }.store(in: cancelBag)
     }
 }
 
@@ -110,6 +135,7 @@ extension CustomAlertVC {
         
         contentsLabel.snp.makeConstraints { make in
             make.top.equalTo(alertImageView.snp.bottom).offset(24)
+            make.leading.trailing.equalToSuperview().inset(10)
             make.centerX.equalToSuperview()
         }
         

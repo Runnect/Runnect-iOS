@@ -61,7 +61,7 @@ final class SignInSocialLoginVC: UIViewController {
 // MARK: - @objc Function
 
 extension SignInSocialLoginVC {
-    @objc func touchUpAppleLoginButton() {
+    @objc func appleLoginButtonDidTap() {
         pushToAppleLogin()
     }
     
@@ -118,14 +118,20 @@ extension SignInSocialLoginVC {
             }
         }
     }
+    
+    @objc private func visitorButtonDidTap() {
+        UserManager.shared.userType = .visitor
+        pushToTabBarController()
+    }
 }
 
 // MARK: - Methods
 
 extension SignInSocialLoginVC {
     private func setAddTarget() {
-        self.appleLoginButton.addTarget(self, action: #selector(touchUpAppleLoginButton), for: .touchUpInside)
+        self.appleLoginButton.addTarget(self, action: #selector(appleLoginButtonDidTap), for: .touchUpInside)
         self.kakaoLoginButton.addTarget(self, action: #selector(kakaoLoginButtonDidTap), for: .touchUpInside)
+        self.visitorButton.addTarget(self, action: #selector(visitorButtonDidTap), for: .touchUpInside)
     }
     
     private func pushToNickNameSetUpVC() {

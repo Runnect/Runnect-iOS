@@ -31,10 +31,26 @@ extension UIViewController {
     }
     
     /// 인증 과정을 다시 거치도록 SplashVC로 보내기
-    private func showSplashVC() {
+    func showSplashVC() {
         let splashVC = SplashVC()
         let navigationController = UINavigationController(rootViewController: splashVC)
         guard let window = self.view.window else { return }
         ViewControllerUtils.setRootViewController(window: window, viewController: navigationController, withAnimation: true)
+    }
+    
+    func presentSignInRequestAlertVC() {
+        let alertVC = CustomAlertVC()
+            .setTitle("가입 후 로그인 시 코스를 저장하고 달릴 수 있어요!")
+            .setLeftButtonTitle(NSAttributedString(string: "닫기", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.m1]))
+            .setRightButtonTitle(NSAttributedString(string: "가입하기", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.w1]))
+        alertVC.modalPresentationStyle = .overFullScreen
+        
+        alertVC.leftButtonTapAction = {
+            print("dsf")
+            alertVC.dismiss(animated: false)
+        }
+        
+        self.present(alertVC, animated: false)
+        alertVC.setImage(ImageLiterals.imgSpaceship, size: CGSize(width: 229, height: 136))
     }
 }
