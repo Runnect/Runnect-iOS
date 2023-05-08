@@ -14,6 +14,11 @@ enum RNError: Error {
     case etc
 }
 
+enum UserType {
+    case visitor
+    case registered
+}
+
 final class UserManager {
     static let shared = UserManager()
     
@@ -23,6 +28,7 @@ final class UserManager {
     @UserDefaultWrapper<String>(key: "refreshToken") public var refreshToken
     @UserDefaultWrapper<Bool>(key: "isKakao") public var isKakao
     var hasAccessToken: Bool { return self.accessToken != nil }
+    var userType: UserType = .visitor
     
     private init() {}
     

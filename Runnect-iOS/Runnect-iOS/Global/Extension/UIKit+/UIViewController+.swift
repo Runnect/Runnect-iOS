@@ -29,4 +29,12 @@ extension UIViewController {
     func hideTabBar(wantsToHide: Bool) {
         self.tabBarController?.tabBar.isHidden = wantsToHide
     }
+    
+    /// 인증 과정을 다시 거치도록 SplashVC로 보내기
+    private func showSplashVC() {
+        let splashVC = SplashVC()
+        let navigationController = UINavigationController(rootViewController: splashVC)
+        guard let window = self.view.window else { return }
+        ViewControllerUtils.setRootViewController(window: window, viewController: navigationController, withAnimation: true)
+    }
 }
