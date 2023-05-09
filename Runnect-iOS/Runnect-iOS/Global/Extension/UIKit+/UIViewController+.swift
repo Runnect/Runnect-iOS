@@ -46,11 +46,20 @@ extension UIViewController {
         alertVC.modalPresentationStyle = .overFullScreen
         
         alertVC.leftButtonTapAction = {
-            print("dsf")
             alertVC.dismiss(animated: false)
+        }
+        
+        alertVC.rightButtonTapAction = {
+            self.showSplashVC()
         }
         
         self.present(alertVC, animated: false)
         alertVC.setImage(ImageLiterals.imgSpaceship, size: CGSize(width: 229, height: 136))
+    }
+    
+    func handleVisitor() -> Bool {
+        guard UserManager.shared.userType == .visitor else { return true }
+        self.presentSignInRequestAlertVC()
+        return false
     }
 }

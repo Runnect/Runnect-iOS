@@ -200,6 +200,7 @@ extension CourseDrawingVC {
     }
     
     @objc private func completeButtonDidTap() {
+        guard handleVisitor() else { return }
         mapView.capturePathImage()
     }
 }
