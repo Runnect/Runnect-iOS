@@ -47,6 +47,7 @@ final class CourseStorageVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        guard UserManager.shared.userType != .visitor else { return }
         self.getPrivateCourseList()
         self.getScrapCourseList()
     }
@@ -107,12 +108,19 @@ extension CourseStorageVC {
     }
     
     private func setLayout() {
-        view.addSubviews(naviBar, viewPager)
+        view.addSubviews(naviBar)
         
         naviBar.snp.makeConstraints { make in
             make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(48)
         }
+        
+        guard UserManager.shared.userType != .visitor else {
+            self.showSignInRequestEmptyView()
+            return
+        }
+        
+        view.addSubview(viewPager)
         
         viewPager.snp.makeConstraints { make in
             make.top.equalTo(naviBar.snp.bottom)

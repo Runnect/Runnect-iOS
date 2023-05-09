@@ -62,4 +62,21 @@ extension UIViewController {
         self.presentSignInRequestAlertVC()
         return false
     }
+    
+    func showSignInRequestEmptyView() {
+        let emptyView = ListEmptyView(description: "러넥트에 가입하면 내가 그린 코스와\n 스크랩 코스를 관리할 수 있어요!",
+                                      buttonTitle: "가입하기")
+        emptyView.buttonTapAction = {
+            self.showSplashVC()
+        }
+        
+        emptyView.setImage(ImageLiterals.imgSpaceship, size: CGSize(width: 229, height: 136))
+        
+        self.view.addSubview(emptyView)
+        
+        emptyView.snp.makeConstraints { make in
+            make.center.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(80)
+        }
+    }
 }
