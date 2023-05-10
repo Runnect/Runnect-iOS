@@ -194,7 +194,19 @@ extension ActivityRecordInfoVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard tableView.cellForRow(at: indexPath) is ActivityRecordInfoTVC else { return }
         guard let selectedRecords = tableView.indexPathsForSelectedRows else { return }
-        editButtonToggle(selectedRecords: selectedRecords, indexPath: indexPath)
+        let activityRecordList = activityRecordList[indexPath.item]
+        //ActivityRecordDetailVC.setCourseId(courseId: <#T##Int?#>, publicCourseId: <#T##Int?#>)
+        
+        if isEditMode {
+            self.deleteRecordButton.isEnabled = true
+            let countSelectedRows = selectedRecords.count
+            self.deleteRecordButton.setTitle(title: "삭제하기(\(countSelectedRows))")
+        } else {
+            tableView.deselectRow(at: indexPath, animated: true)
+            self.deleteRecordButton.setTitle(title: "삭제하기")
+            // 편집 모드가 아닐 때 상세 페이지로 이동
+            
+        }
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -203,19 +215,14 @@ extension ActivityRecordInfoVC: UITableViewDelegate {
             self.deleteRecordButton.isEnabled = false
             self.deleteRecordButton.setTitle(title: "삭제하기")
             return }
-        editButtonToggle(selectedRecords: selectedRecords, indexPath: indexPath)
-    }
-    
-    func editButtonToggle(selectedRecords: [IndexPath], indexPath: IndexPath) {
         if isEditMode {
             self.deleteRecordButton.isEnabled = true
             let countSelectedRows = selectedRecords.count
             self.deleteRecordButton.setTitle(title: "삭제하기(\(countSelectedRows))")
         } else {
-            self.activityRecordTableView.deselectRow(at: indexPath, animated: true)
+            tableView.deselectRow(at: indexPath, animated: true)
             self.deleteRecordButton.setTitle(title: "삭제하기")
-        }
-    }
+        }    }
 }
 
 // MARK: - UITableViewDataSource
