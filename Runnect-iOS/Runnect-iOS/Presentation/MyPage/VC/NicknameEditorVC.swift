@@ -27,29 +27,38 @@ final class NicknameEditorVC: UIViewController {
     
     // MARK: - UI Components
     
-    private let editorContentView = UIView().then {
-        $0.layer.cornerRadius = 10
-    }
-    
-    private let nickNameEditLabel = UILabel().then {
-        $0.text = "닉네임 수정"
-        $0.textColor = .g1
-        $0.font = .h5
-    }
-    
+    private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("닉네임 수정")
+
     private let nickNameTextField = UITextField().then {
         $0.resignFirstResponder()
         $0.text = nil
         $0.textColor = .g1
-        $0.font = .b6
+        $0.font = .h5
+        $0.textAlignment = .center
         $0.attributedPlaceholder = NSAttributedString(
             string: "닉네임을 입력하세요",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.g2, NSAttributedString.Key.font: UIFont.b6]
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.g2, NSAttributedString.Key.font: UIFont.h5]
         )
         $0.keyboardType = .webSearch
     }
     
-    private let horizontalDivideLine = UIView()
+    private let personImageView = UIImageView().then {
+        $0.image = ImageLiterals.imgPerson
+    }
+    
+    private let nickNameContainer = UIView().then {
+        $0.layer.cornerRadius = 5
+        $0.layer.borderColor = UIColor.m1.cgColor
+        $0.layer.borderWidth = 1
+    }
+    
+    private lazy var finishNickNameLabel = UILabel().then {
+        $0.text = "완료"
+        $0.font = .h4
+        $0.textColor = .m1
+        let tap = UITapGestureRecognizer(target: self, action: #selector(finishNickNameLabelDidTap))
+        self.view.addGestureRecognizer(tap)
+    }
     
     // MARK: - View Life Cycle
         
@@ -66,15 +75,7 @@ final class NicknameEditorVC: UIViewController {
 
 // MARK: - Method
 
-extension NicknameEditorVC {
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        if let touch = touches.first, touch.view == self.view {
-            dismiss(animated: false)
-            didNicknameReturn()
-        }
-    }
-    
+extension NicknameEditorVC {    
     private func setAddTarget() {
         nickNameTextField.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
     }
@@ -113,6 +114,11 @@ extension NicknameEditorVC {
             self.nickNameTextField.text = String(newString)
         }
     }
+    
+    @objc private func finishNickNameLabelDidTap() {
+        didNicknameReturn()
+        self.navigationController?.popViewController(animated: false)
+    }
 }
 
 extension NicknameEditorVC {
@@ -120,37 +126,39 @@ extension NicknameEditorVC {
     // MARK: - Layout Helpers
     
     private func setUI() {
-        self.tabBarController?.tabBar.isHidden = true
-        view.backgroundColor = .black.withAlphaComponent(0.8)
-        editorContentView.backgroundColor = .w1
-        horizontalDivideLine.backgroundColor = .g3
+        view.backgroundColor = .w1
     }
     
     private func setLayout() {
-        view.addSubview(editorContentView)
+        view.addSubviews(navibar, finishNickNameLabel, personImageView, nickNameContainer)
         
-        editorContentView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.height.equalTo(111)
+        navibar.snp.makeConstraints { make in
+            make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(48)
         }
         
-        editorContentView.addSubviews(nickNameEditLabel, nickNameTextField, horizontalDivideLine)
-        
-        nickNameEditLabel.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview().offset(24)
+        finishNickNameLabel.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(23)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(12)
         }
+        
+        personImageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.height.equalTo(96)
+            make.top.equalTo(navibar.snp.bottom).offset(98)
+        }
+        
+        nickNameContainer.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(30)
+            make.height.equalTo(44)
+            make.top.equalTo(personImageView.snp.bottom).offset(51)
+        }
+        
+        nickNameContainer.addSubview(nickNameTextField)
         
         nickNameTextField.snp.makeConstraints { make in
-            make.top.equalTo(nickNameEditLabel.snp.bottom).offset(20)
-            make.leading.trailing.equalToSuperview().inset(24)
-        }
-        
-        horizontalDivideLine.snp.makeConstraints { make in
-            make.top.equalTo(nickNameTextField.snp.bottom).offset(10)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(nickNameTextField.snp.width)
-            make.height.equalTo(0.5)
+            make.centerY.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
         }
     }
 }
