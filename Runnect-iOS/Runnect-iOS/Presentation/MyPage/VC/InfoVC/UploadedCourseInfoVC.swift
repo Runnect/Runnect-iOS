@@ -105,7 +105,8 @@ extension UploadedCourseInfoVC {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension UploadedCourseInfoVC: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout:
+                        UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenWidth = UIScreen.main.bounds.width
         let doubleCellWidth = screenWidth - uploadedCourseInset.left - uploadedCourseInset.right - uploadedCourseItemSpacing
         let cellHeight = (doubleCellWidth / 2) * 0.7 + 36
@@ -121,12 +122,11 @@ extension UploadedCourseInfoVC: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-            let courseDetailVC = CourseDetailVC()
-            let courseModel = uploadedCourseList[indexPath.item]
-            courseDetailVC.setCourseId(courseId: courseModel.courseId, publicCourseId: courseModel.id)
-            courseDetailVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(courseDetailVC, animated: true)
+        let courseDetailVC = CourseDetailVC()
+        let courseModel = uploadedCourseList[indexPath.item]
+        courseDetailVC.setCourseId(courseId: courseModel.courseId, publicCourseId: courseModel.id)
+        courseDetailVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(courseDetailVC, animated: true)
     }
 }
 

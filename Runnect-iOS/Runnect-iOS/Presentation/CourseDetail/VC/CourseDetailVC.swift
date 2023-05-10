@@ -104,6 +104,7 @@ final class CourseDetailVC: UIViewController {
         $0.isScrollEnabled = false
         $0.sizeToFit()
     }
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {

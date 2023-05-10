@@ -9,19 +9,16 @@ import UIKit
 
 import SnapKit
 import Then
+import Moya
 
 final class ActivityRecordDetailVC: UIViewController {
 
     // MARK: - Properties
 
     private let recordProvider = Providers.recordProvider
-    
-    private var activityRecordList = [ActivityRecord]()
-    
+        
     private var courseId: Int?
-    
-    private var publicCourseId: Int?
-    
+        
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton)
@@ -111,9 +108,18 @@ final class ActivityRecordDetailVC: UIViewController {
 // MARK: - Methods
 
 extension ActivityRecordDetailVC {
-    func setCourseId(courseId: Int?, publicCourseId: Int?) {
+    func setCourseId(courseId: Int?) {
         self.courseId = courseId
-        self.publicCourseId = publicCourseId
+    }
+    
+    func setData(model: ActivityRecord) {
+        self.mapImageView.setImage(with: model.image)
+        self.courseTitleLabel.text = model.title
+        self.recordDistanceValueLabel.text = "\(model.distance) km"
+        self.recordRunningTimeValueLabel.text = model.time
+        self.recordAveragePaceValueLabel.text = model.pace
+        self.recordDateInfoView.setDescriptionText(description: model.createdAt)
+        self.recordDepartureInfoView.setDescriptionText(description: model.departure.region + " " + model.departure.city)
     }
     
     func setDetailInfoStakcView(title: UIView, value: UIView) -> UIStackView {
@@ -162,7 +168,7 @@ extension ActivityRecordDetailVC {
         }
         
         moreButton.snp.makeConstraints { make in
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(16)
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide)
             make.centerY.equalTo(navibar)
         }
     }
@@ -259,7 +265,7 @@ extension ActivityRecordDetailVC {
                     do {
                         let responseDto = try result.map(BaseResponse<ActivityRecordInfoDto>.self)
                         guard let data = responseDto.data else { return }
-                        //self.setData(activityRecordList: data.records)
+                        //self.courseModel = data.course
                     } catch {
                         print(error.localizedDescription)
                     }

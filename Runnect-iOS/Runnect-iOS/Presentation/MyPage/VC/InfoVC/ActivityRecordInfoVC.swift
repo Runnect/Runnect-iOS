@@ -20,7 +20,7 @@ final class ActivityRecordInfoVC: UIViewController {
     private var activityRecordList = [ActivityRecord]()
     
     private var isEditMode: Bool = false
-            
+                
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("러닝 기록")
@@ -194,8 +194,11 @@ extension ActivityRecordInfoVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard tableView.cellForRow(at: indexPath) is ActivityRecordInfoTVC else { return }
         guard let selectedRecords = tableView.indexPathsForSelectedRows else { return }
-        let activityRecordList = activityRecordList[indexPath.item]
-        //ActivityRecordDetailVC.setCourseId(courseId: <#T##Int?#>, publicCourseId: <#T##Int?#>)
+        let activityRecordDetailVC = ActivityRecordDetailVC()
+
+        // 선택한 코스의 정보 저장하기
+        
+        print(activityRecordList[indexPath.row])
         
         if isEditMode {
             self.deleteRecordButton.isEnabled = true
@@ -204,8 +207,10 @@ extension ActivityRecordInfoVC: UITableViewDelegate {
         } else {
             tableView.deselectRow(at: indexPath, animated: true)
             self.deleteRecordButton.setTitle(title: "삭제하기")
-            // 편집 모드가 아닐 때 상세 페이지로 이동
+            activityRecordDetailVC.setData(model: activityRecordList[indexPath.row])
             
+            // 편집 모드가 아닐 때 상세 페이지로 이동
+            self.navigationController?.pushViewController(activityRecordDetailVC, animated: true)
         }
     }
     
