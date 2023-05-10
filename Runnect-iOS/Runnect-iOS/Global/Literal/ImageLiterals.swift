@@ -52,6 +52,8 @@ enum ImageLiterals {
     static var imgLogo: UIImage { .load(named: "img_logo") }
     static var imgPaper: UIImage { .load(named: "img_paper") }
     static var imgPerson: UIImage { .load(named: "img_person") }
+    static var imgRecordContainerSelected: UIImage { .load(named: "img_record_container_selected") }
+    static var imgRecordContainer: UIImage { .load(named: "img_record_container") }
     static var imgStampC1: UIImage { .load(named: "img_stamp_c1") }
     static var imgStampC2: UIImage { .load(named: "img_stamp_c2") }
     static var imgStampC3: UIImage { .load(named: "img_stamp_c3") }
