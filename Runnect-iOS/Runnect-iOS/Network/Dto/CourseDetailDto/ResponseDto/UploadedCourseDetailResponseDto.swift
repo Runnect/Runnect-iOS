@@ -20,4 +20,5 @@ struct UploadUser: Codable {
     let nickname: String
     let level: Int
     let image: String
+    let isNowUser: Bool?
 }
