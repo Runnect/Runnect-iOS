@@ -25,6 +25,7 @@
 		A3D1A77929CF03D200DD54EC /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D1A77829CF03D200DD54EC /* AuthRouter.swift */; };
 		A3D1A77E29CF09B600DD54EC /* SignInResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D1A77D29CF09B600DD54EC /* SignInResponseDto.swift */; };
 		A3D1A78029CF142E00DD54EC /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D1A77F29CF142E00DD54EC /* UserManager.swift */; };
+		A3DB8C472A0B64830081AF2D /* ActivityRecordDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DB8C462A0B64830081AF2D /* ActivityRecordDetailVC.swift */; };
 		A3E55BA029C815B10000D85D /* SignInSocialLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E55B9F29C815B10000D85D /* SignInSocialLoginVC.swift */; };
 		A3F67AE2296D33AC001598A2 /* MyPageDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F67AE1296D33AC001598A2 /* MyPageDto.swift */; };
 		A3F67AEA296E4936001598A2 /* ActivityRecordInfoDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F67AE9296E4936001598A2 /* ActivityRecordInfoDto.swift */; };
@@ -177,6 +178,7 @@
 		A3D1A77829CF03D200DD54EC /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
 		A3D1A77D29CF09B600DD54EC /* SignInResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInResponseDto.swift; sourceTree = "<group>"; };
 		A3D1A77F29CF142E00DD54EC /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		A3DB8C462A0B64830081AF2D /* ActivityRecordDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRecordDetailVC.swift; sourceTree = "<group>"; };
 		A3E55B9F29C815B10000D85D /* SignInSocialLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSocialLoginVC.swift; sourceTree = "<group>"; };
 		A3E55BA529C8AB0A0000D85D /* Runnect-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Runnect-iOS.entitlements"; sourceTree = "<group>"; };
 		A3F67AE1296D33AC001598A2 /* MyPageDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageDto.swift; sourceTree = "<group>"; };
@@ -360,6 +362,7 @@
 				A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */,
 				A3BC2F2C2962C3F200198261 /* ActivityRecordInfoVC.swift */,
 				A3BC2F2E2962C40A00198261 /* UploadedCourseInfoVC.swift */,
+				A3DB8C462A0B64830081AF2D /* ActivityRecordDetailVC.swift */,
 			);
 			path = InfoVC;
 			sourceTree = "<group>";
@@ -1360,6 +1363,7 @@
 				CEE59FDA29DD6F7D00C791F1 /* Providers.swift in Sources */,
 				CE5875A029601500005D967E /* Toast.swift in Sources */,
 				CE40BB1E2968054F0030ABCA /* BaseResponse.swift in Sources */,
+				A3DB8C472A0B64830081AF2D /* ActivityRecordDetailVC.swift in Sources */,
 				CE14677C2965C1B100DCEA1B /* RunningRecordVC.swift in Sources */,
 				CE6B63D829673450003F900F /* ListEmptyView.swift in Sources */,
 				A3C2CAD329E4F77C00EC525B /* TermsOfServiceVC.swift in Sources */,
