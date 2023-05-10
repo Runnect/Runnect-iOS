@@ -10,6 +10,10 @@ import UIKit
 import SnapKit
 import Then
 
+protocol DeleteViewDelegate: AnyObject {
+    func deleteCourseButtonTapped()
+}
+
 final class RNAlertVC: UIViewController {
     
     // MARK: - Properties

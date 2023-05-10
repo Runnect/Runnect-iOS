@@ -10,6 +10,7 @@ import Combine
 
 import Moya
 
+
 final class CourseStorageVC: UIViewController {
     
     // MARK: - Properties
@@ -17,6 +18,8 @@ final class CourseStorageVC: UIViewController {
     private let courseProvider = Providers.courseProvider
     
     private let scrapProvider = Providers.scrapProvider
+    
+    private var courseId: Int?
     
     private let cancelBag = CancelBag()
     
@@ -127,7 +130,6 @@ extension CourseStorageVC: ScrapCourseListViewDelegate {
         scrapCourse(publicCourseId: publicCourseId, scrapTF: wantsTolike)
     }
 }
-
 // MARK: - Network
 
 extension CourseStorageVC {
@@ -197,6 +199,30 @@ extension CourseStorageVC {
                 let status = result.statusCode
                 if 200..<300 ~= status {
                     self.getScrapCourseList()
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
+    }
+    
+    private func deleteCourse() {
+        guard let courseId = self.courseId else { return }
+        LoadingIndicator.showLoading()
+        courseProvider.request(.deleteCourse(courseIdList: [courseId])) { [weak self] response in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                print("리절트", result)
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    print("삭제 성공")
                 }
                 if status >= 400 {
                     print("400 error")

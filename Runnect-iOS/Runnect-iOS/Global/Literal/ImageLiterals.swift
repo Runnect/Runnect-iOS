@@ -75,7 +75,6 @@ enum ImageLiterals {
     static var imgKakaoLogin: UIImage { .load(named: "img_kakao_login")}
 }
 
-
 extension UIImage {
     static func load(named imageName: String) -> UIImage {
         guard let image = UIImage(named: imageName, in: nil, compatibleWith: nil) else {

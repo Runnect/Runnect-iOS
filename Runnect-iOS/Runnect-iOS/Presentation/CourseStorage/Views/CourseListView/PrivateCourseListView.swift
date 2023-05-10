@@ -8,19 +8,26 @@
 import UIKit
 import Combine
 
+// protocol PrivateCourseListViewDelegate: AnyObject {
+//    func deleteCourseButtonDidTap()
+//}
 final class PrivateCourseListView: UIView {
     
     // MARK: - Properties
     
     var courseDrawButtonTapped = PassthroughSubject<Void, Never>()
+    
+//    var deleteCourseButtonDidTap = PassthroughSubject<Void, Never>()
     var cellDidTapped = PassthroughSubject<Int, Never>()
     
     private var courseList = [PrivateCourse]()
+//    weak var delegate:
+//    PrivateCourseListViewDelegate?
     
     private var selectedIndex: Int? {
         didSet {
             if selectedIndex == nil {
-                deleteRecordButton.setEnabled(false)
+                deleteCourseButton.setEnabled(false)
             }
         }
     }
@@ -56,7 +63,7 @@ final class PrivateCourseListView: UIView {
             $0.layer.cornerRadius = 11
         }
 
-        private lazy var deleteRecordButton = CustomButton(title: "삭제하기").then {
+        private lazy var deleteCourseButton = CustomButton(title: "삭제하기").then {
             $0.isHidden = true
             $0.isEnabled = false
         }
@@ -109,27 +116,39 @@ extension PrivateCourseListView {
     }
     
     private func setAddTarget() {
-            self.editButton.addTarget(self, action: #selector(editButtonDidTap), for: .touchUpInside)
+        self.editButton.addTarget(self, action: #selector(editButtonDidTap), for: .touchUpInside)
+        self.deleteCourseButton.addTarget(self, action: #selector(deleteCourseButtonDidTap), for: .touchUpInside)
         }
 }
 
 // MARK: - @objc Function
 
 extension PrivateCourseListView {
+    
+    @objc func deleteCourseButtonDidTap() {
+        let deleteVC = RNAlertVC(description: "코스를 정말로 삭제하시겠어요?")
+        deleteVC.rightButtonTapAction = { [weak self] in
+            deleteVC.dismiss(animated: false)
+//            self?.deleteCourse()
+            print("삭제")
+        }
+        deleteVC.modalPresentationStyle = .overFullScreen
+//        self.present(deleteVC, animated: false)
+    }
 
     @objc func editButtonDidTap() {
            if isEditMode {
                self.totalNumOfRecordlabel.text = "총 기록 \(self.courseList.count)개"
                self.editButton.setTitle("편집", for: .normal)
-               self.deleteRecordButton.isHidden = true
-               self.deleteRecordButton.isEnabled = false
-               self.deleteRecordButton.setTitle(title: "삭제하기")
+               self.deleteCourseButton.isHidden = true
+               self.deleteCourseButton.isEnabled = false
+               self.deleteCourseButton.setTitle(title: "삭제하기")
                self.courseListCollectionView.reloadData()
                isEditMode = false
            } else {
                self.totalNumOfRecordlabel.text = "기록 선택"
                self.editButton.setTitle("취소", for: .normal)
-               self.deleteRecordButton.isHidden = false
+               self.deleteCourseButton.isHidden = false
                self.courseListCollectionView.reloadData()
                isEditMode = true
            }
@@ -144,7 +163,7 @@ extension PrivateCourseListView {
     }
     
     private func setLayout() {
-        self.addSubviews(beforeEditTopView, courseListCollectionView, deleteRecordButton)
+        self.addSubviews(beforeEditTopView, courseListCollectionView, deleteCourseButton)
         courseListCollectionView.addSubviews(emptyView)
         
         beforeEditTopView.addSubviews(totalNumOfRecordlabel, editButton)
@@ -167,7 +186,7 @@ extension PrivateCourseListView {
             make.top.equalToSuperview().offset(5)
                 }
         
-        deleteRecordButton.snp.makeConstraints { make in
+        deleteCourseButton.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(32)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(44)
@@ -220,38 +239,38 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
                 let courseList = courseList[indexPath.item]
         
         if isEditMode {
-            self.deleteRecordButton.isEnabled = true
+            self.deleteCourseButton.isEnabled = true
             let countSelectCells = selectedCells.count
-            self.deleteRecordButton.setTitle(title: "삭제하기(\(countSelectCells))")
+            self.deleteCourseButton.setTitle(title: "삭제하기(\(countSelectCells))")
             cell.selectCell(didSelect: true)
             self.selectedIndex = indexPath.item
          
         } else {
             collectionView.deselectItem(at: indexPath, animated: true)
-            self.deleteRecordButton.setTitle(title: "삭제하기")
+            self.deleteCourseButton.setTitle(title: "삭제하기")
             cellDidTapped.send(indexPath.item)
             self.selectedIndex = indexPath.item
-            self.deleteRecordButton.setEnabled(true)
+            self.deleteCourseButton.setEnabled(true)
         }
       
         }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         guard collectionView.cellForItem(at: indexPath) is CourseListCVC else { return }
         guard let selectedCells = collectionView.indexPathsForSelectedItems else {
-            self.deleteRecordButton.isEnabled = false
-            self.deleteRecordButton.setTitle(title: "삭제하기")
+            self.deleteCourseButton.isEnabled = false
+            self.deleteCourseButton.setTitle(title: "삭제하기")
             return }
         guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else { return }
         
         if isEditMode {
-            self.deleteRecordButton.isEnabled = true
+            self.deleteCourseButton.isEnabled = true
             let countSelectCells = selectedCells.count
-            self.deleteRecordButton.setTitle(title: "삭제하기(\(countSelectCells))")
+            self.deleteCourseButton.setTitle(title: "삭제하기(\(countSelectCells))")
             self.selectedIndex = nil
             cell.selectCell(didSelect: false)
         } else {
                 collectionView.deselectItem(at: indexPath, animated: true)
-                self.deleteRecordButton.setTitle(title: "삭제하기")
+                self.deleteCourseButton.setTitle(title: "삭제하기")
 
             }
     }
