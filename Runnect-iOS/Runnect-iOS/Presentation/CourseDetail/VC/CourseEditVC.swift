@@ -1,9 +1,10 @@
 //
-//  UploadViewController.swift
+//  CourseEditVC.swift
 //  Runnect-iOS
 //
-//  Created by YEONOO on 2023/01/05.
+//  Created by YEONOO on 2023/05/06.
 //
+
 
 import UIKit
 
@@ -11,19 +12,19 @@ import SnapKit
 import Then
 import Moya
 
-class CourseUploadVC: UIViewController {
+class CourseEditVC: UIViewController {
     
     // MARK: - Properties
     private let PublicCourseProvider = Providers.publicCourseProvider
     
-    private var courseModel: Course?
     private let courseTitleMaxLength = 20
+    var publicCourseId: Int?
     
     // MARK: - UI Components
     
-    private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("코스 업로드")
+    private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("")
     private let buttonContainerView = UIView()
-    private let uploadButton = CustomButton(title: "업로드하기").setEnabled(false)
+    private let editButton = CustomButton(title: "완료").setEnabled(false)
     
     private lazy var scrollView = UIScrollView()
     private let mapImageView = UIImageView().then {
@@ -78,20 +79,21 @@ class CourseUploadVC: UIViewController {
 
 // MARK: - Methods
 
-extension CourseUploadVC {
-    
-    func setData(courseModel: Course) {
-        self.courseModel = courseModel
-        self.mapImageView.setImage(with: courseModel.image)
-        
-        guard let distance = courseModel.distance else { return }
-        self.distanceInfoView.setDescriptionText(description: "\(String(distance))km")
-        self.departureInfoView.setDescriptionText(description: "\(courseModel.departure.region) \(courseModel.departure.city)")
-    }
-    
+extension CourseEditVC {
     private func setAddTarget() {
         self.courseTitleTextField.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
-        self.uploadButton.addTarget(self, action: #selector(uploadButtonDidTap), for: .touchUpInside)
+        self.editButton.addTarget(self, action: #selector(editButtonDidTap), for: .touchUpInside)
+    }
+    
+    // data 그대로 load하기
+    func loadData(model: UploadedCourseDetailResponseDto) {
+        mapImageView.setImage(with: model.publicCourse.image)
+        courseTitleTextField.text = model.publicCourse.title
+        distanceInfoView.setDescriptionText(description: "\(model.publicCourse.distance ?? 0.0)")
+        let departure = "\(model.publicCourse.departure.region) \(model.publicCourse.departure.city)"
+        departureInfoView.setDescriptionText(description: departure)
+        
+        activityTextView.text = model.publicCourse.description   
     }
     
     // 키보드가 올라오면 scrollView 위치 조정
@@ -131,7 +133,7 @@ extension CourseUploadVC {
 }
 // MARK: - @objc Function
 
-extension CourseUploadVC {
+extension CourseEditVC {
     @objc private func textFieldTextDidChange() {
         guard let text = courseTitleTextField.text else { return }
         
@@ -142,9 +144,9 @@ extension CourseUploadVC {
         }
         
         if text.count == 0 && activityTextView.text != self.placeholder && activityTextView.text.count == 0 {
-            uploadButton.setEnabled(true)
+            editButton.setEnabled(true)
         } else {
-            uploadButton.setEnabled(false)
+            editButton.setEnabled(false)
         }
     }
     
@@ -178,14 +180,20 @@ extension CourseUploadVC {
         scrollView.scrollIndicatorInsets = contentInset
     }
     
-    @objc func uploadButtonDidTap() {
-        self.uploadCourse()
+    @objc func editButtonDidTap() {
+        let editCheckVC = RNAlertVC(description: "게시글 수정을 종료할까요?\n종료 시 수정 내용이 반영되지 않아요.")
+        editCheckVC.rightButtonTapAction = { [weak self] in
+            editCheckVC.dismiss(animated: true)
+            self?.editCourse() // patch 실행
+        }
+        editCheckVC.modalPresentationStyle = .overFullScreen
+        self.present(editCheckVC, animated: false)
     }
 }
 
 // MARK: - naviVar Layout
 
-extension CourseUploadVC {
+extension CourseEditVC {
     private func setNavigationBar() {
         view.addSubview(navibar)
         navibar.snp.makeConstraints { make in
@@ -207,15 +215,15 @@ extension CourseUploadVC {
     
     private func setLayout() {
         view.addSubview(buttonContainerView)
-        view.bringSubviewToFront(uploadButton)
-        buttonContainerView.addSubview(uploadButton)
+        view.bringSubviewToFront(editButton)
+        buttonContainerView.addSubview(editButton)
         
         buttonContainerView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(86)
             make.bottom.equalToSuperview()
         }
-        uploadButton.snp.makeConstraints { make in
+        editButton.snp.makeConstraints { make in
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
             make.height.equalTo(44)
             make.bottom.equalToSuperview().inset(34)
@@ -238,7 +246,7 @@ extension CourseUploadVC {
         scrollView.snp.makeConstraints {
             $0.top.equalTo(navibar.snp.bottom)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.bottom.equalTo(uploadButton.snp.top).inset(-25)
+            $0.bottom.equalTo(editButton.snp.top).inset(-25)
         }
         
         mapImageView.snp.makeConstraints { make in
@@ -279,12 +287,10 @@ extension CourseUploadVC {
     
     func setupTextView() {
         activityTextView.delegate = self
-        activityTextView.text = placeholder
-        activityTextView.textColor = .g3
     }
 }
 
-extension CourseUploadVC: UITextViewDelegate {
+extension CourseEditVC: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             activityTextView.textColor = .g3
@@ -298,9 +304,9 @@ extension CourseUploadVC: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         if !courseTitleTextField.isEmpty && !activityTextView.text.isEmpty {
-            uploadButton.setEnabled(true)
+            editButton.setEnabled(true)
         } else {
-            uploadButton.setEnabled(false)
+            editButton.setEnabled(false)
         }
         
         if activityTextView.text.count > 150 {
@@ -317,22 +323,22 @@ extension CourseUploadVC: UITextViewDelegate {
 
 // MARK: - Network
 
-extension CourseUploadVC {
-    private func uploadCourse() {
-        guard let courseId = courseModel?.id else { return }
+extension CourseEditVC {
+    private func editCourse() {
         guard let titletext = courseTitleTextField.text else { return }
         guard let descriptiontext = activityTextView.text else { return }
-        let requsetDto = CourseUploadingRequestDto(courseId: courseId, title: titletext, description: descriptiontext)
+        guard let publicCourseId = publicCourseId else { return }
+        let requsetDto = EditCourseRequestDto(title: titletext, description: descriptiontext)
         
         LoadingIndicator.showLoading()
-        PublicCourseProvider.request(.courseUploadingData(param: requsetDto)) { [weak self] response in
+        PublicCourseProvider.request(.updatePublicCourse(publicCourseId: publicCourseId, editCourseRequestDto: requsetDto)) { [weak self] response in
             LoadingIndicator.hideLoading()
             guard let self = self else { return }
             switch response {
             case .success(let result):
                 let status = result.statusCode
                 if 200..<300 ~= status {
-                    self.navigationController?.popToRootViewController(animated: true)
+                    self.navigationController?.popViewController(animated: true)
                 }
                 if status >= 400 {
                     print("400 error")
