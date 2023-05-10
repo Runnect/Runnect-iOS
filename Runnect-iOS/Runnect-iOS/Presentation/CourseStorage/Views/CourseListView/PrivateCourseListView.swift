@@ -38,17 +38,6 @@ final class PrivateCourseListView: UIView {
         $0.font = .b6
         $0.textColor = .g2
     }
-    
-//    private let afterEditTopView = UIView()
-//    private let selectCouseLabel = UILabel().then {
-//        $0.text = "코스 선택"
-//        $0.font = .b6
-//        $0.textColor = .g2
-//    }
-    
-    
-    
-    
     private lazy var courseListCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: collectionViewLayout
