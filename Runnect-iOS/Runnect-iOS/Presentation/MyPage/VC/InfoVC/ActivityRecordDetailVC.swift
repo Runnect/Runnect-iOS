@@ -173,7 +173,7 @@ extension ActivityRecordDetailVC {
         middleScorollView.snp.makeConstraints { make in
             make.top.equalTo(navibar.snp.bottom)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
         middleScorollView.addSubviews(mapImageView, courseTitleLabel, firstHorizontalDivideLine, recordInfoStackView, secondHorizontalDivideLine)
@@ -197,7 +197,7 @@ extension ActivityRecordDetailVC {
         
         recordInfoStackView.snp.makeConstraints { make in
             make.top.equalTo(firstHorizontalDivideLine.snp.bottom).offset(20)
-            make.leading.trailing.equalToSuperview().inset(16)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
         }
         
         firstVerticalDivideLine.snp.makeConstraints { make in
@@ -239,6 +239,7 @@ extension ActivityRecordDetailVC {
         recordSubInfoStackView.snp.makeConstraints { make in
             make.top.equalTo(secondHorizontalDivideLine.snp.bottom).offset(23)
             make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().inset(30)
         }
     }
 }
