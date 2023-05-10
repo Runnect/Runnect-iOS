@@ -31,7 +31,6 @@ final class PrivateCourseListView: UIView {
     final let itemSpacing: CGFloat = 10
     final let lineSpacing: CGFloat = 20
     
-    
     // MARK: - UI Components
     
     private let collectionViewLayout = UICollectionViewFlowLayout().then {
@@ -80,7 +79,7 @@ final class PrivateCourseListView: UIView {
         self.setLayout()
         self.setDelegate()
         self.register()
-//        self.hideTabBar(wantsToHide: true)
+        self.setAddTarget()
     }
     
     required init?(coder: NSCoder) {
@@ -101,6 +100,7 @@ extension PrivateCourseListView {
     private func setDelegate() {
         courseListCollectionView.delegate = self
         courseListCollectionView.dataSource = self
+        courseListCollectionView.allowsMultipleSelection = true
         emptyView.delegate = self
     }
     private func register() {
@@ -116,12 +116,12 @@ extension PrivateCourseListView {
 // MARK: - @objc Function
 
 extension PrivateCourseListView {
+
     @objc func editButtonDidTap() {
            if isEditMode {
                self.totalNumOfRecordlabel.text = "총 기록 \(self.courseList.count)개"
                self.editButton.setTitle("편집", for: .normal)
                self.deleteRecordButton.isHidden = true
-               guard let selectedIndex = self.selectedIndex else { return }
                self.deleteRecordButton.isEnabled = false
                self.deleteRecordButton.setTitle(title: "삭제하기")
                self.courseListCollectionView.reloadData()
@@ -144,33 +144,33 @@ extension PrivateCourseListView {
     }
     
     private func setLayout() {
-        self.addSubviews(beforeEditTopView,courseListCollectionView,deleteRecordButton)
+        self.addSubviews(beforeEditTopView, courseListCollectionView, deleteRecordButton)
         courseListCollectionView.addSubviews(emptyView)
         
-        beforeEditTopView.addSubviews(totalNumOfRecordlabel,  editButton)
+        beforeEditTopView.addSubviews(totalNumOfRecordlabel, editButton)
         
         beforeEditTopView.snp.makeConstraints { make in
             make.top.equalToSuperview()
-                    make.leading.trailing.equalToSuperview()
-                    make.height.equalTo(38)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(38)
                 }
         
         totalNumOfRecordlabel.snp.makeConstraints { make in
-                    make.leading.equalToSuperview().inset(16)
-                    make.top.equalToSuperview().offset(10)
+            make.leading.equalToSuperview().inset(16)
+            make.top.equalToSuperview().offset(10)
                 }
 
-                editButton.snp.makeConstraints { make in
-                    make.trailing.equalToSuperview().inset(16)
-                    make.width.equalTo(47)
-                    make.height.equalTo(22)
-                    make.top.equalToSuperview().offset(5)
+        editButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(16)
+            make.width.equalTo(47)
+            make.height.equalTo(22)
+            make.top.equalToSuperview().offset(5)
                 }
         
         deleteRecordButton.snp.makeConstraints { make in
-                    make.bottom.equalToSuperview().inset(32)
-                    make.leading.trailing.equalToSuperview().inset(16)
-                    make.height.equalTo(44)
+            make.bottom.equalToSuperview().inset(32)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(44)
                 }
         
         courseListCollectionView.snp.makeConstraints { make in
@@ -193,63 +193,75 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
         return courseList.count
     }
     
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else { return }
-        self.selectedIndex = indexPath.item
-
-        if isEditMode {
-                    self.deleteRecordButton.isEnabled = true
-                    let countCells = courseList.count
-            self.deleteRecordButton.setTitle(title: "삭제하기(\(countCells))")
-                } else {
-                    collectionView.deselectItem(at: indexPath, animated: true)
-                    self.deleteRecordButton.setTitle(title: "삭제하기")
-                    // 편집 모드가 아닐 때 상세 페이지로 이동
-                    
-                }
-        self.selectedIndex = indexPath.item
-        self.deleteRecordButton.setEnabled(true)
-        cell.selectCell(didSelect: true)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else {
-            self.deleteRecordButton.isEnabled = false
-            self.deleteRecordButton.setTitle(title: "삭제하기")
-            return }
-        
-        if isEditMode {
-                    self.deleteRecordButton.isEnabled = true
-            let countCells = courseList.count
-            self.deleteRecordButton.setTitle(title: "삭제하기(\(countCells))")
-            self.selectedIndex = nil
-            cell.selectCell(didSelect: false)
-                } else {
-                    collectionView.deselectItem(at: indexPath, animated: true)
-                    self.deleteRecordButton.setTitle(title: "삭제하기")
-                }
-    }
-
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath)
+                as? CourseListCVC else { return UICollectionViewCell() }
+        cell.setCellType(type: .title)
+        if let selectedCells = collectionView.indexPathsForSelectedItems, selectedCells.contains(indexPath) {
+            cell.selectCell(didSelect: true)
+        } else {
+            cell.selectCell(didSelect: false)
+        }
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className,
                                                             for: indexPath)
                 as? CourseListCVC else { return UICollectionViewCell() }
         cell.setCellType(type: .title)
+
         let model = courseList[indexPath.item]
         let cellTitle =  "\(model.departure.region) \(model.departure.city)"
         cell.setData(imageURL: model.image, title: cellTitle, location: nil, didLike: nil)
         return cell
     }
-}
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard collectionView.cellForItem(at: indexPath) is CourseListCVC else { return }
+        guard let selectedCells = collectionView.indexPathsForSelectedItems else { return }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else { return }
+                let courseList = courseList[indexPath.item]
+        
+        if isEditMode {
+            self.deleteRecordButton.isEnabled = true
+            let countSelectCells = selectedCells.count
+            self.deleteRecordButton.setTitle(title: "삭제하기(\(countSelectCells))")
+            cell.selectCell(didSelect: true)
+            self.selectedIndex = indexPath.item
+         
+        } else {
+            collectionView.deselectItem(at: indexPath, animated: true)
+            self.deleteRecordButton.setTitle(title: "삭제하기")
+            cellDidTapped.send(indexPath.item)
+            self.selectedIndex = indexPath.item
+            self.deleteRecordButton.setEnabled(true)
+        }
+      
+        }
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        guard collectionView.cellForItem(at: indexPath) is CourseListCVC else { return }
+        guard let selectedCells = collectionView.indexPathsForSelectedItems else {
+            self.deleteRecordButton.isEnabled = false
+            self.deleteRecordButton.setTitle(title: "삭제하기")
+            return }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else { return }
+        
+        if isEditMode {
+            self.deleteRecordButton.isEnabled = true
+            let countSelectCells = selectedCells.count
+            self.deleteRecordButton.setTitle(title: "삭제하기(\(countSelectCells))")
+            self.selectedIndex = nil
+            cell.selectCell(didSelect: false)
+        } else {
+                collectionView.deselectItem(at: indexPath, animated: true)
+                self.deleteRecordButton.setTitle(title: "삭제하기")
 
+            }
+    }
+    }
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension PrivateCourseListView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cellWidth = (UIScreen.main.bounds.width - (self.itemSpacing + 2*self.collectionViewInset.left)) / 2
         let cellHeight = CourseListCVCType.getCellHeight(type: .title, cellWidth: cellWidth)
-        
         return CGSize(width: cellWidth, height: cellHeight)
     }
     
@@ -264,10 +276,6 @@ extension PrivateCourseListView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return self.lineSpacing
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        cellDidTapped.send(indexPath.item)
-//    }
 }
 
 // MARK: - Section Heading
