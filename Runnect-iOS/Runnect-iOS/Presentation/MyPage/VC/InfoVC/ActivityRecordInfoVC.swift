@@ -259,7 +259,7 @@ extension ActivityRecordInfoVC: UITableViewDelegate {
             tableView.deselectRow(at: indexPath, animated: true)
             self.deleteRecordButton.setTitle(title: "삭제하기")
             activityRecordDetailVC.setData(model: activityRecordList[indexPath.row])
-            activityRecordDetailVC.setRecordId(recordId: activityRecordList[indexPath.row].courseId)
+            activityRecordDetailVC.setRecordId(recordId: activityRecordList[indexPath.row].id)
             
             // 편집 모드가 아닐 때 상세 페이지로 이동
             self.navigationController?.pushViewController(activityRecordDetailVC, animated: true)

@@ -320,6 +320,8 @@ extension ActivityRecordDetailVC {
                 let status = result.statusCode
                 if 200..<300 ~= status {
                     print("삭제 성공")
+                    self.navigationController?.popViewController(animated: false)
+                    
                 }
                 if status >= 400 {
                     print("400 error")
