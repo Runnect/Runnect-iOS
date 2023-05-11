@@ -17,7 +17,7 @@ final class ActivityRecordDetailVC: UIViewController {
 
     private let recordProvider = Providers.recordProvider
         
-    private var courseId: Int?
+    private var recordId: Int?
         
     // MARK: - UI Components
     
@@ -67,17 +67,11 @@ final class ActivityRecordDetailVC: UIViewController {
         $0.text = "평균 페이스"
     }
 
-    private lazy var recordDistanceValueLabel = setBlackTitle().then {
-        $0.text = "5.1km"
-    }
+    private lazy var recordDistanceValueLabel = setBlackTitle()
     
-    private lazy var recordRunningTimeValueLabel = setBlackTitle().then {
-        $0.text = "00:28:07"
-    }
+    private lazy var recordRunningTimeValueLabel = setBlackTitle()
     
-    private lazy var recordAveragePaceValueLabel = setBlackTitle().then {
-        $0.text = "5’31’’"
-    }
+    private lazy var recordAveragePaceValueLabel = setBlackTitle()
     
     private lazy var recordDistanceStackView = setDetailInfoStakcView(title: recordDistanceLabel, value: recordDistanceValueLabel)
     
@@ -102,14 +96,38 @@ final class ActivityRecordDetailVC: UIViewController {
         setNavigationBar()
         setUI()
         setLayout()
+        setAddTarget()
+    }
+}
+
+// MARK: - @objc Function
+
+extension ActivityRecordDetailVC {
+    @objc func moreButtonDidTap() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let editAction = UIAlertAction(title: "수정하기", style: .default, handler: {(_: UIAlertAction!) in
+            //self.navigationController?.pushViewController(courseEditVC, animated: false)
+        })
+        let deleteVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
+        deleteVC.modalPresentationStyle = .overFullScreen
+        let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive, handler: {(_: UIAlertAction!) in
+            self.present(deleteVC, animated: false, completion: nil)})
+        
+        deleteVC.rightButtonTapAction = { [weak self] in
+            deleteVC.dismiss(animated: false)
+            self?.deleteRecord()
+        }
+        
+        [ editAction, deleteAction ].forEach { alertController.addAction($0) }
+        present(alertController, animated: true, completion: nil)
     }
 }
 
 // MARK: - Methods
 
 extension ActivityRecordDetailVC {
-    func setCourseId(courseId: Int?) {
-        self.courseId = courseId
+    func setRecordId(recordId: Int?) {
+        self.recordId = recordId
     }
     
     func setData(model: ActivityRecord) {
@@ -132,6 +150,10 @@ extension ActivityRecordDetailVC {
         let array = spiltRecordAveragePace(model: model)
         setUpRecordAveragePaceValueLabel(array: array, label: recordAveragePaceValueLabel)
         setUpRecordDistanceValueLabel(model: model, label: recordDistanceValueLabel)
+    }
+    
+    private func setAddTarget() {
+        self.moreButton.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
     }
     
     func setDetailInfoStakcView(title: UIView, value: UIView) -> UIStackView {
@@ -161,14 +183,14 @@ extension ActivityRecordDetailVC {
         label.attributedText = attributedString
     }
     
-    func setBlackTitle() -> UILabel {
+    private func setBlackTitle() -> UILabel {
         let label = UILabel()
         label.textColor = .g1
         label.font = .h3
         return label
     }
     
-    func setGreyTitle() -> UILabel {
+    private func setGreyTitle() -> UILabel {
         let label = UILabel()
         label.textColor = .g2
         label.font = .b4
@@ -179,6 +201,7 @@ extension ActivityRecordDetailVC {
 // MARK: - Layout Helpers
 
 extension ActivityRecordDetailVC {
+    
     private func setUI() {
         view.backgroundColor = .w1
         middleScorollView.backgroundColor = .w1
@@ -277,6 +300,35 @@ extension ActivityRecordDetailVC {
             make.top.equalTo(secondHorizontalDivideLine.snp.bottom).offset(23)
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().inset(30)
+        }
+    }
+}
+
+// MARK: - Network
+
+extension ActivityRecordDetailVC {
+    private func deleteRecord() {
+        guard let recordId = self.recordId else { return }
+        print(recordId)
+        LoadingIndicator.showLoading()
+        recordProvider.request(.deleteRecord(recordIdList: [recordId])) { [weak self] response in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                print("result:", result)
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    print("삭제 성공")
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
         }
     }
 }
