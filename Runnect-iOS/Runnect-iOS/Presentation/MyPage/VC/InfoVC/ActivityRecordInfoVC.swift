@@ -24,11 +24,11 @@ final class ActivityRecordInfoVC: UIViewController, deleteRecordDelegate {
     private var activityRecordList = [ActivityRecord]()
     
     private var deleteRecordList = [Int]()
-        
+    
     weak var delegate: deleteRecordDelegate?
-                
+    
     private var isEditMode: Bool = false
-                
+    
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("러닝 기록")
@@ -65,9 +65,9 @@ final class ActivityRecordInfoVC: UIViewController, deleteRecordDelegate {
     }
     
     // MARK: - View Life Cycle
-        
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setNavigationBar()
         setUI()
         setLayout()
@@ -77,11 +77,6 @@ final class ActivityRecordInfoVC: UIViewController, deleteRecordDelegate {
         getActivityRecordInfo()
         self.hideTabBar(wantsToHide: true)
     }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        self.reloadActivityRecordInfoVC()
-//    }
 }
 
 // MARK: - Methods
@@ -110,7 +105,6 @@ extension ActivityRecordInfoVC {
     }
     
     func reloadActivityRecordInfoVC() {
-        self.activityRecordTableView.reloadData()
         self.editButton.setTitle("편집", for: .normal)
         self.deleteRecordButton.isHidden = true
         self.totalNumOfRecordlabel.text = "총 기록 \(self.activityRecordList.count)개"
@@ -168,12 +162,12 @@ extension ActivityRecordInfoVC {
     }
     
     @objc func deleteRecordButtonDidTap() {
-        let deleteVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
-        deleteVC.modalPresentationStyle = .overFullScreen
-        deleteVC.deleteRecordDelegate = self
-        self.present(deleteVC, animated: false, completion: nil)
-        deleteVC.rightButtonTapAction = { [weak self] in
-            deleteVC.dismiss(animated: false)
+        let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
+        deleteAlertVC.modalPresentationStyle = .overFullScreen
+        deleteAlertVC.deleteRecordDelegate = self
+        self.present(deleteAlertVC, animated: false, completion: nil)
+        deleteAlertVC.rightButtonTapAction = { [weak self] in
+            deleteAlertVC.dismiss(animated: false)
         }
     }
 }
@@ -249,17 +243,16 @@ extension ActivityRecordInfoVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard tableView.cellForRow(at: indexPath) is ActivityRecordInfoTVC else { return }
         guard let selectedRecords = tableView.indexPathsForSelectedRows else { return }
-        let activityRecordDetailVC = ActivityRecordDetailVC()
             
         if isEditMode {
             self.deleteRecordButton.isEnabled = true
             let countSelectedRows = selectedRecords.count
             self.deleteRecordButton.setTitle(title: "삭제하기(\(countSelectedRows))")
         } else {
+            let activityRecordDetailVC = ActivityRecordDetailVC()
             tableView.deselectRow(at: indexPath, animated: true)
             self.deleteRecordButton.setTitle(title: "삭제하기")
             activityRecordDetailVC.setData(model: activityRecordList[indexPath.row])
-            activityRecordDetailVC.setRecordId(recordId: activityRecordList[indexPath.row].id)
             
             // 편집 모드가 아닐 때 상세 페이지로 이동
             self.navigationController?.pushViewController(activityRecordDetailVC, animated: true)
@@ -366,6 +359,7 @@ extension ActivityRecordInfoVC {
                 let status = result.statusCode
                 if 200..<300 ~= status {
                     print("삭제 성공")
+                    self.getActivityRecordInfo()
                     self.reloadActivityRecordInfoVC()
                 }
                 if status >= 400 {

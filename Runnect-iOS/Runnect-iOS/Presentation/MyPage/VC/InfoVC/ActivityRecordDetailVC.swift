@@ -134,11 +134,8 @@ extension ActivityRecordDetailVC {
 // MARK: - Methods
 
 extension ActivityRecordDetailVC {
-    func setRecordId(recordId: Int?) {
-        self.recordId = recordId
-    }
-    
     func setData(model: ActivityRecord) {
+        self.recordId = model.id
         self.mapImageView.setImage(with: model.image)
         self.courseTitleLabel.text = model.title
         
@@ -360,7 +357,9 @@ extension ActivityRecordDetailVC {
                 if 200..<300 ~= status {
                     print("삭제 성공")
                     self.navigationController?.popViewController(animated: false)
-                    
+                    let activityRecordInfoVC = ActivityRecordInfoVC()
+                    activityRecordInfoVC.getActivityRecordInfo()
+                    activityRecordInfoVC.reloadActivityRecordInfoVC()
                 }
                 if status >= 400 {
                     print("400 error")
