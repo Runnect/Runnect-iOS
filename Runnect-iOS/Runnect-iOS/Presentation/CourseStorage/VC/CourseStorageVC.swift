@@ -10,10 +10,7 @@ import Combine
 
 import Moya
 
-final class CourseStorageVC: UIViewController,PrivateCourseListViewDelegate {
-    func deleteCourseButtonDidTapped(courseIdsToDelete: [Int]) {
-        print("delegate")
-    }
+final class CourseStorageVC: UIViewController {
     
     // MARK: - Properties
     
@@ -21,7 +18,7 @@ final class CourseStorageVC: UIViewController,PrivateCourseListViewDelegate {
     
     private let scrapProvider = Providers.scrapProvider
     
-    private var courseIdList: [Int] = []
+    private var courseIdsToDelete: [Int] = []
     
     private let cancelBag = CancelBag()
     
@@ -29,12 +26,7 @@ final class CourseStorageVC: UIViewController,PrivateCourseListViewDelegate {
     
     private var scrapCourseList = [ScrapCourse]()
     
-
-    
-    private var selectedCells: [Int] = []
-    
     // MARK: - UI Components
-    
     private lazy var naviBar = CustomNavigationBar(self, type: .title).setTitle("보관함")
     
     private let privateCourseListView = PrivateCourseListView()
@@ -100,28 +92,12 @@ extension CourseStorageVC {
             courseDetailVC.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(courseDetailVC, animated: true)
         }.store(in: cancelBag)
-        
-//        privateCourseListView.deleteCourseButtonTapped.sink{ [weak self] in
-//            guard let self = self else { return }
-//            let deleteVC = RNAlertVC(description: "코스를 정말로 삭제하시겠어요?")
-//            deleteVC.rightButtonTapAction = { [weak self] in
-//                deleteVC.dismiss(animated: false)
-//               print("여기실행됨 ?")
-//                
-//                
-////                guard let selectedCells = self?.selectedCells else { return }
-////               deleteCourseButtonDidTapped(courseIdsToDelete: selectedCells)
-//                print("dddddddddddddddddd")
-//            }
-//            deleteVC.modalPresentationStyle = .overFullScreen
-//            self.present(deleteVC, animated: false)
-//            print("dddddddddddddddddd")
-//        }
 
     }
     
     private func setDelegate() {
         scrapCourseListView.delegate = self
+        privateCourseListView.delegate = self
         
     }
 }
@@ -156,9 +132,13 @@ extension CourseStorageVC: ScrapCourseListViewDelegate {
     }
 }
 
-
+// MARK: - PrivateCourseListViewDelegate
+extension CourseStorageVC: PrivateCourseListViewDelegate {
+    func deleteCourseButtonTapped(courseIdsToDelete: [Int]) {
+        deleteCourse(courseIdList: courseIdsToDelete)
+    }
+}
 // MARK: - Network
-
 extension CourseStorageVC {
     private func getPrivateCourseList() {
         LoadingIndicator.showLoading()
@@ -239,9 +219,9 @@ extension CourseStorageVC {
     }
     
     private func deleteCourse(courseIdList: [Int]) {
-//        guard let courseIdsDelete = self.courseIdsDelete else { return }
+        let courseIdsToDelete = self.courseIdsToDelete
         LoadingIndicator.showLoading()
-        courseProvider.request(.deleteCourse(courseIdList: courseIdList)) { [weak self] response in
+        courseProvider.request(.deleteCourse(courseIdList: courseIdsToDelete)) { [weak self] response in
             LoadingIndicator.hideLoading()
             guard let self = self else { return }
             switch response {
@@ -262,11 +242,3 @@ extension CourseStorageVC {
         }
     }
 }
-//extension UIResponder {
-//    func parentViewController() -> UIViewController? {
-//        if let viewController = self as? UIViewController {
-//            return viewController
-//        }
-//        return next?.parentViewController()
-//    }
-//}

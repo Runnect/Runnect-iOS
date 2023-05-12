@@ -10,16 +10,16 @@ import UIKit
 import SnapKit
 import Then
 
+
+
 final class RNAlertVC: UIViewController {
     
     // MARK: - Properties
     
     var rightButtonTapAction: (() -> Void)?
     
-
-    
-    
-
+//    weak var delegate: RNAlertVCDeleagte?
+// 
     // MARK: - UI Components
     
     private let containerView = UIView().then {
@@ -94,6 +94,7 @@ extension RNAlertVC {
     
     @objc private func touchYesButton() {
         self.rightButtonTapAction?()
+        
     }
     
     
