@@ -10,16 +10,16 @@ import UIKit
 import SnapKit
 import Then
 
-protocol DeleteViewDelegate: AnyObject {
-    func deleteCourseButtonTapped()
-}
-
 final class RNAlertVC: UIViewController {
     
     // MARK: - Properties
     
     var rightButtonTapAction: (() -> Void)?
     
+
+    
+    
+
     // MARK: - UI Components
     
     private let containerView = UIView().then {
@@ -82,6 +82,7 @@ extension RNAlertVC {
         self.noButton.addTarget(self, action: #selector(touchUpNoButton), for: .touchUpInside)
         self.yesButton.addTarget(self, action: #selector(touchYesButton), for: .touchUpInside)
     }
+    
 }
 
 // MARK: - @objc Function
@@ -94,6 +95,8 @@ extension RNAlertVC {
     @objc private func touchYesButton() {
         self.rightButtonTapAction?()
     }
+    
+    
 }
 
 // MARK: - Layout Helpers

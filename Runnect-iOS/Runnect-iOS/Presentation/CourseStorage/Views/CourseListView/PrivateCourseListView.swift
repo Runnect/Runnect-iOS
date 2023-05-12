@@ -8,30 +8,25 @@
 import UIKit
 import Combine
 
-// protocol PrivateCourseListViewDelegate: AnyObject {
-//    func deleteCourseButtonDidTap()
-//}
+protocol PrivateCourseListViewDelegate: AnyObject {
+    func deleteCourseButtonDidTapped(courseIdsToDelete: [Int])
+    
+}
+
 final class PrivateCourseListView: UIView {
     
     // MARK: - Properties
     
     var courseDrawButtonTapped = PassthroughSubject<Void, Never>()
-    
-//    var deleteCourseButtonDidTap = PassthroughSubject<Void, Never>()
+
     var cellDidTapped = PassthroughSubject<Int, Never>()
     
+    var deleteCourseButtonTapped = PassthroughSubject<Void,Never>()
+    
     private var courseList = [PrivateCourse]()
-//    weak var delegate:
-//    PrivateCourseListViewDelegate?
-    
-    private var selectedIndex: Int? {
-        didSet {
-            if selectedIndex == nil {
-                deleteCourseButton.setEnabled(false)
-            }
-        }
-    }
-    
+    private var selectedCells: [Int] = []
+    weak var delegate: PrivateCourseListViewDelegate?
+    weak var courseStorageVC: UIViewController?
     private var isEditMode: Bool = false
     
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
@@ -87,11 +82,14 @@ final class PrivateCourseListView: UIView {
         self.setDelegate()
         self.register()
         self.setAddTarget()
+        self.setDeleteButton()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+        setDeleteButton()
     }
+    
 }
 
 // MARK: - Methods
@@ -117,23 +115,29 @@ extension PrivateCourseListView {
     
     private func setAddTarget() {
         self.editButton.addTarget(self, action: #selector(editButtonDidTap), for: .touchUpInside)
-        self.deleteCourseButton.addTarget(self, action: #selector(deleteCourseButtonDidTap), for: .touchUpInside)
+        
         }
+    
+    private func setDeleteButton(){
+        deleteCourseButton.addTarget(self, action: #selector(deleteCourseButtonDidTap), for: .touchUpInside)
+    }
 }
 
 // MARK: - @objc Function
 
 extension PrivateCourseListView {
     
-    @objc func deleteCourseButtonDidTap() {
+    @objc func deleteCourseButtonDidTap(_ sender: UIButton) {
+        let rootVC = UIApplication.shared.keyWindow?.rootViewController
         let deleteVC = RNAlertVC(description: "코스를 정말로 삭제하시겠어요?")
+        deleteVC.modalPresentationStyle = .overFullScreen
+        rootVC?.present(deleteVC, animated: false)
+        print("삭제버튼 눌리긴 함 !!!! ")
         deleteVC.rightButtonTapAction = { [weak self] in
             deleteVC.dismiss(animated: false)
-//            self?.deleteCourse()
-            print("삭제")
+            //            delegate?.deleteCourseButtonDidTapped(courseIdsToDelete: selectedCells)}
+            //
         }
-        deleteVC.modalPresentationStyle = .overFullScreen
-//        self.present(deleteVC, animated: false)
     }
 
     @objc func editButtonDidTap() {
@@ -236,23 +240,22 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
         guard collectionView.cellForItem(at: indexPath) is CourseListCVC else { return }
         guard let selectedCells = collectionView.indexPathsForSelectedItems else { return }
         guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else { return }
-                let courseList = courseList[indexPath.item]
+        let courseList = courseList[indexPath.item]
         
         if isEditMode {
             self.deleteCourseButton.isEnabled = true
             let countSelectCells = selectedCells.count
             self.deleteCourseButton.setTitle(title: "삭제하기(\(countSelectCells))")
             cell.selectCell(didSelect: true)
-            self.selectedIndex = indexPath.item
+//            self.selectedIndexs = indexPath.item
          
         } else {
             collectionView.deselectItem(at: indexPath, animated: true)
             self.deleteCourseButton.setTitle(title: "삭제하기")
             cellDidTapped.send(indexPath.item)
-            self.selectedIndex = indexPath.item
+//            self.selectedIndexs = indexPath.item
             self.deleteCourseButton.setEnabled(true)
         }
-      
         }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         guard collectionView.cellForItem(at: indexPath) is CourseListCVC else { return }
@@ -266,15 +269,14 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
             self.deleteCourseButton.isEnabled = true
             let countSelectCells = selectedCells.count
             self.deleteCourseButton.setTitle(title: "삭제하기(\(countSelectCells))")
-            self.selectedIndex = nil
+//            self.selectedIndexs = nil
             cell.selectCell(didSelect: false)
         } else {
                 collectionView.deselectItem(at: indexPath, animated: true)
                 self.deleteCourseButton.setTitle(title: "삭제하기")
-
             }
     }
-    }
+}
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension PrivateCourseListView: UICollectionViewDelegateFlowLayout {
@@ -304,3 +306,19 @@ extension PrivateCourseListView: ListEmptyViewDelegate {
         self.courseDrawButtonTapped.send()
     }
 }
+
+extension PrivateCourseListView: PrivateCourseListViewDelegate {
+    func deleteCourseButtonDidTapped(courseIdsToDelete: [Int]) {
+        self.deleteCourseButtonTapped.send()
+       
+    }
+}
+
+//extension UIResponder {
+//    func parentViewController() -> UIViewController? {
+//        if let viewController = self as? UIViewController {
+//            return viewController
+//        }
+//        return next?.parentViewController()
+//    }
+//}

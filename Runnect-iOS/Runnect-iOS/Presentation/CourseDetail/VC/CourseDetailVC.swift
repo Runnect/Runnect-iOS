@@ -112,7 +112,6 @@ final class CourseDetailVC: UIViewController {
         setUI()
         setLayout()
         setAddTarget()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -150,6 +149,7 @@ extension CourseDetailVC {
             let deleteVC = RNAlertVC(description: "코스를 정말로 삭제하시겠어요?")
             deleteVC.rightButtonTapAction = { [weak self] in
                 deleteVC.dismiss(animated: false)
+                //todo : 업로드한 코스 뷰 pop, data 리로드
                 self?.deleteCourse()
             }
             deleteVC.modalPresentationStyle = .overFullScreen
@@ -195,7 +195,7 @@ extension CourseDetailVC {
 // MARK: - Method
 
 extension CourseDetailVC {
-    func setCourseId(courseId: Int?, publicCourseId: Int?) {
+    func setCourseId(courseId: Int, publicCourseId: Int?) {
         self.courseId = courseId
         self.publicCourseId = publicCourseId
     }

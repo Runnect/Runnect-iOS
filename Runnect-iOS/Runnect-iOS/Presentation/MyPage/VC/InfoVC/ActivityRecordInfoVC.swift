@@ -195,7 +195,6 @@ extension ActivityRecordInfoVC: UITableViewDelegate {
         guard tableView.cellForRow(at: indexPath) is ActivityRecordInfoTVC else { return }
         guard let selectedRecords = tableView.indexPathsForSelectedRows else { return }
         let activityRecordList = activityRecordList[indexPath.item]
-        //ActivityRecordDetailVC.setCourseId(courseId: <#T##Int?#>, publicCourseId: <#T##Int?#>)
         
         if isEditMode {
             self.deleteRecordButton.isEnabled = true
