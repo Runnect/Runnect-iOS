@@ -18,7 +18,9 @@ final class ActivityRecordDetailVC: UIViewController {
     private let recordProvider = Providers.recordProvider
         
     private var recordId: Int?
-        
+    
+    private var isEditMode: Bool = false
+            
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton)
@@ -88,6 +90,10 @@ final class ActivityRecordDetailVC: UIViewController {
         $0.distribution = .fill
     }
     
+    private lazy var finishEditButton = CustomButton(title: "완료").then {
+        $0.isHidden = true
+    }
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -106,7 +112,9 @@ extension ActivityRecordDetailVC {
     @objc func moreButtonDidTap() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let editAction = UIAlertAction(title: "수정하기", style: .default, handler: {(_: UIAlertAction!) in
-            //self.navigationController?.pushViewController(courseEditVC, animated: false)
+            // 수정 모드일 때
+            self.isEditMode = true
+            self.setEditModeLayout()
         })
         let deleteVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
         deleteVC.modalPresentationStyle = .overFullScreen
@@ -302,6 +310,37 @@ extension ActivityRecordDetailVC {
             make.bottom.equalToSuperview().inset(30)
         }
     }
+    
+    private func setEditModeLayout() {
+        mapImageView.snp.remakeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(middleScorollView.snp.width)
+        }
+        
+        secondHorizontalDivideLine.snp.remakeConstraints { make in
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(7)
+            make.top.equalTo(recordInfoStackView.snp.bottom).offset(11)
+        }
+        
+        self.finishEditButton.isHidden = false
+        
+        recordSubInfoStackView.snp.remakeConstraints { make in
+            make.top.equalTo(secondHorizontalDivideLine.snp.bottom).offset(20)
+            make.centerX.equalToSuperview()
+        }
+        
+        middleScorollView.addSubview(finishEditButton)
+
+        finishEditButton.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().inset(30)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            make.top.equalTo(recordSubInfoStackView.snp.bottom).offset(44)
+            make.height.equalTo(44)
+        }
+    }
+    
 }
 
 // MARK: - Network
