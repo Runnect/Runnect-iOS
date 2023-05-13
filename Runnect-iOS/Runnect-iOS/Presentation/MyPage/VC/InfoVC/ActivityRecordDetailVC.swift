@@ -20,6 +20,8 @@ final class ActivityRecordDetailVC: UIViewController {
     private var recordId: Int?
     
     private var isEditMode: Bool = false
+    
+    private let courseTitleMaxLength = 20
             
     // MARK: - UI Components
     
@@ -38,9 +40,18 @@ final class ActivityRecordDetailVC: UIViewController {
     private let mapImageView = UIImageView()
     
     private let courseTitleLabel = UILabel().then {
-        $0.text = "제목"
         $0.textColor = .g1
         $0.font = .h4
+    }
+    
+    private let courseTitleTextField = UITextField().then {
+        $0.attributedPlaceholder = NSAttributedString(
+            string: String(),
+            attributes: [.font: UIFont.h4, .foregroundColor: UIColor.g3]
+        )
+        $0.font = .h4
+        $0.textColor = .g1
+        $0.addLeftPadding(width: 2)
     }
     
     private let recordDateInfoView = CourseDetailInfoView(title: "날짜", description: String())
@@ -103,6 +114,8 @@ final class ActivityRecordDetailVC: UIViewController {
         setUI()
         setLayout()
         setAddTarget()
+        self.setKeyboardNotification()
+        self.setTapGesture()
     }
 }
 
@@ -128,6 +141,39 @@ extension ActivityRecordDetailVC {
         
         [ editAction, deleteAction ].forEach { alertController.addAction($0) }
         present(alertController, animated: true, completion: nil)
+    }
+    
+    @objc private func textFieldTextDidChange() {
+        guard let text = courseTitleTextField.text else { return }
+        
+        self.finishEditButton.isEnabled = !text.isEmpty
+        
+        if text.count > courseTitleMaxLength {
+            let index = text.index(text.startIndex, offsetBy: courseTitleMaxLength)
+            let newString = text[text.startIndex..<index]
+            self.courseTitleTextField.text = String(newString)
+        }
+    }
+    
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+                return
+        }
+
+        let contentInset = UIEdgeInsets(
+            top: 0.0,
+            left: 0.0,
+            bottom: keyboardFrame.size.height,
+            right: 0.0)
+        middleScorollView.contentInset = contentInset
+        middleScorollView.scrollIndicatorInsets = contentInset
+    }
+    
+    @objc private func keyboardWillHide() {
+        let contentInset = UIEdgeInsets.zero
+        middleScorollView.contentInset = contentInset
+        middleScorollView.scrollIndicatorInsets = contentInset
     }
 }
 
@@ -159,6 +205,7 @@ extension ActivityRecordDetailVC {
     
     private func setAddTarget() {
         self.moreButton.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
+        self.courseTitleTextField.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
     }
     
     func setDetailInfoStakcView(title: UIView, value: UIView) -> UIStackView {
@@ -201,12 +248,33 @@ extension ActivityRecordDetailVC {
         label.font = .b4
         return label
     }
+    
+    // 키보드가 올라오면 scrollView 위치 조정
+    private func setKeyboardNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil)
+    }
+    
+    // 화면 터치 시 키보드 내리기
+    private func setTapGesture() {
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
 }
 
 // MARK: - Layout Helpers
 
 extension ActivityRecordDetailVC {
-    
     private func setUI() {
         view.backgroundColor = .w1
         middleScorollView.backgroundColor = .w1
@@ -315,16 +383,39 @@ extension ActivityRecordDetailVC {
             make.height.equalTo(middleScorollView.snp.width)
         }
         
+        self.courseTitleLabel.isHidden = true
+        
+        self.courseTitleTextField.text = self.courseTitleLabel.text
+        
+        middleScorollView.addSubview(courseTitleTextField)
+        
+        courseTitleTextField.snp.makeConstraints { make in
+            make.top.equalTo(mapImageView.snp.bottom).offset(27)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(35)
+        }
+    
+        self.finishEditButton.isHidden = false
+        
+        firstHorizontalDivideLine.snp.remakeConstraints { make in
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            make.height.equalTo(2)
+            make.top.equalTo(courseTitleTextField.snp.bottom).offset(5)
+        }
+        
+        recordInfoStackView.snp.makeConstraints { make in
+            make.top.equalTo(firstHorizontalDivideLine.snp.bottom).offset(20)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+        }
+        
         secondHorizontalDivideLine.snp.remakeConstraints { make in
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(7)
-            make.top.equalTo(recordInfoStackView.snp.bottom).offset(11)
+            make.top.equalTo(recordInfoStackView.snp.bottom).offset(24)
         }
         
-        self.finishEditButton.isHidden = false
-        
         recordSubInfoStackView.snp.remakeConstraints { make in
-            make.top.equalTo(secondHorizontalDivideLine.snp.bottom).offset(20)
+            make.top.equalTo(secondHorizontalDivideLine.snp.bottom).offset(22)
             make.centerX.equalToSuperview()
         }
         
@@ -333,7 +424,7 @@ extension ActivityRecordDetailVC {
         finishEditButton.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(30)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.top.equalTo(recordSubInfoStackView.snp.bottom).offset(44)
+            make.top.equalTo(recordSubInfoStackView.snp.bottom).offset(50)
             make.height.equalTo(44)
         }
     }
@@ -345,7 +436,6 @@ extension ActivityRecordDetailVC {
 extension ActivityRecordDetailVC {
     private func deleteRecord() {
         guard let recordId = self.recordId else { return }
-        print(recordId)
         LoadingIndicator.showLoading()
         recordProvider.request(.deleteRecord(recordIdList: [recordId])) { [weak self] response in
             LoadingIndicator.hideLoading()
@@ -371,4 +461,6 @@ extension ActivityRecordDetailVC {
             }
         }
     }
+    
+    
 }
