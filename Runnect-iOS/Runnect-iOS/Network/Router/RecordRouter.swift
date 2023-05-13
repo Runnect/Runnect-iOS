@@ -13,6 +13,7 @@ enum RecordRouter {
     case recordRunning(param: RunningRecordRequestDto)
     case getActivityRecordInfo
     case deleteRecord(recordIdList: [Int])
+    case updateRecordTitle(recordId: Int, recordTitle: String)
 }
 
 extension RecordRouter: TargetType {
@@ -30,6 +31,8 @@ extension RecordRouter: TargetType {
             return "/record"
         case .getActivityRecordInfo:
             return "/record/user"
+        case .updateRecordTitle(recordId: let recordId, _):
+            return "/record/\(recordId)"
         }
     }
     
@@ -41,6 +44,8 @@ extension RecordRouter: TargetType {
             return .get
         case .deleteRecord:
             return .put
+        case .updateRecordTitle:
+            return .patch
         }
     }
     
@@ -56,12 +61,17 @@ extension RecordRouter: TargetType {
             return .requestPlain
         case .deleteRecord(let recordIdList):
             return .requestParameters(parameters: ["recordIdList": recordIdList], encoding: JSONEncoding.default)
+        case .updateRecordTitle(_, let recordTitle):
+            do {
+                return .requestParameters(parameters: ["title": recordTitle], encoding: JSONEncoding.default)
+            } catch {
+                fatalError("Encoding 실패")}
         }
     }
     
     var headers: [String: String]? {
         switch self {
-        case .recordRunning, .getActivityRecordInfo, .deleteRecord:
+        default:
             return Config.defaultHeader
         }
     }

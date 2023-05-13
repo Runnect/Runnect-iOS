@@ -180,6 +180,10 @@ extension ActivityRecordDetailVC {
         middleScorollView.contentInset = contentInset
         middleScorollView.scrollIndicatorInsets = contentInset
     }
+    
+    @objc private func finishEditButtonDidTap() {
+        editRecordTitle()
+    }
 }
 
 // MARK: - Methods
@@ -211,6 +215,7 @@ extension ActivityRecordDetailVC {
     private func setAddTarget() {
         self.moreButton.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
         self.courseTitleTextField.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
+        self.finishEditButton.addTarget(self, action: #selector(finishEditButtonDidTap), for: .touchUpInside)
     }
     
     func setDetailInfoStakcView(title: UIView, value: UIView) -> UIStackView {
@@ -455,6 +460,31 @@ extension ActivityRecordDetailVC {
                     let activityRecordInfoVC = ActivityRecordInfoVC()
                     activityRecordInfoVC.getActivityRecordInfo()
                     activityRecordInfoVC.reloadActivityRecordInfoVC()
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
+    }
+    
+    private func editRecordTitle() {
+        guard let recordId = self.recordId else { return }
+        guard let editRecordTitle = self.courseTitleTextField.text else { return }
+        LoadingIndicator.showLoading()
+        recordProvider.request(.updateRecordTitle(recordId: recordId, recordTitle: editRecordTitle)) { [weak self] response in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                print("result:", result)
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    print("제목 수정 성공")
                 }
                 if status >= 400 {
                     print("400 error")
