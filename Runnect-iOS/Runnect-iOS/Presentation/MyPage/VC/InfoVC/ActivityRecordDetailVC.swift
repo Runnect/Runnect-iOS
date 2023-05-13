@@ -46,7 +46,7 @@ final class ActivityRecordDetailVC: UIViewController {
     
     private let courseTitleTextField = UITextField().then {
         $0.attributedPlaceholder = NSAttributedString(
-            string: String(),
+            string: "글 제목",
             attributes: [.font: UIFont.h4, .foregroundColor: UIColor.g3]
         )
         $0.font = .h4
@@ -103,6 +103,7 @@ final class ActivityRecordDetailVC: UIViewController {
     
     private lazy var finishEditButton = CustomButton(title: "완료").then {
         $0.isHidden = true
+        $0.isEnabled = false
     }
     
     // MARK: - View Life Cycle
@@ -147,6 +148,10 @@ extension ActivityRecordDetailVC {
         guard let text = courseTitleTextField.text else { return }
         
         self.finishEditButton.isEnabled = !text.isEmpty
+        
+        if text == self.courseTitleLabel.text {
+            self.finishEditButton.isEnabled = false
+        }
         
         if text.count > courseTitleMaxLength {
             let index = text.index(text.startIndex, offsetBy: courseTitleMaxLength)
@@ -418,7 +423,7 @@ extension ActivityRecordDetailVC {
             make.top.equalTo(secondHorizontalDivideLine.snp.bottom).offset(22)
             make.centerX.equalToSuperview()
         }
-        
+                
         middleScorollView.addSubview(finishEditButton)
 
         finishEditButton.snp.makeConstraints { make in
@@ -461,6 +466,4 @@ extension ActivityRecordDetailVC {
             }
         }
     }
-    
-    
 }
