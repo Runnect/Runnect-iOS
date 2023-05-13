@@ -9,7 +9,7 @@ import UIKit
 import Combine
 
 protocol PrivateCourseListViewDelegate: AnyObject {
-    func deleteCourseButtonTapped(courseIdsToDelete: [Int])
+    func deleteCourseButtonTapped(courseIdList: [Int])
 }
 
 final class PrivateCourseListView: UIView {
@@ -21,8 +21,8 @@ final class PrivateCourseListView: UIView {
     var cellDidTapped = PassthroughSubject<Int, Never>()
     var courseDeleteButtonTapped = PassthroughSubject<Void, Never>()
 
-    private var courseList = [PrivateCourse]()
-    private var selectedList: [Int] = []
+    var courseList = [PrivateCourse]()
+    private var deleteToCourseId: [Int] = []
     
     weak var delegate: PrivateCourseListViewDelegate?
     weak var courseStorageVC: UIViewController?
@@ -98,6 +98,7 @@ extension PrivateCourseListView {
         self.courseListCollectionView.reloadData()
         self.emptyView.isHidden = !courseList.isEmpty
         totalNumOfRecordlabel.text = "총 기록 \(courseList.count)개"
+        
     }
     
     private func setDelegate() {
@@ -126,17 +127,23 @@ extension PrivateCourseListView {
 extension PrivateCourseListView {
     
     @objc func deleteCourseButtonDidTap(_sender: UIButton) {
-       
-        let selectedList = self.selectedList
-
+        print(courseList)
+        
+        guard let selectedList = courseListCollectionView.indexPathsForSelectedItems else { return }
+        for indexPath in selectedList {
+                   let course = courseList[indexPath.item]
+                   deleteToCourseId.append(course.id)
+               }
+        let deleteToCourseId = self.deleteToCourseId
+        print(selectedList)
         let rootVC = UIApplication.shared.keyWindow?.rootViewController
         let deleteVC = RNAlertVC(description: "코스를 정말로 삭제하시겠어요?")
         deleteVC.modalPresentationStyle = .overFullScreen
         rootVC?.present(deleteVC, animated: false)
         deleteVC.rightButtonTapAction = { [weak self] in
             deleteVC.dismiss(animated: false)
-            self?.delegate?.deleteCourseButtonTapped(courseIdsToDelete: selectedList)
-            
+            self?.delegate?.deleteCourseButtonTapped(courseIdList: deleteToCourseId)
+           print("삭제하려고 담은애들이야",deleteToCourseId)
         }
     }
 

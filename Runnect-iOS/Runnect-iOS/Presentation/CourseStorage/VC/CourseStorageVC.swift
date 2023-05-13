@@ -58,6 +58,7 @@ extension CourseStorageVC {
     private func setPrivateCourseData(courseList: [PrivateCourse]) {
         self.privateCourseList = courseList
         self.privateCourseListView.setData(courseList: courseList)
+       
     }
     
     private func setScrapCourseData(courseList: [ScrapCourse]) {
@@ -134,8 +135,9 @@ extension CourseStorageVC: ScrapCourseListViewDelegate {
 
 // MARK: - PrivateCourseListViewDelegate
 extension CourseStorageVC: PrivateCourseListViewDelegate {
-    func deleteCourseButtonTapped(courseIdsToDelete: [Int]) {
-        deleteCourse(courseIdList: courseIdsToDelete)
+    func deleteCourseButtonTapped(courseIdList: [Int]) {
+
+//        deleteCourse(courseIdList: courseIdsToDelete)
     }
 }
 // MARK: - Network
@@ -218,27 +220,27 @@ extension CourseStorageVC {
         }
     }
     
-    private func deleteCourse(courseIdList: [Int]) {
-        let courseIdsToDelete = self.courseIdsToDelete
-        LoadingIndicator.showLoading()
-        courseProvider.request(.deleteCourse(courseIdList: courseIdsToDelete)) { [weak self] response in
-            LoadingIndicator.hideLoading()
-            guard let self = self else { return }
-            switch response {
-            case .success(let result):
-                print("리절트", result)
-                let status = result.statusCode
-                if 200..<300 ~= status {
-                    print("삭제 성공")
-                }
-                if status >= 400 {
-                    print("400 error")
-                    self.showNetworkFailureToast()
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-                self.showNetworkFailureToast()
-            }
-        }
-    }
+//    private func deleteCourse(courseIdList: [Int]) {
+//        let courseIdsToDelete = deleteToCourseId
+//        LoadingIndicator.showLoading()
+//        courseProvider.request(.deleteCourse(courseIdList: deleteToCourseId)) { [weak self] response in
+//            LoadingIndicator.hideLoading()
+//            guard let self = self else { return }
+//            switch response {
+//            case .success(let result):
+//                print("리절트", result)
+//                let status = result.statusCode
+//                if 200..<300 ~= status {
+//                    print("삭제 성공")
+//                }
+//                if status >= 400 {
+//                    print("400 error")
+//                    self.showNetworkFailureToast()
+//                }
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//                self.showNetworkFailureToast()
+//            }
+//        }
+//    }
 }
