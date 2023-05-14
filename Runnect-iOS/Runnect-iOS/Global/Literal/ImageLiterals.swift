@@ -44,12 +44,17 @@ enum ImageLiterals {
     static var icLogoCircle: UIImage { .load(named: "ic_logo_circle") }
     static var icMore: UIImage { .load(named: "ic_more") }
     static var icPlus: UIImage { .load(named: "ic_plus") }
+    static var icFrameEdit: UIImage {
+        .load(named: "ic_frame_edit")
+    }
 
     // img
     static var imgBackground: UIImage { .load(named: "img_background") }
     static var imgLogo: UIImage { .load(named: "img_logo") }
     static var imgPaper: UIImage { .load(named: "img_paper") }
     static var imgPerson: UIImage { .load(named: "img_person") }
+    static var imgRecordContainerSelected: UIImage { .load(named: "img_record_container_selected") }
+    static var imgRecordContainer: UIImage { .load(named: "img_record_container") }
     static var imgStampC1: UIImage { .load(named: "img_stamp_c1") }
     static var imgStampC2: UIImage { .load(named: "img_stamp_c2") }
     static var imgStampC3: UIImage { .load(named: "img_stamp_c3") }
@@ -72,7 +77,6 @@ enum ImageLiterals {
     static var imgAppleLogin: UIImage { .load(named: "img_apple_login")}
     static var imgKakaoLogin: UIImage { .load(named: "img_kakao_login")}
 }
-
 
 extension UIImage {
     static func load(named imageName: String) -> UIImage {

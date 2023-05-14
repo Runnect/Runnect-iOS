@@ -164,7 +164,12 @@ extension CustomNavigationBar {
 
 extension CustomNavigationBar {
     @objc private func popToPreviousVC() {
+        guard let vc = vc else { return }
         self.vc?.navigationController?.popViewController(animated: true)
+        if vc.presentingViewController != nil {
+            self.vc?.dismiss(animated: true)
+
+        }
     }
     
     @objc private func searchLocation() {

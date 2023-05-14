@@ -14,6 +14,7 @@ enum CourseRouter {
     case getAllPrivateCourse
     case getPrivateCourseNotUploaded
     case getCourseDetail(courseId: Int)
+    case deleteCourse(courseIdList: [Int])
 }
 
 extension CourseRouter: TargetType {
@@ -35,6 +36,8 @@ extension CourseRouter: TargetType {
             return "/course/private/user"
         case .getCourseDetail(let courseId):
             return "/course/detail/\(courseId)"
+        case .deleteCourse:
+            return "/course"
         }
     }
     
@@ -44,6 +47,8 @@ extension CourseRouter: TargetType {
             return .post
         case .getAllPrivateCourse, .getPrivateCourseNotUploaded, .getCourseDetail:
             return .get
+        case .deleteCourse:
+            return .put
         }
     }
     
@@ -81,6 +86,8 @@ extension CourseRouter: TargetType {
             }
             
             return .uploadMultipart(multipartFormData)
+        case .deleteCourse(let courseIdList):
+            return .requestParameters(parameters: ["courseIdList": courseIdList], encoding: JSONEncoding.default)
         case .getAllPrivateCourse, .getPrivateCourseNotUploaded, .getCourseDetail:
             return .requestPlain
         }

@@ -34,7 +34,6 @@ final class CourseStorageVC: UIViewController {
     
     private lazy var viewPager = ViewPager(pageTitles: ["내가 그린 코스", "스크랩 코스"])
         .addPagedView(pagedView: [privateCourseListView, scrapCourseListView])
-    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {

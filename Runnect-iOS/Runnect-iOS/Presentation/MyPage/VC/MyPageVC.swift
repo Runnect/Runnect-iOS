@@ -73,7 +73,7 @@ final class MyPageVC: UIViewController {
         $0.addGestureRecognizer(tap)
     }
     
-    private lazy var activityRecordInfoView = makeInfoView(title: "활동 기록").then {
+    private lazy var activityRecordInfoView = makeInfoView(title: "러닝 기록").then {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpActivityRecordInfoView))
         $0.addGestureRecognizer(tap)
     }
@@ -97,7 +97,8 @@ final class MyPageVC: UIViewController {
     private let versionInfoValueLabel = UILabel().then {
         $0.textColor = .g2
         $0.font = .b2
-        $0.text = "v. 1.0.1"
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+        $0.text = "v. \(version ?? "1.0.0")"
     }
     
     // MARK: - View Life Cycle
@@ -113,6 +114,7 @@ final class MyPageVC: UIViewController {
         super.viewWillAppear(animated)
         guard UserManager.shared.userType != .visitor else { return }
         self.getMyPageInfo()
+        self.hideTabBar(wantsToHide: false)
     }
 }
 
@@ -175,8 +177,7 @@ extension MyPageVC {
     private func pushToNicknameEditorVC() {
         let nicknameEditorVC = NicknameEditorVC()
         nicknameEditorVC.delegate = self
-        nicknameEditorVC.modalPresentationStyle = .overFullScreen
-        self.present(nicknameEditorVC, animated: false)
+        self.navigationController?.pushViewController(nicknameEditorVC, animated: true)
     }
     
     private func pushToSettingVC() {

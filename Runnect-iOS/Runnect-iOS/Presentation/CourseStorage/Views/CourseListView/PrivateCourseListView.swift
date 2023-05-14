@@ -26,6 +26,28 @@ final class PrivateCourseListView: UIView {
     private let collectionViewLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .vertical
     }
+    private let beforeEditTopView = UIView().then{
+        $0.backgroundColor = .clear
+    }
+    private let frameEditButton = UIButton(type: .system).then {
+        $0.setImage(ImageLiterals.icFrameEdit, for: .normal)
+        $0.tintColor = .g1
+    }
+    private let totalCourseNum = UILabel().then{
+        $0.text = "총 100개"
+        $0.font = .b6
+        $0.textColor = .g2
+    }
+    
+//    private let afterEditTopView = UIView()
+//    private let selectCouseLabel = UILabel().then {
+//        $0.text = "코스 선택"
+//        $0.font = .b6
+//        $0.textColor = .g2
+//    }
+    
+    
+    
     
     private lazy var courseListCollectionView = UICollectionView(
         frame: .zero,
@@ -83,14 +105,27 @@ extension PrivateCourseListView {
     }
     
     private func setLayout() {
-        self.addSubviews(courseListCollectionView)
+        self.addSubviews(beforeEditTopView,courseListCollectionView)
         courseListCollectionView.addSubviews(emptyView)
-
-        courseListCollectionView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.bottom.trailing.equalToSuperview()
+        
+        beforeEditTopView.addSubviews(frameEditButton,totalCourseNum)
+        
+        beforeEditTopView.snp.makeConstraints{ make in make.top.top.equalToSuperview().offset(11)}
+        frameEditButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(1)
+            make.trailing.equalTo(self.safeAreaLayoutGuide).inset(16)
         }
         
+        totalCourseNum.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(1)
+            make.leading.equalTo(self.safeAreaLayoutGuide).offset(16)
+        }
+    
+        courseListCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(frameEditButton.snp.bottom)
+            make.leading.bottom.trailing.equalToSuperview()
+            
+        }
         emptyView.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(80)

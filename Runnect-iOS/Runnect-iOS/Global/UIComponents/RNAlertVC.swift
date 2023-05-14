@@ -16,6 +16,8 @@ final class RNAlertVC: UIViewController {
     
     var rightButtonTapAction: (() -> Void)?
     
+    var deleteRecordDelegate: deleteRecordDelegate?
+        
     // MARK: - UI Components
     
     private let containerView = UIView().then {
@@ -25,10 +27,12 @@ final class RNAlertVC: UIViewController {
     private let descriptionLabel = UILabel().then {
         $0.font = .b4
         $0.textColor = .g2
+        $0.numberOfLines = 0
+        $0.textAlignment = .center
     }
     
     private lazy var yesButton = UIButton(type: .custom).then {
-        $0.setTitle("네", for: .normal)
+        $0.setTitle("예", for: .normal)
         $0.titleLabel?.font = .h5
         $0.setTitleColor(.w1, for: .normal)
         $0.layer.backgroundColor = UIColor.m1.cgColor
@@ -76,6 +80,13 @@ extension RNAlertVC {
         self.noButton.addTarget(self, action: #selector(touchUpNoButton), for: .touchUpInside)
         self.yesButton.addTarget(self, action: #selector(touchYesButton), for: .touchUpInside)
     }
+    
+    @discardableResult
+    func setButtonTitle(_ leftButtonTitle: String, _ rightButtonTitle: String) -> Self {
+        self.yesButton.setTitle(rightButtonTitle, for: .normal)
+        self.noButton.setTitle(leftButtonTitle, for: .normal)
+        return self
+    }
 }
 
 // MARK: - @objc Function
@@ -87,6 +98,7 @@ extension RNAlertVC {
     
     @objc private func touchYesButton() {
         self.rightButtonTapAction?()
+        deleteRecordDelegate?.wantsToDelete()
     }
 }
 
@@ -105,7 +117,7 @@ extension RNAlertVC {
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(30)
-            make.height.equalTo(126)
+//            make.height.equalTo(126)
         }
         
         containerView.addSubviews(descriptionLabel, yesButton, noButton)
@@ -116,6 +128,7 @@ extension RNAlertVC {
         }
         
         noButton.snp.makeConstraints { make in
+            make.top.equalTo(descriptionLabel.snp.bottom).offset(20)
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalTo(containerView.snp.centerX).offset(-4)
             make.height.equalTo(44)
@@ -124,6 +137,7 @@ extension RNAlertVC {
         }
         
         yesButton.snp.makeConstraints { make in
+            make.top.equalTo(noButton.snp.top)
             make.trailing.equalToSuperview().inset(16)
             make.leading.equalTo(containerView.snp.centerX).offset(4)
             make.height.equalTo(44)

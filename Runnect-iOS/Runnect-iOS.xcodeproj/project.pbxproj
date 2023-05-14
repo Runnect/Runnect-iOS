@@ -25,6 +25,7 @@
 		A3D1A77929CF03D200DD54EC /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D1A77829CF03D200DD54EC /* AuthRouter.swift */; };
 		A3D1A77E29CF09B600DD54EC /* SignInResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D1A77D29CF09B600DD54EC /* SignInResponseDto.swift */; };
 		A3D1A78029CF142E00DD54EC /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D1A77F29CF142E00DD54EC /* UserManager.swift */; };
+		A3DB8C472A0B64830081AF2D /* ActivityRecordDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DB8C462A0B64830081AF2D /* ActivityRecordDetailVC.swift */; };
 		A3E55BA029C815B10000D85D /* SignInSocialLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E55B9F29C815B10000D85D /* SignInSocialLoginVC.swift */; };
 		A3F67AE2296D33AC001598A2 /* MyPageDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F67AE1296D33AC001598A2 /* MyPageDto.swift */; };
 		A3F67AEA296E4936001598A2 /* ActivityRecordInfoDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F67AE9296E4936001598A2 /* ActivityRecordInfoDto.swift */; };
@@ -145,6 +146,8 @@
 		CEEC6B4B2961D89700D00E1E /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B4A2961D89700D00E1E /* CustomNavigationBar.swift */; };
 		CEF3CD9A296DB305002723A1 /* CourseDetailResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3CD99296DB305002723A1 /* CourseDetailResponseDto.swift */; };
 		CEFA9A2F29FC263700F2D0CF /* UserDeleteResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFA9A2E29FC263700F2D0CF /* UserDeleteResponseDto.swift */; };
+		DA0587F22A05D54100B72869 /* EditCourseRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0587F12A05D54100B72869 /* EditCourseRequestDto.swift */; };
+		DA0587F42A05DEC000B72869 /* CourseEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0587F32A05DEC000B72869 /* CourseEditVC.swift */; };
 		DA20D847296697A600F1581F /* MyCourseSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D846296697A600F1581F /* MyCourseSelectVC.swift */; };
 		DA20D849296697B400F1581F /* CourseUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D848296697B400F1581F /* CourseUploadVC.swift */; };
 		DA20D84E2966A9B300F1581F /* CourseSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20D84D2966A9B300F1581F /* CourseSearchVC.swift */; };
@@ -175,6 +178,7 @@
 		A3D1A77829CF03D200DD54EC /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
 		A3D1A77D29CF09B600DD54EC /* SignInResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInResponseDto.swift; sourceTree = "<group>"; };
 		A3D1A77F29CF142E00DD54EC /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		A3DB8C462A0B64830081AF2D /* ActivityRecordDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRecordDetailVC.swift; sourceTree = "<group>"; };
 		A3E55B9F29C815B10000D85D /* SignInSocialLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSocialLoginVC.swift; sourceTree = "<group>"; };
 		A3E55BA529C8AB0A0000D85D /* Runnect-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Runnect-iOS.entitlements"; sourceTree = "<group>"; };
 		A3F67AE1296D33AC001598A2 /* MyPageDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageDto.swift; sourceTree = "<group>"; };
@@ -307,6 +311,8 @@
 		CEEC6B4A2961D89700D00E1E /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		CEF3CD99296DB305002723A1 /* CourseDetailResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailResponseDto.swift; sourceTree = "<group>"; };
 		CEFA9A2E29FC263700F2D0CF /* UserDeleteResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDeleteResponseDto.swift; sourceTree = "<group>"; };
+		DA0587F12A05D54100B72869 /* EditCourseRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCourseRequestDto.swift; sourceTree = "<group>"; };
+		DA0587F32A05DEC000B72869 /* CourseEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseEditVC.swift; sourceTree = "<group>"; };
 		DA20D846296697A600F1581F /* MyCourseSelectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCourseSelectVC.swift; sourceTree = "<group>"; };
 		DA20D848296697B400F1581F /* CourseUploadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseUploadVC.swift; sourceTree = "<group>"; };
 		DA20D84D2966A9B300F1581F /* CourseSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseSearchVC.swift; sourceTree = "<group>"; };
@@ -356,6 +362,7 @@
 				A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */,
 				A3BC2F2C2962C3F200198261 /* ActivityRecordInfoVC.swift */,
 				A3BC2F2E2962C40A00198261 /* UploadedCourseInfoVC.swift */,
+				A3DB8C462A0B64830081AF2D /* ActivityRecordDetailVC.swift */,
 			);
 			path = InfoVC;
 			sourceTree = "<group>";
@@ -441,6 +448,7 @@
 		CE10063329680BFD00FD31FB /* CourseDetailDto */ = {
 			isa = PBXGroup;
 			children = (
+				DA0587F02A05D52100B72869 /* RequestDto */,
 				CE4942AB296FCD1000736701 /* ResponseDto */,
 			);
 			path = CourseDetailDto;
@@ -719,6 +727,7 @@
 			isa = PBXGroup;
 			children = (
 				A3BC2F422966A93100198261 /* CourseDetailVC.swift */,
+				DA0587F32A05DEC000B72869 /* CourseEditVC.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -1144,6 +1153,14 @@
 			path = VC;
 			sourceTree = "<group>";
 		};
+		DA0587F02A05D52100B72869 /* RequestDto */ = {
+			isa = PBXGroup;
+			children = (
+				DA0587F12A05D54100B72869 /* EditCourseRequestDto.swift */,
+			);
+			path = RequestDto;
+			sourceTree = "<group>";
+		};
 		DA97A029296DC2020086760E /* RequestDto */ = {
 			isa = PBXGroup;
 			children = (
@@ -1346,6 +1363,7 @@
 				CEE59FDA29DD6F7D00C791F1 /* Providers.swift in Sources */,
 				CE5875A029601500005D967E /* Toast.swift in Sources */,
 				CE40BB1E2968054F0030ABCA /* BaseResponse.swift in Sources */,
+				A3DB8C472A0B64830081AF2D /* ActivityRecordDetailVC.swift in Sources */,
 				CE14677C2965C1B100DCEA1B /* RunningRecordVC.swift in Sources */,
 				CE6B63D829673450003F900F /* ListEmptyView.swift in Sources */,
 				A3C2CAD329E4F77C00EC525B /* TermsOfServiceVC.swift in Sources */,
@@ -1365,6 +1383,7 @@
 				A3F67AE2296D33AC001598A2 /* MyPageDto.swift in Sources */,
 				CE591EA1296D5EB5000FCBB3 /* PrivateCourseResponseDto.swift in Sources */,
 				A3BC2F3F2964706100198261 /* UploadedCourseInfoCVC.swift in Sources */,
+				DA0587F42A05DEC000B72869 /* CourseEditVC.swift in Sources */,
 				CE6655FE295D912300C64E12 /* calculateTopInset.swift in Sources */,
 				CEEC6B492961C5E200D00E1E /* SplashVC.swift in Sources */,
 				CE6655D0295D85FF00C64E12 /* CancelBag.swift in Sources */,
@@ -1423,6 +1442,7 @@
 				CE17F02D2961BBA100E1DED0 /* ColorLiterals.swift in Sources */,
 				CEC2A68E2962AF2C00160BF7 /* RNMarker.swift in Sources */,
 				CE6655D2295D862A00C64E12 /* Publisher+Driver.swift in Sources */,
+				DA0587F22A05D54100B72869 /* EditCourseRequestDto.swift in Sources */,
 				A3C2CACE29E313CC00EC525B /* SettingVC.swift in Sources */,
 				CE21C02E299E601700F62AF5 /* StampRouter.swift in Sources */,
 				CE6655E6295D887F00C64E12 /* UIStackView+.swift in Sources */,
@@ -1593,7 +1613,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.runnect.Runnect-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1630,7 +1650,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.runnect.Runnect-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
