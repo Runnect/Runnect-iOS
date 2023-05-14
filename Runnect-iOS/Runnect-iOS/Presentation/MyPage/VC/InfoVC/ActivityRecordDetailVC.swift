@@ -26,7 +26,7 @@ final class ActivityRecordDetailVC: UIViewController {
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton)
-    
+        
     private let moreButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icMore, for: .normal)
         $0.tintColor = .g1
@@ -128,7 +128,7 @@ extension ActivityRecordDetailVC {
         let editAction = UIAlertAction(title: "수정하기", style: .default, handler: {(_: UIAlertAction!) in
             // 수정 모드일 때
             self.isEditMode = true
-            self.setEditModeLayout()
+            self.setEditMode()
         })
         let deleteVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
         deleteVC.modalPresentationStyle = .overFullScreen
@@ -386,7 +386,24 @@ extension ActivityRecordDetailVC {
         }
     }
     
-    private func setEditModeLayout() {
+    private func setEditMode() {
+        self.navibar.isHidden = true
+        
+        let editNavibar = CustomNavigationBar(self, type: .editModeForTitleWithLeftButton)
+        
+        view.addSubview(editNavibar)
+        
+        editNavibar.snp.makeConstraints {  make in
+            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(48)
+        }
+        
+        middleScorollView.snp.makeConstraints { make in
+            make.top.equalTo(editNavibar.snp.bottom)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
         mapImageView.snp.remakeConstraints { make in
             make.top.equalToSuperview()
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -398,7 +415,7 @@ extension ActivityRecordDetailVC {
         self.courseTitleTextField.text = self.courseTitleLabel.text
         
         middleScorollView.addSubview(courseTitleTextField)
-        
+                
         courseTitleTextField.snp.makeConstraints { make in
             make.top.equalTo(mapImageView.snp.bottom).offset(27)
             make.leading.trailing.equalToSuperview().inset(16)
@@ -438,7 +455,6 @@ extension ActivityRecordDetailVC {
             make.height.equalTo(44)
         }
     }
-    
 }
 
 // MARK: - Network
