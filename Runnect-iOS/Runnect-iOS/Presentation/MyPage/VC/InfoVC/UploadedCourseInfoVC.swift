@@ -121,12 +121,11 @@ extension UploadedCourseInfoVC: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-            let courseDetailVC = CourseDetailVC()
-            let courseModel = uploadedCourseList[indexPath.item]
-            courseDetailVC.setCourseId(courseId: courseModel.courseId, publicCourseId: courseModel.id)
-            courseDetailVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(courseDetailVC, animated: true)
+        let courseDetailVC = CourseDetailVC()
+        let courseModel = uploadedCourseList[indexPath.item]
+        courseDetailVC.setCourseId(courseId: courseModel.courseId, publicCourseId: courseModel.id)
+        courseDetailVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(courseDetailVC, animated: true)
     }
 }
 

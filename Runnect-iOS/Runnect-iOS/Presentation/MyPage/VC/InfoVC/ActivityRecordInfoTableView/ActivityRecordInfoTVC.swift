@@ -135,7 +135,8 @@ extension ActivityRecordInfoTVC {
     }
     
     private func setUpActivityRecordAveragePaceValueLabel(array: [String], label: UILabel) {
-        let attributedString = NSMutableAttributedString(string: String(array[1]) + "’", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1])
+        let numberArray = array.compactMap { Int($0) }   /// 페이스에서 첫번째 인덱스 두번째 값만 가져오기 위해
+        let attributedString = NSMutableAttributedString(string: String(numberArray[1]) + "’", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1])
         attributedString.append(NSAttributedString(string: String(array[2]) + "”", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1]))
         label.attributedText = attributedString
     }

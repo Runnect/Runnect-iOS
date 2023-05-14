@@ -12,6 +12,7 @@ import Moya
 enum RecordRouter {
     case recordRunning(param: RunningRecordRequestDto)
     case getActivityRecordInfo
+    case deleteRecord(recordIdList: [Int])
 }
 
 extension RecordRouter: TargetType {
@@ -25,7 +26,7 @@ extension RecordRouter: TargetType {
     
     var path: String {
         switch self {
-        case .recordRunning:
+        case .recordRunning, .deleteRecord:
             return "/record"
         case .getActivityRecordInfo:
             return "/record/user"
@@ -38,6 +39,8 @@ extension RecordRouter: TargetType {
             return .post
         case .getActivityRecordInfo:
             return .get
+        case .deleteRecord:
+            return .put
         }
     }
     
@@ -51,12 +54,14 @@ extension RecordRouter: TargetType {
             }
         case .getActivityRecordInfo:
             return .requestPlain
+        case .deleteRecord(let recordIdList):
+            return .requestParameters(parameters: ["recordIdList": recordIdList], encoding: JSONEncoding.default)
         }
     }
     
     var headers: [String: String]? {
         switch self {
-        case .recordRunning, .getActivityRecordInfo:
+        case .recordRunning, .getActivityRecordInfo, .deleteRecord:
             return Config.defaultHeader
         }
     }
