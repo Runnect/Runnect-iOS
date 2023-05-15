@@ -33,6 +33,10 @@ final class CourseDrawingHomeVC: UIViewController {
         self.setLayout()
         self.setAddTarget()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.hideTabBar(wantsToHide: false)
+    }
 }
 
 // MARK: - Methods
