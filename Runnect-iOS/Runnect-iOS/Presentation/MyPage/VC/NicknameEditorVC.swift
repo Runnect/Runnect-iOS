@@ -57,7 +57,8 @@ final class NicknameEditorVC: UIViewController {
         $0.font = .h4
         $0.textColor = .m1
         let tap = UITapGestureRecognizer(target: self, action: #selector(finishNickNameLabelDidTap))
-        self.view.addGestureRecognizer(tap)
+        $0.isUserInteractionEnabled = true
+        $0.addGestureRecognizer(tap)
     }
     
     // MARK: - View Life Cycle
@@ -75,7 +76,7 @@ final class NicknameEditorVC: UIViewController {
 
 // MARK: - Method
 
-extension NicknameEditorVC {    
+extension NicknameEditorVC {
     private func setAddTarget() {
         nickNameTextField.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
     }
