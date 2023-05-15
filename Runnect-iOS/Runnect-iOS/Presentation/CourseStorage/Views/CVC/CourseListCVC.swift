@@ -71,10 +71,9 @@ final class CourseListCVC: UICollectionViewCell {
     }
     
     private let likeButton = UIButton(type: .custom).then {
-        $0.setImage(ImageLiterals.icHeartFill.withRenderingMode(.alwaysTemplate), for: .selected)
+        $0.setImage(ImageLiterals.icHeartFill, for: .selected)
         $0.setImage(ImageLiterals.icHeart, for: .normal)
         $0.backgroundColor = .w1
-        $0.tintColor = .g4
     }
     
     // MARK: - initialization
