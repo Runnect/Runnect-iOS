@@ -26,6 +26,7 @@ final class ActivityRecordDetailVC: UIViewController {
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton)
+    private lazy var editNavibar = CustomNavigationBar(self, type: .editModeForTitleWithLeftButton)
         
     private let moreButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icMore, for: .normal)
@@ -45,6 +46,7 @@ final class ActivityRecordDetailVC: UIViewController {
     }
     
     private let courseTitleTextField = UITextField().then {
+        $0.resignFirstResponder()
         $0.attributedPlaceholder = NSAttributedString(
             string: "글 제목",
             attributes: [.font: UIFont.h4, .foregroundColor: UIColor.g3]
@@ -110,6 +112,7 @@ final class ActivityRecordDetailVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        courseTitleTextField.delegate = self
         hideTabBar(wantsToHide: true)
         setNavigationBar()
         setUI()
@@ -183,6 +186,16 @@ extension ActivityRecordDetailVC {
     
     @objc private func finishEditButtonDidTap() {
         editRecordTitle()
+        showToast(message: "제목 수정이 완료되었어요")
+        
+        self.editNavibar.isHidden = true
+        self.navibar.isHidden = false
+        
+        middleScorollView.snp.makeConstraints { make in
+            make.top.equalTo(navibar.snp.bottom)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
     }
 }
 
@@ -279,6 +292,17 @@ extension ActivityRecordDetailVC {
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
+    }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension ActivityRecordDetailVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == self.courseTitleTextField {
+            self.finishEditButtonDidTap()
+        }
+        return true
     }
 }
 
@@ -389,7 +413,7 @@ extension ActivityRecordDetailVC {
     private func setEditMode() {
         self.navibar.isHidden = true
         
-        let editNavibar = CustomNavigationBar(self, type: .editModeForTitleWithLeftButton)
+        
         
         view.addSubview(editNavibar)
         
