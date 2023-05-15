@@ -305,8 +305,7 @@ extension RunningRecordVC {
             case .success(let result):
                 let status = result.statusCode
                 if 200..<300 ~= status {
-                    let window = self.view.window!
-                    Toast.show(message: "저장한 러닝 기록은 마이페이지에서 볼 수 있어요.", view: window, safeAreaBottomInset: self.safeAreaBottomInset())
+                    self.showToastOnWindow(text: "저장한 러닝 기록은 마이페이지에서 볼 수 있어요.")
                     self.navigationController?.popToRootViewController(animated: true)
                 }
                 if status >= 400 {

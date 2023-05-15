@@ -100,7 +100,13 @@ extension CourseDiscoveryVC {
         let nextVC = CourseSearchVC()
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
+    
     @objc private func pushToDiscoveryVC() {
+        guard UserManager.shared.userType != .visitor else {
+            self.showToastOnWindow(text: "러넥트에 가입하면 코스를 업로드할 수 있어요.")
+            return
+        }
+        
         let nextVC = MyCourseSelectVC()
         self.navigationController?.pushViewController(nextVC, animated: true)
     }

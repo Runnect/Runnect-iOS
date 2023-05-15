@@ -79,4 +79,9 @@ extension UIViewController {
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(80)
         }
     }
+    
+    func showToastOnWindow(text: String) {
+        let window = self.view.window!
+        Toast.show(message: text, view: window, safeAreaBottomInset: self.safeAreaBottomInset())
+    }
 }
