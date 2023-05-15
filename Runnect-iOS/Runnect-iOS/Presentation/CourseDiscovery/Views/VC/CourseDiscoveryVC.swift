@@ -248,6 +248,11 @@ extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
 
 extension CourseDiscoveryVC: CourseListCVCDeleagte {
     func likeButtonTapped(wantsTolike: Bool, index: Int) {
+        guard UserManager.shared.userType != .visitor else {
+            showToastOnWindow(text: "러넥트에 가입하면 코스를 스크랩할 수 있어요")
+            return
+        }
+        
         let publicCourseId = courseList[index].id
         scrapCourse(publicCourseId: publicCourseId, scrapTF: wantsTolike)
     }

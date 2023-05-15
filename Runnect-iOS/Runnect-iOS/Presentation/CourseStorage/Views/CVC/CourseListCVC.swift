@@ -128,7 +128,9 @@ extension CourseListCVC {
 extension CourseListCVC {
     @objc func likeButtonDidTap(_ sender: UIButton) {
         guard let indexPath = self.indexPath else { return }
-        sender.isSelected.toggle()
+        if UserManager.shared.userType != .visitor {
+            sender.isSelected.toggle()
+        }
         delegate?.likeButtonTapped(wantsTolike: (sender.isSelected == true), index: indexPath)
     }
 }
