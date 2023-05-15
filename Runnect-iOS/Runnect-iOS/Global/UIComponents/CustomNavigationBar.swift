@@ -20,6 +20,7 @@ enum NaviType {
     case titleWithLeftButton // 뒤로가기 버튼 + 중앙 타이틀
     case search // 검색창
     case report // 신고
+    case editModeForTitleWithLeftButton // 수정하기 페이지일 때
 }
 
 final class CustomNavigationBar: UIView {
@@ -49,7 +50,7 @@ final class CustomNavigationBar: UIView {
         self.vc = vc
         self.setUI(type)
         self.setLayout(type)
-        self.setAddTarget()
+        self.setAddTarget(type)
         self.setDelegate()
     }
     
@@ -69,8 +70,16 @@ extension CustomNavigationBar {
         }
     }
     
-    private func setAddTarget() {
-        self.leftButton.addTarget(self, action: #selector(popToPreviousVC), for: .touchUpInside)
+    private func setAddTarget(_ type: NaviType) {
+        self.naviType = type
+        
+        switch type {
+        case .editModeForTitleWithLeftButton:
+            self.leftButton.addTarget(self, action: #selector(presentToQuitEditAlertVC), for: .touchUpInside)
+        default:
+            self.leftButton.addTarget(self, action: #selector(popToPreviousVC), for: .touchUpInside)
+        }
+        
         self.rightButton.addTarget(self, action: #selector(searchLocation), for: .touchUpInside)
         self.reportButton.addTarget(self, action: #selector(reportLocation), for: .touchUpInside)
     }
@@ -87,25 +96,25 @@ extension CustomNavigationBar {
     }
     
     @discardableResult
-    func resetLeftButtonAction(_ closure: (() -> Void)? = nil) -> Self {
+    func resetLeftButtonAction(_ closure: (() -> Void)? = nil, _ type: NaviType) -> Self {
         self.leftButtonClosure = closure
         self.leftButton.removeTarget(self, action: nil, for: .touchUpInside)
         if closure != nil {
             self.leftButton.addTarget(self, action: #selector(leftButtonDidTap), for: .touchUpInside)
         } else {
-            self.setAddTarget()
+            self.setAddTarget(type)
         }
         return self
     }
     
     @discardableResult
-    func resetRightButtonAction(_ closure: (() -> Void)? = nil) -> Self {
+    func resetRightButtonAction(_ closure: (() -> Void)? = nil, _ type: NaviType) -> Self {
         self.rightButtonClosure = closure
         self.rightButton.removeTarget(self, action: nil, for: .touchUpInside)
         if closure != nil {
             self.rightButton.addTarget(self, action: #selector(rightButtonDidTap), for: .touchUpInside)
         } else {
-            self.setAddTarget()
+            self.setAddTarget(type)
         }
         return self
     }
@@ -142,13 +151,13 @@ extension CustomNavigationBar {
     }
     
     @discardableResult
-    func resetReportButtonAction(_ closure: (() -> Void)? = nil) -> Self {
+    func resetReportButtonAction(_ closure: (() -> Void)? = nil, _ type: NaviType) -> Self {
         self.reportButtonClosure = closure
         self.reportButton.removeTarget(self, action: nil, for: .touchUpInside)
         if closure != nil {
             self.reportButton.addTarget(self, action: #selector(reportButtonDidTap), for: .touchUpInside)
         } else {
-            self.setAddTarget()
+            self.setAddTarget(type)
         }
         return self
     }
@@ -170,6 +179,19 @@ extension CustomNavigationBar {
             self.vc?.dismiss(animated: true)
 
         }
+    }
+    
+    @objc private func presentToQuitEditAlertVC() {
+        guard let vc = vc else { return }
+        let quitEditAlertVC = RNAlertVC(description: "러닝 기록 수정을 종료할까요?\n종료 시 수정 내용이 반영되지 않아요.")
+        
+        quitEditAlertVC.rightButtonTapAction = { [weak self] in
+            quitEditAlertVC.dismiss(animated: false)
+            vc.navigationController?.popViewController(animated: true)
+        }
+        
+        quitEditAlertVC.modalPresentationStyle = .overFullScreen
+        self.vc?.present(quitEditAlertVC, animated: false, completion: nil)
     }
     
     @objc private func searchLocation() {
@@ -209,12 +231,7 @@ extension CustomNavigationBar {
             leftTitleLabel.textColor = .g1
             leftTitleLabel.isHidden = false
         case .titleWithLeftButton:
-            centerTitleLabel.text = ""
-            centerTitleLabel.font = .h4
-            centerTitleLabel.textColor = .g1
-            centerTitleLabel.isHidden = false
-            leftButton.isHidden = false
-            leftButton.setImage(ImageLiterals.icArrowBack, for: .normal)
+            setTitleWithLeftButton()
         case .search:
             leftButton.setImage(ImageLiterals.icArrowBack, for: .normal)
             textField.attributedPlaceholder = NSAttributedString(string: "출발지 검색", attributes: [NSAttributedString.Key.foregroundColor: UIColor.g3, NSAttributedString.Key.font: UIFont.b1])
@@ -222,11 +239,21 @@ extension CustomNavigationBar {
             textField.textColor = .g1
             textField.addLeftPadding(width: 2)
             rightButton.setImage(ImageLiterals.icSearch, for: .normal)
-            
         case .report:
             reportButton.setImage(ImageLiterals.icArrowBack, for: .normal)
             reportButton.isHidden = false
+        case .editModeForTitleWithLeftButton:
+            setTitleWithLeftButton()
         }
+    }
+    
+    private func setTitleWithLeftButton() {
+        centerTitleLabel.text = ""
+        centerTitleLabel.font = .h4
+        centerTitleLabel.textColor = .g1
+        centerTitleLabel.isHidden = false
+        leftButton.isHidden = false
+        leftButton.setImage(ImageLiterals.icArrowBack, for: .normal)
     }
     
     private func setLayout(_ type: NaviType) {
@@ -239,6 +266,8 @@ extension CustomNavigationBar {
             setSearchLayout()
         case .report:
             setReportButtonLayout()
+        case .editModeForTitleWithLeftButton:
+            setTitleWithLeftButtonLayout()
         }
     }
     
