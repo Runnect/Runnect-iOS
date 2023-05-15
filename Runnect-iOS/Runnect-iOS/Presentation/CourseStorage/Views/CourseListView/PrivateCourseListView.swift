@@ -21,7 +21,6 @@ final class PrivateCourseListView: UIView {
     var courseDrawButtonTapped = PassthroughSubject<Void, Never>()
     
     var cellDidTapped = PassthroughSubject<Int, Never>()
-    var courseDeleteButtonTapped = PassthroughSubject<Void, Never>()
     
     var courseList = [PrivateCourse]()
     
@@ -80,8 +79,8 @@ final class PrivateCourseListView: UIView {
         self.setUI()
         self.setLayout()
         self.setDelegate()
-        self.register()
         self.setAddTarget()
+        self.register()
         self.setDeleteButton()
         
     }
@@ -136,8 +135,6 @@ extension PrivateCourseListView {
             let course = courseList[indexPath.item]
             deleteToCourseId.append(course.id)
         }
-        
-        var courseListCollectionView = courseListCollectionView
         self.delegate?.deleteCourseButtonTapped(courseId: deleteToCourseId)
 
     }
@@ -253,14 +250,10 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
             let countSelectCells = selectedCells.count
             self.deleteCourseButton.setTitle(title: "삭제하기(\(countSelectCells))")
             cell.selectCell(didSelect: true)
-            //            self.selectedIndexs = indexPath.item
-            courseDeleteButtonTapped.send()
-            
         } else {
             collectionView.deselectItem(at: indexPath, animated: true)
             self.deleteCourseButton.setTitle(title: "삭제하기")
             cellDidTapped.send(indexPath.item)
-            //            self.selectedIndexs = indexPath.item
             self.deleteCourseButton.setEnabled(true)
         }
     }
@@ -276,7 +269,6 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
             self.deleteCourseButton.isEnabled = true
             let countSelectCells = selectedCells.count
             self.deleteCourseButton.setTitle(title: "삭제하기(\(countSelectCells))")
-            //            self.selectedIndexs = nil
             cell.selectCell(didSelect: false)
         } else {
             collectionView.deselectItem(at: indexPath, animated: true)

@@ -145,9 +145,6 @@ extension CourseStorageVC: PrivateCourseListViewDelegate {
         deleteAlertVC.rightButtonTapAction = {
             deleteAlertVC.dismiss(animated: false)
             self.deleteCourse(courseIdList: courseId)
-            
-
-           
         }
         self.present(deleteAlertVC, animated: false)
     }
