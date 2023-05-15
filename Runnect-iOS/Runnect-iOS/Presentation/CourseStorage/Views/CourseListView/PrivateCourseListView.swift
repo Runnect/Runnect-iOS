@@ -9,7 +9,9 @@ import UIKit
 import Combine
 
 protocol PrivateCourseListViewDelegate: AnyObject {
-    func deleteCourseButtonTapped(courseIdList: [Int])
+    func deleteCourseButtonTapped(courseId: [Int])
+    func courseListEditButtonTapped()
+    
 }
 
 final class PrivateCourseListView: UIView {
@@ -17,16 +19,15 @@ final class PrivateCourseListView: UIView {
     // MARK: - Properties
     
     var courseDrawButtonTapped = PassthroughSubject<Void, Never>()
-
+    
     var cellDidTapped = PassthroughSubject<Int, Never>()
     var courseDeleteButtonTapped = PassthroughSubject<Void, Never>()
-
+    
     var courseList = [PrivateCourse]()
-    private var deleteToCourseId: [Int] = []
     
     weak var delegate: PrivateCourseListViewDelegate?
     weak var courseStorageVC: UIViewController?
-    private var isEditMode: Bool = false
+    var isEditMode: Bool = false
     
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
     final let itemSpacing: CGFloat = 10
@@ -39,28 +40,28 @@ final class PrivateCourseListView: UIView {
     }
     
     private let beforeEditTopView = UIView().then{
-            $0.backgroundColor = .clear
-        }
+        $0.backgroundColor = .clear
+    }
     
     private lazy var totalNumOfRecordlabel = UILabel().then {
-            $0.font = .b6
-            $0.textColor = .g2
-            $0.text = "총 기록 0개"
-        }
-
-        private let editButton = UIButton(type: .custom).then {
-            $0.setTitle("편집", for: .normal)
-            $0.setTitleColor(.m1, for: .normal)
-            $0.titleLabel?.font = .b7
-            $0.layer.borderColor = UIColor.m1.cgColor
-            $0.layer.borderWidth = 1
-            $0.layer.cornerRadius = 11
-        }
-
-        private lazy var deleteCourseButton = CustomButton(title: "삭제하기").then {
-            $0.isHidden = true
-            $0.isEnabled = false
-        }
+        $0.font = .b6
+        $0.textColor = .g2
+        $0.text = "총 기록 0개"
+    }
+    
+    private let editButton = UIButton(type: .custom).then {
+        $0.setTitle("편집", for: .normal)
+        $0.setTitleColor(.m1, for: .normal)
+        $0.titleLabel?.font = .b7
+        $0.layer.borderColor = UIColor.m1.cgColor
+        $0.layer.borderWidth = 1
+        $0.layer.cornerRadius = 11
+    }
+    
+    private lazy var deleteCourseButton = CustomButton(title: "삭제하기").then {
+        $0.isHidden = true
+        $0.isEnabled = false
+    }
     
     private lazy var courseListCollectionView = UICollectionView(
         frame: .zero,
@@ -82,6 +83,7 @@ final class PrivateCourseListView: UIView {
         self.register()
         self.setAddTarget()
         self.setDeleteButton()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -97,6 +99,7 @@ extension PrivateCourseListView {
         self.courseList = courseList
         self.courseListCollectionView.reloadData()
         self.emptyView.isHidden = !courseList.isEmpty
+        self.beforeEditTopView.isHidden = courseList.isEmpty
         totalNumOfRecordlabel.text = "총 기록 \(courseList.count)개"
         
     }
@@ -116,7 +119,7 @@ extension PrivateCourseListView {
     private func setAddTarget() {
         self.editButton.addTarget(self, action: #selector(editButtonDidTap), for: .touchUpInside)
         
-        }
+    }
     
     private func setDeleteButton(){
         deleteCourseButton.addTarget(self, action: #selector(deleteCourseButtonDidTap), for: .touchUpInside)
@@ -127,43 +130,37 @@ extension PrivateCourseListView {
 extension PrivateCourseListView {
     
     @objc func deleteCourseButtonDidTap(_sender: UIButton) {
-        print(courseList)
-        
         guard let selectedList = courseListCollectionView.indexPathsForSelectedItems else { return }
+        var deleteToCourseId = [Int]()
         for indexPath in selectedList {
-                   let course = courseList[indexPath.item]
-                   deleteToCourseId.append(course.id)
-               }
-        let deleteToCourseId = self.deleteToCourseId
-        print(selectedList)
-        let rootVC = UIApplication.shared.keyWindow?.rootViewController
-        let deleteVC = RNAlertVC(description: "코스를 정말로 삭제하시겠어요?")
-        deleteVC.modalPresentationStyle = .overFullScreen
-        rootVC?.present(deleteVC, animated: false)
-        deleteVC.rightButtonTapAction = { [weak self] in
-            deleteVC.dismiss(animated: false)
-            self?.delegate?.deleteCourseButtonTapped(courseIdList: deleteToCourseId)
-           print("삭제하려고 담은애들이야",deleteToCourseId)
+            let course = courseList[indexPath.item]
+            deleteToCourseId.append(course.id)
+        }
+        
+        var courseListCollectionView = courseListCollectionView
+        self.delegate?.deleteCourseButtonTapped(courseId: deleteToCourseId)
+
+    }
+    
+    @objc func editButtonDidTap() {
+        if isEditMode {
+            self.totalNumOfRecordlabel.text = "총 기록 \(self.courseList.count)개"
+            self.editButton.setTitle("편집", for: .normal)
+            self.deleteCourseButton.isHidden = true
+            self.deleteCourseButton.isEnabled = false
+            self.deleteCourseButton.setTitle(title: "삭제하기")
+            self.courseListCollectionView.reloadData()
+            
+            isEditMode = false
+        } else {
+            self.totalNumOfRecordlabel.text = "기록 선택"
+            self.delegate?.courseListEditButtonTapped()
+            self.editButton.setTitle("취소", for: .normal)
+            self.deleteCourseButton.isHidden = false
+            self.courseListCollectionView.reloadData()
+            isEditMode = true
         }
     }
-
-    @objc func editButtonDidTap() {
-           if isEditMode {
-               self.totalNumOfRecordlabel.text = "총 기록 \(self.courseList.count)개"
-               self.editButton.setTitle("편집", for: .normal)
-               self.deleteCourseButton.isHidden = true
-               self.deleteCourseButton.isEnabled = false
-               self.deleteCourseButton.setTitle(title: "삭제하기")
-               self.courseListCollectionView.reloadData()
-               isEditMode = false
-           } else {
-               self.totalNumOfRecordlabel.text = "기록 선택"
-               self.editButton.setTitle("취소", for: .normal)
-               self.deleteCourseButton.isHidden = false
-               self.courseListCollectionView.reloadData()
-               isEditMode = true
-           }
-       }
 }
 // MARK: - UI & Layout
 
@@ -171,6 +168,8 @@ extension PrivateCourseListView {
     private func setUI() {
         self.backgroundColor = .w1
         self.emptyView.isHidden = true
+        self.beforeEditTopView.isHidden = false
+        
     }
     
     private func setLayout() {
@@ -183,25 +182,25 @@ extension PrivateCourseListView {
             make.top.equalToSuperview()
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(38)
-                }
+        }
         
         totalNumOfRecordlabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(16)
             make.top.equalToSuperview().offset(10)
-                }
-
+        }
+        
         editButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(16)
             make.width.equalTo(47)
             make.height.equalTo(22)
             make.top.equalToSuperview().offset(5)
-                }
+        }
         
         deleteCourseButton.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(32)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(44)
-                }
+        }
         
         courseListCollectionView.snp.makeConstraints { make in
             make.top.equalTo(editButton.snp.bottom)
@@ -236,7 +235,7 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
                                                             for: indexPath)
                 as? CourseListCVC else { return UICollectionViewCell() }
         cell.setCellType(type: .title)
-
+        
         let model = courseList[indexPath.item]
         let cellTitle =  "\(model.departure.region) \(model.departure.city)"
         cell.setData(imageURL: model.image, title: cellTitle, location: nil, didLike: nil)
@@ -254,17 +253,17 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
             let countSelectCells = selectedCells.count
             self.deleteCourseButton.setTitle(title: "삭제하기(\(countSelectCells))")
             cell.selectCell(didSelect: true)
-//            self.selectedIndexs = indexPath.item
+            //            self.selectedIndexs = indexPath.item
             courseDeleteButtonTapped.send()
-         
+            
         } else {
             collectionView.deselectItem(at: indexPath, animated: true)
             self.deleteCourseButton.setTitle(title: "삭제하기")
             cellDidTapped.send(indexPath.item)
-//            self.selectedIndexs = indexPath.item
+            //            self.selectedIndexs = indexPath.item
             self.deleteCourseButton.setEnabled(true)
         }
-        }
+    }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         guard collectionView.cellForItem(at: indexPath) is CourseListCVC else { return }
         guard let selectedCells = collectionView.indexPathsForSelectedItems else {
@@ -277,12 +276,12 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
             self.deleteCourseButton.isEnabled = true
             let countSelectCells = selectedCells.count
             self.deleteCourseButton.setTitle(title: "삭제하기(\(countSelectCells))")
-//            self.selectedIndexs = nil
+            //            self.selectedIndexs = nil
             cell.selectCell(didSelect: false)
         } else {
-                collectionView.deselectItem(at: indexPath, animated: true)
-                self.deleteCourseButton.setTitle(title: "삭제하기")
-            }
+            collectionView.deselectItem(at: indexPath, animated: true)
+            self.deleteCourseButton.setTitle(title: "삭제하기")
+        }
     }
 }
 // MARK: - UICollectionViewDelegateFlowLayout

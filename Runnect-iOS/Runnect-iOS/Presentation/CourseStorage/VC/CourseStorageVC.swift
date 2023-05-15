@@ -18,8 +18,6 @@ final class CourseStorageVC: UIViewController {
     
     private let scrapProvider = Providers.scrapProvider
     
-    private var courseIdsToDelete: [Int] = []
-    
     private let cancelBag = CancelBag()
     
     private var privateCourseList = [PrivateCourse]()
@@ -27,14 +25,19 @@ final class CourseStorageVC: UIViewController {
     private var scrapCourseList = [ScrapCourse]()
     
     // MARK: - UI Components
+    
     private lazy var naviBar = CustomNavigationBar(self, type: .title).setTitle("보관함")
     
     private let privateCourseListView = PrivateCourseListView()
+    
+    var isEditMode: Bool = false
+    
     
     private let scrapCourseListView = ScrapCourseListView()
     
     private lazy var viewPager = ViewPager(pageTitles: ["내가 그린 코스", "스크랩 코스"])
         .addPagedView(pagedView: [privateCourseListView, scrapCourseListView])
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -43,6 +46,7 @@ final class CourseStorageVC: UIViewController {
         self.setLayout()
         self.bindUI()
         self.setDelegate()
+    
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,7 +62,7 @@ extension CourseStorageVC {
     private func setPrivateCourseData(courseList: [PrivateCourse]) {
         self.privateCourseList = courseList
         self.privateCourseListView.setData(courseList: courseList)
-       
+    
     }
     
     private func setScrapCourseData(courseList: [ScrapCourse]) {
@@ -99,7 +103,6 @@ extension CourseStorageVC {
     private func setDelegate() {
         scrapCourseListView.delegate = self
         privateCourseListView.delegate = self
-        
     }
 }
 
@@ -135,9 +138,25 @@ extension CourseStorageVC: ScrapCourseListViewDelegate {
 
 // MARK: - PrivateCourseListViewDelegate
 extension CourseStorageVC: PrivateCourseListViewDelegate {
-    func deleteCourseButtonTapped(courseIdList: [Int]) {
+    func deleteCourseButtonTapped(courseId : [Int]) {
+        
+        let deleteAlertVC = RNAlertVC(description: "삭제하시겠습니까?")
+        deleteAlertVC.modalPresentationStyle = .overFullScreen
+        deleteAlertVC.rightButtonTapAction = {
+            deleteAlertVC.dismiss(animated: false)
+            self.deleteCourse(courseIdList: courseId)
+            
 
-//        deleteCourse(courseIdList: courseIdsToDelete)
+           
+        }
+        self.present(deleteAlertVC, animated: false)
+    }
+    
+    func courseListEditButtonTapped() {
+      
+        if self.privateCourseListView.isEditMode {
+            self.tabBarController?.tabBar.isHidden = true
+        }
     }
 }
 // MARK: - Network
@@ -220,27 +239,28 @@ extension CourseStorageVC {
         }
     }
     
-//    private func deleteCourse(courseIdList: [Int]) {
-//        let courseIdsToDelete = deleteToCourseId
-//        LoadingIndicator.showLoading()
-//        courseProvider.request(.deleteCourse(courseIdList: deleteToCourseId)) { [weak self] response in
-//            LoadingIndicator.hideLoading()
-//            guard let self = self else { return }
-//            switch response {
-//            case .success(let result):
-//                print("리절트", result)
-//                let status = result.statusCode
-//                if 200..<300 ~= status {
-//                    print("삭제 성공")
-//                }
-//                if status >= 400 {
-//                    print("400 error")
-//                    self.showNetworkFailureToast()
-//                }
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//                self.showNetworkFailureToast()
-//            }
-//        }
-//    }
+    private func deleteCourse(courseIdList: [Int]) {
+        LoadingIndicator.showLoading()
+        courseProvider.request(.deleteCourse(courseIdList: courseIdList)) { [weak self] response in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                print("리절트", result)
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    print("삭제 성공")
+                    self.getPrivateCourseList()
+                    
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
+    }
 }
