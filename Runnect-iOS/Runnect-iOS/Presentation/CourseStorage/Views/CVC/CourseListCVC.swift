@@ -71,9 +71,10 @@ final class CourseListCVC: UICollectionViewCell {
     }
     
     private let likeButton = UIButton(type: .custom).then {
-        $0.setImage(ImageLiterals.icHeartFill, for: .selected)
+        $0.setImage(ImageLiterals.icHeartFill.withRenderingMode(.alwaysTemplate), for: .selected)
         $0.setImage(ImageLiterals.icHeart, for: .normal)
         $0.backgroundColor = .w1
+        $0.tintColor = .g4
     }
     
     // MARK: - initialization
@@ -156,10 +157,10 @@ extension CourseListCVC {
         }
         
         likeButton.snp.makeConstraints { make in
-            make.top.equalTo(courseImageView.snp.bottom).offset(7)
+            make.top.equalTo(courseImageView.snp.bottom).offset(4)
             make.trailing.equalToSuperview()
-            make.width.equalTo(14)
-            make.height.equalTo(12)
+            make.width.equalTo(22)
+            make.height.equalTo(20)
         }
         
         labelStackView.snp.makeConstraints { make in
