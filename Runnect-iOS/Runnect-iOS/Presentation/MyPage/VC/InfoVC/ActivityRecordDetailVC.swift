@@ -67,23 +67,23 @@ final class ActivityRecordDetailVC: UIViewController {
 
     private let secondHorizontalDivideLine = UIView()
     
-    private lazy var recordDistanceLabel = setGreyTitle().then {
+    private lazy var recordDistanceLabel = SetInfoLayout.makeGreySmailTitleLabel().then {
         $0.text = "거리"
     }
 
-    private lazy var recordRunningTimeLabel = setGreyTitle().then {
+    private lazy var recordRunningTimeLabel = SetInfoLayout.makeGreySmailTitleLabel().then {
         $0.text = "이동 시간"
     }
     
-    private lazy var recordAveragePaceLabel = setGreyTitle().then {
+    private lazy var recordAveragePaceLabel = SetInfoLayout.makeGreySmailTitleLabel().then {
         $0.text = "평균 페이스"
     }
 
-    private lazy var recordDistanceValueLabel = setBlackTitle()
+    private lazy var recordDistanceValueLabel = SetInfoLayout.makeBlackTitleLabel()
     
-    private lazy var recordRunningTimeValueLabel = setBlackTitle()
+    private lazy var recordRunningTimeValueLabel = SetInfoLayout.makeBlackTitleLabel()
     
-    private lazy var recordAveragePaceValueLabel = setBlackTitle()
+    private lazy var recordAveragePaceValueLabel = SetInfoLayout.makeBlackTitleLabel()
     
     private lazy var recordDistanceStackView = setDetailInfoStakcView(title: recordDistanceLabel, value: recordDistanceValueLabel)
     
@@ -273,20 +273,6 @@ extension ActivityRecordDetailVC {
         let attributedString = NSMutableAttributedString(string: String(model.distance) + " ", attributes: [.font: UIFont.h3, .foregroundColor: UIColor.g1])
         attributedString.append(NSAttributedString(string: "km", attributes: [.font: UIFont.b4, .foregroundColor: UIColor.g2]))
         label.attributedText = attributedString
-    }
-    
-    private func setBlackTitle() -> UILabel {
-        let label = UILabel()
-        label.textColor = .g1
-        label.font = .h3
-        return label
-    }
-    
-    private func setGreyTitle() -> UILabel {
-        let label = UILabel()
-        label.textColor = .g2
-        label.font = .b4
-        return label
     }
     
     // 키보드가 올라오면 scrollView 위치 조정
