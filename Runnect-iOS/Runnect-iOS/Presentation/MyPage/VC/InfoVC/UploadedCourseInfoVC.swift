@@ -18,11 +18,10 @@ final class UploadedCourseInfoVC: UIViewController {
     private var uploadedCourseProvider = Providers.publicCourseProvider
     
     private var uploadedCourseList = [PublicCourse]()
-    var deleteToCourseId = [Int]()
+    
     var isEditMode: Bool = false
     
-    private let courseProvider = Providers.courseProvider
-    
+    private var deleteToCourseId = [Int]()
     // MARK: - Constants
     
     final let uploadedCourseInset: UIEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 25, right: 16)
@@ -111,6 +110,7 @@ extension UploadedCourseInfoVC {
         self.UploadedCourseInfoCollectionView.delegate = self
         self.UploadedCourseInfoCollectionView.dataSource = self
         emptyView.delegate = self
+        UploadedCourseInfoCollectionView.allowsMultipleSelection = true
     }
     
     private func register() {
@@ -130,17 +130,19 @@ extension UploadedCourseInfoVC {
 
 extension UploadedCourseInfoVC {
     @objc func deleteCourseButtonDidTap(_sender: UIButton) {
-        guard let selectedList = courseListCollectionView.indexPathsForSelectedItems else { return }
+        guard let selectedList = UploadedCourseInfoCollectionView.indexPathsForSelectedItems else { return }
         var deleteToCourseId = [Int]()
         for indexPath in selectedList {
-            let course = uploadedCourseList[indexPath.item]
-            deleteToCourseId.append(course.id)
+            let publicCourse = uploadedCourseList[indexPath.item]
+            deleteToCourseId.append(publicCourse.id)
         }
+        
         let deleteAlertVC = RNAlertVC(description: "삭제하시겠습니까?")
         deleteAlertVC.modalPresentationStyle = .overFullScreen
         deleteAlertVC.rightButtonTapAction = {
             deleteAlertVC.dismiss(animated: false)
-            self.deleteCourse(courseIdList: deleteToCourseId)
+            self.deleteUploadedCourse(publicCourseIdList: deleteToCourseId)
+
         }
         self.present(deleteAlertVC, animated: false)
     }
@@ -153,12 +155,13 @@ extension UploadedCourseInfoVC {
             self.deleteCourseButton.isEnabled = false
             self.deleteCourseButton.setTitle(title: "삭제하기")
             self.courseListCollectionView.reloadData()
-            
             isEditMode = false
             self.tabBarController?.tabBar.isHidden = false
+            
         } else {
             self.totalNumOfRecordlabel.text = "기록 선택"
             self.editButton.setTitle("취소", for: .normal)
+            
             self.deleteCourseButton.isHidden = false
             self.courseListCollectionView.reloadData()
             isEditMode = true
@@ -258,9 +261,10 @@ extension UploadedCourseInfoVC: UICollectionViewDataSource {
                 as? CourseListCVC else { return UICollectionViewCell() }
         cell.setCellType(type: .title)
         if let selectedCells = collectionView.indexPathsForSelectedItems, selectedCells.contains(indexPath) {
-            cell.selectCell(didSelect: true)
-        } else {
             cell.selectCell(didSelect: false)
+//            cell.selectCell(didSelect: true)
+        } else {
+//            cell.selectCell(didSelect: false)
         }
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className,
                                                             for: indexPath)
@@ -288,12 +292,11 @@ extension UploadedCourseInfoVC: UICollectionViewDataSource {
             collectionView.deselectItem(at: indexPath, animated: true)
             self.deleteCourseButton.setTitle(title: "삭제하기")
             self.deleteCourseButton.setEnabled(true)
-            
             let courseDetailVC = CourseDetailVC()
-            let courseModel = uploadedCourseList[indexPath.item]
-            courseDetailVC.setCourseId(courseId: courseModel.courseId, publicCourseId: courseModel.id)
             courseDetailVC.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(courseDetailVC, animated: true)
+            cell.selectCell(didSelect: false)
+            
         }
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -303,16 +306,16 @@ extension UploadedCourseInfoVC: UICollectionViewDataSource {
             self.deleteCourseButton.setTitle(title: "삭제하기")
             return }
         guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else { return }
-        
+        cell.selectCell(didSelect: false)
         if isEditMode {
             self.deleteCourseButton.isEnabled = true
             let countSelectCells = selectedCells.count
             self.deleteCourseButton.setTitle(title: "삭제하기(\(countSelectCells))")
-            //            self.selectedIndexs = nil
             cell.selectCell(didSelect: false)
         } else {
             collectionView.deselectItem(at: indexPath, animated: true)
             self.deleteCourseButton.setTitle(title: "삭제하기")
+            cell.selectCell(didSelect: false)
         }
     }
 }
@@ -347,9 +350,9 @@ extension UploadedCourseInfoVC {
             }
         }
     }
-    private func deleteCourse(courseIdList: [Int]) {
+    private func deleteUploadedCourse(publicCourseIdList: [Int]) {
         LoadingIndicator.showLoading()
-        courseProvider.request(.deleteCourse(courseIdList: courseIdList)) { [weak self] response in
+        uploadedCourseProvider.request(.deleteUploadedCourse(publicCourseIdList: publicCourseIdList)) { [weak self] response in
             LoadingIndicator.hideLoading()
             guard let self = self else { return }
             switch response {
@@ -359,7 +362,6 @@ extension UploadedCourseInfoVC {
                 if 200..<300 ~= status {
                     print("삭제 성공")
                     self.getUploadedCourseInfo()
-                    
                 }
                 if status >= 400 {
                     print("400 error")

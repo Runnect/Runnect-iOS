@@ -250,11 +250,13 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
             let countSelectCells = selectedCells.count
             self.deleteCourseButton.setTitle(title: "삭제하기(\(countSelectCells))")
             cell.selectCell(didSelect: true)
+            print("눌러짜?")
         } else {
             collectionView.deselectItem(at: indexPath, animated: true)
             self.deleteCourseButton.setTitle(title: "삭제하기")
             cellDidTapped.send(indexPath.item)
             self.deleteCourseButton.setEnabled(true)
+            print("취소해쪄?")
         }
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
