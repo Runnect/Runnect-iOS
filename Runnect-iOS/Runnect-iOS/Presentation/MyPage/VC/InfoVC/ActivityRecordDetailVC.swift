@@ -18,15 +18,12 @@ final class ActivityRecordDetailVC: UIViewController {
     private let recordProvider = Providers.recordProvider
         
     private var recordId: Int?
-    
-    private var isEditMode: Bool = false
-    
+        
     private let courseTitleMaxLength = 20
             
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton)
-    private lazy var editNavibar = CustomNavigationBar(self, type: .editModeForTitleWithLeftButton)
         
     private let moreButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icMore, for: .normal)
@@ -118,6 +115,7 @@ final class ActivityRecordDetailVC: UIViewController {
         setUI()
         setLayout()
         setAddTarget()
+        self.view = view
         self.setKeyboardNotification()
         self.setTapGesture()
     }
@@ -130,7 +128,6 @@ extension ActivityRecordDetailVC {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let editAction = UIAlertAction(title: "수정하기", style: .default, handler: {(_: UIAlertAction!) in
             // 수정 모드일 때
-            self.isEditMode = true
             self.setEditMode()
         })
         let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
@@ -154,8 +151,12 @@ extension ActivityRecordDetailVC {
         
         if text == self.courseTitleLabel.text {
             self.finishEditButton.isEnabled = false
+        } else {
+            // 수정이 된 상태라면 팝업을 띄워주기
+            self.navibar.resetLeftButtonAction({ [weak self] in
+                self?.navibar.leftButton.addTarget(self, action: #selector(self?.presentToQuitEditAlertVC), for: .touchUpInside)
+            }, .titleWithLeftButton)
         }
-        
         if text.count > courseTitleMaxLength {
             let index = text.index(text.startIndex, offsetBy: courseTitleMaxLength)
             let newString = text[text.startIndex..<index]
@@ -188,7 +189,11 @@ extension ActivityRecordDetailVC {
         editRecordTitle()
         showToast(message: "제목 수정이 완료되었어요")
         
-        self.editNavibar.isHidden = true
+        // 수정이 완료되면 팝업 뜨지 않음
+        self.navibar.resetLeftButtonAction({ [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+        }, .titleWithLeftButton)
+        
         self.navibar.isHidden = false
         
         middleScorollView.snp.makeConstraints { make in
@@ -196,6 +201,18 @@ extension ActivityRecordDetailVC {
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+    
+    @objc private func presentToQuitEditAlertVC() {
+        let quitEditAlertVC = RNAlertVC(description: "러닝 기록 수정을 종료할까요?\n종료 시 수정 내용이 반영되지 않아요.")
+        
+        quitEditAlertVC.rightButtonTapAction = { [weak self] in
+            quitEditAlertVC.dismiss(animated: false)
+            self?.navigationController?.popViewController(animated: true)
+        }
+        
+        quitEditAlertVC.modalPresentationStyle = .overFullScreen
+        self.present(quitEditAlertVC, animated: false, completion: nil)
     }
 }
 
@@ -292,6 +309,10 @@ extension ActivityRecordDetailVC {
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
+    }
+    
+    func popUpVC() {
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
@@ -411,21 +432,8 @@ extension ActivityRecordDetailVC {
     }
     
     private func setEditMode() {
-        self.navibar.isHidden = true
+        self.navibar.isHidden = false // true
 
-        view.addSubview(editNavibar)
-        
-        editNavibar.snp.makeConstraints {  make in
-            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
-        }
-        
-        middleScorollView.snp.makeConstraints { make in
-            make.top.equalTo(editNavibar.snp.bottom)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
-        
         mapImageView.snp.remakeConstraints { make in
             make.top.equalToSuperview()
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
