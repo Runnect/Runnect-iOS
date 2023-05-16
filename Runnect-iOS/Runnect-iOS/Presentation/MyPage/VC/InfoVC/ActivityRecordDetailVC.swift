@@ -133,17 +133,17 @@ extension ActivityRecordDetailVC {
             self.isEditMode = true
             self.setEditMode()
         })
-        let deleteVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
-        deleteVC.modalPresentationStyle = .overFullScreen
-        let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive, handler: {(_: UIAlertAction!) in
-            self.present(deleteVC, animated: false, completion: nil)})
+        let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
+        deleteAlertVC.modalPresentationStyle = .overFullScreen
+        let deleteAlertAction = UIAlertAction(title: "삭제하기", style: .destructive, handler: {(_: UIAlertAction!) in
+            self.present(deleteAlertVC, animated: false, completion: nil)})
         
-        deleteVC.rightButtonTapAction = { [weak self] in
-            deleteVC.dismiss(animated: false)
+        deleteAlertVC.rightButtonTapAction = { [weak self] in
+            deleteAlertVC.dismiss(animated: false)
             self?.deleteRecord()
         }
         
-        [ editAction, deleteAction ].forEach { alertController.addAction($0) }
+        [ editAction, deleteAlertAction ].forEach { alertController.addAction($0) }
         present(alertController, animated: true, completion: nil)
     }
     
@@ -412,9 +412,7 @@ extension ActivityRecordDetailVC {
     
     private func setEditMode() {
         self.navibar.isHidden = true
-        
-        
-        
+
         view.addSubview(editNavibar)
         
         editNavibar.snp.makeConstraints {  make in
