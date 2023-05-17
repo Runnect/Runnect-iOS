@@ -103,6 +103,7 @@ extension AdImageCollectionViewCell {
             let currentIndex = currentPage % imgBanners.count
             pageControl.currentPage = currentIndex
         }
+    
     // MARK: - Layout Helpers
     
     func layout() {
@@ -112,11 +113,10 @@ extension AdImageCollectionViewCell {
         bannerCollectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-            pageControl.snp.makeConstraints{ make in
+        pageControl.snp.makeConstraints { make in
                 make.centerX.equalTo(self)
                 make.bottom.equalTo(bannerCollectionView.snp.bottom).offset(0)
-            }
-        
+        }
     }
 }
 

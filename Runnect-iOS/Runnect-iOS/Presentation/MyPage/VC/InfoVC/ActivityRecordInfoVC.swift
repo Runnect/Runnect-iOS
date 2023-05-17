@@ -195,7 +195,6 @@ extension ActivityRecordInfoVC: UITableViewDelegate {
         guard tableView.cellForRow(at: indexPath) is ActivityRecordInfoTVC else { return }
         guard let selectedRecords = tableView.indexPathsForSelectedRows else { return }
         let activityRecordList = activityRecordList[indexPath.item]
-        
         if isEditMode {
             self.deleteRecordButton.isEnabled = true
             let countSelectedRows = selectedRecords.count
@@ -203,8 +202,6 @@ extension ActivityRecordInfoVC: UITableViewDelegate {
         } else {
             tableView.deselectRow(at: indexPath, animated: true)
             self.deleteRecordButton.setTitle(title: "삭제하기")
-            // 편집 모드가 아닐 때 상세 페이지로 이동
-            
         }
     }
     

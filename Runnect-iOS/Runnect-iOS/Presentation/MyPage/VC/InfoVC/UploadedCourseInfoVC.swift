@@ -46,8 +46,8 @@ final class UploadedCourseInfoVC: UIViewController {
         
         return collectionView
     }()
-    
-    private let beforeEditTopView = UIView().then{
+
+    private let beforeEditTopView = UIView().then {
         $0.backgroundColor = .clear
     }
     private lazy var totalNumOfRecordlabel = UILabel().then {
@@ -71,12 +71,10 @@ final class UploadedCourseInfoVC: UIViewController {
     }
     
     private lazy var courseListCollectionView = UICollectionView(
-        frame: .zero,
-        collectionViewLayout:collectionViewLayout
-    ).then {
+        frame: .zero, collectionViewLayout: collectionViewLayout).then {
         $0.backgroundColor = .clear
     }
-    
+
     private let emptyView = ListEmptyView(description: "아직 업로드한 코스가 없어요!\n내가 그린 코스를 공유해보세요",
                                           buttonTitle: "코스 업로드하기")
     
@@ -102,6 +100,8 @@ extension UploadedCourseInfoVC {
         self.uploadedCourseList = courseList
         UploadedCourseInfoCollectionView.reloadData()
         self.emptyView.isHidden = !courseList.isEmpty
+        self.deleteCourseButton.isHidden = courseList.isEmpty
+        self.tabBarController?.tabBar.isHidden = !courseList.isEmpty
         self.beforeEditTopView.isHidden = courseList.isEmpty
         totalNumOfRecordlabel.text = "총 기록 \(courseList.count)개"
     }
@@ -151,11 +151,11 @@ extension UploadedCourseInfoVC {
         if isEditMode {
             self.totalNumOfRecordlabel.text = "총 기록 \(self.uploadedCourseList.count)개"
             self.editButton.setTitle("편집", for: .normal)
-            self.deleteCourseButton.isHidden = true
             self.deleteCourseButton.isEnabled = false
             self.deleteCourseButton.setTitle(title: "삭제하기")
             self.courseListCollectionView.reloadData()
             isEditMode = false
+            self.deleteCourseButton.isHidden = true
             self.tabBarController?.tabBar.isHidden = false
             
         } else {
@@ -191,7 +191,7 @@ extension UploadedCourseInfoVC {
     }
     
     private func setLayout() {
-        view.addSubviews(beforeEditTopView,UploadedCourseInfoCollectionView,deleteCourseButton)
+        view.addSubviews(beforeEditTopView, UploadedCourseInfoCollectionView, deleteCourseButton)
         
         UploadedCourseInfoCollectionView.addSubview(emptyView)
         
@@ -256,6 +256,7 @@ extension UploadedCourseInfoVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return uploadedCourseList.count
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath)
                 as? CourseListCVC else { return UICollectionViewCell() }
@@ -268,10 +269,8 @@ extension UploadedCourseInfoVC: UICollectionViewDataSource {
             // selectCell 표시
             if let selectedCells = collectionView.indexPathsForSelectedItems, selectedCells.contains(indexPath) {
                 cell.selectCell(didSelect: false)}
-            else {
-                cell.selectCell(didSelect: true)
+            else { cell.selectCell(didSelect: true)
             }
-            
         } else {
         cell.setCellType(type: .title)
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className,
@@ -282,8 +281,6 @@ extension UploadedCourseInfoVC: UICollectionViewDataSource {
         return cell
             }
         
-    
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard collectionView.cellForItem(at: indexPath) is CourseListCVC else { return }
         guard let selectedCells = collectionView.indexPathsForSelectedItems else { return }
@@ -386,6 +383,8 @@ extension UploadedCourseInfoVC {
 
 extension UploadedCourseInfoVC: ListEmptyViewDelegate {
     func emptyViewButtonTapped() {
+        let myCourseSelectVC = MyCourseSelectVC()
+        self.navigationController?.pushViewController(myCourseSelectVC, animated: true)
         
     }
 }

@@ -257,8 +257,6 @@ extension ActivityRecordDetailVC {
                 if 200..<300 ~= status {
                     do {
                         let responseDto = try result.map(BaseResponse<ActivityRecordInfoDto>.self)
-                        guard let data = responseDto.data else { return }
-                        //self.setData(activityRecordList: data.records)
                     } catch {
                         print(error.localizedDescription)
                     }

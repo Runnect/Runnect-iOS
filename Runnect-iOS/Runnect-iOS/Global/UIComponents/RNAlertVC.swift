@@ -11,7 +11,6 @@ import SnapKit
 import Then
 
 
-
 final class RNAlertVC: UIViewController {
     
     // MARK: - Properties

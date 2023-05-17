@@ -32,7 +32,6 @@ final class CourseStorageVC: UIViewController {
     
     var isEditMode: Bool = false
     
-    
     private let scrapCourseListView = ScrapCourseListView()
     
     private lazy var viewPager = ViewPager(pageTitles: ["내가 그린 코스", "스크랩 코스"])
@@ -86,6 +85,7 @@ extension CourseStorageVC {
             let runningWaitingVC = RunningWaitingVC()
             runningWaitingVC.setData(courseId: self.privateCourseList[index].id, publicCourseId: nil)
             runningWaitingVC.hidesBottomBarWhenPushed = true
+            
             self.navigationController?.pushViewController(runningWaitingVC, animated: true)
         }.store(in: cancelBag)
         
@@ -138,8 +138,7 @@ extension CourseStorageVC: ScrapCourseListViewDelegate {
 
 // MARK: - PrivateCourseListViewDelegate
 extension CourseStorageVC: PrivateCourseListViewDelegate {
-    func deleteCourseButtonTapped(courseId : [Int]) {
-        
+    func deleteCourseButtonTapped (courseId: [Int]) {
         let deleteAlertVC = RNAlertVC(description: "삭제하시겠습니까?")
         deleteAlertVC.modalPresentationStyle = .overFullScreen
         deleteAlertVC.rightButtonTapAction = {
@@ -148,12 +147,8 @@ extension CourseStorageVC: PrivateCourseListViewDelegate {
         }
         self.present(deleteAlertVC, animated: false)
     }
-    
-    func courseListEditButtonTapped() {
-      
-        if self.privateCourseListView.isEditMode {
+    func courseListEditButtonTapped()  {
             self.tabBarController?.tabBar.isHidden = true
-        }
     }
 }
 // MARK: - Network

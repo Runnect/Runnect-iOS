@@ -98,6 +98,7 @@ extension PrivateCourseListView {
         self.courseList = courseList
         self.courseListCollectionView.reloadData()
         self.emptyView.isHidden = !courseList.isEmpty
+        self.deleteCourseButton.isHidden = courseList.isEmpty
         self.beforeEditTopView.isHidden = courseList.isEmpty
         totalNumOfRecordlabel.text = "총 기록 \(courseList.count)개"
         
@@ -120,7 +121,7 @@ extension PrivateCourseListView {
         
     }
     
-    private func setDeleteButton(){
+    private func setDeleteButton() {
         deleteCourseButton.addTarget(self, action: #selector(deleteCourseButtonDidTap), for: .touchUpInside)
     }
 }
@@ -136,7 +137,6 @@ extension PrivateCourseListView {
             deleteToCourseId.append(course.id)
         }
         self.delegate?.deleteCourseButtonTapped(courseId: deleteToCourseId)
-
     }
     
     @objc func editButtonDidTap() {
@@ -256,7 +256,6 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
             self.deleteCourseButton.setTitle(title: "삭제하기")
             cellDidTapped.send(indexPath.item)
             self.deleteCourseButton.setEnabled(true)
-            print("취소해쪄?")
         }
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
