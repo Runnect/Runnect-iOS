@@ -137,13 +137,6 @@ extension PersonalInfoVC {
         self.logout()
     }
     
-    private func showSplashVC() {
-        let splashVC = SplashVC()
-        let navigationController = UINavigationController(rootViewController: splashVC)
-        guard let window = self.view.window else { return }
-        ViewControllerUtils.setRootViewController(window: window, viewController: navigationController, withAnimation: true)
-    }
-    
     private func requestAppleToken() {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()

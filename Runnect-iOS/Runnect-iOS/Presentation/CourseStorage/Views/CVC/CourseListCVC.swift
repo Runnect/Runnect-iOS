@@ -128,7 +128,9 @@ extension CourseListCVC {
 extension CourseListCVC {
     @objc func likeButtonDidTap(_ sender: UIButton) {
         guard let indexPath = self.indexPath else { return }
-        sender.isSelected.toggle()
+        if UserManager.shared.userType != .visitor {
+            sender.isSelected.toggle()
+        }
         delegate?.likeButtonTapped(wantsTolike: (sender.isSelected == true), index: indexPath)
     }
 }
@@ -154,10 +156,10 @@ extension CourseListCVC {
         }
         
         likeButton.snp.makeConstraints { make in
-            make.top.equalTo(courseImageView.snp.bottom).offset(7)
+            make.top.equalTo(courseImageView.snp.bottom).offset(4)
             make.trailing.equalToSuperview()
-            make.width.equalTo(14)
-            make.height.equalTo(12)
+            make.width.equalTo(22)
+            make.height.equalTo(20)
         }
         
         labelStackView.snp.makeConstraints { make in

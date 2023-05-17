@@ -100,7 +100,13 @@ extension CourseDiscoveryVC {
         let nextVC = CourseSearchVC()
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
+    
     @objc private func pushToDiscoveryVC() {
+        guard UserManager.shared.userType != .visitor else {
+            self.showToastOnWindow(text: "러넥트에 가입하면 코스를 업로드할 수 있어요.")
+            return
+        }
+        
         let nextVC = MyCourseSelectVC()
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
@@ -242,6 +248,11 @@ extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
 
 extension CourseDiscoveryVC: CourseListCVCDeleagte {
     func likeButtonTapped(wantsTolike: Bool, index: Int) {
+        guard UserManager.shared.userType != .visitor else {
+            showToastOnWindow(text: "러넥트에 가입하면 코스를 스크랩할 수 있어요")
+            return
+        }
+        
         let publicCourseId = courseList[index].id
         scrapCourse(publicCourseId: publicCourseId, scrapTF: wantsTolike)
     }

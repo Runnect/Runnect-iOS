@@ -110,11 +110,11 @@ final class MyPageVC: UIViewController {
         setNavigationBar()
         setUI()
         setLayout()
-        getMyPageInfo()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        guard UserManager.shared.userType != .visitor else { return }
         self.getMyPageInfo()
         self.hideTabBar(wantsToHide: false)
     }
@@ -268,6 +268,11 @@ extension MyPageVC {
     }
     
     private func setLayout() {
+        guard UserManager.shared.userType != .visitor else {
+            self.showSignInRequestEmptyView()
+            return
+        }
+        
         view.addSubviews(myProfileView, myRunningProgressView, firstDivideView,
             goalRewardInfoView, secondDivideView, activityRecordInfoView,
             thirdDivideView, uploadedCourseInfoView, fourthDivideView, settingView)

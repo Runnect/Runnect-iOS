@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Property 1=Component 77, Property 2=btn_heart2.png",
+      "filename" : "Component 91.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Property 1=Component 77, Property 2=btn_heart2@2x.png",
+      "filename" : "Component 91@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Property 1=Component 77, Property 2=btn_heart2@3x.png",
+      "filename" : "Component 91@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
