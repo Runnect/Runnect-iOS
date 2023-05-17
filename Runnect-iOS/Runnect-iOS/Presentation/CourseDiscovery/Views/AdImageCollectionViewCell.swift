@@ -72,7 +72,7 @@ extension AdImageCollectionViewCell {
                 pageControl.currentPage = 0
                 pageControl.numberOfPages = imgBanners.count
                 pageControl.pageIndicatorTintColor = .lightGray // 페이지를 암시하는 동그란 점의 색상
-                pageControl.currentPageIndicatorTintColor = .black
+                pageControl.currentPageIndicatorTintColor = .white
         }
     
     @objc func handleSwipeGesture(_ gesture: UISwipeGestureRecognizer) {
