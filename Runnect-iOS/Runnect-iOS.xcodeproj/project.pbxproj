@@ -28,6 +28,7 @@
 		A3D1A78029CF142E00DD54EC /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D1A77F29CF142E00DD54EC /* UserManager.swift */; };
 		A3DB8C472A0B64830081AF2D /* ActivityRecordDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DB8C462A0B64830081AF2D /* ActivityRecordDetailVC.swift */; };
 		A3E55BA029C815B10000D85D /* SignInSocialLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E55B9F29C815B10000D85D /* SignInSocialLoginVC.swift */; };
+		A3E625002A15262B008370FF /* GoalRewardTitleCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E624FF2A15262B008370FF /* GoalRewardTitleCVC.swift */; };
 		A3F67AE2296D33AC001598A2 /* MyPageDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F67AE1296D33AC001598A2 /* MyPageDto.swift */; };
 		A3F67AEA296E4936001598A2 /* ActivityRecordInfoDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F67AE9296E4936001598A2 /* ActivityRecordInfoDto.swift */; };
 		CE09037D296E9ED900BEA710 /* ScrapCourseResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE09037C296E9ED900BEA710 /* ScrapCourseResponseDto.swift */; };
@@ -183,6 +184,7 @@
 		A3DB8C462A0B64830081AF2D /* ActivityRecordDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRecordDetailVC.swift; sourceTree = "<group>"; };
 		A3E55B9F29C815B10000D85D /* SignInSocialLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSocialLoginVC.swift; sourceTree = "<group>"; };
 		A3E55BA529C8AB0A0000D85D /* Runnect-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Runnect-iOS.entitlements"; sourceTree = "<group>"; };
+		A3E624FF2A15262B008370FF /* GoalRewardTitleCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardTitleCVC.swift; sourceTree = "<group>"; };
 		A3F67AE1296D33AC001598A2 /* MyPageDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageDto.swift; sourceTree = "<group>"; };
 		A3F67AE9296E4936001598A2 /* ActivityRecordInfoDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRecordInfoDto.swift; sourceTree = "<group>"; };
 		CE09037C296E9ED900BEA710 /* ScrapCourseResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapCourseResponseDto.swift; sourceTree = "<group>"; };
@@ -374,6 +376,7 @@
 			isa = PBXGroup;
 			children = (
 				A3BC2F33296303A600198261 /* GoalRewardInfoCVC.swift */,
+				A3E624FF2A15262B008370FF /* GoalRewardTitleCVC.swift */,
 			);
 			path = GoalRewardInfoCollectionView;
 			sourceTree = "<group>";
@@ -1404,6 +1407,7 @@
 				CE0D9FD329648DA300CEB5CD /* CustomAlertVC.swift in Sources */,
 				CEB841702963360800BF8080 /* CountDownVC.swift in Sources */,
 				CE320F38296C8FAB009F89A7 /* CourseDrawingResponseData.swift in Sources */,
+				A3E625002A15262B008370FF /* GoalRewardTitleCVC.swift in Sources */,
 				A3D1A77E29CF09B600DD54EC /* SignInResponseDto.swift in Sources */,
 				CE21C028299E5FFC00F62AF5 /* PublicCourseRouter.swift in Sources */,
 				CE18E894296C79B900FEB569 /* CourseDrawingRequestDto.swift in Sources */,

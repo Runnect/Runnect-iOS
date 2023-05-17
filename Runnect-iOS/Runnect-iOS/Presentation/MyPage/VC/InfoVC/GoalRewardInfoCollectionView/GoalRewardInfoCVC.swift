@@ -49,10 +49,9 @@ extension GoalRewardInfoCVC {
     }
 }
 
+// MARK: - Layout Helpers
+
 extension GoalRewardInfoCVC {
-    
-    // MARK: - Layout Helpers
-   
     private func setLayout() {
         contentView.addSubviews(stampImageView, stampStandardLabel)
         
