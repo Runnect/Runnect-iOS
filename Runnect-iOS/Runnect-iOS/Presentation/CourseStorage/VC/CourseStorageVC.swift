@@ -10,8 +10,6 @@ import Combine
 
 import Moya
 
-
-
 final class CourseStorageVC: UIViewController {
     
     // MARK: - Properties
@@ -33,8 +31,6 @@ final class CourseStorageVC: UIViewController {
     
     private let scrapCourseListView = ScrapCourseListView()
     
-    
-    
     private lazy var viewPager = ViewPager(pageTitles: ["내가 그린 코스", "스크랩 코스"])
         .addPagedView(pagedView: [privateCourseListView, scrapCourseListView])
     
@@ -52,14 +48,11 @@ final class CourseStorageVC: UIViewController {
         self.bindUI()
         self.setDelegate()
         self.setDeleteButton()
-    
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.getPrivateCourseList()
         self.getScrapCourseList()
-        
     }
 }
 
@@ -70,7 +63,7 @@ extension CourseStorageVC {
         self.privateCourseList = courseList
         self.privateCourseListView.setData(courseList: courseList)
         self.deleteCourseButton.isHidden = true
-        self.tabBarController?.tabBar.isHidden = false
+        self.hideTabBar(wantsToHide: false)
     }
     
     private func setScrapCourseData(courseList: [ScrapCourse]) {
@@ -110,7 +103,6 @@ extension CourseStorageVC {
             courseDetailVC.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(courseDetailVC, animated: true)
         }.store(in: cancelBag)
-
     }
     
     private func setDelegate() {
@@ -118,7 +110,7 @@ extension CourseStorageVC {
         privateCourseListView.delegate = self
     }
     
-    private func showHiddenViews(withDuration:TimeInterval = 0) {
+    private func showHiddenViews(withDuration: TimeInterval = 0) {
         if let frame = tabBarController?.tabBar.frame {
             let factor: CGFloat = -1
             let y = frame.origin.y + (frame.size.height * factor)
@@ -127,11 +119,11 @@ extension CourseStorageVC {
             })
         }
         UIView.animate(withDuration: withDuration) {
-            self.deleteCourseButton.transform = CGAffineTransform(translationX: 0, y: 36)
+            self.deleteCourseButton.transform = CGAffineTransform(translationX: 0, y: 34)
         }
-
     }
-    private func hiddenViews(withDuration : TimeInterval = 0) {
+    
+    private func hiddenViews(withDuration: TimeInterval = 0) {
         if let frame = tabBarController?.tabBar.frame {
             let factor: CGFloat = 1
             let y = frame.origin.y + (frame.size.height * factor)
@@ -140,10 +132,8 @@ extension CourseStorageVC {
             })
         }
         view.bringSubviewToFront(deleteCourseButton)
-        
         UIView.animate(withDuration: withDuration) {
-
-            self.deleteCourseButton.transform = CGAffineTransform(translationX: 0, y: -36)
+            self.deleteCourseButton.transform = CGAffineTransform(translationX: 0, y: -34)
         }
     }
 }
@@ -158,18 +148,14 @@ extension CourseStorageVC {
             let publicCourse = privateCourseList[indexPath.item]
             deleteToCourseId.append(publicCourse.id)
         }
-        
         let deleteAlertVC = RNAlertVC(description: "삭제하시겠습니까?")
         deleteAlertVC.modalPresentationStyle = .overFullScreen
         deleteAlertVC.rightButtonTapAction = {
             deleteAlertVC.dismiss(animated: false)
             self.deleteCourse(courseIdList: deleteToCourseId)
-
         }
         self.present(deleteAlertVC, animated: false)
     }
-    
-    
 }
 
 // MARK: - UI & Layout
@@ -178,7 +164,6 @@ extension CourseStorageVC {
     private func setUI() {
         view.backgroundColor = .w1
     }
-    
     private func setLayout() {
         view.addSubviews(naviBar, viewPager, deleteCourseButton)
         view.bringSubviewToFront(viewPager)
@@ -187,12 +172,10 @@ extension CourseStorageVC {
             make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(48)
         }
-        
         viewPager.snp.makeConstraints { make in
             make.top.equalTo(naviBar.snp.bottom)
             make.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
         }
-        
         deleteCourseButton.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(34)
             make.leading.trailing.equalToSuperview().inset(16)
@@ -214,7 +197,6 @@ extension CourseStorageVC: ScrapCourseListViewDelegate {
 extension CourseStorageVC: PrivateCourseListViewDelegate {
     
     func courseListEditButtonTapped() {
-         var isEditMode = privateCourseListView.isEditMode
         if privateCourseListView.isEditMode == false {
             self.deleteCourseButton.isHidden = false
             self.deleteCourseButton.isEnabled = false
@@ -227,27 +209,22 @@ extension CourseStorageVC: PrivateCourseListViewDelegate {
             showHiddenViews(withDuration: 0.7)
         }
     }
-    
-        func selectCellDidTapped() {
-            let deleteCourseButton = deleteCourseButton
-            guard let selectedCells = privateCourseListView.courseListCollectionView.indexPathsForSelectedItems else { return }
-            
-            let countSelectCells = selectedCells.count
-            if privateCourseListView.isEditMode == true {
-                if privateCourseListView.isEditMode == false {
-                    self.deleteCourseButton.isEnabled = false
-                    self.deleteCourseButton.setTitle(title: "삭제하기")
-                }
-                self.deleteCourseButton.setTitle(title: "삭제하기(\(countSelectCells))")
-                
+    func selectCellDidTapped() {
+        guard let selectedCells = privateCourseListView.courseListCollectionView.indexPathsForSelectedItems else { return }
+        let countSelectCells = selectedCells.count
+        if privateCourseListView.isEditMode == true {
+            if privateCourseListView.isEditMode == false {
                 self.deleteCourseButton.isEnabled = false
-                self.deleteCourseButton.setEnabled(true)
-                print("ddddd")
+                self.deleteCourseButton.setTitle(title: "삭제하기")
             }
-            if selectedCells.count == 0 {
-                self.deleteCourseButton.isEnabled = false
-            }
+            self.deleteCourseButton.setTitle(title: "삭제하기(\(countSelectCells))")
+            self.deleteCourseButton.isEnabled = false
+            self.deleteCourseButton.setEnabled(true)
         }
+        if selectedCells.count == 0 {
+            self.deleteCourseButton.isEnabled = false
+        }
+    }
 }
 // MARK: - Network
 extension CourseStorageVC {
@@ -341,6 +318,7 @@ extension CourseStorageVC {
                 if 200..<300 ~= status {
                     print("삭제 성공")
                     self.getPrivateCourseList()
+                    self.showHiddenViews(withDuration: 0.7)
                     
                 }
                 if status >= 400 {

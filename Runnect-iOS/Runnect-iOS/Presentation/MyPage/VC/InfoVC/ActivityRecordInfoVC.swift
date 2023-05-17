@@ -194,7 +194,7 @@ extension ActivityRecordInfoVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard tableView.cellForRow(at: indexPath) is ActivityRecordInfoTVC else { return }
         guard let selectedRecords = tableView.indexPathsForSelectedRows else { return }
-        let activityRecordList = activityRecordList[indexPath.item]
+        let activityRecordList = activityRecordList [indexPath.item]
         if isEditMode {
             self.deleteRecordButton.isEnabled = true
             let countSelectedRows = selectedRecords.count

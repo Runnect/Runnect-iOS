@@ -14,7 +14,7 @@ import Moya
 final class UploadedCourseInfoVC: UIViewController {
     
     // MARK: - Properties
-  
+    
     private var uploadedCourseProvider = Providers.publicCourseProvider
     
     private var uploadedCourseList = [PublicCourse]()
@@ -22,14 +22,16 @@ final class UploadedCourseInfoVC: UIViewController {
     var isEditMode: Bool = false
     
     private var deleteToCourseId = [Int]()
+    
     // MARK: - Constants
     
     final let uploadedCourseInset: UIEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 25, right: 16)
     final let uploadedCourseLineSpacing: CGFloat = 20
     final let uploadedCourseItemSpacing: CGFloat = 10
     final let uplodaedCourseCellHeight: CGFloat = 124
-
+    
     // MARK: - UI Components
+    
     private let collectionViewLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .vertical
     }
@@ -46,7 +48,7 @@ final class UploadedCourseInfoVC: UIViewController {
         
         return collectionView
     }()
-
+    
     private let beforeEditTopView = UIView().then {
         $0.backgroundColor = .clear
     }
@@ -72,9 +74,9 @@ final class UploadedCourseInfoVC: UIViewController {
     
     private lazy var courseListCollectionView = UICollectionView(
         frame: .zero, collectionViewLayout: collectionViewLayout).then {
-        $0.backgroundColor = .clear
-    }
-
+            $0.backgroundColor = .clear
+        }
+    
     private let emptyView = ListEmptyView(description: "아직 업로드한 코스가 없어요!\n내가 그린 코스를 공유해보세요",
                                           buttonTitle: "코스 업로드하기")
     
@@ -116,7 +118,7 @@ extension UploadedCourseInfoVC {
     
     private func register() {
         UploadedCourseInfoCollectionView.register(CourseListCVC.self,
-                                     forCellWithReuseIdentifier: CourseListCVC.className)
+                                                  forCellWithReuseIdentifier: CourseListCVC.className)
     }
     private func setAddTarget() {
         self.editButton.addTarget(self, action: #selector(editButtonDidTap), for: .touchUpInside)
@@ -127,6 +129,7 @@ extension UploadedCourseInfoVC {
         deleteCourseButton.addTarget(self, action: #selector(deleteCourseButtonDidTap), for: .touchUpInside)
     }
 }
+
 // MARK: - @objc Function
 
 extension UploadedCourseInfoVC {
@@ -143,7 +146,7 @@ extension UploadedCourseInfoVC {
         deleteAlertVC.rightButtonTapAction = {
             deleteAlertVC.dismiss(animated: false)
             self.deleteUploadedCourse(publicCourseIdList: deleteToCourseId)
-
+            
         }
         self.present(deleteAlertVC, animated: false)
     }
@@ -245,7 +248,7 @@ extension UploadedCourseInfoVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return uploadedCourseLineSpacing
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return uploadedCourseInset
     }
@@ -270,25 +273,23 @@ extension UploadedCourseInfoVC: UICollectionViewDataSource {
             // selectCell 표시
             if let selectedCells = collectionView.indexPathsForSelectedItems, selectedCells.contains(indexPath) {
                 cell.selectCell(didSelect: false)
-            }
-            else { cell.selectCell(didSelect: true)
+            } else { cell.selectCell(didSelect: true)
             }
         } else {
-        cell.setCellType(type: .title)
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className,
-                                                            for: indexPath)
-                as? CourseListCVC else { return UICollectionViewCell() }
-        cell.setCellType(type: .title)
-    }
+            cell.setCellType(type: .title)
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className,
+                                                                for: indexPath)
+                    as? CourseListCVC else { return UICollectionViewCell() }
+            cell.setCellType(type: .title)
+        }
         return cell
-            }
-        
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard collectionView.cellForItem(at: indexPath) is CourseListCVC else { return }
         guard let selectedCells = collectionView.indexPathsForSelectedItems else { return }
         guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else { return }
         let courseList = uploadedCourseList[indexPath.item]
-        
         if isEditMode {
             self.deleteCourseButton.isEnabled = true
             let countSelectCells = selectedCells.count
@@ -302,7 +303,6 @@ extension UploadedCourseInfoVC: UICollectionViewDataSource {
             courseDetailVC.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(courseDetailVC, animated: true)
             cell.selectCell(didSelect: false)
-            
         }
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
