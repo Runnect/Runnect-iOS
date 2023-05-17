@@ -36,7 +36,7 @@ final class CustomBottomSheetVC: UIViewController {
         $0.image = ImageLiterals.imgSpaceship
     }
     
-    private let completeButton = CustomButton(title: "기록 보러가기")
+    private let completeButton = CustomButton(title: "기록 보러 가기")
     
     // MARK: - View Life Cycle
     
