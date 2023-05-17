@@ -154,7 +154,8 @@ extension ActivityRecordDetailVC {
         } else {
             // 수정이 된 상태라면 팝업을 띄워주기
             self.navibar.resetLeftButtonAction({ [weak self] in
-                self?.navibar.leftButton.addTarget(self, action: #selector(self?.presentToQuitEditAlertVC), for: .touchUpInside)
+                //self?.navibar.leftButton.addTarget(self, action: #selector(self?.presentToQuitEditAlertVC), for: .touchUpInside)
+                self?.presentToQuitEditAlertVC()
             }, .titleWithLeftButton)
         }
         if text.count > courseTitleMaxLength {

@@ -5,7 +5,6 @@
 //  Created by 몽이 누나 on 2023/05/16.
 //
 
-import Foundation
 import UIKit
 
 class SetInfoLayout {
