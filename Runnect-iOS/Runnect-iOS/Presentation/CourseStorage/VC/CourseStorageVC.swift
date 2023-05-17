@@ -216,16 +216,16 @@ extension CourseStorageVC: PrivateCourseListViewDelegate {
             guard let selectedCells = privateCourseListView.courseListCollectionView.indexPathsForSelectedItems else { return }
             
             let countSelectCells = selectedCells.count
-            print(countSelectCells)
             if privateCourseListView.isEditMode == true {
-               self.deleteCourseButton.isEnabled = true
+                if privateCourseListView.isEditMode == false {
+                    self.deleteCourseButton.isEnabled = false
+                    self.deleteCourseButton.setTitle(title: "삭제하기")
+                }
                 self.deleteCourseButton.setTitle(title: "삭제하기(\(countSelectCells))")
-            }
-            if privateCourseListView.isEditMode == true {
-                print("실행됨?")
-                self.deleteCourseButton.setTitle(title: "삭제하기")
+                
                 self.deleteCourseButton.isEnabled = false
                 self.deleteCourseButton.setEnabled(true)
+                print("ddddd")
             }
             if selectedCells.count == 0 {
                 self.deleteCourseButton.isEnabled = false
