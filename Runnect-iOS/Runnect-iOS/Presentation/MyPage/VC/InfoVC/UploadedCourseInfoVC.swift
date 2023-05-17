@@ -100,8 +100,10 @@ extension UploadedCourseInfoVC {
         self.uploadedCourseList = courseList
         UploadedCourseInfoCollectionView.reloadData()
         self.emptyView.isHidden = !courseList.isEmpty
+        self.deleteCourseButton.isHidden = !courseList.isEmpty
         self.deleteCourseButton.isHidden = courseList.isEmpty
         self.tabBarController?.tabBar.isHidden = !courseList.isEmpty
+        self.tabBarController?.tabBar.isHidden = courseList.isEmpty
         self.beforeEditTopView.isHidden = courseList.isEmpty
         totalNumOfRecordlabel.text = "총 기록 \(courseList.count)개"
     }
@@ -122,7 +124,7 @@ extension UploadedCourseInfoVC {
         
     }
     
-    private func setDeleteButton(){
+    private func setDeleteButton() {
         deleteCourseButton.addTarget(self, action: #selector(deleteCourseButtonDidTap), for: .touchUpInside)
     }
 }
@@ -268,7 +270,8 @@ extension UploadedCourseInfoVC: UICollectionViewDataSource {
         if isEditMode {
             // selectCell 표시
             if let selectedCells = collectionView.indexPathsForSelectedItems, selectedCells.contains(indexPath) {
-                cell.selectCell(didSelect: false)}
+                cell.selectCell(didSelect: false)
+            }
             else { cell.selectCell(didSelect: true)
             }
         } else {

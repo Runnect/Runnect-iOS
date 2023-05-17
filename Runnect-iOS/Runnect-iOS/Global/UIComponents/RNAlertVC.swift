@@ -10,7 +10,6 @@ import UIKit
 import SnapKit
 import Then
 
-
 final class RNAlertVC: UIViewController {
     
     // MARK: - Properties
@@ -95,8 +94,6 @@ extension RNAlertVC {
         self.rightButtonTapAction?()
         
     }
-    
-    
 }
 
 // MARK: - Layout Helpers

@@ -38,7 +38,7 @@ final class PrivateCourseListView: UIView {
         $0.scrollDirection = .vertical
     }
     
-    private let beforeEditTopView = UIView().then{
+    private let beforeEditTopView = UIView().then {
         $0.backgroundColor = .clear
     }
     
@@ -57,7 +57,7 @@ final class PrivateCourseListView: UIView {
         $0.layer.cornerRadius = 11
     }
     
-    private lazy var deleteCourseButton = CustomButton(title: "삭제하기").then {
+    var deleteCourseButton = CustomButton(title: "삭제하기").then {
         $0.isHidden = true
         $0.isEnabled = false
     }
@@ -98,7 +98,6 @@ extension PrivateCourseListView {
         self.courseList = courseList
         self.courseListCollectionView.reloadData()
         self.emptyView.isHidden = !courseList.isEmpty
-        self.deleteCourseButton.isHidden = courseList.isEmpty
         self.beforeEditTopView.isHidden = courseList.isEmpty
         totalNumOfRecordlabel.text = "총 기록 \(courseList.count)개"
         
@@ -140,22 +139,25 @@ extension PrivateCourseListView {
     }
     
     @objc func editButtonDidTap() {
+        _ = courseList
         if isEditMode {
             self.totalNumOfRecordlabel.text = "총 기록 \(self.courseList.count)개"
             self.editButton.setTitle("편집", for: .normal)
             self.deleteCourseButton.isHidden = true
             self.deleteCourseButton.isEnabled = false
             self.deleteCourseButton.setTitle(title: "삭제하기")
+            self.delegate?.courseListEditButtonTapped()
             self.courseListCollectionView.reloadData()
-            
             isEditMode = false
         } else {
             self.totalNumOfRecordlabel.text = "기록 선택"
             self.delegate?.courseListEditButtonTapped()
             self.editButton.setTitle("취소", for: .normal)
             self.deleteCourseButton.isHidden = false
+            
             self.courseListCollectionView.reloadData()
             isEditMode = true
+            
         }
     }
 }
@@ -243,7 +245,7 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
         guard collectionView.cellForItem(at: indexPath) is CourseListCVC else { return }
         guard let selectedCells = collectionView.indexPathsForSelectedItems else { return }
         guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else { return }
-        let courseList = courseList[indexPath.item]
+        let courseList = courseList [indexPath.item]
         
         if isEditMode {
             self.deleteCourseButton.isEnabled = true
