@@ -19,7 +19,6 @@
 		A3BC2F4129667A0D00198261 /* NicknameEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F4029667A0D00198261 /* NicknameEditorVC.swift */; };
 		A3BC2F432966A93100198261 /* CourseDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F422966A93100198261 /* CourseDetailVC.swift */; };
 		A3C2CACE29E313CC00EC525B /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2CACD29E313CC00EC525B /* SettingVC.swift */; };
-		A3C2CAD329E4F77C00EC525B /* TermsOfServiceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2CAD229E4F77C00EC525B /* TermsOfServiceVC.swift */; };
 		A3C2CAD529E4F85400EC525B /* PersonalInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2CAD429E4F85400EC525B /* PersonalInfoVC.swift */; };
 		A3C2CAD729E53B2900EC525B /* RNAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2CAD629E53B2900EC525B /* RNAlertVC.swift */; };
 		A3C38FED2A13212300FF196D /* SetInfoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C38FEC2A13212300FF196D /* SetInfoLayout.swift */; };
@@ -174,7 +173,6 @@
 		A3BC2F4029667A0D00198261 /* NicknameEditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditorVC.swift; sourceTree = "<group>"; };
 		A3BC2F422966A93100198261 /* CourseDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailVC.swift; sourceTree = "<group>"; };
 		A3C2CACD29E313CC00EC525B /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
-		A3C2CAD229E4F77C00EC525B /* TermsOfServiceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceVC.swift; sourceTree = "<group>"; };
 		A3C2CAD429E4F85400EC525B /* PersonalInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfoVC.swift; sourceTree = "<group>"; };
 		A3C2CAD629E53B2900EC525B /* RNAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNAlertVC.swift; sourceTree = "<group>"; };
 		A3C38FEC2A13212300FF196D /* SetInfoLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetInfoLayout.swift; sourceTree = "<group>"; };
@@ -401,7 +399,6 @@
 			isa = PBXGroup;
 			children = (
 				A3C2CACD29E313CC00EC525B /* SettingVC.swift */,
-				A3C2CAD229E4F77C00EC525B /* TermsOfServiceVC.swift */,
 				A3C2CAD429E4F85400EC525B /* PersonalInfoVC.swift */,
 			);
 			path = SettingVC;
@@ -1372,7 +1369,6 @@
 				A3DB8C472A0B64830081AF2D /* ActivityRecordDetailVC.swift in Sources */,
 				CE14677C2965C1B100DCEA1B /* RunningRecordVC.swift in Sources */,
 				CE6B63D829673450003F900F /* ListEmptyView.swift in Sources */,
-				A3C2CAD329E4F77C00EC525B /* TermsOfServiceVC.swift in Sources */,
 				CE6655F6295D90B600C64E12 /* addToolBar.swift in Sources */,
 				A3C2CAD529E4F85400EC525B /* PersonalInfoVC.swift in Sources */,
 				DAD5A3DA296C6DA500C8166B /* TitleCollectionViewCell.swift in Sources */,
