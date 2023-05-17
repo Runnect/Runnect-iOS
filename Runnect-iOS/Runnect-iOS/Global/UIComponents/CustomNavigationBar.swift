@@ -20,7 +20,6 @@ enum NaviType {
     case titleWithLeftButton // 뒤로가기 버튼 + 중앙 타이틀
     case search // 검색창
     case report // 신고
-    case editModeForTitleWithLeftButton // 수정하기 페이지일 때
 }
 
 final class CustomNavigationBar: UIView {
@@ -38,7 +37,7 @@ final class CustomNavigationBar: UIView {
     
     private let leftTitleLabel = UILabel()
     private let centerTitleLabel = UILabel()
-    private let leftButton = UIButton()
+    let leftButton = UIButton()
     private let rightButton = UIButton()
     private let reportButton = UIButton()
     private let textField = UITextField()
@@ -72,14 +71,7 @@ extension CustomNavigationBar {
     
     private func setAddTarget(_ type: NaviType) {
         self.naviType = type
-        
-        switch type {
-        case .editModeForTitleWithLeftButton:
-            self.leftButton.addTarget(self, action: #selector(presentToQuitEditAlertVC), for: .touchUpInside)
-        default:
-            self.leftButton.addTarget(self, action: #selector(popToPreviousVC), for: .touchUpInside)
-        }
-        
+        self.leftButton.addTarget(self, action: #selector(popToPreviousVC), for: .touchUpInside)
         self.rightButton.addTarget(self, action: #selector(searchLocation), for: .touchUpInside)
         self.reportButton.addTarget(self, action: #selector(reportLocation), for: .touchUpInside)
     }
@@ -181,19 +173,6 @@ extension CustomNavigationBar {
         }
     }
     
-    @objc private func presentToQuitEditAlertVC() {
-        guard let vc = vc else { return }
-        let quitEditAlertVC = RNAlertVC(description: "러닝 기록 수정을 종료할까요?\n종료 시 수정 내용이 반영되지 않아요.")
-        
-        quitEditAlertVC.rightButtonTapAction = { [weak self] in
-            quitEditAlertVC.dismiss(animated: false)
-            vc.navigationController?.popViewController(animated: true)
-        }
-        
-        quitEditAlertVC.modalPresentationStyle = .overFullScreen
-        self.vc?.present(quitEditAlertVC, animated: false, completion: nil)
-    }
-    
     @objc private func searchLocation() {
         guard let text = textField.text else { return }
         self.hideKeyboard()
@@ -202,7 +181,6 @@ extension CustomNavigationBar {
     
     @objc private func reportLocation() {
         self.reportButtonClosure?()
-        
     }
     
     @objc private func rightButtonDidTap() {
@@ -242,8 +220,6 @@ extension CustomNavigationBar {
         case .report:
             reportButton.setImage(ImageLiterals.icArrowBack, for: .normal)
             reportButton.isHidden = false
-        case .editModeForTitleWithLeftButton:
-            setTitleWithLeftButton()
         }
     }
     
@@ -266,8 +242,6 @@ extension CustomNavigationBar {
             setSearchLayout()
         case .report:
             setReportButtonLayout()
-        case .editModeForTitleWithLeftButton:
-            setTitleWithLeftButtonLayout()
         }
     }
     
