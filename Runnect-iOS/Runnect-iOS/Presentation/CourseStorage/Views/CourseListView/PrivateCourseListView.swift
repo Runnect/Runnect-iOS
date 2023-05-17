@@ -221,10 +221,10 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard collectionView.cellForItem(at: indexPath) is CourseListCVC else { return }
-        guard let selectedCells = collectionView.indexPathsForSelectedItems else { return }
+//        guard let selectedCells = collectionView.indexPathsForSelectedItems else { return }
         guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else { return }
-        let courseList = courseList [indexPath.item]
-        let countSelectCells = selectedCells.count
+//        let courseList = courseList [indexPath.item]
+//        let countSelectCells = selectedCells.count
         
         if isEditMode {
             
@@ -235,8 +235,7 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
             cellDidTapped.send(indexPath.item)
             delegate?.selectCellDidTapped()
         }
-        
-        
+
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         guard collectionView.cellForItem(at: indexPath) is CourseListCVC else { return }

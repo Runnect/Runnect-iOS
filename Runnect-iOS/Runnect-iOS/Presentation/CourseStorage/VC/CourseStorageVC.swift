@@ -15,7 +15,6 @@ import Moya
 final class CourseStorageVC: UIViewController {
     
     // MARK: - Properties
-    
     private let courseProvider = Providers.courseProvider
     
     private let scrapProvider = Providers.scrapProvider
@@ -118,6 +117,35 @@ extension CourseStorageVC {
         scrapCourseListView.delegate = self
         privateCourseListView.delegate = self
     }
+    
+    private func showHiddenViews(withDuration:TimeInterval = 0) {
+        if let frame = tabBarController?.tabBar.frame {
+            let factor: CGFloat = -1
+            let y = frame.origin.y + (frame.size.height * factor)
+            UIView.animate(withDuration: 0.7, animations: {
+                self.tabBarController?.tabBar.frame = CGRect(x: frame.origin.x, y: y, width: frame.width, height: frame.height)
+            })
+        }
+        UIView.animate(withDuration: withDuration) {
+            self.deleteCourseButton.transform = CGAffineTransform(translationX: 0, y: 36)
+        }
+
+    }
+    private func hiddenViews(withDuration : TimeInterval = 0) {
+        if let frame = tabBarController?.tabBar.frame {
+            let factor: CGFloat = 1
+            let y = frame.origin.y + (frame.size.height * factor)
+            UIView.animate(withDuration: 0.7, animations: {
+                self.tabBarController?.tabBar.frame = CGRect(x: frame.origin.x, y: y, width: frame.width, height: frame.height)
+            })
+        }
+        view.bringSubviewToFront(deleteCourseButton)
+        
+        UIView.animate(withDuration: withDuration) {
+
+            self.deleteCourseButton.transform = CGAffineTransform(translationX: 0, y: -36)
+        }
+    }
 }
 
 // MARK: - @objc Function
@@ -135,7 +163,7 @@ extension CourseStorageVC {
         deleteAlertVC.modalPresentationStyle = .overFullScreen
         deleteAlertVC.rightButtonTapAction = {
             deleteAlertVC.dismiss(animated: false)
-            self.deleteCourse(courseIdList:deleteToCourseId)
+            self.deleteCourse(courseIdList: deleteToCourseId)
 
         }
         self.present(deleteAlertVC, animated: false)
@@ -186,28 +214,17 @@ extension CourseStorageVC: ScrapCourseListViewDelegate {
 extension CourseStorageVC: PrivateCourseListViewDelegate {
     
     func courseListEditButtonTapped() {
-        [privateCourseListView, deleteCourseButton].forEach { subView in view.bringSubviewToFront(subView)
-        }
-//        UIView.animate(withDuration: withDuration){
-//            // tabBar 내려가는 모션
-//            let tabBarController = TabBarController()
-//            self.tabBarController.transform = CGAffineTransform(translationX: 0, y: 172)
-//        }
-        UIView.animate(withDuration: 0){
-        }
          var isEditMode = privateCourseListView.isEditMode
         if privateCourseListView.isEditMode == false {
             self.deleteCourseButton.isHidden = false
             self.deleteCourseButton.isEnabled = false
             self.deleteCourseButton.setTitle(title: "삭제하기")
-            // 탭바 숨김
-            self.hideTabBar(wantsToHide: true)
-            // 삭제하기 버튼 올라오는 모션
-            self.deleteCourseButton.transform = CGAffineTransform(translationX: 0, y: -10)
+            hiddenViews(withDuration: 0.7)
         }
         if privateCourseListView.isEditMode == true {
             self.hideTabBar(wantsToHide: false)
             self.deleteCourseButton.isHidden = false
+            showHiddenViews(withDuration: 0.7)
         }
     }
     
