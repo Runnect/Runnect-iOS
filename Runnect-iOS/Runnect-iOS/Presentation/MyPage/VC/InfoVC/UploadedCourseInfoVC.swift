@@ -102,8 +102,7 @@ extension UploadedCourseInfoVC {
         self.emptyView.isHidden = !courseList.isEmpty
         self.deleteCourseButton.isHidden = !courseList.isEmpty
         self.deleteCourseButton.isHidden = courseList.isEmpty
-        self.tabBarController?.tabBar.isHidden = !courseList.isEmpty
-        self.tabBarController?.tabBar.isHidden = courseList.isEmpty
+        self.tabBarController?.tabBar.isHidden = false
         self.beforeEditTopView.isHidden = courseList.isEmpty
         totalNumOfRecordlabel.text = "총 기록 \(courseList.count)개"
     }
