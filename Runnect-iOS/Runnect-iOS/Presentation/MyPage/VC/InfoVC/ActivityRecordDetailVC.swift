@@ -18,9 +18,7 @@ final class ActivityRecordDetailVC: UIViewController {
     private let recordProvider = Providers.recordProvider
         
     private var recordId: Int?
-    
-    private var isEditMode: Bool = false
-    
+        
     private let courseTitleMaxLength = 20
             
     // MARK: - UI Components
@@ -45,6 +43,7 @@ final class ActivityRecordDetailVC: UIViewController {
     }
     
     private let courseTitleTextField = UITextField().then {
+        $0.resignFirstResponder()
         $0.attributedPlaceholder = NSAttributedString(
             string: "글 제목",
             attributes: [.font: UIFont.h4, .foregroundColor: UIColor.g3]
@@ -68,23 +67,23 @@ final class ActivityRecordDetailVC: UIViewController {
 
     private let secondHorizontalDivideLine = UIView()
     
-    private lazy var recordDistanceLabel = setGreyTitle().then {
+    private lazy var recordDistanceLabel = SetInfoLayout.makeGreySmailTitleLabel().then {
         $0.text = "거리"
     }
 
-    private lazy var recordRunningTimeLabel = setGreyTitle().then {
+    private lazy var recordRunningTimeLabel = SetInfoLayout.makeGreySmailTitleLabel().then {
         $0.text = "이동 시간"
     }
     
-    private lazy var recordAveragePaceLabel = setGreyTitle().then {
+    private lazy var recordAveragePaceLabel = SetInfoLayout.makeGreySmailTitleLabel().then {
         $0.text = "평균 페이스"
     }
 
-    private lazy var recordDistanceValueLabel = setBlackTitle()
+    private lazy var recordDistanceValueLabel = SetInfoLayout.makeBlackTitleLabel()
     
-    private lazy var recordRunningTimeValueLabel = setBlackTitle()
+    private lazy var recordRunningTimeValueLabel = SetInfoLayout.makeBlackTitleLabel()
     
-    private lazy var recordAveragePaceValueLabel = setBlackTitle()
+    private lazy var recordAveragePaceValueLabel = SetInfoLayout.makeBlackTitleLabel()
     
     private lazy var recordDistanceStackView = setDetailInfoStakcView(title: recordDistanceLabel, value: recordDistanceValueLabel)
     
@@ -110,11 +109,13 @@ final class ActivityRecordDetailVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        courseTitleTextField.delegate = self
         hideTabBar(wantsToHide: true)
         setNavigationBar()
         setUI()
         setLayout()
         setAddTarget()
+        self.view = view
         self.setKeyboardNotification()
         self.setTapGesture()
     }
@@ -127,20 +128,19 @@ extension ActivityRecordDetailVC {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let editAction = UIAlertAction(title: "수정하기", style: .default, handler: {(_: UIAlertAction!) in
             // 수정 모드일 때
-            self.isEditMode = true
             self.setEditMode()
         })
-        let deleteVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
-        deleteVC.modalPresentationStyle = .overFullScreen
-        let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive, handler: {(_: UIAlertAction!) in
-            self.present(deleteVC, animated: false, completion: nil)})
+        let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
+        deleteAlertVC.modalPresentationStyle = .overFullScreen
+        let deleteAlertAction = UIAlertAction(title: "삭제하기", style: .destructive, handler: {(_: UIAlertAction!) in
+            self.present(deleteAlertVC, animated: false, completion: nil)})
         
-        deleteVC.rightButtonTapAction = { [weak self] in
-            deleteVC.dismiss(animated: false)
+        deleteAlertVC.rightButtonTapAction = { [weak self] in
+            deleteAlertVC.dismiss(animated: false)
             self?.deleteRecord()
         }
         
-        [ editAction, deleteAction ].forEach { alertController.addAction($0) }
+        [ editAction, deleteAlertAction ].forEach { alertController.addAction($0) }
         present(alertController, animated: true, completion: nil)
     }
     
@@ -151,8 +151,13 @@ extension ActivityRecordDetailVC {
         
         if text == self.courseTitleLabel.text {
             self.finishEditButton.isEnabled = false
+        } else {
+            // 수정이 된 상태라면 팝업을 띄워주기
+            self.navibar.resetLeftButtonAction({ [weak self] in
+                //self?.navibar.leftButton.addTarget(self, action: #selector(self?.presentToQuitEditAlertVC), for: .touchUpInside)
+                self?.presentToQuitEditAlertVC()
+            }, .titleWithLeftButton)
         }
-        
         if text.count > courseTitleMaxLength {
             let index = text.index(text.startIndex, offsetBy: courseTitleMaxLength)
             let newString = text[text.startIndex..<index]
@@ -183,6 +188,32 @@ extension ActivityRecordDetailVC {
     
     @objc private func finishEditButtonDidTap() {
         editRecordTitle()
+        showToast(message: "제목 수정이 완료되었어요")
+        
+        // 수정이 완료되면 팝업 뜨지 않음
+        self.navibar.resetLeftButtonAction({ [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+        }, .titleWithLeftButton)
+        
+        self.navibar.isHidden = false
+        
+        middleScorollView.snp.makeConstraints { make in
+            make.top.equalTo(navibar.snp.bottom)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
+    @objc private func presentToQuitEditAlertVC() {
+        let quitEditAlertVC = RNAlertVC(description: "러닝 기록 수정을 종료할까요?\n종료 시 수정 내용이 반영되지 않아요.")
+        
+        quitEditAlertVC.rightButtonTapAction = { [weak self] in
+            quitEditAlertVC.dismiss(animated: false)
+            self?.navigationController?.popViewController(animated: true)
+        }
+        
+        quitEditAlertVC.modalPresentationStyle = .overFullScreen
+        self.present(quitEditAlertVC, animated: false, completion: nil)
     }
 }
 
@@ -245,20 +276,6 @@ extension ActivityRecordDetailVC {
         label.attributedText = attributedString
     }
     
-    private func setBlackTitle() -> UILabel {
-        let label = UILabel()
-        label.textColor = .g1
-        label.font = .h3
-        return label
-    }
-    
-    private func setGreyTitle() -> UILabel {
-        let label = UILabel()
-        label.textColor = .g2
-        label.font = .b4
-        return label
-    }
-    
     // 키보드가 올라오면 scrollView 위치 조정
     private func setKeyboardNotification() {
         NotificationCenter.default.addObserver(
@@ -279,6 +296,21 @@ extension ActivityRecordDetailVC {
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
+    }
+    
+    func popUpVC() {
+        self.navigationController?.popViewController(animated: true)
+    }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension ActivityRecordDetailVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == self.courseTitleTextField {
+            self.finishEditButtonDidTap()
+        }
+        return true
     }
 }
 
@@ -387,23 +419,8 @@ extension ActivityRecordDetailVC {
     }
     
     private func setEditMode() {
-        self.navibar.isHidden = true
-        
-        let editNavibar = CustomNavigationBar(self, type: .editModeForTitleWithLeftButton)
-        
-        view.addSubview(editNavibar)
-        
-        editNavibar.snp.makeConstraints {  make in
-            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
-        }
-        
-        middleScorollView.snp.makeConstraints { make in
-            make.top.equalTo(editNavibar.snp.bottom)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
-        
+        self.navibar.isHidden = false // true
+
         mapImageView.snp.remakeConstraints { make in
             make.top.equalToSuperview()
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)

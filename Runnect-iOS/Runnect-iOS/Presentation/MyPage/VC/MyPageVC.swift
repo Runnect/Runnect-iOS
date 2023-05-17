@@ -12,12 +12,14 @@ import Then
 import Moya
 
 final class MyPageVC: UIViewController {
-    
+
     // MARK: - Properties
     
     private var userProvider = Providers.userProvider
     
     let stampNameImageDictionary: [String: UIImage] = GoalRewardInfoModel.stampNameImageDictionary
+        
+    var sendEmail = String()
         
     // MARK: - UI Components
     
@@ -182,10 +184,12 @@ extension MyPageVC {
     
     private func pushToSettingVC() {
         let settingVC = SettingVC()
+        settingVC.setData(email: sendEmail)
         self.navigationController?.pushViewController(settingVC, animated: true)
     }
     
     private func setData(model: MyPageDto) {
+        self.sendEmail = model.user.email
         self.myProfileNameLabel.text = model.user.nickname
         self.myRunningProgressBar.setProgress(Float(model.user.levelPercent)/100, animated: false)
         setMyRunningProgressPercentLabel(label: myRunnigProgressPercentLabel, model: model)

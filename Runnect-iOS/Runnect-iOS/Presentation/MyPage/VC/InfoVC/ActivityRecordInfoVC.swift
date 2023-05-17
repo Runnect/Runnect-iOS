@@ -73,7 +73,7 @@ final class ActivityRecordInfoVC: UIViewController, deleteRecordDelegate {
         setLayout()
         setAddTarget()
         setDelegate()
-        register()
+        registerCell()
         getActivityRecordInfo()
         self.hideTabBar(wantsToHide: true)
     }
@@ -95,7 +95,7 @@ extension ActivityRecordInfoVC {
         self.emptyView.delegate = self
     }
     
-    private func register() {
+    private func registerCell() {
         self.activityRecordTableView.register(ActivityRecordInfoTVC.self, forCellReuseIdentifier: ActivityRecordInfoTVC.className)
     }
     

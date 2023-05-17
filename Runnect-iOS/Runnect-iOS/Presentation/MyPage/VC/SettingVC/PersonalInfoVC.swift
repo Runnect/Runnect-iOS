@@ -12,11 +12,13 @@ import SnapKit
 import Then
 
 final class PersonalInfoVC: UIViewController {
-    
+
     // MARK: - Properties
     
     private let userProvider = Providers.userProvider
     
+    var email = String()
+        
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("계정 정보")
@@ -32,10 +34,10 @@ final class PersonalInfoVC: UIViewController {
         $0.text = "아이디"
     }
     
-    private let idEmailInfoLabel = UILabel().then {
+    private lazy var idEmailInfoLabel = UILabel().then {
         $0.font = .b2
         $0.textColor = .g2
-        $0.text = "dlwogus0128@ajou.ac.kr"
+        $0.text = self.email
     }
     
     private lazy var logoutView = makeInfoView(title: "로그아웃").then {
