@@ -10,6 +10,8 @@ import Combine
 
 import Moya
 
+
+
 final class CourseStorageVC: UIViewController {
     
     // MARK: - Properties
@@ -32,8 +34,15 @@ final class CourseStorageVC: UIViewController {
     
     private let scrapCourseListView = ScrapCourseListView()
     
+    
+    
     private lazy var viewPager = ViewPager(pageTitles: ["내가 그린 코스", "스크랩 코스"])
         .addPagedView(pagedView: [privateCourseListView, scrapCourseListView])
+    
+    private var deleteCourseButton = CustomButton(title: "삭제하기").then {
+        $0.isHidden = true
+        $0.isEnabled = false
+    }
     
     // MARK: - View Life Cycle
     
@@ -43,6 +52,7 @@ final class CourseStorageVC: UIViewController {
         self.setLayout()
         self.bindUI()
         self.setDelegate()
+        self.setDeleteButton()
     
     }
     
@@ -60,12 +70,17 @@ extension CourseStorageVC {
     private func setPrivateCourseData(courseList: [PrivateCourse]) {
         self.privateCourseList = courseList
         self.privateCourseListView.setData(courseList: courseList)
-    
+        self.deleteCourseButton.isHidden = true
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     private func setScrapCourseData(courseList: [ScrapCourse]) {
         self.scrapCourseList = courseList
         self.scrapCourseListView.setData(courseList: courseList)
+    }
+    
+    private func setDeleteButton() {
+        deleteCourseButton.addTarget(self, action: #selector(deleteCourseButtonDidTap), for: .touchUpInside)
     }
     
     private func bindUI() {
@@ -105,6 +120,30 @@ extension CourseStorageVC {
     }
 }
 
+// MARK: - @objc Function
+
+extension CourseStorageVC {
+    @objc func deleteCourseButtonDidTap(_sender: UIButton) {
+        guard let selectedList = privateCourseListView.courseListCollectionView.indexPathsForSelectedItems else { return }
+        var deleteToCourseId = [Int]()
+        for indexPath in selectedList {
+            let publicCourse = privateCourseList[indexPath.item]
+            deleteToCourseId.append(publicCourse.id)
+        }
+        
+        let deleteAlertVC = RNAlertVC(description: "삭제하시겠습니까?")
+        deleteAlertVC.modalPresentationStyle = .overFullScreen
+        deleteAlertVC.rightButtonTapAction = {
+            deleteAlertVC.dismiss(animated: false)
+            self.deleteCourse(courseIdList:deleteToCourseId)
+
+        }
+        self.present(deleteAlertVC, animated: false)
+    }
+    
+    
+}
+
 // MARK: - UI & Layout
 
 extension CourseStorageVC {
@@ -113,7 +152,8 @@ extension CourseStorageVC {
     }
     
     private func setLayout() {
-        view.addSubviews(naviBar, viewPager)
+        view.addSubviews(naviBar, viewPager, deleteCourseButton)
+        view.bringSubviewToFront(viewPager)
         
         naviBar.snp.makeConstraints { make in
             make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -123,6 +163,12 @@ extension CourseStorageVC {
         viewPager.snp.makeConstraints { make in
             make.top.equalTo(naviBar.snp.bottom)
             make.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        deleteCourseButton.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().inset(34)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(44)
         }
     }
 }
@@ -136,28 +182,55 @@ extension CourseStorageVC: ScrapCourseListViewDelegate {
 }
 
 // MARK: - PrivateCourseListViewDelegate
+
 extension CourseStorageVC: PrivateCourseListViewDelegate {
-    func deleteCourseButtonTapped (courseId: [Int]) {
-        let deleteAlertVC = RNAlertVC(description: "삭제하시겠습니까?")
-        deleteAlertVC.modalPresentationStyle = .overFullScreen
-        deleteAlertVC.rightButtonTapAction = {
-            deleteAlertVC.dismiss(animated: false)
-            self.deleteCourse(courseIdList: courseId)
-            self.privateCourseListView.deleteCourseButton.isHidden = true
-        }
-        self.present(deleteAlertVC, animated: false)
-    }
+    
     func courseListEditButtonTapped() {
-        var isEditMode = privateCourseListView.isEditMode
+        [privateCourseListView, deleteCourseButton].forEach { subView in view.bringSubviewToFront(subView)
+        }
+//        UIView.animate(withDuration: withDuration){
+//            // tabBar 내려가는 모션
+//            let tabBarController = TabBarController()
+//            self.tabBarController.transform = CGAffineTransform(translationX: 0, y: 172)
+//        }
+        UIView.animate(withDuration: 0){
+        }
+         var isEditMode = privateCourseListView.isEditMode
         if privateCourseListView.isEditMode == false {
+            self.deleteCourseButton.isHidden = false
+            self.deleteCourseButton.isEnabled = false
+            self.deleteCourseButton.setTitle(title: "삭제하기")
             // 탭바 숨김
             self.hideTabBar(wantsToHide: true)
+            // 삭제하기 버튼 올라오는 모션
+            self.deleteCourseButton.transform = CGAffineTransform(translationX: 0, y: -10)
         }
         if privateCourseListView.isEditMode == true {
             self.hideTabBar(wantsToHide: false)
-            
+            self.deleteCourseButton.isHidden = false
         }
     }
+    
+        func selectCellDidTapped() {
+            let deleteCourseButton = deleteCourseButton
+            guard let selectedCells = privateCourseListView.courseListCollectionView.indexPathsForSelectedItems else { return }
+            
+            let countSelectCells = selectedCells.count
+            print(countSelectCells)
+            if privateCourseListView.isEditMode == true {
+               self.deleteCourseButton.isEnabled = true
+                self.deleteCourseButton.setTitle(title: "삭제하기(\(countSelectCells))")
+            }
+            if privateCourseListView.isEditMode == true {
+                print("실행됨?")
+                self.deleteCourseButton.setTitle(title: "삭제하기")
+                self.deleteCourseButton.isEnabled = false
+                self.deleteCourseButton.setEnabled(true)
+            }
+            if selectedCells.count == 0 {
+                self.deleteCourseButton.isEnabled = false
+            }
+        }
 }
 // MARK: - Network
 extension CourseStorageVC {

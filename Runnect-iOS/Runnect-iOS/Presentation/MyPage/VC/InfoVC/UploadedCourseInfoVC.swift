@@ -53,7 +53,7 @@ final class UploadedCourseInfoVC: UIViewController {
     private lazy var totalNumOfRecordlabel = UILabel().then {
         $0.font = .b6
         $0.textColor = .g2
-        $0.text = "총 기록 0개"
+        $0.text = "총 코스 0개"
     }
     
     private let editButton = UIButton(type: .custom).then {
@@ -104,7 +104,7 @@ extension UploadedCourseInfoVC {
         self.deleteCourseButton.isHidden = courseList.isEmpty
         self.tabBarController?.tabBar.isHidden = false
         self.beforeEditTopView.isHidden = courseList.isEmpty
-        totalNumOfRecordlabel.text = "총 기록 \(courseList.count)개"
+        totalNumOfRecordlabel.text = "총 코스 \(courseList.count)개"
     }
     
     private func setDelegate() {
@@ -150,7 +150,7 @@ extension UploadedCourseInfoVC {
     
     @objc func editButtonDidTap() {
         if isEditMode {
-            self.totalNumOfRecordlabel.text = "총 기록 \(self.uploadedCourseList.count)개"
+            self.totalNumOfRecordlabel.text = "총 코스 \(self.uploadedCourseList.count)개"
             self.editButton.setTitle("편집", for: .normal)
             self.deleteCourseButton.isEnabled = false
             self.deleteCourseButton.setTitle(title: "삭제하기")
