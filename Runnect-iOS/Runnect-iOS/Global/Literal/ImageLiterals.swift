@@ -44,8 +44,6 @@ enum ImageLiterals {
     static var icLogoCircle: UIImage { .load(named: "ic_logo_circle") }
     static var icMore: UIImage { .load(named: "ic_more") }
     static var icPlus: UIImage { .load(named: "ic_plus") }
-    static var icFrameEdit: UIImage { .load(named: "ic_frame_edit")}
-    static var icFrameDelete: UIImage { .load(named: "ic_frame_delete")}
 
     // img
     static var imgBackground: UIImage { .load(named: "img_background") }
