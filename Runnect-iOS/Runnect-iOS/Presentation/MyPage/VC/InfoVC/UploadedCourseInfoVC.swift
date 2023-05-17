@@ -260,22 +260,29 @@ extension UploadedCourseInfoVC: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath)
                 as? CourseListCVC else { return UICollectionViewCell() }
         cell.setCellType(type: .title)
-        if let selectedCells = collectionView.indexPathsForSelectedItems, selectedCells.contains(indexPath) {
-            cell.selectCell(didSelect: false)
-//            cell.selectCell(didSelect: true)
+        let model = uploadedCourseList[indexPath.item]
+        let cellTitle =  "\(model.departure.region) \(model.departure.city)"
+        cell.setData(imageURL: model.image, title: cellTitle, location: nil, didLike: nil)
+        
+        if isEditMode {
+            // selectCell 표시
+            if let selectedCells = collectionView.indexPathsForSelectedItems, selectedCells.contains(indexPath) {
+                cell.selectCell(didSelect: false)}
+            else {
+                cell.selectCell(didSelect: true)
+            }
+            
         } else {
-//            cell.selectCell(didSelect: false)
-        }
+        cell.setCellType(type: .title)
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className,
                                                             for: indexPath)
                 as? CourseListCVC else { return UICollectionViewCell() }
         cell.setCellType(type: .title)
-        
-        let model = uploadedCourseList[indexPath.item]
-        let cellTitle =  "\(model.departure.region) \(model.departure.city)"
-        cell.setData(imageURL: model.image, title: cellTitle, location: nil, didLike: nil)
-        return cell
     }
+        return cell
+            }
+        
+    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard collectionView.cellForItem(at: indexPath) is CourseListCVC else { return }
