@@ -56,8 +56,9 @@ final class NicknameEditorVC: UIViewController {
         $0.text = "완료"
         $0.font = .h4
         $0.textColor = .m1
-        let tap = UITapGestureRecognizer(target: self, action: #selector(finishNickNameLabelDidTap))
-        self.view.addGestureRecognizer(tap)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(finishEditNickname))
+        $0.isUserInteractionEnabled = true
+        $0.addGestureRecognizer(tap)
     }
     
     // MARK: - View Life Cycle
@@ -75,7 +76,7 @@ final class NicknameEditorVC: UIViewController {
 
 // MARK: - Method
 
-extension NicknameEditorVC {    
+extension NicknameEditorVC {
     private func setAddTarget() {
         nickNameTextField.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
     }
@@ -115,16 +116,15 @@ extension NicknameEditorVC {
         }
     }
     
-    @objc private func finishNickNameLabelDidTap() {
+    @objc private func finishEditNickname() {
         didNicknameReturn()
         self.navigationController?.popViewController(animated: false)
     }
 }
 
+// MARK: - Layout Helpers
+
 extension NicknameEditorVC {
-    
-    // MARK: - Layout Helpers
-    
     private func setUI() {
         view.backgroundColor = .w1
     }
@@ -168,7 +168,7 @@ extension NicknameEditorVC {
 extension NicknameEditorVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == self.nickNameTextField {
-            didNicknameReturn()
+            finishEditNickname()
         }
         return true
     }

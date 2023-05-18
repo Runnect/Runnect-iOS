@@ -12,12 +12,14 @@ import Then
 import Moya
 
 final class MyPageVC: UIViewController {
-    
+
     // MARK: - Properties
     
     private var userProvider = Providers.userProvider
     
     let stampNameImageDictionary: [String: UIImage] = GoalRewardInfoModel.stampNameImageDictionary
+        
+    var sendEmail = String()
         
     // MARK: - UI Components
     
@@ -108,11 +110,11 @@ final class MyPageVC: UIViewController {
         setNavigationBar()
         setUI()
         setLayout()
-        getMyPageInfo()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        guard UserManager.shared.userType != .visitor else { return }
         self.getMyPageInfo()
         self.hideTabBar(wantsToHide: false)
     }
@@ -182,10 +184,12 @@ extension MyPageVC {
     
     private func pushToSettingVC() {
         let settingVC = SettingVC()
+        settingVC.setData(email: sendEmail)
         self.navigationController?.pushViewController(settingVC, animated: true)
     }
     
     private func setData(model: MyPageDto) {
+        self.sendEmail = model.user.email
         self.myProfileNameLabel.text = model.user.nickname
         self.myRunningProgressBar.setProgress(Float(model.user.levelPercent)/100, animated: false)
         setMyRunningProgressPercentLabel(label: myRunnigProgressPercentLabel, model: model)
@@ -264,6 +268,11 @@ extension MyPageVC {
     }
     
     private func setLayout() {
+        guard UserManager.shared.userType != .visitor else {
+            self.showSignInRequestEmptyView()
+            return
+        }
+        
         view.addSubviews(myProfileView, myRunningProgressView, firstDivideView,
             goalRewardInfoView, secondDivideView, activityRecordInfoView,
             thirdDivideView, uploadedCourseInfoView, fourthDivideView, settingView)

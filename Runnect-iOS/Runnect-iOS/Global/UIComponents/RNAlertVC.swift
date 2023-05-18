@@ -16,8 +16,13 @@ final class RNAlertVC: UIViewController {
     
     var rightButtonTapAction: (() -> Void)?
     
+<<<<<<< HEAD
 //    weak var delegate: RNAlertVCDeleagte?
 // 
+=======
+    var deleteRecordDelegate: deleteRecordDelegate?
+        
+>>>>>>> b3d6309976964fe58bb68432c068d27d31a9f4f5
     // MARK: - UI Components
     
     private let containerView = UIView().then {
@@ -32,7 +37,7 @@ final class RNAlertVC: UIViewController {
     }
     
     private lazy var yesButton = UIButton(type: .custom).then {
-        $0.setTitle("네", for: .normal)
+        $0.setTitle("예", for: .normal)
         $0.titleLabel?.font = .h5
         $0.setTitleColor(.w1, for: .normal)
         $0.layer.backgroundColor = UIColor.m1.cgColor
@@ -81,6 +86,15 @@ extension RNAlertVC {
         self.yesButton.addTarget(self, action: #selector(touchYesButton), for: .touchUpInside)
     }
     
+<<<<<<< HEAD
+=======
+    @discardableResult
+    func setButtonTitle(_ leftButtonTitle: String, _ rightButtonTitle: String) -> Self {
+        self.yesButton.setTitle(rightButtonTitle, for: .normal)
+        self.noButton.setTitle(leftButtonTitle, for: .normal)
+        return self
+    }
+>>>>>>> b3d6309976964fe58bb68432c068d27d31a9f4f5
 }
 
 // MARK: - @objc Function
@@ -92,7 +106,11 @@ extension RNAlertVC {
     
     @objc private func touchYesButton() {
         self.rightButtonTapAction?()
+<<<<<<< HEAD
         
+=======
+        deleteRecordDelegate?.wantsToDelete()
+>>>>>>> b3d6309976964fe58bb68432c068d27d31a9f4f5
     }
 }
 

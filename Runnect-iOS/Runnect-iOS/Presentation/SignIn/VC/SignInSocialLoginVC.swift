@@ -43,6 +43,12 @@ final class SignInSocialLoginVC: UIViewController {
         $0.setImage(ImageLiterals.imgKakaoLogin, for: .normal)
     }
     
+    private let visitorButton: UIButton = UIButton(type: .custom).then {
+        let attributedString = NSAttributedString(string: "회원가입 없이 둘러보기", attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.b2, .foregroundColor: UIColor.white])
+        
+        $0.setAttributedTitle(attributedString, for: .normal)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -55,7 +61,7 @@ final class SignInSocialLoginVC: UIViewController {
 // MARK: - @objc Function
 
 extension SignInSocialLoginVC {
-    @objc func touchUpAppleLoginButton() {
+    @objc func appleLoginButtonDidTap() {
         pushToAppleLogin()
     }
     
@@ -112,14 +118,20 @@ extension SignInSocialLoginVC {
             }
         }
     }
+    
+    @objc private func visitorButtonDidTap() {
+        UserManager.shared.userType = .visitor
+        pushToTabBarController()
+    }
 }
 
 // MARK: - Methods
 
 extension SignInSocialLoginVC {
     private func setAddTarget() {
-        self.appleLoginButton.addTarget(self, action: #selector(touchUpAppleLoginButton), for: .touchUpInside)
+        self.appleLoginButton.addTarget(self, action: #selector(appleLoginButtonDidTap), for: .touchUpInside)
         self.kakaoLoginButton.addTarget(self, action: #selector(kakaoLoginButtonDidTap), for: .touchUpInside)
+        self.visitorButton.addTarget(self, action: #selector(visitorButtonDidTap), for: .touchUpInside)
     }
     
     private func pushToNickNameSetUpVC() {
@@ -146,7 +158,7 @@ extension SignInSocialLoginVC {
     }
     
     private func setLayout() {
-        view.addSubviews(backgroundImageView, logoImageView, kakaoLoginButton, appleLoginButton)
+        view.addSubviews(backgroundImageView, logoImageView, kakaoLoginButton, appleLoginButton, visitorButton)
         
         backgroundImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -156,8 +168,15 @@ extension SignInSocialLoginVC {
             make.center.equalTo(view.safeAreaLayoutGuide)
         }
         
+        visitorButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(23)
+            make.height.equalTo(38)
+            make.width.equalTo(158)
+            make.centerX.equalToSuperview()
+        }
+        
         kakaoLoginButton.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(54)
+            make.bottom.equalTo(visitorButton.snp.top).offset(-10)
             make.height.equalTo(55)
             make.leading.trailing.equalToSuperview().inset(15)
         }

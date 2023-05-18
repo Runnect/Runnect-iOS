@@ -203,16 +203,7 @@ extension RunTrackingVC {
     
     @objc private func runningCompleteButtonDidTap() {
         stopwatch.isRunning.toggle()
-        let bottomSheetVC = CustomBottomSheetVC()
-        bottomSheetVC.modalPresentationStyle = .overFullScreen
-        
-        bottomSheetVC.completeButtonTapped.sink { [weak self] _ in
-            guard let self = self else { return }
-            self.pushToRunningRecordVC()
-            bottomSheetVC.dismiss(animated: true)
-        }.store(in: cancelBag)
-        
-        self.present(bottomSheetVC, animated: true)
+        self.pushToRunningRecordVC()
     }
 }
 

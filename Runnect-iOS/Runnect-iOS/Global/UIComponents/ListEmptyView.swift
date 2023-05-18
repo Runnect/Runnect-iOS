@@ -17,6 +17,8 @@ final class ListEmptyView: UIView {
     
     weak var delegate: ListEmptyViewDelegate?
     
+    var buttonTapAction: (() -> Void)?
+    
     // MARK: - UI Components
     
     private let mainImageView = UIImageView().then {
@@ -61,6 +63,14 @@ extension ListEmptyView {
     private func setAddTarget() {
         bottomButton.addTarget(self, action: #selector(bottomButtonDidTap), for: .touchUpInside)
     }
+    
+    public func setImage(_ image: UIImage, size: CGSize) {
+        self.mainImageView.image = image
+        self.mainImageView.snp.updateConstraints { make in
+            make.width.equalTo(size.width)
+            make.height.equalTo(size.height)
+        }
+    }
 }
 
 // MARK: - @objc Function
@@ -68,6 +78,7 @@ extension ListEmptyView {
 extension ListEmptyView {
     @objc private func bottomButtonDidTap() {
         delegate?.emptyViewButtonTapped()
+        self.buttonTapAction?()
     }
 }
 
