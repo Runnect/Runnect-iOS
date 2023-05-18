@@ -104,6 +104,7 @@ final class CourseDetailVC: UIViewController {
         $0.isScrollEnabled = false
         $0.sizeToFit()
     }
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -125,6 +126,11 @@ final class CourseDetailVC: UIViewController {
 
 extension CourseDetailVC {
     @objc func likeButtonDidTap(_ sender: UIButton) {
+        guard UserManager.shared.userType != .visitor else {
+            showToastOnWindow(text: "러넥트에 가입하면 코스를 스크랩할 수 있어요")
+            return
+        }
+        
         scrapCourse(scrapTF: !sender.isSelected)
     }
     

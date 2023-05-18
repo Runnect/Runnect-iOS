@@ -22,6 +22,7 @@
 		A3C2CAD329E4F77C00EC525B /* TermsOfServiceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2CAD229E4F77C00EC525B /* TermsOfServiceVC.swift */; };
 		A3C2CAD529E4F85400EC525B /* PersonalInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2CAD429E4F85400EC525B /* PersonalInfoVC.swift */; };
 		A3C2CAD729E53B2900EC525B /* RNAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2CAD629E53B2900EC525B /* RNAlertVC.swift */; };
+		A3C38FED2A13212300FF196D /* SetInfoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C38FEC2A13212300FF196D /* SetInfoLayout.swift */; };
 		A3D1A77929CF03D200DD54EC /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D1A77829CF03D200DD54EC /* AuthRouter.swift */; };
 		A3D1A77E29CF09B600DD54EC /* SignInResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D1A77D29CF09B600DD54EC /* SignInResponseDto.swift */; };
 		A3D1A78029CF142E00DD54EC /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D1A77F29CF142E00DD54EC /* UserManager.swift */; };
@@ -175,6 +176,7 @@
 		A3C2CAD229E4F77C00EC525B /* TermsOfServiceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceVC.swift; sourceTree = "<group>"; };
 		A3C2CAD429E4F85400EC525B /* PersonalInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfoVC.swift; sourceTree = "<group>"; };
 		A3C2CAD629E53B2900EC525B /* RNAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNAlertVC.swift; sourceTree = "<group>"; };
+		A3C38FEC2A13212300FF196D /* SetInfoLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetInfoLayout.swift; sourceTree = "<group>"; };
 		A3D1A77829CF03D200DD54EC /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
 		A3D1A77D29CF09B600DD54EC /* SignInResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInResponseDto.swift; sourceTree = "<group>"; };
 		A3D1A77F29CF142E00DD54EC /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 				A3BC2F2C2962C3F200198261 /* ActivityRecordInfoVC.swift */,
 				A3BC2F2E2962C40A00198261 /* UploadedCourseInfoVC.swift */,
 				A3DB8C462A0B64830081AF2D /* ActivityRecordDetailVC.swift */,
+				A3C38FEC2A13212300FF196D /* SetInfoLayout.swift */,
 			);
 			path = InfoVC;
 			sourceTree = "<group>";
@@ -1396,6 +1399,7 @@
 				CE21C02C299E601000F62AF5 /* ScrapRouter.swift in Sources */,
 				A3D1A78029CF142E00DD54EC /* UserManager.swift in Sources */,
 				A3D1A77929CF03D200DD54EC /* AuthRouter.swift in Sources */,
+				A3C38FED2A13212300FF196D /* SetInfoLayout.swift in Sources */,
 				CE6655D4295D865B00C64E12 /* Publisher+UIControl.swift in Sources */,
 				CE0D9FD329648DA300CEB5CD /* CustomAlertVC.swift in Sources */,
 				CEB841702963360800BF8080 /* CountDownVC.swift in Sources */,
@@ -1596,11 +1600,12 @@
 				CODE_SIGN_ENTITLEMENTS = "Runnect-iOS/Runnect-iOS.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 23051501;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9K86FQHDLU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Runnect-iOS/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Runnect;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 정보 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치 정보 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치 정보 권한이 필요합니다.";
@@ -1633,11 +1638,12 @@
 				CODE_SIGN_ENTITLEMENTS = "Runnect-iOS/Runnect-iOS.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 23051501;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9K86FQHDLU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Runnect-iOS/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Runnect;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 정보 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치 정보 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치 정보 권한이 필요합니다.";

@@ -33,18 +33,17 @@ final class ActivityRecordInfoTVC: UITableViewCell {
         $0.clipsToBounds = true
     }
     
-    private lazy var activityRecordTitleLabel = setBlackTitle()
-    private lazy var activityRecordPlaceLabel = setGreyTitle()
-    
-    private lazy var activityRecordVirticalBarLabel = setGreyTitle().then {
+    private lazy var activityRecordTitleLabel = SetInfoLayout.makeBlackSmallTitleLabel()
+    private lazy var activityRecordPlaceLabel = SetInfoLayout.makeGreyTitleLabel()
+    private lazy var activityRecordVirticalBarLabel = SetInfoLayout.makeGreySmailTitleLabel().then {
         $0.text = "|"
     }
     
-    private lazy var activityRecordDateLabel = setGreyTitle()
+    private lazy var activityRecordDateLabel = SetInfoLayout.makeGreySmailTitleLabel()
     
     private lazy var activityRecordSubTitleStackView = UIStackView(arrangedSubviews: [activityRecordPlaceLabel, activityRecordVirticalBarLabel, activityRecordDateLabel]).then {
         $0.axis = .horizontal
-        $0.spacing = 4
+        $0.spacing = 6
     }
     
     private lazy var activityRecordMainInfoStackView = UIStackView(arrangedSubviews: [activityRecordTitleLabel, activityRecordSubTitleStackView]).then {
@@ -53,19 +52,19 @@ final class ActivityRecordInfoTVC: UITableViewCell {
         $0.spacing = 7
     }
     
-    private lazy var activityRecordTotalDistanceValueLabel = setBlackTitle()
-    private lazy var activityRecordRunningTimeValueLabel = setBlackTitle()
-    private lazy var activityRecordAveragePaceValueLabel = setBlackTitle()
+    private lazy var activityRecordTotalDistanceValueLabel = SetInfoLayout.makeBlackSmallTitleLabel()
+    private lazy var activityRecordRunningTimeValueLabel = SetInfoLayout.makeBlackSmallTitleLabel()
+    private lazy var activityRecordAveragePaceValueLabel = SetInfoLayout.makeBlackSmallTitleLabel()
     
-    private lazy var activityRecordTotalDistanceLabel = setGreyTitle().then {
+    private lazy var activityRecordTotalDistanceLabel = SetInfoLayout.makeGreySmailTitleLabel().then {
         $0.text = "총 거리"
     }
 
-    private lazy var activityRecordRunningTimeLabel = setGreyTitle().then {
+    private lazy var activityRecordRunningTimeLabel = SetInfoLayout.makeGreySmailTitleLabel().then {
         $0.text = "이동 시간"
     }
     
-    private lazy var activityRecordAveragePaceLabel = setGreyTitle().then {
+    private lazy var activityRecordAveragePaceLabel = SetInfoLayout.makeGreySmailTitleLabel().then {
         $0.text = "평균 페이스"
     }
     
@@ -135,7 +134,8 @@ extension ActivityRecordInfoTVC {
     }
     
     private func setUpActivityRecordAveragePaceValueLabel(array: [String], label: UILabel) {
-        let attributedString = NSMutableAttributedString(string: String(array[1]) + "’", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1])
+        let numberArray = array.compactMap { Int($0) }   /// 페이스에서 첫번째 인덱스 두번째 값만 가져오기 위해
+        let attributedString = NSMutableAttributedString(string: String(numberArray[1]) + "’", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1])
         attributedString.append(NSAttributedString(string: String(array[2]) + "”", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1]))
         label.attributedText = attributedString
     }
@@ -157,20 +157,6 @@ extension ActivityRecordInfoTVC {
         stackView.alignment = .center
         stackView.spacing = 2
         return stackView
-    }
-    
-    func setBlackTitle() -> UILabel {
-        let label = UILabel()
-        label.textColor = .g1
-        label.font = .h5
-        return label
-    }
-    
-    func setGreyTitle() -> UILabel {
-        let label = UILabel()
-        label.textColor = .g2
-        label.font = .b8
-        return label
     }
     
     func setLineDot(view: UIView) {

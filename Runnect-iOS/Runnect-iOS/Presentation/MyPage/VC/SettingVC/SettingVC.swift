@@ -12,6 +12,8 @@ import Then
 import SafariServices
 
 final class SettingVC: UIViewController {
+
+    private var email = String()
     
     // MARK: - UI Components
     
@@ -46,12 +48,15 @@ final class SettingVC: UIViewController {
         setUI()
         setLayout()
     }
-    
 }
 
 // MARK: - Methods
 
 extension SettingVC {
+    func setData(email: String) {
+        self.email = email
+    }
+    
     private func makeInfoView(title: String) -> UIView {
         let containerView = UIView()
         
@@ -82,6 +87,7 @@ extension SettingVC {
     
     private func pushToPersonalInfoVC() {
         let personalInfoVC = PersonalInfoVC()
+        personalInfoVC.email = self.email
         self.navigationController?.pushViewController(personalInfoVC, animated: true)
     }
     

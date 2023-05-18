@@ -11,7 +11,11 @@ import SnapKit
 import Then
 import Moya
 
-final class ActivityRecordInfoVC: UIViewController {
+protocol deleteRecordDelegate: AnyObject {
+    func wantsToDelete()
+}
+
+final class ActivityRecordInfoVC: UIViewController, deleteRecordDelegate {
     
     // MARK: - Properties
     
@@ -19,8 +23,12 @@ final class ActivityRecordInfoVC: UIViewController {
     
     private var activityRecordList = [ActivityRecord]()
     
+    private var deleteRecordList = [Int]()
+    
+    weak var delegate: deleteRecordDelegate?
+    
     private var isEditMode: Bool = false
-            
+    
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("러닝 기록")
@@ -57,15 +65,15 @@ final class ActivityRecordInfoVC: UIViewController {
     }
     
     // MARK: - View Life Cycle
-        
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setNavigationBar()
         setUI()
         setLayout()
         setAddTarget()
         setDelegate()
-        register()
+        registerCell()
         getActivityRecordInfo()
         self.hideTabBar(wantsToHide: true)
     }
@@ -87,12 +95,43 @@ extension ActivityRecordInfoVC {
         self.emptyView.delegate = self
     }
     
-    private func register() {
+    private func registerCell() {
         self.activityRecordTableView.register(ActivityRecordInfoTVC.self, forCellReuseIdentifier: ActivityRecordInfoTVC.className)
     }
     
     private func setAddTarget() {
         self.editButton.addTarget(self, action: #selector(editButtonDidTap), for: .touchUpInside)
+        self.deleteRecordButton.addTarget(self, action: #selector(deleteRecordButtonDidTap), for: .touchUpInside)
+    }
+    
+    func reloadActivityRecordInfoVC() {
+        self.editButton.setTitle("편집", for: .normal)
+        self.deleteRecordButton.isHidden = true
+        self.totalNumOfRecordlabel.text = "총 기록 \(self.activityRecordList.count)개"
+        if let selectedRows = activityRecordTableView.indexPathsForSelectedRows {
+            for indexPath in selectedRows {
+                activityRecordTableView.deselectRow(at: indexPath, animated: true)
+            }
+        }
+        self.deleteRecordButton.isEnabled = false
+        self.deleteRecordButton.setTitle(title: "삭제하기")
+        self.activityRecordTableView.reloadData()
+    }
+}
+
+// MARK: - deleteRecordDelegate
+
+extension ActivityRecordInfoVC {
+    func wantsToDelete() {
+        print("삭제 실행")
+        
+        guard let selectedRecords = activityRecordTableView.indexPathsForSelectedRows else { return }
+        
+        for indexPath in selectedRecords {
+            self.deleteRecordList.append(activityRecordList[indexPath.row].id)
+        }
+        
+        deleteRecord()
     }
 }
 
@@ -119,6 +158,16 @@ extension ActivityRecordInfoVC {
             self.deleteRecordButton.isHidden = false
             self.activityRecordTableView.reloadData()
             isEditMode = true
+        }
+    }
+    
+    @objc func deleteRecordButtonDidTap() {
+        let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
+        deleteAlertVC.modalPresentationStyle = .overFullScreen
+        deleteAlertVC.deleteRecordDelegate = self
+        self.present(deleteAlertVC, animated: false, completion: nil)
+        deleteAlertVC.rightButtonTapAction = { [weak self] in
+            deleteAlertVC.dismiss(animated: false)
         }
     }
 }
@@ -194,14 +243,26 @@ extension ActivityRecordInfoVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard tableView.cellForRow(at: indexPath) is ActivityRecordInfoTVC else { return }
         guard let selectedRecords = tableView.indexPathsForSelectedRows else { return }
+<<<<<<< HEAD
         let activityRecordList = activityRecordList [indexPath.item]
+=======
+            
+>>>>>>> b3d6309976964fe58bb68432c068d27d31a9f4f5
         if isEditMode {
             self.deleteRecordButton.isEnabled = true
             let countSelectedRows = selectedRecords.count
             self.deleteRecordButton.setTitle(title: "삭제하기(\(countSelectedRows))")
         } else {
+            let activityRecordDetailVC = ActivityRecordDetailVC()
             tableView.deselectRow(at: indexPath, animated: true)
             self.deleteRecordButton.setTitle(title: "삭제하기")
+<<<<<<< HEAD
+=======
+            activityRecordDetailVC.setData(model: activityRecordList[indexPath.row])
+            
+            // 편집 모드가 아닐 때 상세 페이지로 이동
+            self.navigationController?.pushViewController(activityRecordDetailVC, animated: true)
+>>>>>>> b3d6309976964fe58bb68432c068d27d31a9f4f5
         }
     }
     
@@ -218,7 +279,8 @@ extension ActivityRecordInfoVC: UITableViewDelegate {
         } else {
             tableView.deselectRow(at: indexPath, animated: true)
             self.deleteRecordButton.setTitle(title: "삭제하기")
-        }    }
+        }
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -276,9 +338,36 @@ extension ActivityRecordInfoVC {
                         let responseDto = try result.map(BaseResponse<ActivityRecordInfoDto>.self)
                         guard let data = responseDto.data else { return }
                         self.setData(activityRecordList: data.records)
+                        
                     } catch {
                         print(error.localizedDescription)
                     }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
+    }
+    
+    func deleteRecord() {
+        let deleteRecordList = self.deleteRecordList
+        LoadingIndicator.showLoading()
+        recordProvider.request(.deleteRecord(recordIdList: deleteRecordList)) { [weak self] response in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                print("result:", result)
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    print("삭제 성공")
+                    self.getActivityRecordInfo()
+                    self.reloadActivityRecordInfoVC()
                 }
                 if status >= 400 {
                     print("400 error")

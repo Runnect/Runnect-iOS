@@ -252,6 +252,17 @@ extension UploadedCourseInfoVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return uploadedCourseInset
     }
+<<<<<<< HEAD
+=======
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let courseDetailVC = CourseDetailVC()
+        let courseModel = uploadedCourseList[indexPath.item]
+        courseDetailVC.setCourseId(courseId: courseModel.courseId, publicCourseId: courseModel.id)
+        courseDetailVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(courseDetailVC, animated: true)
+    }
+>>>>>>> b3d6309976964fe58bb68432c068d27d31a9f4f5
 }
 
 // MARK: - UICollectionViewDataSource
