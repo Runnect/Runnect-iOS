@@ -130,6 +130,7 @@ extension CourseDetailVC {
     }
     
     @objc func startButtonDidTap() {
+        guard handleVisitor() else { return }
         guard let courseId = self.courseId else { return }
         getCourseDetailWithPath(courseId: courseId)
     }
