@@ -93,6 +93,10 @@ final class UploadedCourseInfoVC: UIViewController {
         self.setAddTarget()
         self.setDeleteButton()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.hideTabBar(wantsToHide: true)
+    }
 }
 
 // MARK: - Methods
@@ -104,7 +108,6 @@ extension UploadedCourseInfoVC {
         self.emptyView.isHidden = !courseList.isEmpty
         self.deleteCourseButton.isHidden = !courseList.isEmpty
         self.deleteCourseButton.isHidden = courseList.isEmpty
-        self.tabBarController?.tabBar.isHidden = false
         self.beforeEditTopView.isHidden = courseList.isEmpty
         totalNumOfRecordlabel.text = "총 코스 \(courseList.count)개"
     }
@@ -160,8 +163,6 @@ extension UploadedCourseInfoVC {
             self.courseListCollectionView.reloadData()
             isEditMode = false
             self.deleteCourseButton.isHidden = true
-            self.tabBarController?.tabBar.isHidden = false
-            
         } else {
             self.totalNumOfRecordlabel.text = "기록 선택"
             self.editButton.setTitle("취소", for: .normal)
@@ -169,8 +170,7 @@ extension UploadedCourseInfoVC {
             self.deleteCourseButton.isHidden = false
             self.courseListCollectionView.reloadData()
             isEditMode = true
-            self.tabBarController?.tabBar.isHidden = true
-        }
+       }
     }
 }
 
