@@ -20,7 +20,7 @@ class AdImageCollectionViewCell: UICollectionViewCell {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.isScrollEnabled = false
+        collectionView.isScrollEnabled = true
         collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
@@ -31,6 +31,7 @@ class AdImageCollectionViewCell: UICollectionViewCell {
     // MARK: - UI Components
     var imgBanners: [UIImage] = [ImageLiterals.imgBanner1, ImageLiterals.imgBanner2, ImageLiterals.imgBanner3]
     var currentPage: Int = 0
+    private var timer: Timer?
     
     private var pageControl = UIPageControl()
     // MARK: - Life cycle
@@ -58,46 +59,27 @@ extension AdImageCollectionViewCell {
         
         // 초기 페이지 설정
         currentPage = imgBanners.count
+        timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(animateBannerSlide), userInfo: nil, repeats: true)
                 
-        // 제스처 인식기 추가
-               let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
-               swipeLeftGesture.direction = .left
-        bannerCollectionView.addGestureRecognizer(swipeLeftGesture)
-               
-               let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
-               swipeRightGesture.direction = .right
-        bannerCollectionView.addGestureRecognizer(swipeRightGesture)
-        
         // 페이지 컨트롤 설정
                 pageControl.currentPage = 0
                 pageControl.numberOfPages = imgBanners.count
                 pageControl.pageIndicatorTintColor = .lightGray // 페이지를 암시하는 동그란 점의 색상
                 pageControl.currentPageIndicatorTintColor = .white
         }
-    
-    @objc func handleSwipeGesture(_ gesture: UISwipeGestureRecognizer) {
-        // 배너를 스와이프하여 수동으로 슬라이드
-               if gesture.direction == .left {
-                   currentPage += 1
-               } else if gesture.direction == .right {
-                   currentPage -= 1
-               }
-               // 첫 번째 배너에서 이전으로 스와이프하면 마지막 배너로 이동
-               if currentPage < 0 {
-                   currentPage = imgBanners.count * 2 - 1
-               }
-               
-               // 마지막 배너에서 다음으로 스와이프하면 첫 번째 배너로 이동
-               if currentPage >= imgBanners.count * 2 {
-                   currentPage = 0
-               }
-               
-               let indexPath = IndexPath(item: currentPage, section: 0)
-        bannerCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        
-        updatePageControl()
-       }
-    
+    @objc func animateBannerSlide() {
+            currentPage += 1
+            
+            if currentPage >= imgBanners.count {
+                currentPage = 0
+            }
+            
+            let indexPath = IndexPath(item: currentPage, section: 0)
+            bannerCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+            
+            pageControl.currentPage = currentPage
+        }
+
     // 페이지 컨트롤 업데이트
         func updatePageControl() {
             let currentIndex = currentPage % imgBanners.count
