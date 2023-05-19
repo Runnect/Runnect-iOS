@@ -168,13 +168,11 @@ extension CourseStorageVC {
     private func setLayout() {
         view.addSubviews(naviBar)
 
-        
         naviBar.snp.makeConstraints { make in
             make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(48)
         }
 
-        
         guard UserManager.shared.userType != .visitor else {
             self.showSignInRequestEmptyView()
             return

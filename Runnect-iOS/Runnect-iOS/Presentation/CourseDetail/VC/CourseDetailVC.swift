@@ -113,12 +113,7 @@ final class CourseDetailVC: UIViewController {
         setUI()
         setLayout()
         setAddTarget()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         getUploadedCourseDetail()
-     
     }
 }
 
@@ -155,7 +150,6 @@ extension CourseDetailVC {
             let deleteVC = RNAlertVC(description: "코스를 정말로 삭제하시겠어요?")
             deleteVC.rightButtonTapAction = { [weak self] in
                 deleteVC.dismiss(animated: false)
-                self?.navigationController?.popViewController(animated: false)
                 self?.deleteCourse()
             }
             deleteVC.modalPresentationStyle = .overFullScreen
@@ -201,7 +195,7 @@ extension CourseDetailVC {
 // MARK: - Method
 
 extension CourseDetailVC {
-    func setCourseId(courseId: Int, publicCourseId: Int?) {
+    func setCourseId(courseId: Int?, publicCourseId: Int?) {
         self.courseId = courseId
         self.publicCourseId = publicCourseId
     }
@@ -210,7 +204,7 @@ extension CourseDetailVC {
         self.uploadedCourseDetailModel = model
         self.mapImageView.setImage(with: model.publicCourse.image)
         self.profileImageView.image = GoalRewardInfoModel.stampNameImageDictionary[model.user.image]
-        self.profileNameLabel.text = model.user.nickname 
+        self.profileNameLabel.text = model.user.nickname
         self.runningLevelLabel.text = "Lv. \(model.user.level)"
         self.courseTitleLabel.text = model.publicCourse.title
         self.isMyCourse = model.user.isNowUser
