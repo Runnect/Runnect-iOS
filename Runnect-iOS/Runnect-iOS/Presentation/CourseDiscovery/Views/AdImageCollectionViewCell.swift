@@ -115,7 +115,7 @@ extension AdImageCollectionViewCell {
         }
         pageControl.snp.makeConstraints { make in
                 make.centerX.equalTo(self)
-                make.bottom.equalTo(bannerCollectionView.snp.bottom).offset(0)
+                make.bottom.equalTo(bannerCollectionView.snp.bottom)
         }
     }
 }

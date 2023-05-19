@@ -124,7 +124,7 @@ extension CourseStorageVC {
         }
     }
     
-    private func hiddenViews(withDuration: TimeInterval = 0) {
+    private func hideHiddenViews(withDuration: TimeInterval = 0) {
         if let frame = tabBarController?.tabBar.frame {
             let factor: CGFloat = 1
             let y = frame.origin.y + (frame.size.height * factor)
@@ -209,7 +209,7 @@ extension CourseStorageVC: PrivateCourseListViewDelegate {
             self.deleteCourseButton.isHidden = false
             self.deleteCourseButton.isEnabled = false
             self.deleteCourseButton.setTitle(title: "삭제하기")
-            hiddenViews(withDuration: 0.7)
+            hideHiddenViews(withDuration: 0.7)
         }
         if privateCourseListView.isEditMode == true {
             self.hideTabBar(wantsToHide: false)
