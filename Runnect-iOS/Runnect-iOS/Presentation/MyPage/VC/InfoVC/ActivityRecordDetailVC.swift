@@ -486,6 +486,13 @@ extension ActivityRecordDetailVC {
                 print("result:", result)
                 let status = result.statusCode
                 if 200..<300 ~= status {
+<<<<<<< HEAD
+                    do {
+                        let responseDto = try result.map(BaseResponse<ActivityRecordInfoDto>.self)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+=======
                     print("삭제 성공")
                     self.navigationController?.popViewController(animated: false)
                     let activityRecordInfoVC = ActivityRecordInfoVC()
