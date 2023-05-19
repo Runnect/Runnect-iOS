@@ -8,14 +8,26 @@
 import UIKit
 import Combine
 
+protocol PrivateCourseListViewDelegate: AnyObject {
+    func courseListEditButtonTapped()
+    func selectCellDidTapped()
+}
+
 final class PrivateCourseListView: UIView {
     
     // MARK: - Properties
     
     var courseDrawButtonTapped = PassthroughSubject<Void, Never>()
+    
     var cellDidTapped = PassthroughSubject<Int, Never>()
     
-    private var courseList = [PrivateCourse]()
+    var courseList = [PrivateCourse]()
+    
+    weak var delegate: PrivateCourseListViewDelegate?
+    
+    weak var courseStorageVC: UIViewController?
+    
+    var isEditMode: Bool = false
     
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
     final let itemSpacing: CGFloat = 10
@@ -26,30 +38,27 @@ final class PrivateCourseListView: UIView {
     private let collectionViewLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .vertical
     }
-    private let beforeEditTopView = UIView().then{
+    
+    private let beforeEditTopView = UIView().then {
         $0.backgroundColor = .clear
     }
-    private let frameEditButton = UIButton(type: .system).then {
-        $0.setImage(ImageLiterals.icFrameEdit, for: .normal)
-        $0.tintColor = .g1
-    }
-    private let totalCourseNum = UILabel().then{
-        $0.text = "총 100개"
+    
+    private lazy var totalNumOfRecordlabel = UILabel().then {
         $0.font = .b6
         $0.textColor = .g2
+        $0.text = "총 코스 0개"
     }
     
-//    private let afterEditTopView = UIView()
-//    private let selectCouseLabel = UILabel().then {
-//        $0.text = "코스 선택"
-//        $0.font = .b6
-//        $0.textColor = .g2
-//    }
+    private let editButton = UIButton(type: .custom).then {
+        $0.setTitle("편집", for: .normal)
+        $0.setTitleColor(.m1, for: .normal)
+        $0.titleLabel?.font = .b7
+        $0.layer.borderColor = UIColor.m1.cgColor
+        $0.layer.borderWidth = 1
+        $0.layer.cornerRadius = 11
+    }
     
-    
-    
-    
-    private lazy var courseListCollectionView = UICollectionView(
+    lazy var courseListCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: collectionViewLayout
     ).then {
@@ -66,9 +75,9 @@ final class PrivateCourseListView: UIView {
         self.setUI()
         self.setLayout()
         self.setDelegate()
+        self.setAddTarget()
         self.register()
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -81,12 +90,14 @@ extension PrivateCourseListView {
         self.courseList = courseList
         self.courseListCollectionView.reloadData()
         self.emptyView.isHidden = !courseList.isEmpty
+        self.beforeEditTopView.isHidden = courseList.isEmpty
+        totalNumOfRecordlabel.text = "총 코스 \(courseList.count)개"
     }
     
     private func setDelegate() {
         courseListCollectionView.delegate = self
         courseListCollectionView.dataSource = self
-        
+        courseListCollectionView.allowsMultipleSelection = true
         emptyView.delegate = self
     }
     
@@ -94,37 +105,65 @@ extension PrivateCourseListView {
         courseListCollectionView.register(CourseListCVC.self,
                                           forCellWithReuseIdentifier: CourseListCVC.className)
     }
+    
+    private func setAddTarget() {
+        self.editButton.addTarget(self, action: #selector(editButtonDidTap), for: .touchUpInside)
+        
+    }
 }
 
+extension PrivateCourseListView {
+    @objc func editButtonDidTap() {
+        if isEditMode {
+            self.totalNumOfRecordlabel.text = "총 코스 \(self.courseList.count)개"
+            self.editButton.setTitle("편집", for: .normal)
+            self.delegate?.courseListEditButtonTapped()
+            self.courseListCollectionView.reloadData()
+            isEditMode = false
+        } else {
+            self.totalNumOfRecordlabel.text = "코스 선택"
+            self.delegate?.courseListEditButtonTapped()
+            self.editButton.setTitle("취소", for: .normal)
+            self.courseListCollectionView.reloadData()
+            isEditMode = true
+        }
+    }
+}
 // MARK: - UI & Layout
 
 extension PrivateCourseListView {
+    
     private func setUI() {
         self.backgroundColor = .w1
         self.emptyView.isHidden = true
+        self.beforeEditTopView.isHidden = false
     }
     
     private func setLayout() {
-        self.addSubviews(beforeEditTopView,courseListCollectionView)
+        self.addSubviews(beforeEditTopView, courseListCollectionView)
         courseListCollectionView.addSubviews(emptyView)
-        
-        beforeEditTopView.addSubviews(frameEditButton,totalCourseNum)
-        
-        beforeEditTopView.snp.makeConstraints{ make in make.top.top.equalToSuperview().offset(11)}
-        frameEditButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(1)
-            make.trailing.equalTo(self.safeAreaLayoutGuide).inset(16)
+        beforeEditTopView.addSubviews(totalNumOfRecordlabel, editButton)
+        beforeEditTopView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(38)
         }
         
-        totalCourseNum.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(1)
-            make.leading.equalTo(self.safeAreaLayoutGuide).offset(16)
+        totalNumOfRecordlabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(16)
+            make.top.equalToSuperview().offset(10)
         }
-    
+        
+        editButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(16)
+            make.width.equalTo(47)
+            make.height.equalTo(22)
+            make.top.equalToSuperview().offset(5)
+        }
+        
         courseListCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(frameEditButton.snp.bottom)
+            make.top.equalTo(editButton.snp.bottom)
             make.leading.bottom.trailing.equalToSuperview()
-            
         }
         emptyView.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -136,13 +175,21 @@ extension PrivateCourseListView {
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
 extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return courseList.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className,
-                                                            for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath)
+                as? CourseListCVC else { return UICollectionViewCell() }
+        cell.setCellType(type: .title)
+        if let selectedCells = collectionView.indexPathsForSelectedItems, selectedCells.contains(indexPath) {
+            cell.selectCell(didSelect: true)
+        } else {
+            cell.selectCell(didSelect: false)
+        }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath)
                 as? CourseListCVC else { return UICollectionViewCell() }
         cell.setCellType(type: .title)
         let model = courseList[indexPath.item]
@@ -150,15 +197,39 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
         cell.setData(imageURL: model.image, title: cellTitle, location: nil, didLike: nil)
         return cell
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard collectionView.cellForItem(at: indexPath) is CourseListCVC else { return }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else { return }
+        if isEditMode {
+            cell.selectCell(didSelect: true)
+            delegate?.selectCellDidTapped()
+        } else {
+            collectionView.deselectItem(at: indexPath, animated: true)
+            cellDidTapped.send(indexPath.item)
+            delegate?.selectCellDidTapped()
+        }
+    }
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        guard collectionView.cellForItem(at: indexPath) is CourseListCVC else { return }
+        guard let selectedCells = collectionView.indexPathsForSelectedItems else {
+            return }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else { return }
+        if isEditMode {
+            let countSelectCells = selectedCells.count
+            delegate?.selectCellDidTapped()
+            cell.selectCell(didSelect: false)
+        } else {
+            collectionView.deselectItem(at: indexPath, animated: true)
+            delegate?.selectCellDidTapped()
+        }
+    }
 }
-
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension PrivateCourseListView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cellWidth = (UIScreen.main.bounds.width - (self.itemSpacing + 2*self.collectionViewInset.left)) / 2
         let cellHeight = CourseListCVCType.getCellHeight(type: .title, cellWidth: cellWidth)
-        
         return CGSize(width: cellWidth, height: cellHeight)
     }
     
@@ -172,10 +243,6 @@ extension PrivateCourseListView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return self.lineSpacing
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        cellDidTapped.send(indexPath.item)
     }
 }
 

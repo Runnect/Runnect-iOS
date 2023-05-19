@@ -21,9 +21,10 @@ final class CourseDiscoveryVC: UIViewController {
     
     private var courseList = [PublicCourse]()
     
+   
     // MARK: - UIComponents
     
-    private lazy var navibar = CustomNavigationBar(self, type: .title).setTitle("코스 발견")
+    private lazy var naviBar = CustomNavigationBar(self, type: .title).setTitle("코스 발견")
     private let searchButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icSearch, for: .normal)
         $0.tintColor = .g1
@@ -34,6 +35,9 @@ final class CourseDiscoveryVC: UIViewController {
         $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
         $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
     }
+    
+    private let emptyView = ListEmptyView(description: "공유할 수 있는 코스가 없어요!\n코스를 그려주세요",
+                                          buttonTitle: "코스 그리기")
     
     // MARK: - collectionview
     
@@ -74,11 +78,13 @@ extension CourseDiscoveryVC {
     private func setData(courseList: [PublicCourse]) {
         self.courseList = courseList
         mapCollectionView.reloadData()
+        self.emptyView.isHidden = !courseList.isEmpty
     }
     
     private func setDelegate() {
         mapCollectionView.delegate = self
         mapCollectionView.dataSource = self
+        emptyView.delegate = self
     }
     
     private func register() {
@@ -118,28 +124,30 @@ extension CourseDiscoveryVC {
     private func setUI() {
         view.backgroundColor = .w1
         mapCollectionView.backgroundColor = .w1
+        self.emptyView.isHidden = true
     }
     
     private func setNavigationBar() {
-        view.addSubview(navibar)
+        view.addSubview(naviBar)
         view.addSubview(searchButton)
         
-        navibar.snp.makeConstraints { make in
+        naviBar.snp.makeConstraints { make in
             make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(48)
         }
         searchButton.snp.makeConstraints { make in
             make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(16)
-            make.centerY.equalTo(navibar)
+            make.centerY.equalTo(naviBar)
         }
     }
     
     private func layout() {
         view.addSubviews(uploadButton, mapCollectionView)
         view.bringSubviewToFront(uploadButton)
+        mapCollectionView.addSubview(emptyView)
         
         mapCollectionView.snp.makeConstraints {
-            $0.top.equalTo(self.navibar.snp.bottom)
+            $0.top.equalTo(self.naviBar.snp.bottom)
             $0.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
         }
         
@@ -148,6 +156,10 @@ extension CourseDiscoveryVC {
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(20)
             make.height.equalTo(40)
             make.width.equalTo(92)
+        }
+        emptyView.snp.makeConstraints { make in
+            make.top.equalTo(naviBar.snp.bottom).offset(300)
+            make.centerX.equalTo(naviBar)
         }
     }
 }
@@ -308,5 +320,13 @@ extension CourseDiscoveryVC {
                 self.showNetworkFailureToast()
             }
         }
+    }
+}
+
+// MARK: - Section Heading
+
+extension CourseDiscoveryVC: ListEmptyViewDelegate {
+    func emptyViewButtonTapped() {
+        self.tabBarController?.selectedIndex = 0
     }
 }

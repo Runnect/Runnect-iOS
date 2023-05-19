@@ -22,14 +22,14 @@ class TitleCollectionViewCell: UICollectionViewCell {
     
     private let mainLabel: UILabel = {
         let label = UILabel()
-        label.text = "코스 추천"
+        label.text = "이런 코스 어때요?"
         label.font =  UIFont.h4
         label.textColor = UIColor.g1
         return label
     }()
     private let subLabel: UILabel = {
         let label = UILabel()
-        label.text = "새로운 코스를 발견해나가요"
+        label.text = "상쾌한 하루를 시작하게 만들어주는 러닝코스"
         label.font =  UIFont.b6
         label.textColor = UIColor.g1
         return label

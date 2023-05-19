@@ -11,7 +11,7 @@ import SnapKit
 import Then
 
 class MapCollectionViewCell: UICollectionViewCell {
-    
+        
     // MARK: - collectionview
     
     private lazy var mapCollectionView: UICollectionView = {
@@ -38,7 +38,6 @@ class MapCollectionViewCell: UICollectionViewCell {
         layout()
         register()
         setDelegate()
-        layout()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
