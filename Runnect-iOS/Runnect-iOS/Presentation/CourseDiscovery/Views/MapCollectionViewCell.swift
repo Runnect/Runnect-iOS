@@ -12,6 +12,7 @@ import Then
 
 class MapCollectionViewCell: UICollectionViewCell {
     
+    
     // MARK: - collectionview
     
     private lazy var mapCollectionView: UICollectionView = {
