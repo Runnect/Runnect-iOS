@@ -70,28 +70,16 @@ final class ActivityRecordDetailVC: UIViewController {
     private lazy var recordDistanceLabel = SetInfoLayout.makeGreySmailTitleLabel().then {
         $0.text = "거리"
     }
-<<<<<<< HEAD
-    
-    private lazy var recordRunningTimeLabel = setGreyTitle().then {
-=======
 
     private lazy var recordRunningTimeLabel = SetInfoLayout.makeGreySmailTitleLabel().then {
->>>>>>> b3d6309976964fe58bb68432c068d27d31a9f4f5
         $0.text = "이동 시간"
     }
     
     private lazy var recordAveragePaceLabel = SetInfoLayout.makeGreySmailTitleLabel().then {
         $0.text = "평균 페이스"
     }
-<<<<<<< HEAD
-    
-    private lazy var recordDistanceValueLabel = setBlackTitle().then {
-        $0.text = "5.1km"
-    }
-=======
 
     private lazy var recordDistanceValueLabel = SetInfoLayout.makeBlackTitleLabel()
->>>>>>> b3d6309976964fe58bb68432c068d27d31a9f4f5
     
     private lazy var recordRunningTimeValueLabel = SetInfoLayout.makeBlackTitleLabel()
     
@@ -142,7 +130,7 @@ extension ActivityRecordDetailVC {
             // 수정 모드일 때
             self.setEditMode()
         })
-        let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
+        let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?")
         deleteAlertVC.modalPresentationStyle = .overFullScreen
         let deleteAlertAction = UIAlertAction(title: "삭제하기", style: .destructive, handler: {(_: UIAlertAction!) in
             self.present(deleteAlertVC, animated: false, completion: nil)})
@@ -166,7 +154,6 @@ extension ActivityRecordDetailVC {
         } else {
             // 수정이 된 상태라면 팝업을 띄워주기
             self.navibar.resetLeftButtonAction({ [weak self] in
-                //self?.navibar.leftButton.addTarget(self, action: #selector(self?.presentToQuitEditAlertVC), for: .touchUpInside)
                 self?.presentToQuitEditAlertVC()
             }, .titleWithLeftButton)
         }
@@ -199,7 +186,7 @@ extension ActivityRecordDetailVC {
     }
     
     @objc private func finishEditButtonDidTap() {
-        editRecordTitle()
+//        editRecordTitle()
         showToast(message: "제목 수정이 완료되었어요")
         
         // 수정이 완료되면 팝업 뜨지 않음
@@ -499,13 +486,6 @@ extension ActivityRecordDetailVC {
                 print("result:", result)
                 let status = result.statusCode
                 if 200..<300 ~= status {
-<<<<<<< HEAD
-                    do {
-                        let responseDto = try result.map(BaseResponse<ActivityRecordInfoDto>.self)
-                    } catch {
-                        print(error.localizedDescription)
-                    }
-=======
                     print("삭제 성공")
                     self.navigationController?.popViewController(animated: false)
                     let activityRecordInfoVC = ActivityRecordInfoVC()
@@ -536,7 +516,6 @@ extension ActivityRecordDetailVC {
                 let status = result.statusCode
                 if 200..<300 ~= status {
                     print("제목 수정 성공")
->>>>>>> b3d6309976964fe58bb68432c068d27d31a9f4f5
                 }
                 if status >= 400 {
                     print("400 error")
