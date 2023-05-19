@@ -289,7 +289,7 @@ extension UploadedCourseInfoVC: UICollectionViewDataSource {
         guard collectionView.cellForItem(at: indexPath) is CourseListCVC else { return }
         guard let selectedCells = collectionView.indexPathsForSelectedItems else { return }
         guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else { return }
-        let courseList = uploadedCourseList[indexPath.item]
+        let publicCourseModel = uploadedCourseList[indexPath.item]
         if isEditMode {
             self.deleteCourseButton.isEnabled = true
             let countSelectCells = selectedCells.count
@@ -300,6 +300,7 @@ extension UploadedCourseInfoVC: UICollectionViewDataSource {
             self.deleteCourseButton.setTitle(title: "삭제하기")
             self.deleteCourseButton.setEnabled(true)
             let courseDetailVC = CourseDetailVC()
+            courseDetailVC.setCourseId(courseId: publicCourseModel.courseId, publicCourseId: publicCourseModel.id)
             courseDetailVC.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(courseDetailVC, animated: true)
             cell.selectCell(didSelect: false)
