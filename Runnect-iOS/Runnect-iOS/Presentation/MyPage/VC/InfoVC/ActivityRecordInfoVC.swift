@@ -262,7 +262,7 @@ extension ActivityRecordInfoVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? ActivityRecordInfoTVC else { return }
+        guard tableView.cellForRow(at: indexPath) is ActivityRecordInfoTVC else { return }
         guard let selectedRecords = tableView.indexPathsForSelectedRows else {
             self.deleteRecordButton.isEnabled = false
             self.deleteRecordButton.setTitle(title: "삭제하기")
