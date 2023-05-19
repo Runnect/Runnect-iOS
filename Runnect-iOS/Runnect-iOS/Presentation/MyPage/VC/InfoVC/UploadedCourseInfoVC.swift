@@ -106,10 +106,10 @@ extension UploadedCourseInfoVC {
         self.uploadedCourseList = courseList
         UploadedCourseInfoCollectionView.reloadData()
         self.emptyView.isHidden = !courseList.isEmpty
-        self.deleteCourseButton.isHidden = !courseList.isEmpty
-        self.deleteCourseButton.isHidden = courseList.isEmpty
+        self.deleteCourseButton.isHidden = true
         self.beforeEditTopView.isHidden = courseList.isEmpty
         totalNumOfRecordlabel.text = "총 코스 \(courseList.count)개"
+        
     }
     
     private func setDelegate() {
