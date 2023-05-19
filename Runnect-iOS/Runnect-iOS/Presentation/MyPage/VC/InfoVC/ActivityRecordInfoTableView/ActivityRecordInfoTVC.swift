@@ -121,6 +121,14 @@ extension ActivityRecordInfoTVC {
         activityRecordMapImage.setImage(with: model.image)
     }
     
+    func updateSelectionCellUI(isSelected: Bool) {
+        if isSelected {
+            activityRecordContainerView.image = ImageLiterals.imgRecordContainerSelected
+        } else {
+            activityRecordContainerView.image = ImageLiterals.imgRecordContainer
+        }
+    }
+    
     private func setUpActivityRecordPlaceLabel(model: ActivityRecord, label: UILabel) {
         let attributedString = NSMutableAttributedString(string: String(model.departure.region) + " ", attributes: [.font: UIFont.b8, .foregroundColor: UIColor.g2])
         attributedString.append(NSAttributedString(string: String(model.departure.city), attributes: [.font: UIFont.b8, .foregroundColor: UIColor.g2]))
