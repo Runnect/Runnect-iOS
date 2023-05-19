@@ -15,6 +15,7 @@ enum PublicCourseRouter {
     case getUploadedCourseDetail(publicCourseId: Int)
     case getUploadedCourseInfo
     case updatePublicCourse(publicCourseId: Int, editCourseRequestDto: EditCourseRequestDto)
+    case deleteUploadedCourse(publicCourseIdList: [Int])
 }     
 
 extension PublicCourseRouter: TargetType {
@@ -38,6 +39,8 @@ extension PublicCourseRouter: TargetType {
             return "/public-course/user"
         case .updatePublicCourse(let publicCourseId, _):
             return "/public-course/\(publicCourseId)"
+        case .deleteUploadedCourse:
+            return "/public-course"
         }
     }
     
@@ -49,6 +52,8 @@ extension PublicCourseRouter: TargetType {
             return .post
         case .updatePublicCourse:
             return .patch
+        case .deleteUploadedCourse:
+            return .put
         }
     }
     
@@ -66,6 +71,8 @@ extension PublicCourseRouter: TargetType {
                 return .requestParameters(parameters: try param.asParameter(), encoding: JSONEncoding.default)
             } catch {
                 fatalError("Encoding 실패")}
+        case .deleteUploadedCourse(let publicCourseIdList):
+            return .requestParameters(parameters: ["publicCourseIdList": publicCourseIdList], encoding: JSONEncoding.default)
         case .getCourseData, .getUploadedCourseDetail, .getUploadedCourseInfo:
             return .requestPlain
         }

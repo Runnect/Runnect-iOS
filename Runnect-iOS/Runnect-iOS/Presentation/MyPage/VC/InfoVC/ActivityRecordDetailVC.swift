@@ -12,9 +12,9 @@ import Then
 import Moya
 
 final class ActivityRecordDetailVC: UIViewController {
-
+    
     // MARK: - Properties
-
+    
     private let recordProvider = Providers.recordProvider
         
     private var recordId: Int?
@@ -34,7 +34,7 @@ final class ActivityRecordDetailVC: UIViewController {
         $0.isScrollEnabled = true
         $0.showsVerticalScrollIndicator = false
     }
-        
+    
     private let mapImageView = UIImageView()
     
     private let courseTitleLabel = UILabel().then {
@@ -64,7 +64,7 @@ final class ActivityRecordDetailVC: UIViewController {
     }
     
     private let firstHorizontalDivideLine = UIView()
-
+    
     private let secondHorizontalDivideLine = UIView()
     
     private lazy var recordDistanceLabel = SetInfoLayout.makeGreySmailTitleLabel().then {
@@ -154,7 +154,6 @@ extension ActivityRecordDetailVC {
         } else {
             // 수정이 된 상태라면 팝업을 띄워주기
             self.navibar.resetLeftButtonAction({ [weak self] in
-                //self?.navibar.leftButton.addTarget(self, action: #selector(self?.presentToQuitEditAlertVC), for: .touchUpInside)
                 self?.presentToQuitEditAlertVC()
             }, .titleWithLeftButton)
         }
@@ -187,7 +186,7 @@ extension ActivityRecordDetailVC {
     }
     
     @objc private func finishEditButtonDidTap() {
-        editRecordTitle()
+//        editRecordTitle()
         showToast(message: "제목 수정이 완료되었어요")
         
         // 수정이 완료되면 팝업 뜨지 않음
@@ -335,7 +334,6 @@ extension ActivityRecordDetailVC {
             make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(48)
         }
-        
         moreButton.snp.makeConstraints { make in
             make.trailing.equalTo(self.view.safeAreaLayoutGuide)
             make.centerY.equalTo(navibar)
@@ -402,15 +400,15 @@ extension ActivityRecordDetailVC {
         recordDistanceStackView.snp.makeConstraints { make in
             make.width.equalTo(stackViewWidth)
         }
-
+        
         recordRunningTimeStackView.snp.makeConstraints { make in
             make.width.equalTo(stackViewWidth)
         }
-
+        
         recordAveragePaceStackView.snp.makeConstraints { make in
             make.width.equalTo(stackViewWidth)
         }
-
+        
         recordSubInfoStackView.snp.makeConstraints { make in
             make.top.equalTo(secondHorizontalDivideLine.snp.bottom).offset(23)
             make.centerX.equalToSuperview()

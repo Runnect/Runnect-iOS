@@ -147,14 +147,14 @@ extension CourseDetailVC {
             let editAction = UIAlertAction(title: "수정하기", style: .default, handler: {(_: UIAlertAction!) in
                 self.navigationController?.pushViewController(courseEditVC, animated: false)
             })
-            let deleteVC = RNAlertVC(description: "코스를 정말로 삭제하시겠어요?")
-            deleteVC.rightButtonTapAction = { [weak self] in
-                deleteVC.dismiss(animated: false)
+            let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
+            deleteAlertVC.rightButtonTapAction = { [weak self] in
+                deleteAlertVC.dismiss(animated: false)
                 self?.deleteCourse()
             }
-            deleteVC.modalPresentationStyle = .overFullScreen
+            deleteAlertVC.modalPresentationStyle = .overFullScreen
             let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive, handler: {(_: UIAlertAction!) in
-                self.present(deleteVC, animated: false, completion: nil)})
+                self.present(deleteAlertVC, animated: false, completion: nil)})
             [ editAction, deleteAction, cancelAction].forEach { editAlertController.addAction($0) }
             present(editAlertController, animated: false, completion: nil)
         } else {
@@ -204,7 +204,7 @@ extension CourseDetailVC {
         self.uploadedCourseDetailModel = model
         self.mapImageView.setImage(with: model.publicCourse.image)
         self.profileImageView.image = GoalRewardInfoModel.stampNameImageDictionary[model.user.image]
-        self.profileNameLabel.text = model.user.nickname 
+        self.profileNameLabel.text = model.user.nickname
         self.runningLevelLabel.text = "Lv. \(model.user.level)"
         self.courseTitleLabel.text = model.publicCourse.title
         self.isMyCourse = model.user.isNowUser

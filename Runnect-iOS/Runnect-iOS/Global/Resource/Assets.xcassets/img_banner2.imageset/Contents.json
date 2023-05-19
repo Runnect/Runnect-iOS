@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "Frame 2064.png",
+      "filename" : "ios 2.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Frame 2064@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Frame 2064@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
