@@ -288,10 +288,13 @@ extension UploadedCourseInfoVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard collectionView.cellForItem(at: indexPath) is CourseListCVC else { return }
         guard let selectedCells = collectionView.indexPathsForSelectedItems else { return }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else { return }
+        let courseList = uploadedCourseList[indexPath.item]
         if isEditMode {
             self.deleteCourseButton.isEnabled = true
             let countSelectCells = selectedCells.count
             self.deleteCourseButton.setTitle(title: "삭제하기(\(countSelectCells))")
+            cell.selectCell(didSelect: true)
         } else {
             collectionView.deselectItem(at: indexPath, animated: true)
             self.deleteCourseButton.setTitle(title: "삭제하기")
@@ -299,6 +302,7 @@ extension UploadedCourseInfoVC: UICollectionViewDataSource {
             let courseDetailVC = CourseDetailVC()
             courseDetailVC.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(courseDetailVC, animated: true)
+            cell.selectCell(didSelect: false)
         }
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
