@@ -130,7 +130,7 @@ extension ActivityRecordDetailVC {
             // 수정 모드일 때
             self.setEditMode()
         })
-        let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?")
+        let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
         deleteAlertVC.modalPresentationStyle = .overFullScreen
         let deleteAlertAction = UIAlertAction(title: "삭제하기", style: .destructive, handler: {(_: UIAlertAction!) in
             self.present(deleteAlertVC, animated: false, completion: nil)})

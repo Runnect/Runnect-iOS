@@ -162,12 +162,12 @@ extension ActivityRecordInfoVC {
     }
     
     @objc func deleteRecordButtonDidTap() {
-        let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?")
-        self.present(deleteAlertVC, animated: false, completion: nil)
+        let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
         deleteAlertVC.modalPresentationStyle = .overFullScreen
+        deleteAlertVC.deleteRecordDelegate = self
+        self.present(deleteAlertVC, animated: false, completion: nil)
         deleteAlertVC.rightButtonTapAction = { [weak self] in
             deleteAlertVC.dismiss(animated: false)
-            self?.wantsToDelete()
         }
     }
 }

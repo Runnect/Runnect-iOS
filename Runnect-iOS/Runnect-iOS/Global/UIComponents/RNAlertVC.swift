@@ -15,7 +15,9 @@ final class RNAlertVC: UIViewController {
     // MARK: - Properties
     
     var rightButtonTapAction: (() -> Void)?
-
+    
+    var deleteRecordDelegate: deleteRecordDelegate?
+        
     // MARK: - UI Components
     
     private let containerView = UIView().then {
@@ -79,6 +81,12 @@ extension RNAlertVC {
         self.yesButton.addTarget(self, action: #selector(touchYesButton), for: .touchUpInside)
     }
     
+    @discardableResult
+    func setButtonTitle(_ leftButtonTitle: String, _ rightButtonTitle: String) -> Self {
+        self.yesButton.setTitle(rightButtonTitle, for: .normal)
+        self.noButton.setTitle(leftButtonTitle, for: .normal)
+        return self
+    }
 }
 
 // MARK: - @objc Function
@@ -90,6 +98,7 @@ extension RNAlertVC {
     
     @objc private func touchYesButton() {
         self.rightButtonTapAction?()
+        deleteRecordDelegate?.wantsToDelete()
     }
 }
 
