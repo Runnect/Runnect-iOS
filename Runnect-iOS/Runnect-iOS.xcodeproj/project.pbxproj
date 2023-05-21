@@ -1606,9 +1606,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Runnect-iOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Runnect;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 정보 권한이 필요합니다.";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치 정보 권한이 필요합니다.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치 정보 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "코스 출발지 설정과 러닝 트래킹을 위해 현재 위치 정보를 사용하도록 허용합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "코스 출발지 설정과 러닝 트래킹을 위해 현재 위치 정보를 사용하도록 허용합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "코스 출발지 설정과 러닝 트래킹을 위해 현재 위치 정보를 사용하도록 허용합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1644,9 +1644,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Runnect-iOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Runnect;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 정보 권한이 필요합니다.";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치 정보 권한이 필요합니다.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치 정보 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "코스 출발지 설정과 러닝 트래킹을 위해 현재 위치 정보를 사용하도록 허용합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "코스 출발지 설정과 러닝 트래킹을 위해 현재 위치 정보를 사용하도록 허용합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "코스 출발지 설정과 러닝 트래킹을 위해 현재 위치 정보를 사용하도록 허용합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
