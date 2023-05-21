@@ -122,11 +122,7 @@ extension ActivityRecordInfoTVC {
     }
     
     func updateSelectionCellUI(isSelected: Bool) {
-        if isSelected {
-            activityRecordContainerView.image = ImageLiterals.imgRecordContainerSelected
-        } else {
-            activityRecordContainerView.image = ImageLiterals.imgRecordContainer
-        }
+        activityRecordContainerView.image = isSelected ? ImageLiterals.imgRecordContainerSelected : ImageLiterals.imgRecordContainer
     }
     
     private func setUpActivityRecordPlaceLabel(model: ActivityRecord, label: UILabel) {
