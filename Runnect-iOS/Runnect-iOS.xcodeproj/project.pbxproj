@@ -19,7 +19,6 @@
 		A3BC2F4129667A0D00198261 /* NicknameEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F4029667A0D00198261 /* NicknameEditorVC.swift */; };
 		A3BC2F432966A93100198261 /* CourseDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F422966A93100198261 /* CourseDetailVC.swift */; };
 		A3C2CACE29E313CC00EC525B /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2CACD29E313CC00EC525B /* SettingVC.swift */; };
-		A3C2CAD329E4F77C00EC525B /* TermsOfServiceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2CAD229E4F77C00EC525B /* TermsOfServiceVC.swift */; };
 		A3C2CAD529E4F85400EC525B /* PersonalInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2CAD429E4F85400EC525B /* PersonalInfoVC.swift */; };
 		A3C2CAD729E53B2900EC525B /* RNAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2CAD629E53B2900EC525B /* RNAlertVC.swift */; };
 		A3C38FED2A13212300FF196D /* SetInfoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C38FEC2A13212300FF196D /* SetInfoLayout.swift */; };
@@ -28,6 +27,7 @@
 		A3D1A78029CF142E00DD54EC /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D1A77F29CF142E00DD54EC /* UserManager.swift */; };
 		A3DB8C472A0B64830081AF2D /* ActivityRecordDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DB8C462A0B64830081AF2D /* ActivityRecordDetailVC.swift */; };
 		A3E55BA029C815B10000D85D /* SignInSocialLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E55B9F29C815B10000D85D /* SignInSocialLoginVC.swift */; };
+		A3E625002A15262B008370FF /* GoalRewardTitleCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E624FF2A15262B008370FF /* GoalRewardTitleCVC.swift */; };
 		A3F67AE2296D33AC001598A2 /* MyPageDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F67AE1296D33AC001598A2 /* MyPageDto.swift */; };
 		A3F67AEA296E4936001598A2 /* ActivityRecordInfoDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F67AE9296E4936001598A2 /* ActivityRecordInfoDto.swift */; };
 		CE09037D296E9ED900BEA710 /* ScrapCourseResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE09037C296E9ED900BEA710 /* ScrapCourseResponseDto.swift */; };
@@ -173,7 +173,6 @@
 		A3BC2F4029667A0D00198261 /* NicknameEditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditorVC.swift; sourceTree = "<group>"; };
 		A3BC2F422966A93100198261 /* CourseDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailVC.swift; sourceTree = "<group>"; };
 		A3C2CACD29E313CC00EC525B /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
-		A3C2CAD229E4F77C00EC525B /* TermsOfServiceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceVC.swift; sourceTree = "<group>"; };
 		A3C2CAD429E4F85400EC525B /* PersonalInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfoVC.swift; sourceTree = "<group>"; };
 		A3C2CAD629E53B2900EC525B /* RNAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNAlertVC.swift; sourceTree = "<group>"; };
 		A3C38FEC2A13212300FF196D /* SetInfoLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetInfoLayout.swift; sourceTree = "<group>"; };
@@ -183,6 +182,7 @@
 		A3DB8C462A0B64830081AF2D /* ActivityRecordDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRecordDetailVC.swift; sourceTree = "<group>"; };
 		A3E55B9F29C815B10000D85D /* SignInSocialLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSocialLoginVC.swift; sourceTree = "<group>"; };
 		A3E55BA529C8AB0A0000D85D /* Runnect-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Runnect-iOS.entitlements"; sourceTree = "<group>"; };
+		A3E624FF2A15262B008370FF /* GoalRewardTitleCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardTitleCVC.swift; sourceTree = "<group>"; };
 		A3F67AE1296D33AC001598A2 /* MyPageDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageDto.swift; sourceTree = "<group>"; };
 		A3F67AE9296E4936001598A2 /* ActivityRecordInfoDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRecordInfoDto.swift; sourceTree = "<group>"; };
 		CE09037C296E9ED900BEA710 /* ScrapCourseResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapCourseResponseDto.swift; sourceTree = "<group>"; };
@@ -374,6 +374,7 @@
 			isa = PBXGroup;
 			children = (
 				A3BC2F33296303A600198261 /* GoalRewardInfoCVC.swift */,
+				A3E624FF2A15262B008370FF /* GoalRewardTitleCVC.swift */,
 			);
 			path = GoalRewardInfoCollectionView;
 			sourceTree = "<group>";
@@ -398,7 +399,6 @@
 			isa = PBXGroup;
 			children = (
 				A3C2CACD29E313CC00EC525B /* SettingVC.swift */,
-				A3C2CAD229E4F77C00EC525B /* TermsOfServiceVC.swift */,
 				A3C2CAD429E4F85400EC525B /* PersonalInfoVC.swift */,
 			);
 			path = SettingVC;
@@ -1369,7 +1369,6 @@
 				A3DB8C472A0B64830081AF2D /* ActivityRecordDetailVC.swift in Sources */,
 				CE14677C2965C1B100DCEA1B /* RunningRecordVC.swift in Sources */,
 				CE6B63D829673450003F900F /* ListEmptyView.swift in Sources */,
-				A3C2CAD329E4F77C00EC525B /* TermsOfServiceVC.swift in Sources */,
 				CE6655F6295D90B600C64E12 /* addToolBar.swift in Sources */,
 				A3C2CAD529E4F85400EC525B /* PersonalInfoVC.swift in Sources */,
 				DAD5A3DA296C6DA500C8166B /* TitleCollectionViewCell.swift in Sources */,
@@ -1404,6 +1403,7 @@
 				CE0D9FD329648DA300CEB5CD /* CustomAlertVC.swift in Sources */,
 				CEB841702963360800BF8080 /* CountDownVC.swift in Sources */,
 				CE320F38296C8FAB009F89A7 /* CourseDrawingResponseData.swift in Sources */,
+				A3E625002A15262B008370FF /* GoalRewardTitleCVC.swift in Sources */,
 				A3D1A77E29CF09B600DD54EC /* SignInResponseDto.swift in Sources */,
 				CE21C028299E5FFC00F62AF5 /* PublicCourseRouter.swift in Sources */,
 				CE18E894296C79B900FEB569 /* CourseDrawingRequestDto.swift in Sources */,

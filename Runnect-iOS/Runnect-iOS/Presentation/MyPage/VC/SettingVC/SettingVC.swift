@@ -26,6 +26,9 @@ final class SettingVC: UIViewController {
     let reportUrl = NSURL(string: "https://docs.google.com/forms/d/e/1FAIpQLSek2rkClKfGaz1zwTEHX3Oojbq_pbF3ifPYMYezBU0_pe-_Tg/viewform")
     lazy var reportSafariView: SFSafariViewController = SFSafariViewController(url: self.reportUrl! as URL)
     
+    let termsOfServiceUrl = NSURL(string: "https://www.notion.so/Runnect-81cf5a3a507b40e4b6104b5d08f12792?pvs=4")
+    lazy var termsOfServiceSafariView: SFSafariViewController = SFSafariViewController(url: self.termsOfServiceUrl! as URL)
+    
     private lazy var personalInfoView = makeInfoView(title: "계정 정보").then {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpPersonalInfoView))
         $0.addGestureRecognizer(tap)
@@ -90,11 +93,6 @@ extension SettingVC {
         personalInfoVC.email = self.email
         self.navigationController?.pushViewController(personalInfoVC, animated: true)
     }
-    
-    private func pushToTermsOfServiceVC() {
-        let termsOfServiceVC = TermsOfServiceVC()
-        self.navigationController?.pushViewController(termsOfServiceVC, animated: true)
-    }
 }
 
 // MARK: - @objc Function
@@ -112,7 +110,7 @@ extension SettingVC {
     
     @objc
     private func touchUpTermsOfServiceView() {
-        pushToTermsOfServiceVC()
+        self.present(self.termsOfServiceSafariView, animated: true, completion: nil)
     }
 }
 

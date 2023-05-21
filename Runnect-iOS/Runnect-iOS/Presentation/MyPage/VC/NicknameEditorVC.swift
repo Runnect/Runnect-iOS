@@ -25,13 +25,15 @@ final class NicknameEditorVC: UIViewController {
     
     private let nicknameMaxLength: Int = 7
     
+    var currentNickname = String()
+    
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("닉네임 수정")
 
-    private let nickNameTextField = UITextField().then {
+    private lazy var nickNameTextField = UITextField().then {
         $0.resignFirstResponder()
-        $0.text = nil
+        $0.text = self.currentNickname
         $0.textColor = .g1
         $0.font = .h5
         $0.textAlignment = .center
@@ -77,6 +79,10 @@ final class NicknameEditorVC: UIViewController {
 // MARK: - Method
 
 extension NicknameEditorVC {
+    func setData(nickname: String) {
+        self.currentNickname = nickname
+    }
+    
     private func setAddTarget() {
         nickNameTextField.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
     }

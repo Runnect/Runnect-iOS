@@ -20,6 +20,7 @@ final class MyPageVC: UIViewController {
     let stampNameImageDictionary: [String: UIImage] = GoalRewardInfoModel.stampNameImageDictionary
         
     var sendEmail = String()
+    var sendNickname = String()
         
     // MARK: - UI Components
     
@@ -178,6 +179,7 @@ extension MyPageVC {
     
     private func pushToNicknameEditorVC() {
         let nicknameEditorVC = NicknameEditorVC()
+        nicknameEditorVC.setData(nickname: sendNickname)
         nicknameEditorVC.delegate = self
         self.navigationController?.pushViewController(nicknameEditorVC, animated: true)
     }
@@ -190,6 +192,7 @@ extension MyPageVC {
     
     private func setData(model: MyPageDto) {
         self.sendEmail = model.user.email
+        self.sendNickname = model.user.nickname
         self.myProfileNameLabel.text = model.user.nickname
         self.myRunningProgressBar.setProgress(Float(model.user.levelPercent)/100, animated: false)
         setMyRunningProgressPercentLabel(label: myRunnigProgressPercentLabel, model: model)

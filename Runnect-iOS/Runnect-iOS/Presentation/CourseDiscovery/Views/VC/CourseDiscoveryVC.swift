@@ -21,7 +21,6 @@ final class CourseDiscoveryVC: UIViewController {
     
     private var courseList = [PublicCourse]()
     
-   
     // MARK: - UIComponents
     
     private lazy var naviBar = CustomNavigationBar(self, type: .title).setTitle("코스 발견")

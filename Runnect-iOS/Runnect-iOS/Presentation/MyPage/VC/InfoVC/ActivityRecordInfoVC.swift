@@ -108,14 +108,18 @@ extension ActivityRecordInfoVC {
         self.editButton.setTitle("편집", for: .normal)
         self.deleteRecordButton.isHidden = true
         self.totalNumOfRecordlabel.text = "총 기록 \(self.activityRecordList.count)개"
+        deselectedActivityRecordTableRows()
+        self.deleteRecordButton.isEnabled = false
+        self.deleteRecordButton.setTitle(title: "삭제하기")
+        self.activityRecordTableView.reloadData()
+    }
+    
+    private func deselectedActivityRecordTableRows() {
         if let selectedRows = activityRecordTableView.indexPathsForSelectedRows {
             for indexPath in selectedRows {
                 activityRecordTableView.deselectRow(at: indexPath, animated: true)
             }
         }
-        self.deleteRecordButton.isEnabled = false
-        self.deleteRecordButton.setTitle(title: "삭제하기")
-        self.activityRecordTableView.reloadData()
     }
 }
 
@@ -143,21 +147,17 @@ extension ActivityRecordInfoVC {
             self.totalNumOfRecordlabel.text = "총 기록 \(self.activityRecordList.count)개"
             self.editButton.setTitle("편집", for: .normal)
             self.deleteRecordButton.isHidden = true
-            if let selectedRows = activityRecordTableView.indexPathsForSelectedRows {
-                for indexPath in selectedRows {
-                    activityRecordTableView.deselectRow(at: indexPath, animated: true)
-                }
-            }
+            deselectedActivityRecordTableRows()
             self.deleteRecordButton.isEnabled = false
             self.deleteRecordButton.setTitle(title: "삭제하기")
             self.activityRecordTableView.reloadData()
-            isEditMode = false
+            isEditMode.toggle()
         } else {
             self.totalNumOfRecordlabel.text = "기록 선택"
             self.editButton.setTitle("취소", for: .normal)
             self.deleteRecordButton.isHidden = false
             self.activityRecordTableView.reloadData()
-            isEditMode = true
+            isEditMode.toggle()
         }
     }
     
@@ -241,18 +241,20 @@ extension ActivityRecordInfoVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard tableView.cellForRow(at: indexPath) is ActivityRecordInfoTVC else { return }
+        guard let cell = tableView.cellForRow(at: indexPath) as? ActivityRecordInfoTVC else { return }
         guard let selectedRecords = tableView.indexPathsForSelectedRows else { return }
             
         if isEditMode {
             self.deleteRecordButton.isEnabled = true
             let countSelectedRows = selectedRecords.count
             self.deleteRecordButton.setTitle(title: "삭제하기(\(countSelectedRows))")
+            cell.updateSelectionCellUI(isSelected: true)
         } else {
             let activityRecordDetailVC = ActivityRecordDetailVC()
             tableView.deselectRow(at: indexPath, animated: true)
             self.deleteRecordButton.setTitle(title: "삭제하기")
             activityRecordDetailVC.setData(model: activityRecordList[indexPath.row])
+            cell.updateSelectionCellUI(isSelected: false)
             
             // 편집 모드가 아닐 때 상세 페이지로 이동
             self.navigationController?.pushViewController(activityRecordDetailVC, animated: true)
@@ -287,22 +289,6 @@ extension ActivityRecordInfoVC: UITableViewDataSource {
         guard let activityRecordCell = tableView.dequeueReusableCell(withIdentifier: ActivityRecordInfoTVC.className, for: indexPath) as? ActivityRecordInfoTVC else { return UITableViewCell()}
         activityRecordCell.selectionStyle = .none
         activityRecordCell.setData(model: activityRecordList[indexPath.item])
-        if isEditMode {
-            // 선택된 셀에 대한 표시 업데이트
-            if let selectedRecords = tableView.indexPathsForSelectedRows, selectedRecords.contains(indexPath) {
-                activityRecordCell.activityRecordContainerView.image = ImageLiterals.imgRecordContainerSelected
-            } else {
-                activityRecordCell.activityRecordContainerView.image = ImageLiterals.imgRecordContainer
-            }
-        
-        } else {
-            activityRecordCell.selectionStyle = .none
-            // 선택된 셀들을 순회하면서 미선택 이미지로 변경
-            for indexPath in tableView.indexPathsForSelectedRows ?? [] {
-                guard let cell = tableView.cellForRow(at: indexPath) as? ActivityRecordInfoTVC else { continue }
-                cell.activityRecordContainerView.image = ImageLiterals.imgRecordContainer
-            }
-        }
         return activityRecordCell
     }
 }
