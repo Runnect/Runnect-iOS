@@ -29,10 +29,11 @@ class MyCourseSelectVC: UIViewController {
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("불러오기")
-    private let selectButton = CustomButton(title: "선택하기").setEnabled(false)
     
-    // MARK: - collectionview
-    
+    private lazy var selectButton = CustomButton(title: "선택하기").setEnabled(false).then {
+        $0.isHidden = true
+    }
+        
     private lazy var mapCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -45,6 +46,11 @@ class MyCourseSelectVC: UIViewController {
         return collectionView
     }()
     
+    private lazy var emptyView = ListEmptyView(description: "공유할 수 있는 코스가 없어요!\n코스를 그려주세요!",
+                                               buttonTitle: "코스 그리기").then {
+        $0.setImage(ImageLiterals.imgPaper, size: CGSize(width: 189, height: 169))
+    }
+        
     // MARK: - Constants
     
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
@@ -75,11 +81,14 @@ extension MyCourseSelectVC {
     private func setData(courseList: [Course]) {
         self.courseList = courseList
         mapCollectionView.reloadData()
+        self.emptyView.isHidden = !courseList.isEmpty
+        self.selectButton.isHidden = courseList.isEmpty
     }
-    
+
     private func setDelegate() {
         mapCollectionView.delegate = self
         mapCollectionView.dataSource = self
+        emptyView.delegate = self
     }
     
     private func register() {
@@ -117,11 +126,13 @@ extension MyCourseSelectVC {
     private func setUI() {
         view.backgroundColor = .w1
         self.tabBarController?.tabBar.isHidden = true
+        self.emptyView.isHidden = true
     }
         
     private func setLayout() {
         view.addSubviews(selectButton, mapCollectionView)
         self.view.bringSubviewToFront(selectButton)
+        mapCollectionView.addSubview(emptyView)
         
         selectButton.snp.makeConstraints { make in
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
@@ -133,6 +144,11 @@ extension MyCourseSelectVC {
             make.top.equalTo(navibar.snp.bottom)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(selectButton.snp.top).inset(-25)
+        }
+        
+        emptyView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalTo(view.safeAreaLayoutGuide)
         }
     }
 }
@@ -234,5 +250,13 @@ extension MyCourseSelectVC {
                 self.showNetworkFailureToast()
             }
         }
+    }
+}
+
+// MARK: - Section Heading
+
+extension MyCourseSelectVC: ListEmptyViewDelegate {
+    func emptyViewButtonTapped() {
+        self.tabBarController?.selectedIndex = 0
     }
 }
