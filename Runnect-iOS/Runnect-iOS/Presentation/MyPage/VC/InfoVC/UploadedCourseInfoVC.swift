@@ -229,7 +229,8 @@ extension UploadedCourseInfoVC {
             make.leading.bottom.trailing.equalToSuperview()
         }
         emptyView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.centerY.equalTo(view.safeAreaLayoutGuide)
             make.leading.trailing.equalToSuperview().inset(80)
         }
     }
