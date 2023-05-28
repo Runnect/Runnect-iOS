@@ -24,17 +24,21 @@ class AdImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
         collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
+    
     // MARK: - Constants
     
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
 
     // MARK: - UI Components
+    
     var imgBanners: [UIImage] = [ImageLiterals.imgBanner1, ImageLiterals.imgBanner2, ImageLiterals.imgBanner3]
     var currentPage: Int = 0
     private var timer: Timer?
     
     private var pageControl = UIPageControl()
+    
     // MARK: - Life cycle
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         layout()
@@ -48,6 +52,7 @@ class AdImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
 // MARK: - Extensions
 
 extension AdImageCollectionViewCell {
+    
     private func setDelegate() {
         bannerCollectionView.delegate = self
         bannerCollectionView.dataSource = self
@@ -55,20 +60,23 @@ extension AdImageCollectionViewCell {
         bannerCollectionView.showsHorizontalScrollIndicator = false
         bannerCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "BannerCell")
     }
+    
     private func startBannerSlide() {
-        // 초기 페이지 설정
         currentPage = imgBanners.count
         timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(animateBannerSlide), userInfo: nil, repeats: true)
-        // 페이지 컨트롤 설정
         pageControl.currentPage = 0
         pageControl.numberOfPages = imgBanners.count
-        pageControl.pageIndicatorTintColor = .lightGray // 페이지를 암시하는 동그란 점의 색상
+        pageControl.pageIndicatorTintColor = .lightGray
         pageControl.currentPageIndicatorTintColor = .white
     }
+    
     private func updatePageControl() {
-            let currentIndex = currentPage % imgBanners.count
-            pageControl.currentPage = currentIndex
+        let currentIndex = currentPage % imgBanners.count
+        pageControl.currentPage = currentIndex
+        let indexPath = IndexPath(item: currentPage, section: 0)
+        bannerCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
+    
     internal func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let currentPage = Int(scrollView.contentOffset.x / scrollView.frame.width)
         pageControl.currentPage = currentPage % imgBanners.count
@@ -80,6 +88,7 @@ extension AdImageCollectionViewCell {
         contentView.backgroundColor = .clear
         contentView.addSubview(bannerCollectionView)
         contentView.addSubview(pageControl)
+        
         bannerCollectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -94,15 +103,12 @@ extension AdImageCollectionViewCell {
 
 extension AdImageCollectionViewCell {
     @objc func animateBannerSlide() {
-            currentPage += 1
-            if currentPage >= imgBanners.count {
-                currentPage = 0
-            }
-        let indexPath = IndexPath(item: currentPage, section: 0)
-        bannerCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+        currentPage += 1
+        if currentPage >= imgBanners.count {
+            currentPage = 0
+        }
         updatePageControl()
     }
-    
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
@@ -114,15 +120,13 @@ extension AdImageCollectionViewCell: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = bannerCollectionView.dequeueReusableCell(withReuseIdentifier: "BannerCell", for: indexPath)
-                
-        // 배너 이미지 설정
-                let imageIndex = indexPath.item % imgBanners.count
-                let imageView = UIImageView(frame: cell.contentView.bounds)
-                imageView.image = imgBanners[imageIndex]
-                imageView.contentMode = .scaleAspectFill
-                imageView.clipsToBounds = true
-                cell.contentView.addSubviews(imageView)
-                return cell
+        let imageIndex = indexPath.item % imgBanners.count
+        let imageView = UIImageView(frame: cell.contentView.bounds)
+        imageView.image = imgBanners[imageIndex]
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        cell.contentView.addSubviews(imageView)
+        return cell
     }
 }
 
