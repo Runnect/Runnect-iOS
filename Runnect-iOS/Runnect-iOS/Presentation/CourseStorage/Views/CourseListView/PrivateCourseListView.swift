@@ -232,6 +232,7 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
         delegate?.selectCellDidTapped()
     }
 }
+
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension PrivateCourseListView: UICollectionViewDelegateFlowLayout {

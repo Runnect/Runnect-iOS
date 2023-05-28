@@ -55,6 +55,14 @@ final class CourseStorageVC: UIViewController {
         self.getPrivateCourseList()
         self.getScrapCourseList()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if privateCourseListView.isEditMode {
+            self.finishEditMode(withDuration: 0)
+        }
+    }
 }
 
 // MARK: - Methods
@@ -76,6 +84,12 @@ extension CourseStorageVC {
     }
     
     private func bindUI() {
+        viewPager.$selectedTabIndex.sink { [weak self] selectedTabIndex in
+            guard let self = self else { return }
+            print(selectedTabIndex)
+            self.deleteCourseButton.isHidden = (selectedTabIndex != 0)
+        }.store(in: cancelBag)
+        
         privateCourseListView.courseDrawButtonTapped.sink { [weak self] in
             guard let self = self else { return }
             self.tabBarController?.selectedIndex = 0
@@ -110,28 +124,30 @@ extension CourseStorageVC {
         privateCourseListView.delegate = self
     }
     
-    private func hideTabBarWithAnimation() {
+    private func hideTabBarWithAnimation(duration: TimeInterval = 0.7) {
         if let frame = tabBarController?.tabBar.frame {
             let factor: CGFloat = 1
             let y = frame.origin.y + (frame.size.height * factor)
-            UIView.animate(withDuration: 0.7, animations: {
+            UIView.animate(withDuration: duration, animations: {
                 self.tabBarController?.tabBar.frame = CGRect(x: frame.origin.x, y: y, width: frame.width, height: frame.height)
             })
         }
     }
     
-    private func showTabBarWithAnimation() {
+    private func showTabBarWithAnimation(duration: TimeInterval = 0.7) {
         if let frame = tabBarController?.tabBar.frame {
             let factor: CGFloat = -1
             let y = frame.origin.y + (frame.size.height * factor)
-            UIView.animate(withDuration: 0.7, animations: {
+            UIView.animate(withDuration: duration, animations: {
                 self.tabBarController?.tabBar.frame = CGRect(x: frame.origin.x, y: y, width: frame.width, height: frame.height)
             })
         }
     }
     
     private func finishEditMode(withDuration: TimeInterval = 0) {
-        showTabBarWithAnimation()
+        self.privateCourseListView.isEditMode = false
+        
+        showTabBarWithAnimation(duration: withDuration)
         self.deleteCourseButton.setEnabled(false)
         self.deleteCourseButton.setTitle(title: "삭제하기")
         
@@ -141,7 +157,9 @@ extension CourseStorageVC {
     }
     
     private func startEditMode(withDuration: TimeInterval = 0) {
-        hideTabBarWithAnimation()
+        self.privateCourseListView.isEditMode = true
+        
+        hideTabBarWithAnimation(duration: withDuration)
         
         view.bringSubviewToFront(deleteCourseButton)
         UIView.animate(withDuration: withDuration) {
@@ -239,7 +257,9 @@ extension CourseStorageVC: PrivateCourseListViewDelegate {
         self.deleteCourseButton.setEnabled(countSelectCells != 0)
     }
 }
+
 // MARK: - Network
+
 extension CourseStorageVC {
     private func getPrivateCourseList() {
         LoadingIndicator.showLoading()
