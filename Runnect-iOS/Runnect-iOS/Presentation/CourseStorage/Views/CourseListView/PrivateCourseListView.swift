@@ -114,19 +114,17 @@ extension PrivateCourseListView {
 
 extension PrivateCourseListView {
     @objc func editButtonDidTap() {
+        isEditMode.toggle()
+        
         if isEditMode {
+            self.totalNumOfRecordlabel.text = "코스 선택"
+            self.editButton.setTitle("취소", for: .normal)
+        } else {
             self.totalNumOfRecordlabel.text = "총 코스 \(self.courseList.count)개"
             self.editButton.setTitle("편집", for: .normal)
-            self.delegate?.courseListEditButtonTapped()
-            self.courseListCollectionView.reloadData()
-            isEditMode = false
-        } else {
-            self.totalNumOfRecordlabel.text = "코스 선택"
-            self.delegate?.courseListEditButtonTapped()
-            self.editButton.setTitle("취소", for: .normal)
-            self.courseListCollectionView.reloadData()
-            isEditMode = true
         }
+        
+        self.delegate?.courseListEditButtonTapped()
     }
 }
 // MARK: - UI & Layout
