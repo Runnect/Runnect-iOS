@@ -27,7 +27,11 @@ final class PrivateCourseListView: UIView {
     
     weak var courseStorageVC: UIViewController?
     
-    var isEditMode: Bool = false
+    var isEditMode: Bool = false {
+        didSet {
+            isEditMode ? startEditMode() : finishEditMode()
+        }
+    }
     
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
     final let itemSpacing: CGFloat = 10
@@ -116,17 +120,26 @@ extension PrivateCourseListView {
     @objc func editButtonDidTap() {
         isEditMode.toggle()
         
-        if isEditMode {
-            self.totalNumOfRecordlabel.text = "코스 선택"
-            self.editButton.setTitle("취소", for: .normal)
-        } else {
-            self.totalNumOfRecordlabel.text = "총 코스 \(self.courseList.count)개"
-            self.editButton.setTitle("편집", for: .normal)
-        }
-        
         self.delegate?.courseListEditButtonTapped()
     }
+    
+    private func startEditMode() {
+        self.totalNumOfRecordlabel.text = "코스 선택"
+        self.editButton.setTitle("취소", for: .normal)
+    }
+    
+    private func finishEditMode() {
+        self.totalNumOfRecordlabel.text = "총 코스 \(self.courseList.count)개"
+        self.editButton.setTitle("편집", for: .normal)
+        self.deselectAllItems()
+    }
+    
+    private func deselectAllItems() {
+        guard let selectedItems = courseListCollectionView.indexPathsForSelectedItems else { return }
+        for indexPath in selectedItems { courseListCollectionView.deselectItem(at: indexPath, animated: false) }
+    }
 }
+
 // MARK: - UI & Layout
 
 extension PrivateCourseListView {
@@ -187,16 +200,14 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
         } else {
             cell.selectCell(didSelect: false)
         }
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath)
-                as? CourseListCVC else { return UICollectionViewCell() }
-        cell.setCellType(type: .title)
+
         let model = courseList[indexPath.item]
         let cellTitle =  "\(model.departure.region) \(model.departure.city)"
         cell.setData(imageURL: model.image, title: cellTitle, location: nil, didLike: nil)
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard collectionView.cellForItem(at: indexPath) is CourseListCVC else { return }
         guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else { return }
         if isEditMode {
             cell.selectCell(didSelect: true)
@@ -204,22 +215,21 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
         } else {
             collectionView.deselectItem(at: indexPath, animated: true)
             cellDidTapped.send(indexPath.item)
-            delegate?.selectCellDidTapped()
         }
     }
+    
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        guard collectionView.cellForItem(at: indexPath) is CourseListCVC else { return }
         guard let selectedCells = collectionView.indexPathsForSelectedItems else {
-            return }
-        guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else { return }
-        if isEditMode {
-            let countSelectCells = selectedCells.count
-            delegate?.selectCellDidTapped()
-            cell.selectCell(didSelect: false)
-        } else {
-            collectionView.deselectItem(at: indexPath, animated: true)
-            delegate?.selectCellDidTapped()
+            return
         }
+        
+        guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else { return }
+        
+        if isEditMode {
+            cell.selectCell(didSelect: false)
+        }
+        
+        delegate?.selectCellDidTapped()
     }
 }
 // MARK: - UICollectionViewDelegateFlowLayout

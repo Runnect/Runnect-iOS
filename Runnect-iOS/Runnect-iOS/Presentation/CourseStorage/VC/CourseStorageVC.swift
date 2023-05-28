@@ -132,6 +132,8 @@ extension CourseStorageVC {
     
     private func finishEditMode(withDuration: TimeInterval = 0) {
         showTabBarWithAnimation()
+        self.deleteCourseButton.setEnabled(false)
+        self.deleteCourseButton.setTitle(title: "삭제하기")
         
         UIView.animate(withDuration: withDuration) {
             self.deleteCourseButton.transform = CGAffineTransform(translationX: 0, y: 34)
@@ -222,31 +224,19 @@ extension CourseStorageVC: ScrapCourseListViewDelegate {
 extension CourseStorageVC: PrivateCourseListViewDelegate {
     
     func courseListEditButtonTapped() {
-        if privateCourseListView.isEditMode == true {
-            self.deleteCourseButton.setTitle(title: "삭제하기")
-            startEditMode(withDuration: 0.7)
-        }
-        
-        if privateCourseListView.isEditMode == false {
-            finishEditMode(withDuration: 0.7)
-        }
+        privateCourseListView.isEditMode ? startEditMode(withDuration: 0.7) : finishEditMode(withDuration: 0.7)
     }
     
     func selectCellDidTapped() {
         guard let selectedCells = privateCourseListView.courseListCollectionView.indexPathsForSelectedItems else { return }
+        
         let countSelectCells = selectedCells.count
+        
         if privateCourseListView.isEditMode == true {
-            if privateCourseListView.isEditMode == false {
-                self.deleteCourseButton.isEnabled = false
-                self.deleteCourseButton.setTitle(title: "삭제하기")
-            }
             self.deleteCourseButton.setTitle(title: "삭제하기(\(countSelectCells))")
-            self.deleteCourseButton.isEnabled = false
-            self.deleteCourseButton.setEnabled(true)
         }
-        if selectedCells.count == 0 {
-            self.deleteCourseButton.isEnabled = false
-        }
+        
+        self.deleteCourseButton.setEnabled(countSelectCells != 0)
     }
 }
 // MARK: - Network
@@ -334,6 +324,7 @@ extension CourseStorageVC {
         courseProvider.request(.deleteCourse(courseIdList: courseIdList)) { [weak self] response in
             LoadingIndicator.hideLoading()
             guard let self = self else { return }
+            self.privateCourseListView.isEditMode = false
             switch response {
             case .success(let result):
                 print("리절트", result)
@@ -342,7 +333,6 @@ extension CourseStorageVC {
                     print("삭제 성공")
                     self.getPrivateCourseList()
                     self.finishEditMode(withDuration: 0.7)
-                    
                 }
                 if status >= 400 {
                     print("400 error")
