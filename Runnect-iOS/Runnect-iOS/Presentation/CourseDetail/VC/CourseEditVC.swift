@@ -11,7 +11,7 @@ import SnapKit
 import Then
 import Moya
 
-class CourseEditVC: UIViewController, UITextFieldDelegate {
+class CourseEditVC: UIViewController {
     
     // MARK: - Properties
     
@@ -61,8 +61,7 @@ class CourseEditVC: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.courseTitleTextField.delegate = self
-        self.activityTextView.delegate = self
+        setDelegate()
         setNavigationBar()
         setUI()
         setLayout()
@@ -87,6 +86,11 @@ class CourseEditVC: UIViewController, UITextFieldDelegate {
 // MARK: - Methods
 
 extension CourseEditVC {
+    private func setDelegate() {
+        self.courseTitleTextField.delegate = self
+        self.activityTextView.delegate = self
+    }
+    
     private func setAddTarget() {
         self.courseTitleTextField.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
         self.editButton.addTarget(self, action: #selector(editButtonDidTap), for: .touchUpInside)
@@ -143,31 +147,28 @@ extension CourseEditVC {
             name: UIResponder.keyboardWillHideNotification,
             object: nil)
     }
+    
+    private func isTextChanged(_ textFieldtext: String, _ textViewtext: String) {
+        // 둘 중 하나라도 비어있으면 버튼 비활성화
+        if textFieldtext.isEmpty || textViewtext.isEmpty {
+            editButton.isEnabled = false
+            return
+        }
+        
+        // 둘 중 하나라도 수정되어있을 경우
+        if textFieldtext != self.currentTitle || textViewtext != self.currentDescription {
+            self.editButton.isEnabled = true
+            self.navibar.resetLeftButtonAction({ [weak self] in
+                self?.presentToQuitEditAlertVC()
+            }, .titleWithLeftButton)
+        } else {
+            self.editButton.isEnabled = false
+        }
+    }
 }
 // MARK: - @objc Function
 
 extension CourseEditVC {
-    @objc private func textFieldTextDidChange() {
-        guard let text = courseTitleTextField.text else { return }
-        
-        self.editButton.isEnabled = !text.isEmpty
-        
-        if text.count > courseTitleMaxLength {
-            let index = text.index(text.startIndex, offsetBy: courseTitleMaxLength)
-            let newString = text[text.startIndex..<index]
-            self.courseTitleTextField.text = String(newString)
-        }
-        
-        if text == self.currentTitle {
-            self.editButton.isEnabled = false
-        } else {
-            // 수정이 된 상태라면 팝업을 띄워주기
-            self.navibar.resetLeftButtonAction({ [weak self] in
-                self?.presentToQuitEditAlertVC()
-            }, .titleWithLeftButton)
-        }
-    }
-    
     @objc private func keyboardWillShow(_ notification: Notification) {
         guard let userInfo = notification.userInfo,
               let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
@@ -316,6 +317,22 @@ extension CourseEditVC {
     }
 }
 
+// MARK: - UITextFieldDelegate
+
+extension CourseEditVC: UITextFieldDelegate {
+    @objc private func textFieldTextDidChange() {
+        guard let text = courseTitleTextField.text else { return }
+        
+        isTextChanged(text, self.activityTextView.text)
+        
+        if text.count > courseTitleMaxLength {
+            let index = text.index(text.startIndex, offsetBy: courseTitleMaxLength)
+            let newString = text[text.startIndex..<index]
+            self.courseTitleTextField.text = String(newString)
+        }
+    }
+}
+
 // MARK: - UITextViewDelegate
 
 extension CourseEditVC: UITextViewDelegate {
@@ -342,20 +359,12 @@ extension CourseEditVC: UITextViewDelegate {
         textView.attributedText = attributedString
         textView.font = .b3
         textView.textColor = .g1
-
-        self.editButton.isEnabled = !text.isEmpty
+                
+        guard let courseTitleTextFieldText = self.courseTitleTextField.text else { return }
+        isTextChanged(courseTitleTextFieldText, text)
         
         if text.count > self.activityTextMaxLength {
             self.activityTextView.deleteBackward()
-        }
-        
-        if text == self.currentDescription {
-            self.editButton.isEnabled = false
-        } else {
-            // 수정이 된 상태라면 팝업을 띄워주기
-            self.navibar.resetLeftButtonAction({ [weak self] in
-                self?.presentToQuitEditAlertVC()
-            }, .titleWithLeftButton)
         }
     }
     
