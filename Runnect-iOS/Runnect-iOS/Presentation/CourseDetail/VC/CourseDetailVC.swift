@@ -83,9 +83,9 @@ final class CourseDetailVC: UIViewController {
         $0.font = .h4
     }
     
-    private let courseDistanceInfoView = CourseDetailInfoView(title: "거리", description: "0.0km")
+    private let courseDistanceInfoView = CourseDetailInfoView(title: "거리", description: String())
     
-    private let courseDepartureInfoView = CourseDetailInfoView(title: "출발지", description: "위치")
+    private let courseDepartureInfoView = CourseDetailInfoView(title: "출발지", description: String())
     
     private lazy var courseDetailStackView = UIStackView(arrangedSubviews: [courseDistanceInfoView, courseDepartureInfoView]).then {
         $0.axis = .vertical
@@ -113,9 +113,11 @@ final class CourseDetailVC: UIViewController {
         setUI()
         setLayout()
         setAddTarget()
+        self.hideTabBar(wantsToHide: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.hideTabBar(wantsToHide: true)
         getUploadedCourseDetail()
     }
 }
@@ -240,7 +242,7 @@ extension CourseDetailVC {
             make.height.equalTo(48)
         }
         moreButton.snp.makeConstraints { make in
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(16)
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide)
             make.centerY.equalTo(navibar)
         }
         

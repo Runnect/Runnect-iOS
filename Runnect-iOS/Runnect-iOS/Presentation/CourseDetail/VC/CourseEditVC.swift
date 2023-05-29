@@ -190,27 +190,24 @@ extension CourseEditVC {
     }
 }
 
-// MARK: - naviVar Layout
+// MARK: - Layout Helpers
 
 extension CourseEditVC {
     private func setNavigationBar() {
         view.addSubview(navibar)
+        
         navibar.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(48)
         }
     }
-    // MARK: - setUI
     
     private func setUI() {
         view.backgroundColor = .w1
         scrollView.backgroundColor = .clear
         buttonContainerView.backgroundColor = .w1
         mapImageView.backgroundColor = .systemGray4
-        
     }
-    
-    // MARK: - Layout Helpers
     
     private func setLayout() {
         view.addSubview(buttonContainerView)
@@ -289,6 +286,8 @@ extension CourseEditVC {
     }
 }
 
+// MARK: - UITextViewDelegate
+
 extension CourseEditVC: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
@@ -312,6 +311,7 @@ extension CourseEditVC: UITextViewDelegate {
             activityTextView.deleteBackward()
         }
     }
+    
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || textView.text == placeholder {
             activityTextView.textColor = .g3
