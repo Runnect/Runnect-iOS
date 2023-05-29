@@ -186,7 +186,7 @@ extension ActivityRecordDetailVC {
     }
     
     @objc private func finishEditButtonDidTap() {
-//        editRecordTitle()
+        editRecordTitle()
         showToast(message: "제목 수정이 완료되었어요")
         
         // 수정이 완료되면 팝업 뜨지 않음
