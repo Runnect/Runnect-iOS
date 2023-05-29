@@ -210,7 +210,8 @@ extension CourseDetailVC {
         self.uploadedCourseDetailModel = model
         self.mapImageView.setImage(with: model.publicCourse.image)
         self.profileImageView.image = GoalRewardInfoModel.stampNameImageDictionary[model.user.image]
-        self.profileNameLabel.text = model.user.nickname
+        // 탈퇴 유저 처리
+        model.user.nickname == "알 수 없음" ? setNullUser() : (self.profileNameLabel.text = model.user.nickname)
         self.runningLevelLabel.text = "Lv. \(model.user.level)"
         self.courseTitleLabel.text = model.publicCourse.title
         self.isMyCourse = model.user.isNowUser
@@ -228,6 +229,13 @@ extension CourseDetailVC {
         likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
         
         moreButton.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
+    }
+    
+    private func setNullUser() {
+        self.profileImageView.image = ImageLiterals.imgPerson
+        self.profileNameLabel.textColor = .g2
+        self.profileNameLabel.text = "(알 수 없음)"
+        self.runningLevelLabel.isHidden = true
     }
 }
 
