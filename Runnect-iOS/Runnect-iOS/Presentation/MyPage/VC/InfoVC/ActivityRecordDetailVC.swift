@@ -187,7 +187,6 @@ extension ActivityRecordDetailVC {
     
     @objc private func finishEditButtonDidTap() {
         editRecordTitle()
-        showToast(message: "제목 수정이 완료되었어요")
         
         // 수정이 완료되면 팝업 뜨지 않음
         self.navibar.resetLeftButtonAction({ [weak self] in
@@ -516,6 +515,7 @@ extension ActivityRecordDetailVC {
                 let status = result.statusCode
                 if 200..<300 ~= status {
                     print("제목 수정 성공")
+                    showToast(message: "제목 수정이 완료되었어요")
                 }
                 if status >= 400 {
                     print("400 error")

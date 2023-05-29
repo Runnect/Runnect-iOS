@@ -11,13 +11,18 @@ import SnapKit
 import Then
 import Moya
 
-class CourseEditVC: UIViewController {
+class CourseEditVC: UIViewController, UITextFieldDelegate {
     
     // MARK: - Properties
-    private let PublicCourseProvider = Providers.publicCourseProvider
     
+    private let PublicCourseProvider = Providers.publicCourseProvider
+
     private let courseTitleMaxLength = 20
+    private let activityTextMaxLength = 150
     var publicCourseId: Int?
+    
+    var currentTitle: String?
+    var currentDescription: String?
     
     // MARK: - UI Components
     
@@ -29,7 +34,7 @@ class CourseEditVC: UIViewController {
     private let mapImageView = UIImageView().then {
         $0.image = UIImage(named: "")
     }
-    private let courseTitleTextField = UITextField().then {
+    private lazy var courseTitleTextField = UITextField().then {
         $0.attributedPlaceholder = NSAttributedString(
             string: "글 제목",
             attributes: [.font: UIFont.h4, .foregroundColor: UIColor.g3]
@@ -45,17 +50,19 @@ class CourseEditVC: UIViewController {
     private let departureInfoView = CourseDetailInfoView(title: "출발지", description: "")
     private let placeholder = "코스에 대한 소개를 적어주세요.(난이도/풍경/지형)"
     
-    let activityTextView = UITextView().then {
-        $0.font = .b4
+    private lazy var activityTextView = UITextView().then {
+        $0.font = .b3
         $0.backgroundColor = .m3
         $0.tintColor = .m1
         $0.textContainerInset = UIEdgeInsets(top: 14, left: 12, bottom: 14, right: 12)
     }
-    
+
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.courseTitleTextField.delegate = self
+        self.activityTextView.delegate = self
         setNavigationBar()
         setUI()
         setLayout()
@@ -64,6 +71,7 @@ class CourseEditVC: UIViewController {
         setKeyboardNotification()
         setTapGesture()
         addKeyboardObserver()
+        textViewDidChange(self.activityTextView)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -84,15 +92,21 @@ extension CourseEditVC {
         self.editButton.addTarget(self, action: #selector(editButtonDidTap), for: .touchUpInside)
     }
     
+    private func setCurrentInfo() {
+        self.courseTitleTextField.text = self.currentTitle
+        self.activityTextView.text = self.currentDescription
+    }
+    
     // data 그대로 load하기
     func loadData(model: UploadedCourseDetailResponseDto) {
         mapImageView.setImage(with: model.publicCourse.image)
-        courseTitleTextField.text = model.publicCourse.title
-        distanceInfoView.setDescriptionText(description: "\(model.publicCourse.distance ?? 0.0)")
+        self.currentTitle = model.publicCourse.title
+        distanceInfoView.setDescriptionText(description: "\(model.publicCourse.distance ?? 0.0)km")
         let departure = "\(model.publicCourse.departure.region) \(model.publicCourse.departure.city)"
         departureInfoView.setDescriptionText(description: departure)
         
-        activityTextView.text = model.publicCourse.description   
+        self.currentDescription = model.publicCourse.description
+        setCurrentInfo()
     }
     
     // 키보드가 올라오면 scrollView 위치 조정
@@ -136,16 +150,21 @@ extension CourseEditVC {
     @objc private func textFieldTextDidChange() {
         guard let text = courseTitleTextField.text else { return }
         
+        self.editButton.isEnabled = !text.isEmpty
+        
         if text.count > courseTitleMaxLength {
             let index = text.index(text.startIndex, offsetBy: courseTitleMaxLength)
             let newString = text[text.startIndex..<index]
             self.courseTitleTextField.text = String(newString)
         }
         
-        if text.count == 0 && activityTextView.text != self.placeholder && activityTextView.text.count == 0 {
-            editButton.setEnabled(true)
+        if text == self.currentTitle {
+            self.editButton.isEnabled = false
         } else {
-            editButton.setEnabled(false)
+            // 수정이 된 상태라면 팝업을 띄워주기
+            self.navibar.resetLeftButtonAction({ [weak self] in
+                self?.presentToQuitEditAlertVC()
+            }, .titleWithLeftButton)
         }
     }
     
@@ -180,13 +199,24 @@ extension CourseEditVC {
     }
     
     @objc func editButtonDidTap() {
-        let editCheckVC = RNAlertVC(description: "게시글 수정을 종료할까요?\n종료 시 수정 내용이 반영되지 않아요.")
-        editCheckVC.rightButtonTapAction = { [weak self] in
-            editCheckVC.dismiss(animated: true)
-            self?.editCourse() // patch 실행
+        editCourse()
+        
+        // 수정이 완료되면 팝업 뜨지 않음
+        self.navibar.resetLeftButtonAction({ [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+        }, .titleWithLeftButton)
+    }
+
+    @objc func presentToQuitEditAlertVC() {
+        let quitEditAlertVC = RNAlertVC(description: "게시글 수정을 종료할까요?\n종료 시 수정 내용이 반영되지 않아요.")
+        
+        quitEditAlertVC.rightButtonTapAction = { [weak self] in
+            quitEditAlertVC.dismiss(animated: false)
+            self?.navigationController?.popViewController(animated: true)
         }
-        editCheckVC.modalPresentationStyle = .overFullScreen
-        self.present(editCheckVC, animated: false)
+        
+        quitEditAlertVC.modalPresentationStyle = .overFullScreen
+        self.present(quitEditAlertVC, animated: false, completion: nil)
     }
 }
 
@@ -301,14 +331,31 @@ extension CourseEditVC: UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        if !courseTitleTextField.isEmpty && !activityTextView.text.isEmpty {
-            editButton.setEnabled(true)
-        } else {
-            editButton.setEnabled(false)
+        guard let text = activityTextView.text else { return }
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 8
+           
+        let attributedString = NSMutableAttributedString(string: textView.text)
+        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
+           
+        textView.attributedText = attributedString
+        textView.font = .b3
+        textView.textColor = .g1
+
+        self.editButton.isEnabled = !text.isEmpty
+        
+        if text.count > self.activityTextMaxLength {
+            self.activityTextView.deleteBackward()
         }
         
-        if activityTextView.text.count > 150 {
-            activityTextView.deleteBackward()
+        if text == self.currentDescription {
+            self.editButton.isEnabled = false
+        } else {
+            // 수정이 된 상태라면 팝업을 띄워주기
+            self.navibar.resetLeftButtonAction({ [weak self] in
+                self?.presentToQuitEditAlertVC()
+            }, .titleWithLeftButton)
         }
     }
     
@@ -337,7 +384,7 @@ extension CourseEditVC {
             case .success(let result):
                 let status = result.statusCode
                 if 200..<300 ~= status {
-                    self.navigationController?.popViewController(animated: true)
+                    showToast(message: "게시글 수정이 완료되었어요")
                 }
                 if status >= 400 {
                     print("400 error")
