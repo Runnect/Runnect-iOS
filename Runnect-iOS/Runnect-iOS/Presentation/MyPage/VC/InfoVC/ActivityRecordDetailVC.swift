@@ -517,7 +517,7 @@ extension ActivityRecordDetailVC {
                 let status = result.statusCode
                 if 200..<300 ~= status {
                     print("제목 수정 성공")
-                    showToast(message: "제목 수정이 완료되었어요")
+                    self.showToast(message: "제목 수정이 완료되었어요")
                 }
                 if status >= 400 {
                     print("400 error")
