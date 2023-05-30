@@ -29,6 +29,7 @@ final class CourseDiscoveryVC: UIViewController {
         $0.tintColor = .g1
     }
     private let uploadButton = CustomButton(title: "업로드").then {
+        $0.clipsToBounds = true
         $0.layer.cornerRadius = 20
         $0.setImage(ImageLiterals.icPlus, for: .normal)
         $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
@@ -156,10 +157,23 @@ extension CourseDiscoveryVC {
             make.height.equalTo(40)
             make.width.equalTo(92)
         }
+        
         emptyView.snp.makeConstraints { make in
             make.top.equalTo(naviBar.snp.bottom).offset(300)
             make.centerX.equalTo(naviBar)
         }
+        
+        let shadowView = ShadowView()
+        self.view.addSubview(shadowView)
+
+        shadowView.snp.makeConstraints { make in
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(16)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(20)
+            make.height.equalTo(40)
+            make.width.equalTo(92)
+        }
+        
+        self.view.bringSubviewToFront(uploadButton)
     }
 }
 

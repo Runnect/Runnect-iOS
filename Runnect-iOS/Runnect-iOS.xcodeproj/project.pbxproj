@@ -138,6 +138,7 @@
 		CEC2A6902962B06C00160BF7 /* convertLocationObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A68F2962B06C00160BF7 /* convertLocationObject.swift */; };
 		CEC2A6922962BE2900160BF7 /* DepartureSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC2A6912962BE2900160BF7 /* DepartureSearchVC.swift */; };
 		CECA695C296E61D6002AF05C /* PrivateCourseNotUploadedResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA695B296E61D6002AF05C /* PrivateCourseNotUploadedResponseDto.swift */; };
+		CED791B32A2626AF001BFCFB /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED791B22A2626AF001BFCFB /* ShadowView.swift */; };
 		CEE59FDA29DD6F7D00C791F1 /* Providers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE59FD929DD6F7D00C791F1 /* Providers.swift */; };
 		CEEC6B3A2961C4F300D00E1E /* CourseDrawingHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B392961C4F300D00E1E /* CourseDrawingHomeVC.swift */; };
 		CEEC6B3C2961C51A00D00E1E /* CourseStorageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC6B3B2961C51A00D00E1E /* CourseStorageVC.swift */; };
@@ -302,6 +303,7 @@
 		CEC2A68F2962B06C00160BF7 /* convertLocationObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = convertLocationObject.swift; sourceTree = "<group>"; };
 		CEC2A6912962BE2900160BF7 /* DepartureSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureSearchVC.swift; sourceTree = "<group>"; };
 		CECA695B296E61D6002AF05C /* PrivateCourseNotUploadedResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateCourseNotUploadedResponseDto.swift; sourceTree = "<group>"; };
+		CED791B22A2626AF001BFCFB /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 		CEE59FD929DD6F7D00C791F1 /* Providers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Providers.swift; sourceTree = "<group>"; };
 		CEEC6B392961C4F300D00E1E /* CourseDrawingHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDrawingHomeVC.swift; sourceTree = "<group>"; };
 		CEEC6B3B2961C51A00D00E1E /* CourseStorageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseStorageVC.swift; sourceTree = "<group>"; };
@@ -1042,6 +1044,7 @@
 				CE6B63D729673450003F900F /* ListEmptyView.swift */,
 				CEB0BCBB29D123350048CCD5 /* GuideView.swift */,
 				A3C2CAD629E53B2900EC525B /* RNAlertVC.swift */,
+				CED791B22A2626AF001BFCFB /* ShadowView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -1441,6 +1444,7 @@
 				CE14677A2965A80700DCEA1B /* CustomBottomSheetVC.swift in Sources */,
 				CEEC6B4B2961D89700D00E1E /* CustomNavigationBar.swift in Sources */,
 				CE09037D296E9ED900BEA710 /* ScrapCourseResponseDto.swift in Sources */,
+				CED791B32A2626AF001BFCFB /* ShadowView.swift in Sources */,
 				CE40BB2D296808B00030ABCA /* DepartureSearchingRouter.swift in Sources */,
 				CE15F5A4296C932E0023827C /* RunningModel.swift in Sources */,
 				CE17F02D2961BBA100E1DED0 /* ColorLiterals.swift in Sources */,
