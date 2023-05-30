@@ -140,7 +140,9 @@ extension ActivityRecordDetailVC {
             self?.deleteRecord()
         }
         
-        [ editAction, deleteAlertAction ].forEach { alertController.addAction($0) }
+        let cancelAction = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
+        
+        [ editAction, deleteAlertAction, cancelAction ].forEach { alertController.addAction($0) }
         present(alertController, animated: true, completion: nil)
     }
     

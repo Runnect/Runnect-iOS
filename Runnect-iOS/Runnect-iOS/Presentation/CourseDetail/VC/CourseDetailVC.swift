@@ -32,6 +32,7 @@ final class CourseDetailVC: UIViewController {
     private var isMyCourse: Bool?
     
     // MARK: - UI Components
+    
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton)
     private let moreButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icMore, for: .normal)
@@ -147,10 +148,11 @@ extension CourseDetailVC {
         
         if isMyCourse == true {
             let editAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let courseEditVC = CourseEditVC()
-            courseEditVC.loadData(model: uploadedCourseDetailModel)
-            courseEditVC.publicCourseId = self.publicCourseId
+            
             let editAction = UIAlertAction(title: "수정하기", style: .default, handler: {(_: UIAlertAction!) in
+                let courseEditVC = CourseEditVC()
+                courseEditVC.loadData(model: uploadedCourseDetailModel)
+                courseEditVC.publicCourseId = self.publicCourseId
                 self.navigationController?.pushViewController(courseEditVC, animated: false)
             })
             let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
@@ -160,7 +162,8 @@ extension CourseDetailVC {
             }
             deleteAlertVC.modalPresentationStyle = .overFullScreen
             let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive, handler: {(_: UIAlertAction!) in
-                self.present(deleteAlertVC, animated: false, completion: nil)})
+                self.present(deleteAlertVC, animated: false, completion: nil)
+            })
             [ editAction, deleteAction, cancelAction].forEach { editAlertController.addAction($0) }
             present(editAlertController, animated: false, completion: nil)
         } else {
@@ -227,7 +230,6 @@ extension CourseDetailVC {
     
     private func setAddTarget() {
         likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
-        
         moreButton.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
     }
     
@@ -239,9 +241,10 @@ extension CourseDetailVC {
     }
 }
 
+// MARK: - Layout Helpers
+
 extension CourseDetailVC {
-    
-    // MARK: - Layout Helpers
+
     private func setNavigationBar() {
         view.addSubview(navibar)
         view.addSubview(moreButton)
@@ -359,6 +362,8 @@ extension CourseDetailVC {
         }
     }
 }
+
+// MARK: - Network
 
 extension CourseDetailVC {
     private func getUploadedCourseDetail() {

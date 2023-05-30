@@ -50,7 +50,7 @@ class CourseEditVC: UIViewController {
     private let departureInfoView = CourseDetailInfoView(title: "출발지", description: "")
     private let placeholder = "코스에 대한 소개를 적어주세요.(난이도/풍경/지형)"
     
-    private lazy var activityTextView = UITextView().then {
+    private let activityTextView = UITextView().then {
         $0.font = .b3
         $0.backgroundColor = .m3
         $0.tintColor = .m1
@@ -65,7 +65,6 @@ class CourseEditVC: UIViewController {
         setNavigationBar()
         setUI()
         setLayout()
-        setupTextView()
         setAddTarget()
         setKeyboardNotification()
         setTapGesture()
@@ -148,7 +147,7 @@ extension CourseEditVC {
             object: nil)
     }
     
-    private func isTextChanged(_ textFieldtext: String, _ textViewtext: String) {
+    private func textDidChanged(_ textFieldtext: String, _ textViewtext: String) {
         // 둘 중 하나라도 비어있으면 버튼 비활성화
         if textFieldtext.isEmpty || textViewtext.isEmpty {
             editButton.isEnabled = false
@@ -311,10 +310,6 @@ extension CourseEditVC {
             make.height.equalTo(187)
         }
     }
-    
-    func setupTextView() {
-        activityTextView.delegate = self
-    }
 }
 
 // MARK: - UITextFieldDelegate
@@ -323,7 +318,7 @@ extension CourseEditVC: UITextFieldDelegate {
     @objc private func textFieldTextDidChange() {
         guard let text = courseTitleTextField.text else { return }
         
-        isTextChanged(text, self.activityTextView.text)
+        textDidChanged(text, self.activityTextView.text)
         
         if text.count > courseTitleMaxLength {
             let index = text.index(text.startIndex, offsetBy: courseTitleMaxLength)
@@ -361,7 +356,7 @@ extension CourseEditVC: UITextViewDelegate {
         textView.textColor = .g1
                 
         guard let courseTitleTextFieldText = self.courseTitleTextField.text else { return }
-        isTextChanged(courseTitleTextFieldText, text)
+        textDidChanged(courseTitleTextFieldText, text)
         
         if text.count > self.activityTextMaxLength {
             self.activityTextView.deleteBackward()
