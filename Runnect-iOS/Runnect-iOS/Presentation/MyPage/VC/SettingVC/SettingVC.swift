@@ -26,7 +26,7 @@ final class SettingVC: UIViewController {
     let reportUrl = NSURL(string: "https://docs.google.com/forms/d/e/1FAIpQLSek2rkClKfGaz1zwTEHX3Oojbq_pbF3ifPYMYezBU0_pe-_Tg/viewform")
     lazy var reportSafariView: SFSafariViewController = SFSafariViewController(url: self.reportUrl! as URL)
     
-    let termsOfServiceUrl = NSURL(string: "https://www.notion.so/Runnect-81cf5a3a507b40e4b6104b5d08f12792?pvs=4")
+    let termsOfServiceUrl = NSURL(string: "https://third-sight-046.notion.site/Runnect-5dfee19ccff04c388590e5ee335e77ed")
     lazy var termsOfServiceSafariView: SFSafariViewController = SFSafariViewController(url: self.termsOfServiceUrl! as URL)
     
     private lazy var personalInfoView = makeInfoView(title: "계정 정보").then {

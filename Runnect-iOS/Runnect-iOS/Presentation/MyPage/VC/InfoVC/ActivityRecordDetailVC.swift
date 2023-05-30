@@ -140,7 +140,9 @@ extension ActivityRecordDetailVC {
             self?.deleteRecord()
         }
         
-        [ editAction, deleteAlertAction ].forEach { alertController.addAction($0) }
+        let cancelAction = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
+        
+        [ editAction, deleteAlertAction, cancelAction ].forEach { alertController.addAction($0) }
         present(alertController, animated: true, completion: nil)
     }
     
@@ -186,8 +188,7 @@ extension ActivityRecordDetailVC {
     }
     
     @objc private func finishEditButtonDidTap() {
-//        editRecordTitle()
-        showToast(message: "제목 수정이 완료되었어요")
+        editRecordTitle()
         
         // 수정이 완료되면 팝업 뜨지 않음
         self.navibar.resetLeftButtonAction({ [weak self] in
@@ -516,6 +517,7 @@ extension ActivityRecordDetailVC {
                 let status = result.statusCode
                 if 200..<300 ~= status {
                     print("제목 수정 성공")
+                    showToast(message: "제목 수정이 완료되었어요")
                 }
                 if status >= 400 {
                     print("400 error")

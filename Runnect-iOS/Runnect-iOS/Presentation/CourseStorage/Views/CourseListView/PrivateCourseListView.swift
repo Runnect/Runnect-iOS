@@ -169,7 +169,7 @@ extension PrivateCourseListView {
             make.trailing.equalToSuperview().inset(16)
             make.width.equalTo(47)
             make.height.equalTo(22)
-            make.top.equalToSuperview().offset(5)
+            make.top.equalToSuperview().offset(8)
         }
         
         courseListCollectionView.snp.makeConstraints { make in

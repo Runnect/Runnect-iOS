@@ -32,6 +32,7 @@ final class CourseDetailVC: UIViewController {
     private var isMyCourse: Bool?
     
     // MARK: - UI Components
+    
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton)
     private let moreButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icMore, for: .normal)
@@ -83,9 +84,9 @@ final class CourseDetailVC: UIViewController {
         $0.font = .h4
     }
     
-    private let courseDistanceInfoView = CourseDetailInfoView(title: "거리", description: "0.0km")
+    private let courseDistanceInfoView = CourseDetailInfoView(title: "거리", description: String())
     
-    private let courseDepartureInfoView = CourseDetailInfoView(title: "출발지", description: "위치")
+    private let courseDepartureInfoView = CourseDetailInfoView(title: "출발지", description: String())
     
     private lazy var courseDetailStackView = UIStackView(arrangedSubviews: [courseDistanceInfoView, courseDepartureInfoView]).then {
         $0.axis = .vertical
@@ -113,6 +114,11 @@ final class CourseDetailVC: UIViewController {
         setUI()
         setLayout()
         setAddTarget()
+        self.hideTabBar(wantsToHide: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.hideTabBar(wantsToHide: true)
         getUploadedCourseDetail()
     }
 }
@@ -142,10 +148,11 @@ extension CourseDetailVC {
         
         if isMyCourse == true {
             let editAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let courseEditVC = CourseEditVC()
-            courseEditVC.loadData(model: uploadedCourseDetailModel)
-            courseEditVC.publicCourseId = self.publicCourseId
+            
             let editAction = UIAlertAction(title: "수정하기", style: .default, handler: {(_: UIAlertAction!) in
+                let courseEditVC = CourseEditVC()
+                courseEditVC.loadData(model: uploadedCourseDetailModel)
+                courseEditVC.publicCourseId = self.publicCourseId
                 self.navigationController?.pushViewController(courseEditVC, animated: false)
             })
             let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
@@ -155,7 +162,8 @@ extension CourseDetailVC {
             }
             deleteAlertVC.modalPresentationStyle = .overFullScreen
             let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive, handler: {(_: UIAlertAction!) in
-                self.present(deleteAlertVC, animated: false, completion: nil)})
+                self.present(deleteAlertVC, animated: false, completion: nil)
+            })
             [ editAction, deleteAction, cancelAction].forEach { editAlertController.addAction($0) }
             present(editAlertController, animated: false, completion: nil)
         } else {
@@ -205,7 +213,8 @@ extension CourseDetailVC {
         self.uploadedCourseDetailModel = model
         self.mapImageView.setImage(with: model.publicCourse.image)
         self.profileImageView.image = GoalRewardInfoModel.stampNameImageDictionary[model.user.image]
-        self.profileNameLabel.text = model.user.nickname
+        // 탈퇴 유저 처리
+        model.user.nickname == "알 수 없음" ? setNullUser() : (self.profileNameLabel.text = model.user.nickname)
         self.runningLevelLabel.text = "Lv. \(model.user.level)"
         self.courseTitleLabel.text = model.publicCourse.title
         self.isMyCourse = model.user.isNowUser
@@ -221,14 +230,21 @@ extension CourseDetailVC {
     
     private func setAddTarget() {
         likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
-        
         moreButton.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
+    }
+    
+    private func setNullUser() {
+        self.profileImageView.image = ImageLiterals.imgPerson
+        self.profileNameLabel.textColor = .g2
+        self.profileNameLabel.text = "(알 수 없음)"
+        self.runningLevelLabel.isHidden = true
     }
 }
 
+// MARK: - Layout Helpers
+
 extension CourseDetailVC {
-    
-    // MARK: - Layout Helpers
+
     private func setNavigationBar() {
         view.addSubview(navibar)
         view.addSubview(moreButton)
@@ -237,7 +253,7 @@ extension CourseDetailVC {
             make.height.equalTo(48)
         }
         moreButton.snp.makeConstraints { make in
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(16)
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide)
             make.centerY.equalTo(navibar)
         }
         
@@ -346,6 +362,8 @@ extension CourseDetailVC {
         }
     }
 }
+
+// MARK: - Network
 
 extension CourseDetailVC {
     private func getUploadedCourseDetail() {
