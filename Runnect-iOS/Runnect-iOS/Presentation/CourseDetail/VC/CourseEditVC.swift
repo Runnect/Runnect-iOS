@@ -31,9 +31,7 @@ class CourseEditVC: UIViewController {
     private let editButton = CustomButton(title: "완료").setEnabled(false)
     
     private lazy var scrollView = UIScrollView()
-    private let mapImageView = UIImageView().then {
-        $0.image = UIImage(named: "")
-    }
+    private let mapImageView = UIImageView()
     private lazy var courseTitleTextField = UITextField().then {
         $0.attributedPlaceholder = NSAttributedString(
             string: "글 제목",
@@ -388,7 +386,7 @@ extension CourseEditVC {
             case .success(let result):
                 let status = result.statusCode
                 if 200..<300 ~= status {
-                    showToast(message: "게시글 수정이 완료되었어요")
+                    self.showToast(message: "게시글 수정이 완료되었어요")
                 }
                 if status >= 400 {
                     print("400 error")
