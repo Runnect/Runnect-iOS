@@ -26,7 +26,7 @@ extension MoyaProvider {
       self.init(session: Session(interceptor: AuthInterceptor.shared),
                 plugins: [NetworkLoggerPlugin(verbose: true)])
     } else {
-      self.init()
+        self.init(plugins: [NetworkLoggerPlugin(verbose: true)])
     }
   }
 }
