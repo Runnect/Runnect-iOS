@@ -228,7 +228,6 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
         if isEditMode {
             cell.selectCell(didSelect: false)
         }
-        
         delegate?.selectCellDidTapped()
     }
 }

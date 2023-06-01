@@ -127,10 +127,15 @@ extension UploadedCourseInfoVC {
         self.editButton.addTarget(self, action: #selector(editButtonDidTap), for: .touchUpInside)
         
     }
+    private func deselectAllItems() {
+        guard let selectedItems = UploadedCourseInfoCollectionView.indexPathsForSelectedItems else { return }
+        for indexPath in selectedItems { UploadedCourseInfoCollectionView.deselectItem(at: indexPath, animated: false) }
+    }
     
     private func setDeleteButton() {
         deleteCourseButton.addTarget(self, action: #selector(deleteCourseButtonDidTap), for: .touchUpInside)
     }
+    
 }
 
 // MARK: - @objc Function
@@ -160,18 +165,19 @@ extension UploadedCourseInfoVC {
             self.editButton.setTitle("편집", for: .normal)
             self.deleteCourseButton.isEnabled = false
             self.deleteCourseButton.setTitle(title: "삭제하기")
-            self.courseListCollectionView.reloadData()
-            isEditMode = false
+            self.deselectAllItems()
             self.deleteCourseButton.isHidden = true
+            self.UploadedCourseInfoCollectionView.reloadData()
+            isEditMode.toggle()
         } else {
             self.totalNumOfRecordlabel.text = "기록 선택"
             self.editButton.setTitle("취소", for: .normal)
-            
             self.deleteCourseButton.isHidden = false
-            self.courseListCollectionView.reloadData()
-            isEditMode = true
+            self.UploadedCourseInfoCollectionView.reloadData()
+            isEditMode.toggle()
        }
     }
+
 }
 
 extension UploadedCourseInfoVC {
@@ -257,7 +263,7 @@ extension UploadedCourseInfoVC: UICollectionViewDelegateFlowLayout {
 
 // MARK: - UICollectionViewDataSource
 
-extension UploadedCourseInfoVC: UICollectionViewDataSource {
+extension UploadedCourseInfoVC: UICollectionViewDelegate,UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return uploadedCourseList.count
     }
@@ -266,23 +272,15 @@ extension UploadedCourseInfoVC: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath)
                 as? CourseListCVC else { return UICollectionViewCell() }
         cell.setCellType(type: .title)
+        if let selectedCells = collectionView.indexPathsForSelectedItems, selectedCells.contains(indexPath) {
+            cell.selectCell(didSelect: true)
+        } else {
+            cell.selectCell(didSelect: false)
+        }
+
         let model = uploadedCourseList[indexPath.item]
         let cellTitle =  "\(model.departure.region) \(model.departure.city)"
         cell.setData(imageURL: model.image, title: cellTitle, location: nil, didLike: nil)
-        
-        if isEditMode {
-            // selectCell 표시
-            if let selectedCells = collectionView.indexPathsForSelectedItems, selectedCells.contains(indexPath) {
-                cell.selectCell(didSelect: false)
-            } else { cell.selectCell(didSelect: true)
-            }
-        } else {
-            cell.setCellType(type: .title)
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className,
-                                                                for: indexPath)
-                    as? CourseListCVC else { return UICollectionViewCell() }
-            cell.setCellType(type: .title)
-        }
         return cell
     }
     
