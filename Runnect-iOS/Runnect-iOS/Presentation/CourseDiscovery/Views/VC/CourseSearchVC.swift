@@ -151,7 +151,7 @@ extension CourseSearchVC: UICollectionViewDelegate, UICollectionViewDataSource {
         cell.delegate = self
         let model = self.courseList[indexPath.item]
         let location = "\(model.departure.region) \(model.departure.city)"
-        cell.setData(imageURL: model.image, title: model.title, location: location, didLike: model.scrap, indexPath: indexPath.item)
+        cell.setData(imageURL: model.image, title: model.title, location: location, didLike: model.scrap, didCheck: nil, indexPath: indexPath.item)
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

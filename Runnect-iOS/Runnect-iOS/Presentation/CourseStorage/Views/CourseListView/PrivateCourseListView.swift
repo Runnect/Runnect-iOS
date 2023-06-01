@@ -203,7 +203,7 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
 
         let model = courseList[indexPath.item]
         let cellTitle =  "\(model.departure.region) \(model.departure.city)"
-        cell.setData(imageURL: model.image, title: cellTitle, location: nil, didLike: nil)
+        cell.setData(imageURL: model.image, title: cellTitle, location: nil, didLike: nil, didCheck: nil)
         return cell
     }
     

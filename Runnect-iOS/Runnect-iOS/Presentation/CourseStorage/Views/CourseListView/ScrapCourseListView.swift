@@ -120,7 +120,7 @@ extension ScrapCourseListView: UICollectionViewDelegate, UICollectionViewDataSou
         
         let location = "\(model.departure.region) \(model.departure.city)"
         
-        cell.setData(imageURL: model.image, title: model.title, location: location, didLike: true, indexPath: indexPath.item)
+        cell.setData(imageURL: model.image, title: model.title, location: location, didLike: true, didCheck: nil, indexPath: indexPath.item)
         return cell
     }
 }

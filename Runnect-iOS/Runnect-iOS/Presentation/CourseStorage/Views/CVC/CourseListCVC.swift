@@ -76,6 +76,12 @@ final class CourseListCVC: UICollectionViewCell {
         $0.backgroundColor = .w1
     }
     
+    private let checkMark = UIButton(type: .custom).then {
+        $0.setImage(ImageLiterals.icCheckFill, for: .selected)
+        $0.setImage(ImageLiterals.icCheck, for: .normal)
+        $0.backgroundColor = .clear
+    }
+    
     // MARK: - initialization
     
     override init(frame: CGRect) {
@@ -97,7 +103,7 @@ extension CourseListCVC {
         likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
     }
     
-    func setData(imageURL: String, title: String, location: String?, didLike: Bool?, indexPath: Int? = nil) {
+    func setData(imageURL: String, title: String, location: String?, didLike: Bool?, didCheck: Bool?, indexPath: Int? = nil) {
         self.courseImageView.setImage(with: imageURL)
         self.titleLabel.text = title
         self.indexPath = indexPath
@@ -109,6 +115,10 @@ extension CourseListCVC {
         if let didLike = didLike {
             self.likeButton.isSelected = didLike
         }
+        
+        if let didCheck = didCheck {
+            self.checkMark.isSelected = didCheck
+        }
     }
     
     func selectCell(didSelect: Bool) {
@@ -116,9 +126,11 @@ extension CourseListCVC {
             courseImageView.layer.borderColor = UIColor.m1.cgColor
             courseImageView.layer.borderWidth = 2
             imageCoverView.isHidden = false
+            checkMark.isSelected.toggle()
         } else {
             courseImageView.layer.borderColor = UIColor.clear.cgColor
             imageCoverView.isHidden = true
+            checkMark.isSelected.toggle()
         }
     }
 }
@@ -143,7 +155,7 @@ extension CourseListCVC {
     }
     
     private func setLayout() {
-        self.contentView.addSubviews(courseImageView, imageCoverView, labelStackView, likeButton)
+        self.contentView.addSubviews(courseImageView, imageCoverView, labelStackView, likeButton, checkMark)
     
         courseImageView.snp.makeConstraints { make in
             make.leading.top.trailing.equalToSuperview()
@@ -162,6 +174,13 @@ extension CourseListCVC {
             make.height.equalTo(20)
         }
         
+        checkMark.snp.makeConstraints { make in
+            make.top.equalTo(courseImageView.snp.top).offset(8)
+            make.leading.equalToSuperview().offset(8)
+            make.width.equalTo(20)
+            make.height.equalTo(20)
+        }
+        
         labelStackView.snp.makeConstraints { make in
             make.top.equalTo(courseImageView.snp.bottom).offset(4)
             make.leading.equalToSuperview()
@@ -174,12 +193,15 @@ extension CourseListCVC {
         case .title:
             self.locationLabel.isHidden = true
             self.likeButton.isHidden = true
+            self.checkMark.isHidden = true
         case .titleWithLocation:
             self.locationLabel.isHidden = false
             self.likeButton.isHidden = true
+            self.checkMark.isHidden = true
         case .all:
             self.locationLabel.isHidden = false
             self.likeButton.isHidden = false
+            self.checkMark.isHidden = true
         }
     }
 }
