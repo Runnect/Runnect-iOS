@@ -11,11 +11,7 @@ import SnapKit
 import Then
 import Moya
 
-protocol deleteRecordDelegate: AnyObject {
-    func wantsToDelete()
-}
-
-final class ActivityRecordInfoVC: UIViewController, deleteRecordDelegate {
+final class ActivityRecordInfoVC: UIViewController {
     
     // MARK: - Properties
     
@@ -24,9 +20,7 @@ final class ActivityRecordInfoVC: UIViewController, deleteRecordDelegate {
     private var activityRecordList = [ActivityRecord]()
     
     private var deleteRecordList = [Int]()
-    
-    weak var delegate: deleteRecordDelegate?
-    
+        
     private var isEditMode: Bool = false
     
     // MARK: - UI Components
@@ -127,15 +121,9 @@ extension ActivityRecordInfoVC {
 
 extension ActivityRecordInfoVC {
     func wantsToDelete() {
-        self.deleteRecordList = [Int]()
+        self.deleteRecordList = activityRecordTableView.indexPathsForSelectedRows?.map { activityRecordList[$0.row].id } ?? []
         
         print("삭제 실행")
-        
-        guard let selectedRecords = activityRecordTableView.indexPathsForSelectedRows else { return }
-        
-        for indexPath in selectedRecords {
-            self.deleteRecordList.append(activityRecordList[indexPath.row].id)
-        }
         
         self.isEditMode.toggle()
         deleteRecord()
@@ -168,12 +156,11 @@ extension ActivityRecordInfoVC {
     @objc func deleteRecordButtonDidTap() {
         let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
         deleteAlertVC.modalPresentationStyle = .overFullScreen
-        deleteAlertVC.deleteRecordDelegate = self
         self.present(deleteAlertVC, animated: false, completion: nil)
         deleteAlertVC.rightButtonTapAction = { [weak self] in
             deleteAlertVC.dismiss(animated: false)
-            let activityRecordInfoVC = ActivityRecordInfoVC()
-            activityRecordInfoVC.isEditMode = false
+            self?.wantsToDelete()
+            self?.isEditMode = false
             return
         }
     }

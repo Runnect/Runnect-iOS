@@ -15,9 +15,7 @@ final class RNAlertVC: UIViewController {
     // MARK: - Properties
     
     var rightButtonTapAction: (() -> Void)?
-        
-    var deleteRecordDelegate: deleteRecordDelegate?
-        
+                
     // MARK: - UI Components
     
     private let containerView = UIView().then {
@@ -98,7 +96,6 @@ extension RNAlertVC {
     
     @objc private func touchYesButton() {
         self.rightButtonTapAction?()
-        deleteRecordDelegate?.wantsToDelete()
     }
 }
 
