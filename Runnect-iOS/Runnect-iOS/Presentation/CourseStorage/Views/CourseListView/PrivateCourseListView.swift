@@ -119,7 +119,7 @@ extension PrivateCourseListView {
 extension PrivateCourseListView {
     @objc func editButtonDidTap() {
         isEditMode.toggle()
-        
+        self.courseListCollectionView.reloadData()
         self.delegate?.courseListEditButtonTapped()
     }
     
