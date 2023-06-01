@@ -127,6 +127,8 @@ extension ActivityRecordInfoVC {
 
 extension ActivityRecordInfoVC {
     func wantsToDelete() {
+        self.deleteRecordList = [Int]()
+        
         print("삭제 실행")
         
         guard let selectedRecords = activityRecordTableView.indexPathsForSelectedRows else { return }
@@ -135,6 +137,7 @@ extension ActivityRecordInfoVC {
             self.deleteRecordList.append(activityRecordList[indexPath.row].id)
         }
         
+        self.isEditMode.toggle()
         deleteRecord()
     }
 }
@@ -143,6 +146,7 @@ extension ActivityRecordInfoVC {
 
 extension ActivityRecordInfoVC {
     @objc func editButtonDidTap() {
+        print(isEditMode)
         if isEditMode {
             self.totalNumOfRecordlabel.text = "총 기록 \(self.activityRecordList.count)개"
             self.editButton.setTitle("편집", for: .normal)
@@ -168,6 +172,9 @@ extension ActivityRecordInfoVC {
         self.present(deleteAlertVC, animated: false, completion: nil)
         deleteAlertVC.rightButtonTapAction = { [weak self] in
             deleteAlertVC.dismiss(animated: false)
+            let activityRecordInfoVC = ActivityRecordInfoVC()
+            activityRecordInfoVC.isEditMode = false
+            return
         }
     }
 }

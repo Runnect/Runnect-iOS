@@ -15,7 +15,7 @@ final class RNAlertVC: UIViewController {
     // MARK: - Properties
     
     var rightButtonTapAction: (() -> Void)?
-    
+        
     var deleteRecordDelegate: deleteRecordDelegate?
         
     // MARK: - UI Components
