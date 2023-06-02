@@ -179,8 +179,8 @@ extension UploadedCourseInfoVC {
     }
     
     @objc func editButtonDidTap() {
-        self.UploadedCourseInfoCollectionView.reloadData()
         isEditMode.toggle()
+        self.UploadedCourseInfoCollectionView.reloadData()
     }
 }
 
@@ -367,8 +367,8 @@ extension UploadedCourseInfoVC {
                 let status = result.statusCode
                 if 200..<300 ~= status {
                     print("삭제 성공")
-                    self.getUploadedCourseInfo()
                     self.isEditMode.toggle()
+                    self.getUploadedCourseInfo()
                 }
                 if status >= 400 {
                     print("400 error")

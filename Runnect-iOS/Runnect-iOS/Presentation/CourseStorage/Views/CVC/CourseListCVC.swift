@@ -76,7 +76,7 @@ final class CourseListCVC: UICollectionViewCell {
         $0.backgroundColor = .w1
     }
     
-    private let selectIdicatorButton = UIButton(type: .custom).then {
+    private let selectIndicatorButton = UIButton(type: .custom).then {
         $0.setImage(ImageLiterals.icCheckFill, for: .selected)
         $0.setImage(ImageLiterals.icCheck, for: .normal)
         $0.isSelected = false
@@ -115,7 +115,7 @@ extension CourseListCVC {
         if let didLike = didLike {
             self.likeButton.isSelected = didLike
         }
-        self.selectIdicatorButton.isHidden = !isEditMode
+        self.selectIndicatorButton.isHidden = !isEditMode
     }
     
     func selectCell(didSelect: Bool) {
@@ -123,11 +123,11 @@ extension CourseListCVC {
             courseImageView.layer.borderColor = UIColor.m1.cgColor
             courseImageView.layer.borderWidth = 2
             imageCoverView.isHidden = false
-            selectIdicatorButton.isSelected = true
+            selectIndicatorButton.isSelected = true
         } else {
             courseImageView.layer.borderColor = UIColor.clear.cgColor
             imageCoverView.isHidden = true
-            selectIdicatorButton.isSelected = false
+            selectIndicatorButton.isSelected = false
             
         }
     }
@@ -153,7 +153,7 @@ extension CourseListCVC {
     }
     
     private func setLayout() {
-        self.contentView.addSubviews(courseImageView, imageCoverView, labelStackView, likeButton, selectIdicatorButton)
+        self.contentView.addSubviews(courseImageView, imageCoverView, labelStackView, likeButton, selectIndicatorButton)
     
         courseImageView.snp.makeConstraints { make in
             make.leading.top.trailing.equalToSuperview()
@@ -172,7 +172,7 @@ extension CourseListCVC {
             make.height.equalTo(20)
         }
         
-        selectIdicatorButton.snp.makeConstraints { make in
+        selectIndicatorButton.snp.makeConstraints { make in
             make.top.leading.equalToSuperview().inset(8)
             make.leading.equalToSuperview().offset(8)
             make.width.equalTo(20)
