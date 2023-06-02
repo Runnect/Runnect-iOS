@@ -76,10 +76,11 @@ final class CourseListCVC: UICollectionViewCell {
         $0.backgroundColor = .w1
     }
     
-    private let checkMark = UIButton(type: .custom).then {
+    private let selectIdicatorButton = UIButton(type: .custom).then {
         $0.setImage(ImageLiterals.icCheckFill, for: .selected)
         $0.setImage(ImageLiterals.icCheck, for: .normal)
-        $0.backgroundColor = .clear
+        $0.isSelected = false
+        $0.isHidden = true
     }
     
     // MARK: - initialization
@@ -89,6 +90,7 @@ final class CourseListCVC: UICollectionViewCell {
         self.setUI()
         self.setLayout()
         self.setAddTarget()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -103,22 +105,17 @@ extension CourseListCVC {
         likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
     }
     
-    func setData(imageURL: String, title: String, location: String?, didLike: Bool?, didCheck: Bool?, indexPath: Int? = nil) {
+    func setData(imageURL: String, title: String, location: String?, didLike: Bool?, indexPath: Int? = nil, isEditMode: Bool = false) {
         self.courseImageView.setImage(with: imageURL)
         self.titleLabel.text = title
         self.indexPath = indexPath
-        
         if let location = location {
             self.locationLabel.text = location
         }
-        
         if let didLike = didLike {
             self.likeButton.isSelected = didLike
         }
-        
-        if let didCheck = didCheck {
-            self.checkMark.isSelected = didCheck
-        }
+        self.selectIdicatorButton.isHidden = !isEditMode
     }
     
     func selectCell(didSelect: Bool) {
@@ -126,11 +123,12 @@ extension CourseListCVC {
             courseImageView.layer.borderColor = UIColor.m1.cgColor
             courseImageView.layer.borderWidth = 2
             imageCoverView.isHidden = false
-            checkMark.isSelected.toggle()
+            selectIdicatorButton.isSelected = true
         } else {
             courseImageView.layer.borderColor = UIColor.clear.cgColor
             imageCoverView.isHidden = true
-            checkMark.isSelected.toggle()
+            selectIdicatorButton.isSelected = false
+            
         }
     }
 }
@@ -155,7 +153,7 @@ extension CourseListCVC {
     }
     
     private func setLayout() {
-        self.contentView.addSubviews(courseImageView, imageCoverView, labelStackView, likeButton, checkMark)
+        self.contentView.addSubviews(courseImageView, imageCoverView, labelStackView, likeButton, selectIdicatorButton)
     
         courseImageView.snp.makeConstraints { make in
             make.leading.top.trailing.equalToSuperview()
@@ -174,7 +172,7 @@ extension CourseListCVC {
             make.height.equalTo(20)
         }
         
-        checkMark.snp.makeConstraints { make in
+        selectIdicatorButton.snp.makeConstraints { make in
             make.top.equalTo(courseImageView.snp.top).offset(8)
             make.leading.equalToSuperview().offset(8)
             make.width.equalTo(20)
@@ -193,15 +191,12 @@ extension CourseListCVC {
         case .title:
             self.locationLabel.isHidden = true
             self.likeButton.isHidden = true
-            self.checkMark.isHidden = true
         case .titleWithLocation:
             self.locationLabel.isHidden = false
             self.likeButton.isHidden = true
-            self.checkMark.isHidden = true
         case .all:
             self.locationLabel.isHidden = false
             self.likeButton.isHidden = false
-            self.checkMark.isHidden = true
         }
     }
 }

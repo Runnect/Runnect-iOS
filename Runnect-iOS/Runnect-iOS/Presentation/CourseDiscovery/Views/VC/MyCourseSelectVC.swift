@@ -191,7 +191,7 @@ extension MyCourseSelectVC: UICollectionViewDelegate, UICollectionViewDataSource
             title += " \(town)"
         }
 
-        cell.setData(imageURL: model.image, title: title, location: nil, didLike: nil, didCheck: nil)
+        cell.setData(imageURL: model.image, title: title, location: nil, didLike: nil)
         
         return cell
     }

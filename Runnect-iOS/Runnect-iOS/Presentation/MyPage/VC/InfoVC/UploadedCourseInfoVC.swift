@@ -263,7 +263,7 @@ extension UploadedCourseInfoVC: UICollectionViewDelegateFlowLayout {
 
 // MARK: - UICollectionViewDataSource
 
-extension UploadedCourseInfoVC: UICollectionViewDelegate,UICollectionViewDataSource {
+extension UploadedCourseInfoVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return uploadedCourseList.count
     }
@@ -280,7 +280,7 @@ extension UploadedCourseInfoVC: UICollectionViewDelegate,UICollectionViewDataSou
 
         let model = uploadedCourseList[indexPath.item]
         let cellTitle =  "\(model.departure.region) \(model.departure.city)"
-        cell.setData(imageURL: model.image, title: cellTitle, location: nil, didLike: nil, didCheck: nil)
+        cell.setData(imageURL: model.image, title: cellTitle, location: nil, didLike: nil)
         return cell
     }
     
