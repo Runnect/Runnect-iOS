@@ -173,7 +173,7 @@ extension CourseListCVC {
         }
         
         selectIdicatorButton.snp.makeConstraints { make in
-            make.top.equalTo(courseImageView.snp.top).offset(8)
+            make.top.leading.equalToSuperview().inset(8)
             make.leading.equalToSuperview().offset(8)
             make.width.equalTo(20)
             make.height.equalTo(20)
