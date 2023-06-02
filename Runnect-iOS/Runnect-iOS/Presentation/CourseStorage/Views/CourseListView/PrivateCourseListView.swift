@@ -33,7 +33,6 @@ final class PrivateCourseListView: UIView {
         }
     }
    
-    
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
     final let itemSpacing: CGFloat = 10
     final let lineSpacing: CGFloat = 20
@@ -125,7 +124,6 @@ extension PrivateCourseListView {
     }
     
     private func startEditMode() {
-        self.setEditModeCell()
         self.totalNumOfRecordlabel.text = "코스 선택"
         self.editButton.setTitle("취소", for: .normal)
     }
@@ -139,12 +137,6 @@ extension PrivateCourseListView {
     private func deselectAllItems() {
         guard let selectedItems = courseListCollectionView.indexPathsForSelectedItems else { return }
         for indexPath in selectedItems { courseListCollectionView.deselectItem(at: indexPath, animated: false) }
-    }
-    private func setEditModeCell() {
-        let cell = courseListCollectionView.indexPathsForVisibleItems
-        for indexPath in cell {
-            courseListCollectionView.cellForItem(at: indexPath)
-        }
     }
 }
 
@@ -222,16 +214,11 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
             delegate?.selectCellDidTapped()
         } else {
             collectionView.deselectItem(at: indexPath, animated: true)
-            cell.selectCell(didSelect: false)
             cellDidTapped.send(indexPath.item)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        guard let selectedCells = collectionView.indexPathsForSelectedItems else {
-            return
-        }
-        
         guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else { return }
         
         if isEditMode {

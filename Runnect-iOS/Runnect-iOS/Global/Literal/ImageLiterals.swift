@@ -47,7 +47,6 @@ enum ImageLiterals {
     static var icCheck: UIImage { .load(named: "ic_check") }
     static var icCheckFill: UIImage { .load(named: "ic_check_fill") }
     
-
     // img
     static var imgBackground: UIImage { .load(named: "img_background") }
     static var imgLogo: UIImage { .load(named: "img_logo") }
