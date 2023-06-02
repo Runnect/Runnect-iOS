@@ -19,7 +19,11 @@ final class UploadedCourseInfoVC: UIViewController {
     
     private var uploadedCourseList = [PublicCourse]()
     
-    var isEditMode: Bool = false
+    var isEditMode: Bool = false {
+        didSet {
+            isEditMode ? startEditMode() : finishEditMode()
+        }
+    }
     
     private var deleteToCourseId = [Int]()
     
@@ -104,7 +108,7 @@ final class UploadedCourseInfoVC: UIViewController {
 extension UploadedCourseInfoVC {
     private func setData(courseList: [PublicCourse]) {
         self.uploadedCourseList = courseList
-        UploadedCourseInfoCollectionView.reloadData()
+        self.UploadedCourseInfoCollectionView.reloadData()
         self.emptyView.isHidden = !courseList.isEmpty
         self.deleteCourseButton.isHidden = true
         self.beforeEditTopView.isHidden = courseList.isEmpty
@@ -127,10 +131,30 @@ extension UploadedCourseInfoVC {
         self.editButton.addTarget(self, action: #selector(editButtonDidTap), for: .touchUpInside)
         
     }
+    private func startEditMode() {
+        self.totalNumOfRecordlabel.text = "코스 선택"
+        self.editButton.setTitle("취소", for: .normal)
+        self.deleteCourseButton.isHidden = false
+    }
+    
+    private func finishEditMode() {
+        self.totalNumOfRecordlabel.text = "총 코스 \(self.uploadedCourseList.count)개"
+        self.editButton.setTitle("편집", for: .normal)
+        self.deleteCourseButton.isEnabled = false
+        self.deleteCourseButton.setTitle(title: "삭제하기")
+        self.deleteCourseButton.isHidden = true
+        self.deselectAllItems()
+    }
+    
+    private func deselectAllItems() {
+        guard let selectedItems = UploadedCourseInfoCollectionView.indexPathsForSelectedItems else { return }
+        for indexPath in selectedItems { UploadedCourseInfoCollectionView.deselectItem(at: indexPath, animated: false) }
+    }
     
     private func setDeleteButton() {
         deleteCourseButton.addTarget(self, action: #selector(deleteCourseButtonDidTap), for: .touchUpInside)
     }
+    
 }
 
 // MARK: - @objc Function
@@ -155,22 +179,8 @@ extension UploadedCourseInfoVC {
     }
     
     @objc func editButtonDidTap() {
-        if isEditMode {
-            self.totalNumOfRecordlabel.text = "총 코스 \(self.uploadedCourseList.count)개"
-            self.editButton.setTitle("편집", for: .normal)
-            self.deleteCourseButton.isEnabled = false
-            self.deleteCourseButton.setTitle(title: "삭제하기")
-            self.courseListCollectionView.reloadData()
-            isEditMode = false
-            self.deleteCourseButton.isHidden = true
-        } else {
-            self.totalNumOfRecordlabel.text = "기록 선택"
-            self.editButton.setTitle("취소", for: .normal)
-            
-            self.deleteCourseButton.isHidden = false
-            self.courseListCollectionView.reloadData()
-            isEditMode = true
-       }
+        isEditMode.toggle()
+        self.UploadedCourseInfoCollectionView.reloadData()
     }
 }
 
@@ -257,7 +267,7 @@ extension UploadedCourseInfoVC: UICollectionViewDelegateFlowLayout {
 
 // MARK: - UICollectionViewDataSource
 
-extension UploadedCourseInfoVC: UICollectionViewDataSource {
+extension UploadedCourseInfoVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return uploadedCourseList.count
     }
@@ -266,65 +276,53 @@ extension UploadedCourseInfoVC: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath)
                 as? CourseListCVC else { return UICollectionViewCell() }
         cell.setCellType(type: .title)
+        if let selectedCells = collectionView.indexPathsForSelectedItems, selectedCells.contains(indexPath) {
+            cell.selectCell(didSelect: true)
+        } else {
+            cell.selectCell(didSelect: false)
+        }
+
         let model = uploadedCourseList[indexPath.item]
         let cellTitle =  "\(model.departure.region) \(model.departure.city)"
-        cell.setData(imageURL: model.image, title: cellTitle, location: nil, didLike: nil)
-        
-        if isEditMode {
-            // selectCell 표시
-            if let selectedCells = collectionView.indexPathsForSelectedItems, selectedCells.contains(indexPath) {
-                cell.selectCell(didSelect: false)
-            } else { cell.selectCell(didSelect: true)
-            }
-        } else {
-            cell.setCellType(type: .title)
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className,
-                                                                for: indexPath)
-                    as? CourseListCVC else { return UICollectionViewCell() }
-            cell.setCellType(type: .title)
-        }
+        cell.setData(imageURL: model.image, title: cellTitle, location: nil, didLike: nil, isEditMode: isEditMode)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard collectionView.cellForItem(at: indexPath) is CourseListCVC else { return }
-        guard let selectedCells = collectionView.indexPathsForSelectedItems else { return }
         guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else { return }
         let publicCourseModel = uploadedCourseList[indexPath.item]
         if isEditMode {
             self.deleteCourseButton.isEnabled = true
-            let countSelectCells = selectedCells.count
-            self.deleteCourseButton.setTitle(title: "삭제하기(\(countSelectCells))")
             cell.selectCell(didSelect: true)
+            guard let selectedCells = collectionView.indexPathsForSelectedItems else { return }
+            
+            let countSelectCells = selectedCells.count
+            
+            if isEditMode {
+                self.deleteCourseButton.setTitle(title: "삭제하기(\(countSelectCells))")
+            }
+            self.deleteCourseButton.setEnabled(countSelectCells != 0)
         } else {
             collectionView.deselectItem(at: indexPath, animated: true)
-            self.deleteCourseButton.setTitle(title: "삭제하기")
-            self.deleteCourseButton.setEnabled(true)
             let courseDetailVC = CourseDetailVC()
             courseDetailVC.setCourseId(courseId: publicCourseModel.courseId, publicCourseId: publicCourseModel.id)
             courseDetailVC.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(courseDetailVC, animated: true)
-            cell.selectCell(didSelect: false)
         }
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        guard collectionView.cellForItem(at: indexPath) is CourseListCVC else { return }
-        guard let selectedCells = collectionView.indexPathsForSelectedItems else {
-            self.deleteCourseButton.isEnabled = false
-            self.deleteCourseButton.setTitle(title: "삭제하기")
-            return }
+        guard let selectedCells = collectionView.indexPathsForSelectedItems else { return }
         guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else { return }
         cell.selectCell(didSelect: false)
         if isEditMode {
-            self.deleteCourseButton.isEnabled = true
-            let countSelectCells = selectedCells.count
-            self.deleteCourseButton.setTitle(title: "삭제하기(\(countSelectCells))")
-            cell.selectCell(didSelect: false)
-        } else {
-            collectionView.deselectItem(at: indexPath, animated: true)
-            self.deleteCourseButton.setTitle(title: "삭제하기")
             cell.selectCell(didSelect: false)
         }
+        
+        let countSelectCells = selectedCells.count
+        if isEditMode {
+            self.deleteCourseButton.setTitle(title: "삭제하기(\(countSelectCells))")
+        }
+        self.deleteCourseButton.setEnabled(countSelectCells != 0)
     }
 }
 
@@ -369,6 +367,7 @@ extension UploadedCourseInfoVC {
                 let status = result.statusCode
                 if 200..<300 ~= status {
                     print("삭제 성공")
+                    self.isEditMode.toggle()
                     self.getUploadedCourseInfo()
                 }
                 if status >= 400 {

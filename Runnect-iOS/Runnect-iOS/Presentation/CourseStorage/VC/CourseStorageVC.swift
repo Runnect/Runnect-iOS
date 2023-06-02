@@ -86,7 +86,6 @@ extension CourseStorageVC {
     private func bindUI() {
         viewPager.$selectedTabIndex.sink { [weak self] selectedTabIndex in
             guard let self = self else { return }
-            print(selectedTabIndex)
             self.deleteCourseButton.isHidden = (selectedTabIndex != 0)
         }.store(in: cancelBag)
         

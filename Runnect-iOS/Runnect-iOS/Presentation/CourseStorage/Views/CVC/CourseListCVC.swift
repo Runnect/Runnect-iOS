@@ -76,6 +76,13 @@ final class CourseListCVC: UICollectionViewCell {
         $0.backgroundColor = .w1
     }
     
+    private let selectIndicatorButton = UIButton(type: .custom).then {
+        $0.setImage(ImageLiterals.icCheckFill, for: .selected)
+        $0.setImage(ImageLiterals.icCheck, for: .normal)
+        $0.isSelected = false
+        $0.isHidden = true
+    }
+    
     // MARK: - initialization
     
     override init(frame: CGRect) {
@@ -83,6 +90,7 @@ final class CourseListCVC: UICollectionViewCell {
         self.setUI()
         self.setLayout()
         self.setAddTarget()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -97,18 +105,17 @@ extension CourseListCVC {
         likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
     }
     
-    func setData(imageURL: String, title: String, location: String?, didLike: Bool?, indexPath: Int? = nil) {
+    func setData(imageURL: String, title: String, location: String?, didLike: Bool?, indexPath: Int? = nil, isEditMode: Bool = false) {
         self.courseImageView.setImage(with: imageURL)
         self.titleLabel.text = title
         self.indexPath = indexPath
-        
         if let location = location {
             self.locationLabel.text = location
         }
-        
         if let didLike = didLike {
             self.likeButton.isSelected = didLike
         }
+        self.selectIndicatorButton.isHidden = !isEditMode
     }
     
     func selectCell(didSelect: Bool) {
@@ -116,9 +123,12 @@ extension CourseListCVC {
             courseImageView.layer.borderColor = UIColor.m1.cgColor
             courseImageView.layer.borderWidth = 2
             imageCoverView.isHidden = false
+            selectIndicatorButton.isSelected = true
         } else {
             courseImageView.layer.borderColor = UIColor.clear.cgColor
             imageCoverView.isHidden = true
+            selectIndicatorButton.isSelected = false
+            
         }
     }
 }
@@ -143,7 +153,7 @@ extension CourseListCVC {
     }
     
     private func setLayout() {
-        self.contentView.addSubviews(courseImageView, imageCoverView, labelStackView, likeButton)
+        self.contentView.addSubviews(courseImageView, imageCoverView, labelStackView, likeButton, selectIndicatorButton)
     
         courseImageView.snp.makeConstraints { make in
             make.leading.top.trailing.equalToSuperview()
@@ -159,6 +169,13 @@ extension CourseListCVC {
             make.top.equalTo(courseImageView.snp.bottom).offset(4)
             make.trailing.equalToSuperview()
             make.width.equalTo(22)
+            make.height.equalTo(20)
+        }
+        
+        selectIndicatorButton.snp.makeConstraints { make in
+            make.top.leading.equalToSuperview().inset(8)
+            make.leading.equalToSuperview().offset(8)
+            make.width.equalTo(20)
             make.height.equalTo(20)
         }
         

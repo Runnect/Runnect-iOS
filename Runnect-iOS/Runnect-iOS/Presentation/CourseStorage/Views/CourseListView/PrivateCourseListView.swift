@@ -32,7 +32,7 @@ final class PrivateCourseListView: UIView {
             isEditMode ? startEditMode() : finishEditMode()
         }
     }
-    
+   
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
     final let itemSpacing: CGFloat = 10
     final let lineSpacing: CGFloat = 20
@@ -119,8 +119,8 @@ extension PrivateCourseListView {
 extension PrivateCourseListView {
     @objc func editButtonDidTap() {
         isEditMode.toggle()
-        
         self.delegate?.courseListEditButtonTapped()
+        self.courseListCollectionView.reloadData()
     }
     
     private func startEditMode() {
@@ -203,7 +203,7 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
 
         let model = courseList[indexPath.item]
         let cellTitle =  "\(model.departure.region) \(model.departure.city)"
-        cell.setData(imageURL: model.image, title: cellTitle, location: nil, didLike: nil)
+        cell.setData(imageURL: model.image, title: cellTitle, location: nil, didLike: nil, isEditMode: isEditMode)
         return cell
     }
     
@@ -219,16 +219,11 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        guard let selectedCells = collectionView.indexPathsForSelectedItems else {
-            return
-        }
-        
         guard let cell = collectionView.cellForItem(at: indexPath) as? CourseListCVC else { return }
         
         if isEditMode {
             cell.selectCell(didSelect: false)
         }
-        
         delegate?.selectCellDidTapped()
     }
 }
