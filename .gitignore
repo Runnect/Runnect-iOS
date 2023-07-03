@@ -111,4 +111,4 @@ iOSInjectionProject/
 Config.swift
 Gemfile.lock
 report.xml
-Runnect-iOS/fastlane/.env
+Runnect-iOS/fastlane/.env.default

@@ -28,4 +28,48 @@ platform :ios do
       xcodeproj: "./Runnect-iOS.xcodeproj"
     )
   end
+
+  desc "Testflight Upload"
+  lane :upload_testflight do |version|
+    version = version[:version]
+
+    match(
+      type: "appstore",
+      app_identifier: "com.runnect.Runnect-iOS",
+      readonly: true
+    )
+
+    if version
+      puts "버전 정보: #{version}"
+      set_version(version: version)
+    else 
+      puts "버전 입력 X"
+      increment_build_number(
+        build_number: Time.new.strftime("%Y.%m%d.%H%M"),
+        xcodeproj: "./Runnect-iOS.xcodeproj"
+      )
+    end
+
+    build_app(
+      output_directory:"./BuildOutputs",
+      scheme: "Runnect-iOS"
+    )
+
+    upload_to_testflight(skip_waiting_for_build_processing: true)
+  end
+
+  desc "Match all code signing"
+  lane :match_read_only do
+    match(
+      type: "appstore",
+      app_identifier: "com.runnect.Runnect-iOS",
+      readonly: true
+    )
+
+    match(
+      type: "development",
+      app_identifier: "com.runnect.Runnect-iOS",
+      readonly: true
+    )
+  end
 end
