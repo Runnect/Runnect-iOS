@@ -22,6 +22,7 @@ class AdImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.isScrollEnabled = true
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.isUserInteractionEnabled = true
         return collectionView
     }()
     
@@ -30,8 +31,8 @@ class AdImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
 
     // MARK: - UI Components
-    
-    var imgBanners: [UIImage] = [ImageLiterals.imgBanner1, ImageLiterals.imgBanner2, ImageLiterals.imgBanner3]
+    var eventImg: UIImage = ImageLiterals.imgBanner4
+    var imgBanners: [UIImage] = [ImageLiterals.imgBanner4, ImageLiterals.imgBanner1, ImageLiterals.imgBanner2]
     var currentPage: Int = 0
     private var timer: Timer?
     
@@ -44,6 +45,7 @@ class AdImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
         layout()
         setDelegate()
         startBannerSlide()
+        goToForm()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -77,11 +79,17 @@ extension AdImageCollectionViewCell {
         bannerCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
     
+    private func goToForm() {
+        // 이미지 뷰에 탭 제스처 추가
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+        bannerCollectionView.addGestureRecognizer(tapGesture)
+    }
+    
     internal func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let currentPage = Int(scrollView.contentOffset.x / scrollView.frame.width)
         pageControl.currentPage = currentPage % imgBanners.count
     }
-    
+
     // MARK: - Layout Helpers
     
     func layout() {
@@ -109,6 +117,13 @@ extension AdImageCollectionViewCell {
         }
         updatePageControl()
     }
+    @objc func imageTapped() {
+           // Safari 링크로 연결
+           if let url = URL(string: "https://docs.google.com/forms/d/1cpgZHNNi1kIvi2ZCwCIcMJcI1PkHBz9a5vWJb7FfIbg/edit") { // 연결하고자 하는 링크 주소에 따라 변경해야 합니다.
+               UIApplication.shared.open(url)
+           }
+       }
+    
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
