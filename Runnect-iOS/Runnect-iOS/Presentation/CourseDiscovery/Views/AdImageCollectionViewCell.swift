@@ -45,7 +45,6 @@ class AdImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
         layout()
         setDelegate()
         startBannerSlide()
-        goToForm()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -77,12 +76,6 @@ extension AdImageCollectionViewCell {
         pageControl.currentPage = currentIndex
         let indexPath = IndexPath(item: currentPage, section: 0)
         bannerCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-    }
-    
-    private func goToForm() {
-        // 이미지 뷰에 탭 제스처 추가
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
-        bannerCollectionView.addGestureRecognizer(tapGesture)
     }
     
     internal func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -117,13 +110,6 @@ extension AdImageCollectionViewCell {
         }
         updatePageControl()
     }
-    @objc func imageTapped() {
-           // Safari 링크로 연결
-           if let url = URL(string: "https://docs.google.com/forms/d/1cpgZHNNi1kIvi2ZCwCIcMJcI1PkHBz9a5vWJb7FfIbg/edit") { // 연결하고자 하는 링크 주소에 따라 변경해야 합니다.
-               UIApplication.shared.open(url)
-           }
-       }
-    
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
@@ -140,9 +126,23 @@ extension AdImageCollectionViewCell: UICollectionViewDelegate, UICollectionViewD
         imageView.image = imgBanners[imageIndex]
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = true
         cell.contentView.addSubviews(imageView)
+        
+        if indexPath.item == 0 {
+                    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(firstCellTapped(_:)))
+                    imageView.addGestureRecognizer(tapGesture)
+                }
         return cell
     }
+    // 첫 번째 셀 클릭 이벤트 핸들러
+       @objc func firstCellTapped(_ gesture: UITapGestureRecognizer) {
+           // Safari 링크로 연결
+           if let url = URL(string: "https://docs.google.com/forms/d/1cpgZHNNi1kIvi2ZCwCIcMJcI1PkHBz9a5vWJb7FfIbg/edit") {
+               UIApplication.shared.open(url)
+           }
+       }
+    
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
