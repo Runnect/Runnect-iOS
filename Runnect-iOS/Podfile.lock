@@ -11,7 +11,7 @@ PODS:
     - KakaoSDKCommon/Common (= 2.14.0)
   - KakaoSDKUser (2.14.0):
     - KakaoSDKAuth (= 2.14.0)
-  - Kingfisher (7.4.1)
+  - Kingfisher (7.6.2)
   - Moya (15.0.0):
     - Moya/Core (= 15.0.0)
   - Moya/Core (15.0.0):
@@ -26,7 +26,7 @@ DEPENDENCIES:
   - KakaoSDKAuth
   - KakaoSDKCommon
   - KakaoSDKUser
-  - Kingfisher (~> 7.0)
+  - Kingfisher (~> 7.6.1)
   - Moya (~> 15.0)
   - NMapsMap
   - SnapKit (~> 5.6.0)
@@ -50,13 +50,13 @@ SPEC CHECKSUMS:
   KakaoSDKAuth: 8fca87815de22062a23297983f327613b087b8bb
   KakaoSDKCommon: 0ce638f7a2e49704943c0b74a087a9f8067bba1c
   KakaoSDKUser: 2ca18314ce72e6690f76cb1f6f9fbc771d31a803
-  Kingfisher: cd762a593a61b2fbecf7645c00f9a801a3ebfc9c
+  Kingfisher: 6c5449c6450c5239166510ba04afe374a98afc4f
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
   NMapsMap: 926c3a303d381a24bec8da3cd6e198f50af93ae9
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
-PODFILE CHECKSUM: fd71a741af1234cbd39c9117a0768b376c78640a
+PODFILE CHECKSUM: 3ff78d538165fc12192d51c2120502f7874b2924
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1
