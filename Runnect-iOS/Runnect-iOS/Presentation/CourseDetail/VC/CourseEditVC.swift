@@ -345,14 +345,20 @@ extension CourseEditVC: UITextViewDelegate {
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 8
-           
+        
+        // 커서 위치 저장
+        let selectedRange = textView.selectedRange
+        
         let attributedString = NSMutableAttributedString(string: textView.text)
         attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
-           
+
         textView.attributedText = attributedString
         textView.font = .b3
         textView.textColor = .g1
-                
+        
+        // 커서 위치 다시 설정
+        textView.selectedRange = selectedRange
+
         guard let courseTitleTextFieldText = self.courseTitleTextField.text else { return }
         textDidChanged(courseTitleTextFieldText, text)
         
