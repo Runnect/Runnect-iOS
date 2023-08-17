@@ -38,6 +38,10 @@ final class CourseDetailVC: UIViewController {
         $0.setImage(ImageLiterals.icMore, for: .normal)
         $0.tintColor = .g1
     }
+    private let shareButton = UIButton(type: .system).then {
+        $0.setImage(ImageLiterals.icShare, for: .normal)
+        $0.tintColor = .g1
+    }
     private lazy var middleScorollView = UIScrollView().then {
         $0.isScrollEnabled = true
         $0.showsVerticalScrollIndicator = false
@@ -179,6 +183,10 @@ extension CourseDetailVC {
         }
     }
     
+    @objc func shareButtonDidTap() {
+        
+    }
+    
     private func pushToCountDownVC() {
         guard let courseModel = self.courseModel,
               let path = courseModel.path,
@@ -248,12 +256,17 @@ extension CourseDetailVC {
     private func setNavigationBar() {
         view.addSubview(navibar)
         view.addSubview(moreButton)
+        view.addSubview(shareButton)
         navibar.snp.makeConstraints {  make in
             make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(48)
         }
         moreButton.snp.makeConstraints { make in
             make.trailing.equalTo(self.view.safeAreaLayoutGuide)
+            make.centerY.equalTo(navibar)
+        }
+        shareButton.snp.makeConstraints { make in
+            make.trailing.equalTo(moreButton.snp.leading).offset(4)
             make.centerY.equalTo(navibar)
         }
         
