@@ -22,6 +22,7 @@ class AdImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.isScrollEnabled = true
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.isUserInteractionEnabled = true
         return collectionView
     }()
     
@@ -30,8 +31,8 @@ class AdImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
 
     // MARK: - UI Components
-    
-    var imgBanners: [UIImage] = [ImageLiterals.imgBanner1, ImageLiterals.imgBanner2, ImageLiterals.imgBanner3]
+    var eventImg: UIImage = ImageLiterals.imgBanner4
+    var imgBanners: [UIImage] = [ImageLiterals.imgBanner4, ImageLiterals.imgBanner1, ImageLiterals.imgBanner2]
     var currentPage: Int = 0
     private var timer: Timer?
     
@@ -81,7 +82,7 @@ extension AdImageCollectionViewCell {
         let currentPage = Int(scrollView.contentOffset.x / scrollView.frame.width)
         pageControl.currentPage = currentPage % imgBanners.count
     }
-    
+
     // MARK: - Layout Helpers
     
     func layout() {
@@ -125,9 +126,23 @@ extension AdImageCollectionViewCell: UICollectionViewDelegate, UICollectionViewD
         imageView.image = imgBanners[imageIndex]
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = true
         cell.contentView.addSubviews(imageView)
+        
+        if indexPath.item == 0 {
+                    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(firstCellTapped(_:)))
+                    imageView.addGestureRecognizer(tapGesture)
+                }
         return cell
     }
+    // 첫 번째 셀 클릭 이벤트 핸들러
+       @objc func firstCellTapped(_ gesture: UITapGestureRecognizer) {
+           // Safari 링크로 연결
+           if let url = URL(string: "https://docs.google.com/forms/d/1cpgZHNNi1kIvi2ZCwCIcMJcI1PkHBz9a5vWJb7FfIbg/edit") {
+               UIApplication.shared.open(url)
+           }
+       }
+    
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
