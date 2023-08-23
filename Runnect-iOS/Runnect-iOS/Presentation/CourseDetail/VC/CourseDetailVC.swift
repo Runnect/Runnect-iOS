@@ -184,7 +184,51 @@ extension CourseDetailVC {
     }
     
     @objc func shareButtonDidTap() {
-        
+        guard let model = self.uploadedCourseDetailModel else {
+                  return
+              }
+
+              let courseId = model.publicCourse.courseId
+              let courseDescription = model.publicCourse.description
+
+              // Create a deep link URL for your app
+              let deepLinkURLString = "myapp://detail?courseId=\(courseId)"
+
+              // Create an array of items to share
+              var itemsToShare: [Any] = []
+
+              // Add course description
+              itemsToShare.append(courseDescription!)
+
+              // Check if your app is installed
+              if let deepLinkURL = URL(string: deepLinkURLString),
+                 UIApplication.shared.canOpenURL(deepLinkURL) {
+                  // Your app is installed, share the deep link
+                  itemsToShare.append(deepLinkURL)
+              } else {
+                  // Your app is not installed, share the app store link
+                  let appBundleID = "com.runnect.Runnect-iOS"
+                  let appStoreURLString = "https://itunes.apple.com/app/id\(appBundleID)"
+
+                  if let appStoreURL = URL(string: appStoreURLString) {
+                      itemsToShare.append(appStoreURL)
+                  }
+              }
+
+              // Create an activity view controller
+              let activityViewController = UIActivityViewController(activityItems: itemsToShare, applicationActivities: nil)
+
+              // Remove the excludedActivityTypes array to include all options
+              activityViewController.excludedActivityTypes = nil
+
+              // Present the activity view controller
+              if let popoverPresentationController = activityViewController.popoverPresentationController {
+                  popoverPresentationController.sourceView = self.view
+                  popoverPresentationController.sourceRect = self.shareButton.frame
+              }
+
+              present(activityViewController, animated: true, completion: nil)
+
     }
     
     private func pushToCountDownVC() {
@@ -239,6 +283,8 @@ extension CourseDetailVC {
     private func setAddTarget() {
         likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
         moreButton.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
+        shareButton.addTarget(self, action: #selector(shareButtonDidTap), for: .touchUpInside)
+        
     }
     
     private func setNullUser() {
