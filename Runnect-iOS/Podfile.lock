@@ -1,23 +1,23 @@
 PODS:
-  - Alamofire (5.6.4)
-  - KakaoSDKAuth (2.14.0):
-    - KakaoSDKCommon (= 2.14.0)
-  - KakaoSDKCommon (2.14.0):
-    - KakaoSDKCommon/Common (= 2.14.0)
-    - KakaoSDKCommon/Network (= 2.14.0)
-  - KakaoSDKCommon/Common (2.14.0)
-  - KakaoSDKCommon/Network (2.14.0):
+  - Alamofire (5.7.1)
+  - KakaoSDKAuth (2.16.0):
+    - KakaoSDKCommon (= 2.16.0)
+  - KakaoSDKCommon (2.16.0):
+    - KakaoSDKCommon/Common (= 2.16.0)
+    - KakaoSDKCommon/Network (= 2.16.0)
+  - KakaoSDKCommon/Common (2.16.0)
+  - KakaoSDKCommon/Network (2.16.0):
     - Alamofire (~> 5.1)
-    - KakaoSDKCommon/Common (= 2.14.0)
-  - KakaoSDKUser (2.14.0):
-    - KakaoSDKAuth (= 2.14.0)
-  - Kingfisher (7.4.1)
+    - KakaoSDKCommon/Common (= 2.16.0)
+  - KakaoSDKUser (2.16.0):
+    - KakaoSDKAuth (= 2.16.0)
+  - Kingfisher (7.9.1)
   - Moya (15.0.0):
     - Moya/Core (= 15.0.0)
   - Moya/Core (15.0.0):
     - Alamofire (~> 5.0)
   - NMapsGeometry (1.0.1)
-  - NMapsMap (3.16.1):
+  - NMapsMap (3.17.0):
     - NMapsGeometry
   - SnapKit (5.6.0)
   - Then (3.0.0)
@@ -46,14 +46,14 @@ SPEC REPOS:
     - Then
 
 SPEC CHECKSUMS:
-  Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
-  KakaoSDKAuth: 8fca87815de22062a23297983f327613b087b8bb
-  KakaoSDKCommon: 0ce638f7a2e49704943c0b74a087a9f8067bba1c
-  KakaoSDKUser: 2ca18314ce72e6690f76cb1f6f9fbc771d31a803
-  Kingfisher: cd762a593a61b2fbecf7645c00f9a801a3ebfc9c
+  Alamofire: 0123a34370cb170936ae79a8df46cc62b2edeb88
+  KakaoSDKAuth: 1b85ed7c41b0517bfd1fc9dc46c292c75b8cb610
+  KakaoSDKCommon: d6579aa2e9d963d74e13d741cbf1cce48b8b0c17
+  KakaoSDKUser: 427e5b3884abd19ee6d9a7bd6e3f3029eb2968b8
+  Kingfisher: 1d14e9f59cbe19389f591c929000332bf70efd32
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
-  NMapsMap: 926c3a303d381a24bec8da3cd6e198f50af93ae9
+  NMapsMap: a5b909a31b6f3d27a670f6eb2ddc913c38975474
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
