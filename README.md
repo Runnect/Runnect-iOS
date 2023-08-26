@@ -16,10 +16,10 @@ Runnect는 Run과 connect의 합성어로 직접 코스를 그리고 공유하�
 <br>
 
 ##  Team Runnect iOS Developers
-![미모티콘](https://user-images.githubusercontent.com/77267404/210303677-1354bea7-fba4-4824-a22a-27ba56327370.png) | ![KakaoTalk_Photo_2023-01-03-14-20-26](https://user-images.githubusercontent.com/77267404/210303710-db640ea4-a716-4947-812a-9b19aae8d2a4.png) | ![KakaoTalk_Photo_2023-01-03-14-18-19](https://user-images.githubusercontent.com/77267404/210303572-f9581df7-c3c0-46a8-9c63-219384d6dd64.png) |
- :---------:|:----------:|:---------:
- 이세진 | 이연우 | 이재현 |
-  👨🏻‍🌾 | 🥔 | 🍠
+![미모티콘](https://user-images.githubusercontent.com/77267404/210303677-1354bea7-fba4-4824-a22a-27ba56327370.png) | ![KakaoTalk_Photo_2023-01-03-14-20-26](https://user-images.githubusercontent.com/77267404/210303710-db640ea4-a716-4947-812a-9b19aae8d2a4.png) | ![KakaoTalk_Photo_2023-01-03-14-18-19](https://user-images.githubusercontent.com/77267404/210303572-f9581df7-c3c0-46a8-9c63-219384d6dd64.png) | ![image](https://github.com/Runnect/Runnect-iOS/assets/88179341/a3633fff-f50b-4afa-a54f-8bd0b3d8668c) | ![image](https://github.com/Runnect/Runnect-iOS/assets/88179341/f8884b2b-4cd6-4077-9d9f-683e62f8137f) |
+ :---------:|:----------:|:---------:|:---------:|:----------:
+ 이세진 | 이연우 | 이재현 |  이명진 | 이소진 |
+  👨🏻‍🌾 | 🥔 | 🍠 | 😸 | 🐶 |
 
 
 <br>
