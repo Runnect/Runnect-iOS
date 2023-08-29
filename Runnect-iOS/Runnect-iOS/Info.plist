@@ -26,6 +26,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>kakao27d01e20b51e5925bf386a6c5465849f</string>
+				<string>myapp</string>
 			</array>
 		</dict>
 	</array>

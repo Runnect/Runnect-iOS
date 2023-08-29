@@ -56,6 +56,7 @@ final class CustomNavigationBar: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }
 
 // MARK: - Methods
@@ -68,6 +69,7 @@ extension CustomNavigationBar {
             [self.leftTitleLabel, self.centerTitleLabel, self.leftButton, self.rightButton, self.reportButton].forEach { $0.alpha = isHidden ? 0 : 1 }
         }
     }
+    
     
     private func setAddTarget(_ type: NaviType) {
         self.naviType = type
@@ -315,4 +317,7 @@ extension CustomNavigationBar: UITextFieldDelegate {
         self.hideKeyboard()
         return true
     }
+    
+    
+    
 }

@@ -12,6 +12,9 @@ import Then
 import NMapsMap
 import Moya
 import SafariServices
+import KakaoSDKCommon
+import KakaoSDKShare
+import KakaoSDKTemplate
 
 final class CourseDetailVC: UIViewController {
     
@@ -31,11 +34,17 @@ final class CourseDetailVC: UIViewController {
     private var publicCourseId: Int?
     private var isMyCourse: Bool?
     
+    private var safariViewController : SFSafariViewController?
+    
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton)
     private let moreButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icMore, for: .normal)
+        $0.tintColor = .g1
+    }
+    private let shareButton = UIButton(type: .system).then {
+        $0.setImage(ImageLiterals.icShareButton, for: .normal)
         $0.tintColor = .g1
     }
     private lazy var middleScorollView = UIScrollView().then {
@@ -56,6 +65,11 @@ final class CourseDetailVC: UIViewController {
     
     private lazy var startButton = CustomButton(title: "시작하기").then {
         $0.addTarget(self, action: #selector(startButtonDidTap), for: .touchUpInside)
+    }
+    
+    private lazy var followButton = UIButton(type: .custom).then {
+        $0.setImage(ImageLiterals.icFollowButton, for: .normal)
+        $0.setImage(ImageLiterals.icFollowedButton, for: .selected)
     }
     
     private let mapImageView = UIImageView()
@@ -135,12 +149,133 @@ extension CourseDetailVC {
         scrapCourse(scrapTF: !sender.isSelected)
     }
     
+    @objc func followButtonTapped() {
+        followButton.isSelected.toggle()
+    }
+    
+//    @objc func shareButtonTapped() {
+//        guard let model = self.uploadedCourseDetailModel else {
+//            return
+//        }
+//
+//        let courseImage = model.publicCourse.image
+//        let courseId = model.publicCourse.courseId
+//        let courseTitle = model.publicCourse.title
+//        let courseDescription = model.publicCourse.description
+//
+//        // Create a deep link URL for your app
+//        let deepLinkURLString = "myapp://detail?courseId=\(courseId)"
+//
+//        // 공유할 배열 생성
+//        var itemsToShare: [Any] = []
+//
+//        // Add course description
+////        itemsToShare.append(courseImage)
+////        itemsToShare.append(courseTitle)
+////        itemsToShare.append(courseDescription!)
+//
+//        // Check if your app is installed
+//        if let deepLinkURL = URL(string: deepLinkURLString),
+//           UIApplication.shared.canOpenURL(deepLinkURL) {
+//            // Your app is installed, share the deep link
+//            itemsToShare.append(deepLinkURL)
+//        } else {
+//            // Your app is not installed, share the app store link
+//            let appBundleID = "com.runnect.Runnect-iOS"
+//            let appStoreURLString = "https://itunes.apple.com/app/id\(appBundleID)"
+//
+//            if let appStoreURL = URL(string: appStoreURLString) {
+//                itemsToShare.append(appStoreURL)
+//            }
+//        }
+//
+//        // Create an activity view controller
+//        let activityViewController = UIActivityViewController(activityItems: itemsToShare, applicationActivities: nil)
+//
+//        // Remove the excludedActivityTypes array to include all options
+//        activityViewController.excludedActivityTypes = nil
+//
+//        // Present the activity view controller
+//        if let popoverPresentationController = activityViewController.popoverPresentationController {
+//            popoverPresentationController.sourceView = self.view
+//            popoverPresentationController.sourceRect = self.shareButton.frame
+//        }
+//
+//        present(activityViewController, animated: true, completion: nil)
+//    }
+    
+    @objc func shareButtonTapped() {
+        
+        guard let model = self.uploadedCourseDetailModel else {
+            return
+        }
+
+        let title = model.publicCourse.title
+        let courseId = model.publicCourse.courseId
+        let courseImage = model.publicCourse.image
+        let courseDescription = model.publicCourse.description
+        let deepLinkURLString = "myapp://detail?courseId=\(courseId)"
+
+        // Send the feed message using KakaoLink API
+        if ShareApi.isKakaoTalkSharingAvailable() {
+            
+            // Web Link로 전송이 된다. 하지만 우리는 앱 링크를 받을거기 때문에 딱히 필요가 없으.
+            // 아래 줄을 주석해도 상관없다.
+            let link = Link(mobileWebUrl: URL(string: deepLinkURLString))
+            
+            // 우리가 원하는 앱으로 보내주는 링크이다.
+            // second, vvv는 url 링크 마지막에 딸려서 오기 때문에, 이 파라미터를 바탕으로 파싱해서
+            // 앱단에서 원하는 기능을 만들어서 실행할 수 있다 예를 들면 다른 뷰 페이지로 이동 등등~
+            let appLink = Link(iosExecutionParams: ["key1": "courseId=\(courseId)"])
+
+            // 해당 appLink를 들고 있을 버튼을 만들어준다.
+            let button = Button(title: "앱에서 보기", link: link)
+            
+            // Content는 이제 사진과 함께 글들이 적혀있다.
+            let content = Content(title: title,
+                                imageUrl: URL(string: courseImage)!,
+                                description: courseDescription,
+                                link: appLink)
+            
+            // 템플릿에 버튼을 추가할때 아래 buttons에 배열의 형태로 넣어준다.
+            // 만약 버튼을 하나 더 추가하려면 버튼 변수를 만들고 [button, button2] 이런 식으로 진행하면 된다 .
+            let template = FeedTemplate(content: content, buttons: [button])
+            
+            // 메시지 템플릿 encode
+            if let templateJsonData = (try? SdkJSONEncoder.custom.encode(template)) {
+                
+                // 생성한 메시지 템플릿 객체를 jsonObject로 변환
+                if let templateJsonObject = SdkUtils.toJsonObject(templateJsonData) {
+                    ShareApi.shared.shareDefault(templateObject: templateJsonObject) {(linkResult, error) in
+                        if let error = error {
+                            print("error : \(error)")
+                        } else {
+                            print("defaultLink(templateObject:templateJsonObject) success.")
+                            guard let linkResult = linkResult else { return }
+                            UIApplication.shared.open(linkResult.url, options: [:], completionHandler: nil)
+                        }
+                    }
+                }
+            }
+        } else {
+            // 없을 경우 카카오톡 앱스토어로 이동합니다. (이거 하려면 URL Scheme에 itms-apps 추가 해야함)
+            let appBundleID = "com.runnect.Runnect-iOS"
+            let appStoreURLString = "https://itunes.apple.com/app/id\(appBundleID)"
+            if let url = URL(string: appStoreURLString), UIApplication.shared.canOpenURL(url) {
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+            }
+        }
+    }
+
     @objc func startButtonDidTap() {
         guard handleVisitor() else { return }
         guard let courseId = self.courseId else { return }
         getCourseDetailWithPath(courseId: courseId)
     }
-    
     @objc func moreButtonDidTap() {
         guard let isMyCourse = self.isMyCourse, let uploadedCourseDetailModel = self.uploadedCourseDetailModel else { return }
         
@@ -231,6 +366,8 @@ extension CourseDetailVC {
     private func setAddTarget() {
         likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
         moreButton.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
+        followButton.addTarget(self, action: #selector(followButtonTapped), for: .touchUpInside)
+        shareButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
     }
     
     private func setNullUser() {
@@ -239,6 +376,7 @@ extension CourseDetailVC {
         self.profileNameLabel.text = "(알 수 없음)"
         self.runningLevelLabel.isHidden = true
     }
+    
 }
 
 // MARK: - Layout Helpers
@@ -248,6 +386,7 @@ extension CourseDetailVC {
     private func setNavigationBar() {
         view.addSubview(navibar)
         view.addSubview(moreButton)
+        view.addSubview(shareButton)
         navibar.snp.makeConstraints {  make in
             make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(48)
@@ -256,7 +395,10 @@ extension CourseDetailVC {
             make.trailing.equalTo(self.view.safeAreaLayoutGuide)
             make.centerY.equalTo(navibar)
         }
-        
+        shareButton.snp.makeConstraints { make in
+            make.trailing.leading.equalTo(self.view.safeAreaLayoutGuide).offset(135)
+            make.centerY.equalTo(navibar)
+        }
     }
     
     private func setUI() {
@@ -309,7 +451,7 @@ extension CourseDetailVC {
             make.bottom.equalTo(thirdHorizontalDivideLine.snp.top)
         }
         
-        middleScorollView.addSubviews(mapImageView, profileImageView, profileNameLabel, runningLevelLabel, firstHorizontalDivideLine, courseTitleLabel, courseDetailStackView, secondHorizontalDivideLine, courseExplanationTextView)
+        middleScorollView.addSubviews(mapImageView, profileImageView, profileNameLabel, runningLevelLabel, followButton, firstHorizontalDivideLine, courseTitleLabel, courseDetailStackView, secondHorizontalDivideLine, courseExplanationTextView)
         
         mapImageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -330,7 +472,12 @@ extension CourseDetailVC {
         
         runningLevelLabel.snp.makeConstraints { make in
             make.bottom.equalTo(profileNameLabel.snp.bottom)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(31)
+            make.leading.equalTo(profileNameLabel.snp.trailing).offset(10)
+        }
+        
+        followButton.snp.makeConstraints { make in
+            make.centerY.equalTo(profileNameLabel.snp.centerY)
+            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-16)
         }
         
         firstHorizontalDivideLine.snp.makeConstraints { make in
@@ -473,3 +620,46 @@ extension CourseDetailVC {
         }
     }
 }
+
+// CourseDetailVC.swift 파일 내에서 'CourseDetailVC' 클래스 안에 추가합니다.
+extension CourseDetailVC {
+    func navigateToCourseView(with courseId: String) {
+        // courseId를 기반으로 원하는 뷰 컨트롤러로 이동하는 로직을 구현하세요.
+        // 예를 들어, courseId를 사용하여 특정 뷰 컨트롤러를 생성하고 데이터를 설정한 다음에 pushViewController를 사용하여 이동할 수 있습니다.
+        // 이동하는 방식은 여러 가지가 가능하므로 원하는 방식대로 구현하세요.
+        
+        // 예시 코드:
+        let destinationVC = CourseDetailVC() // 이 부분을 원하는 뷰 컨트롤러로 변경하세요.
+        destinationVC.courseId = Int(courseId) // 뷰 컨트롤러에 필요한 데이터 설정
+        
+        // navigationController가 존재한다고 가정하고, pushViewController를 사용하여 이동합니다.
+        self.navigationController?.pushViewController(destinationVC, animated: true)
+    }
+}
+
+#if DEBUG
+import SwiftUI
+struct Preview: UIViewControllerRepresentable {
+    
+    func makeUIViewController(context: Context) -> UIViewController {
+        // 이부분
+        CourseDetailVC()
+        // 이거 보고싶은 현재 VC로 바꾸셈
+    }
+    
+    func updateUIViewController(_ uiView: UIViewController, context: Context) {
+        // leave this empty
+    }
+}
+
+struct ViewController_PreviewProvider: PreviewProvider {
+    static var previews: some View {
+        Group {
+            Preview()
+                .edgesIgnoringSafeArea(.all)
+                .previewDisplayName("Preview")
+                .previewDevice(PreviewDevice(rawValue: "iPhone 12 Pro"))
+        }
+    }
+}
+#endif

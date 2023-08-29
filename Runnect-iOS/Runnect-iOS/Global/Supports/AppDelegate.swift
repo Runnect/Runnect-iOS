@@ -14,6 +14,8 @@ import KakaoSDKCommon
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    var window: UIWindow?
+    
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         if let url = URLContexts.first?.url {
             if (AuthApi.isKakaoTalkLoginUrl(url)) {
@@ -34,6 +36,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+    
+    // Handle deep linking
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        if let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+           let host = components.host,
+           let queryItems = components.queryItems {
+            
+            // Handle deep link URL here
+            if host == "detail" {
+                if let courseId = queryItems.first(where: { $0.name == "courseId" })?.value {
+                    // Now you can navigate to your desired view controller based on the courseId
+                    if let navigationController = window?.rootViewController as? UINavigationController,
+                       let courseDetailVC = navigationController.viewControllers.first as? CourseDetailVC {
+                        // Call a method in your CourseDetailVC to navigate to the desired view
+                        courseDetailVC.navigateToCourseView(with: courseId)
+                    }
+                }
+            }
+        }
+        return false
+    }
+    
 
     // MARK: UISceneSession Lifecycle
 

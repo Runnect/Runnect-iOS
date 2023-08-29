@@ -27,6 +27,16 @@ final class DepartureSearchVC: UIViewController {
         $0.backgroundColor = .g5
     }
     
+    private let selectNowButton = UIButton(type: .custom).then {
+        $0.setImage(ImageLiterals.icSelectNowButton, for: .normal)
+        $0.tintColor = .g1
+    }
+    
+    private let selectMapButton = UIButton(type: .custom).then {
+        $0.setImage(ImageLiterals.icSelectMapButton, for: .normal)
+        $0.tintColor = .g3
+    }
+    
     private let locationTableView = UITableView(frame: .zero, style: .plain).then {
         $0.backgroundColor = .white
         $0.separatorStyle = .none
@@ -92,7 +102,7 @@ extension DepartureSearchVC {
     }
     
     private func setLayout() {
-        view.addSubviews(naviBar, dividerView, locationTableView)
+        view.addSubviews(naviBar, dividerView, locationTableView, selectNowButton, selectMapButton)
         
         naviBar.snp.makeConstraints { make in
             make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -103,6 +113,17 @@ extension DepartureSearchVC {
             make.top.equalTo(naviBar.snp.bottom)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(6)
+        }
+        
+        selectNowButton.snp.makeConstraints { make in
+            make.top.equalTo(dividerView.snp.bottom)
+            make.height.equalTo(40)
+        }
+        
+        selectMapButton.snp.makeConstraints { make in
+            make.top.equalTo(dividerView.snp.bottom)
+            make.leading.equalTo(selectNowButton.snp.trailing)
+            make.height.equalTo(40)
         }
         
         locationTableView.snp.makeConstraints { make in
@@ -157,6 +178,9 @@ extension DepartureSearchVC: UITableViewDelegate, UITableViewDataSource {
 extension DepartureSearchVC: CustomNavigationBarDelegate {
     func searchButtonDidTap(text: String) {
         searchAddressWithKeyword(keyword: text)
+        // 검색 바 입력 시 버튼 숨김 처리
+        selectNowButton.isHidden = true
+        selectMapButton.isHidden = true
     }
 }
 
