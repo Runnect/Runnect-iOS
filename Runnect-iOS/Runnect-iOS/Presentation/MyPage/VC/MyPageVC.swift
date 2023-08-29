@@ -56,7 +56,7 @@ final class MyPageVC: UIViewController {
         $0.addGestureRecognizer(tap)
     }
     
-    private let myRunningLevelLavel = UILabel()
+    private let myRunningLevelLabel = UILabel()
     
     private lazy var myRunningProgressBar = UIProgressView(progressViewStyle: .bar).then {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -196,7 +196,7 @@ extension MyPageVC {
         self.myProfileNameLabel.text = model.user.nickname
         self.myRunningProgressBar.setProgress(Float(model.user.levelPercent)/100, animated: false)
         setMyRunningProgressPercentLabel(label: myRunnigProgressPercentLabel, model: model)
-        setMyRunningLevelLavel(label: myRunningLevelLavel, model: model)
+        setMyRunningLevelLabel(label: myRunningLevelLabel, model: model)
         setMyProfileImage(model: model)
     }
     
@@ -206,7 +206,7 @@ extension MyPageVC {
         label.attributedText = attributedString
     }
     
-    private func setMyRunningLevelLavel(label: UILabel, model: MyPageDto) {
+    private func setMyRunningLevelLabel(label: UILabel, model: MyPageDto) {
         let attributedString = NSMutableAttributedString(string: "LV ", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1])
         attributedString.append(NSAttributedString(string: String(model.user.level), attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1]))
         label.attributedText = attributedString
@@ -329,16 +329,16 @@ extension MyPageVC {
     }
     
     private func setRunningProgressLayout() {
-        myRunningProgressView.addSubviews(myRunningLevelLavel, myRunningProgressBar,
+        myRunningProgressView.addSubviews(myRunningLevelLabel, myRunningProgressBar,
                                           myRunnigProgressPercentLabel)
         
-        myRunningLevelLavel.snp.makeConstraints { make in
+        myRunningLevelLabel.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.equalToSuperview().offset(3)
         }
         
         myRunningProgressBar.snp.makeConstraints { make in
-            make.top.equalTo(myRunningLevelLavel.snp.bottom).offset(6)
+            make.top.equalTo(myRunningLevelLabel.snp.bottom).offset(6)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(11)
         }
@@ -395,7 +395,7 @@ extension MyPageVC {
         settingView.snp.makeConstraints { make in
             make.top.equalTo(fourthDivideView.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(60)
+            make.height.equalTo(100)
         }
     
     }
