@@ -941,8 +941,8 @@
 		CE6655AF295D7FF600C64E12 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				CE5875A1296015A2005D967E /* NetworkLoggerPlugin.swift */,
 				CE40BB1D2968054F0030ABCA /* BaseResponse.swift */,
+				CE5875A1296015A2005D967E /* NetworkLoggerPlugin.swift */,
 				CE40BB1F296805F70030ABCA /* NetworkResult.swift */,
 				CE40BB21296806140030ABCA /* NetworkHelper.swift */,
 				712F661C2A7B7BAB00D9539B /* Config.swift */,
@@ -1043,8 +1043,8 @@
 				CE9291262965D0ED0010959C /* StatsInfoView.swift */,
 				CE6B63D729673450003F900F /* ListEmptyView.swift */,
 				CEB0BCBB29D123350048CCD5 /* GuideView.swift */,
-				A3C2CAD629E53B2900EC525B /* RNAlertVC.swift */,
 				CED791B22A2626AF001BFCFB /* ShadowView.swift */,
+				A3C2CAD629E53B2900EC525B /* RNAlertVC.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
