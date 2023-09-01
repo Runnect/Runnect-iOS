@@ -34,7 +34,7 @@ final class CourseDetailVC: UIViewController {
     private var publicCourseId: Int?
     private var isMyCourse: Bool?
     
-    private var safariViewController : SFSafariViewController?
+    private var safariViewController: SFSafariViewController?
     
     // MARK: - UI Components
     
@@ -203,54 +203,39 @@ extension CourseDetailVC {
 //
 //        present(activityViewController, animated: true, completion: nil)
 //    }
-    
-    @objc func shareButtonTapped() {
         
+    @objc func shareButtonTapped() {
         guard let model = self.uploadedCourseDetailModel else {
             return
         }
 
         let title = model.publicCourse.title
         let courseId = model.publicCourse.courseId
+        let description = model.publicCourse.description
         let courseImage = model.publicCourse.image
-        let courseDescription = model.publicCourse.description
-        let deepLinkURLString = "myapp://detail?courseId=\(courseId)"
 
-        // Send the feed message using KakaoLink API
+        // 딥 링크 URL 생성
+        let deepLinkURLString = "kakao27d01e20b51e5925bf386a6c5465849f://kakaolink?publicCourseId=\(courseId)"
+        print("🔥내가 누른 코스 아이디 \(courseId) \n 🔥내가 만든 딥링크 확인 \(deepLinkURLString)")
+        // KakaoLink 템플릿을 생성.
+        let link = Link(mobileWebUrl: URL(string: deepLinkURLString))
+        let appLink = Link(iosExecutionParams: ["publicCourseId": String(courseId)])
+        let button = Button(title: "앱에서 보기", link: appLink)
+        let content = Content(title: title,
+                              imageUrl: URL(string: courseImage)!,
+                              description: description,
+                              link: link)
+        let template = FeedTemplate(content: content, buttons: [button])
+
+        // 카카오톡으로 공유합니다.
         if ShareApi.isKakaoTalkSharingAvailable() {
-            
-            // Web Link로 전송이 된다. 하지만 우리는 앱 링크를 받을거기 때문에 딱히 필요가 없으.
-            // 아래 줄을 주석해도 상관없다.
-            let link = Link(mobileWebUrl: URL(string: deepLinkURLString))
-            
-            // 우리가 원하는 앱으로 보내주는 링크이다.
-            // second, vvv는 url 링크 마지막에 딸려서 오기 때문에, 이 파라미터를 바탕으로 파싱해서
-            // 앱단에서 원하는 기능을 만들어서 실행할 수 있다 예를 들면 다른 뷰 페이지로 이동 등등~
-            let appLink = Link(iosExecutionParams: ["key1": "courseId=\(courseId)"])
-
-            // 해당 appLink를 들고 있을 버튼을 만들어준다.
-            let button = Button(title: "앱에서 보기", link: link)
-            
-            // Content는 이제 사진과 함께 글들이 적혀있다.
-            let content = Content(title: title,
-                                imageUrl: URL(string: courseImage)!,
-                                description: courseDescription,
-                                link: appLink)
-            
-            // 템플릿에 버튼을 추가할때 아래 buttons에 배열의 형태로 넣어준다.
-            // 만약 버튼을 하나 더 추가하려면 버튼 변수를 만들고 [button, button2] 이런 식으로 진행하면 된다 .
-            let template = FeedTemplate(content: content, buttons: [button])
-            
-            // 메시지 템플릿 encode
             if let templateJsonData = (try? SdkJSONEncoder.custom.encode(template)) {
-                
-                // 생성한 메시지 템플릿 객체를 jsonObject로 변환
                 if let templateJsonObject = SdkUtils.toJsonObject(templateJsonData) {
-                    ShareApi.shared.shareDefault(templateObject: templateJsonObject) {(linkResult, error) in
+                    ShareApi.shared.shareDefault(templateObject: templateJsonObject) { (linkResult, error) in
                         if let error = error {
-                            print("error : \(error)")
+                            print("🔥카카오링크 공유 실패: error : \(error)🔥")
                         } else {
-                            print("defaultLink(templateObject:templateJsonObject) success.")
+                            print("⭐️카카오 링크 공유 성공 success.⭐️")
                             guard let linkResult = linkResult else { return }
                             UIApplication.shared.open(linkResult.url, options: [:], completionHandler: nil)
                         }
@@ -258,7 +243,8 @@ extension CourseDetailVC {
                 }
             }
         } else {
-            // 없을 경우 카카오톡 앱스토어로 이동합니다. (이거 하려면 URL Scheme에 itms-apps 추가 해야함)
+            // 카카오톡 앱이 없을 경우 근데 딥링크는 요거 아마 안됌.. Universial Link인가 그거해야함
+            print("⭐️카카오톡 없어서 앱스토어 가야지?")
             let appBundleID = "com.runnect.Runnect-iOS"
             let appStoreURLString = "https://itunes.apple.com/app/id\(appBundleID)"
             if let url = URL(string: appStoreURLString), UIApplication.shared.canOpenURL(url) {
@@ -396,7 +382,7 @@ extension CourseDetailVC {
             make.centerY.equalTo(navibar)
         }
         shareButton.snp.makeConstraints { make in
-            make.trailing.leading.equalTo(self.view.safeAreaLayoutGuide).offset(135)
+            make.trailing.trailing.equalTo(moreButton).offset(-50)
             make.centerY.equalTo(navibar)
         }
     }
@@ -618,22 +604,6 @@ extension CourseDetailVC {
                 self.showNetworkFailureToast()
             }
         }
-    }
-}
-
-// CourseDetailVC.swift 파일 내에서 'CourseDetailVC' 클래스 안에 추가합니다.
-extension CourseDetailVC {
-    func navigateToCourseView(with courseId: String) {
-        // courseId를 기반으로 원하는 뷰 컨트롤러로 이동하는 로직을 구현하세요.
-        // 예를 들어, courseId를 사용하여 특정 뷰 컨트롤러를 생성하고 데이터를 설정한 다음에 pushViewController를 사용하여 이동할 수 있습니다.
-        // 이동하는 방식은 여러 가지가 가능하므로 원하는 방식대로 구현하세요.
-        
-        // 예시 코드:
-        let destinationVC = CourseDetailVC() // 이 부분을 원하는 뷰 컨트롤러로 변경하세요.
-        destinationVC.courseId = Int(courseId) // 뷰 컨트롤러에 필요한 데이터 설정
-        
-        // navigationController가 존재한다고 가정하고, pushViewController를 사용하여 이동합니다.
-        self.navigationController?.pushViewController(destinationVC, animated: true)
     }
 }
 
