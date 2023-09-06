@@ -15,6 +15,7 @@ target 'Runnect-iOS' do
 	pod 'KakaoSDKUser'
 	pod 'KakaoSDKShare'
 	pod 'KakaoSDKTemplate'
+	pod 'FirebaseDynamicLinks'
 	
 
   # Pods for Runnect-iOS

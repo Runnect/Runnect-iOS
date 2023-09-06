@@ -34,9 +34,11 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>DynamicLink</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>runnect</string>
+				<string>com.runnect.Runnect-iOS</string>
 			</array>
 		</dict>
 	</array>

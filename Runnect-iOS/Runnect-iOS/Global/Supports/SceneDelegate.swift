@@ -8,13 +8,26 @@
 import UIKit
 import KakaoSDKAuth
 import KakaoSDKCommon
+import FirebaseDynamicLinks
+import FirebaseCore
+import FirebaseCoreInternal
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    
     var window: UIWindow?
-
-
+    
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        
+        print("🔥 scene에서 willConnectTo 동작 🔥")
+        guard let _ = (scene as? UIWindowScene) else { return }
+        
+        if let userActivity = connectionOptions.userActivities.first {
+            print("🔥 scene에서 userActivity 동작 🔥")
+            self.scene(scene, continue: userActivity)
+        }
+        
+        print("🔥 scene에서 SplashVC() 동작 🔥")
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
@@ -22,46 +35,74 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = nav
         self.window = window
         window.makeKeyAndVisible()
+        
+    }
+    
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        if let incomingURL = userActivity.webpageURL {
+            let linkHandled = DynamicLinks.dynamicLinks()
+                .handleUniversalLink(incomingURL) { dynamicLink, error in
+                    
+                    
+                    if let courseId = self.handleDynamicLink(dynamicLink) {
+                        guard let _ = (scene as? UIWindowScene) else { return }
+                        
+                        if let windowScene = scene as? UIWindowScene {
+                            let window = UIWindow(windowScene: windowScene)
+                            
+                            let rootVC = CourseDetailVC()
+                            rootVC.setPublicCourseId(publicCourseId: Int(courseId))
+                            rootVC.getUploadedCourseDetail(courseId: Int(courseId))
+                            
+                            // CourseDetailVC를 NavigationController로 감싸고, rootViewController로 설정합니다.
+                            let navigationController = UINavigationController(rootViewController: rootVC)
+                            window.rootViewController = navigationController
+                            window.makeKeyAndVisible()
+                            self.window = window
+                        }
+                    }
+                }
+        }
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        print("🔥 SceneDelegate의 openURLContexts입니다~ 🔥")
         
-        print("🔥 scene에서 뷰 동작 🔥")
+        print(URLContexts)
+        print(URLContexts.first!)
         
         if let url = URLContexts.first?.url {
-            
-            print("🔥 url : \(url)🔥 \n")
-            
-            if url.scheme == "kakao27d01e20b51e5925bf386a6c5465849f" { // 앱의 URL Scheme를 확인합니다.
-
-                if let host = url.host, host == "kakaolink" {
-                    // 딥링크 경로가 "detail"일 경우 CourseDetailView로 이동하도록 처리합니다.
-                    if let courseIdString = url.queryParameters?["publicCourseId"], let courseId = Int(courseIdString) {
+            // Firebase Dynamic Links를 사용하여 딥 링크를 처리합니다.
+            print("🔥 SceneDelegate의 url은 : \(url) 🔥")
+            let linkHandled = DynamicLinks.dynamicLinks().handleUniversalLink(url) { dynamicLink, error in
+                if let courseId = self.handleDynamicLink(dynamicLink) {
+                    guard let _ = (scene as? UIWindowScene) else { return }
+                    
+                    if let windowScene = scene as? UIWindowScene {
+                        let window = UIWindow(windowScene: windowScene)
+                        window.overrideUserInterfaceStyle = .light
                         
-                        print("🔥 url.queryParameters : \(url.queryParameters!)🔥 \n")
-                        print("🔥 courseIdString : \(courseIdString)🔥 \n")
-                        let courseDetailVC = CourseDetailVC() // 해당 뷰 컨트롤러 클래스를 생성합니다.
-//                        courseDetailVC.courseId = courseId // CourseDetailView에 값을 전달합니다.
-
-                        // 이제 courseDetailVC를 현재 화면에 추가하거나 모달로 표시할 수 있습니다.
-                        // 예를 들어, 현재의 루트 뷰 컨트롤러에 추가하는 경우:
-//                        if let rootViewController = window?.rootViewController {
-//                            rootViewController.addChild(courseDetailVC)
-//                            rootViewController.view.addSubview(courseDetailVC.view)
-//                            courseDetailVC.didMove(toParent: rootViewController)
-//                        }
+                        // CourseDetailVC 인스턴스를 생성합니다.
+                        let rootVC = CourseDetailVC()
+                        rootVC.setPublicCourseId(publicCourseId: Int(courseId))
+                        
+                        // CourseDetailVC를 NavigationController로 감싸고, rootViewController로 설정합니다.
+                        let navigationController = UINavigationController(rootViewController: rootVC)
+                        window.rootViewController = navigationController
+                        window.makeKeyAndVisible()
+                        self.window = window
                     }
                 }
-
             }
-        
-            if (AuthApi.isKakaoTalkLoginUrl(url)) {
+            print("🔥 바인딩 유무 ", linkHandled, "🔥")
+            
+            // Kakao SDK가 처리해야 하는지 확인합니다.
+            if AuthApi.isKakaoTalkLoginUrl(url) {
                 _ = AuthController.handleOpenUrl(url: url)
             }
         }
-        
-        
     }
+    
     
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
@@ -90,22 +131,53 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
+
+    func handleDynamicLink(_ dynamicLink: DynamicLink?) -> String? {
+        if let dynamicLink = dynamicLink, let url = dynamicLink.url,
+           let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+           let queryItems = components.queryItems {
+            for item in queryItems {
+                if item.name == "courseId", let courseId = item.value {
+                    // courseId를 사용하여 특정 뷰로 이동
+                    // 예: courseId를 기반으로 상세 화면을 열거나 특정 기능 수행
+                    print("🔥코스아이디가 제대로 여기까지 오는가!", courseId, "🔥")
+                    return courseId
+                }
+            }
+        }
+        return nil
+    }
     
 }
 
-extension URL {
-    var queryParameters: [String: String]? {
-        guard let components = URLComponents(url: self, resolvingAgainstBaseURL: true),
-            let queryItems = components.queryItems else {
-                return nil
-        }
+extension CourseDetailVC {
 
-        var parameters = [String: String]()
-        for item in queryItems {
-            parameters[item.name] = item.value
+    func getUploadedCourseDetail(courseId: Int?) {
+        guard let publicCourseId = courseId else { return }
+        LoadingIndicator.showLoading()
+        Providers.publicCourseProvider.request(.getUploadedCourseDetail(publicCourseId: publicCourseId)) { [weak self] response in
+            guard let self = self else { return }
+            LoadingIndicator.hideLoading()
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    do {
+                        let responseDto = try result.map(BaseResponse<UploadedCourseDetailResponseDto>.self)
+                        guard let data = responseDto.data else { return }
+                        self.setData(model: data)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
         }
-
-        return parameters
     }
 }
-

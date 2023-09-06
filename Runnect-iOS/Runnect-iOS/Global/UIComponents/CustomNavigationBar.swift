@@ -70,7 +70,6 @@ extension CustomNavigationBar {
         }
     }
     
-    
     private func setAddTarget(_ type: NaviType) {
         self.naviType = type
         self.leftButton.addTarget(self, action: #selector(popToPreviousVC), for: .touchUpInside)
@@ -317,7 +316,5 @@ extension CustomNavigationBar: UITextFieldDelegate {
         self.hideKeyboard()
         return true
     }
-    
-    
-    
 }
+

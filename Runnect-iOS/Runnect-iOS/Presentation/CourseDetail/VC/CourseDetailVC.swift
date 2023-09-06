@@ -15,7 +15,9 @@ import SafariServices
 import KakaoSDKCommon
 import KakaoSDKShare
 import KakaoSDKTemplate
-
+import FirebaseCore
+import FirebaseDynamicLinks
+      
 final class CourseDetailVC: UIViewController {
     
     // MARK: - Properties
@@ -153,108 +155,41 @@ extension CourseDetailVC {
         followButton.isSelected.toggle()
     }
     
-//    @objc func shareButtonTapped() {
-//        guard let model = self.uploadedCourseDetailModel else {
-//            return
-//        }
-//
-//        let courseImage = model.publicCourse.image
-//        let courseId = model.publicCourse.courseId
-//        let courseTitle = model.publicCourse.title
-//        let courseDescription = model.publicCourse.description
-//
-//        // Create a deep link URL for your app
-//        let deepLinkURLString = "myapp://detail?courseId=\(courseId)"
-//
-//        // 공유할 배열 생성
-//        var itemsToShare: [Any] = []
-//
-//        // Add course description
-////        itemsToShare.append(courseImage)
-////        itemsToShare.append(courseTitle)
-////        itemsToShare.append(courseDescription!)
-//
-//        // Check if your app is installed
-//        if let deepLinkURL = URL(string: deepLinkURLString),
-//           UIApplication.shared.canOpenURL(deepLinkURL) {
-//            // Your app is installed, share the deep link
-//            itemsToShare.append(deepLinkURL)
-//        } else {
-//            // Your app is not installed, share the app store link
-//            let appBundleID = "com.runnect.Runnect-iOS"
-//            let appStoreURLString = "https://itunes.apple.com/app/id\(appBundleID)"
-//
-//            if let appStoreURL = URL(string: appStoreURLString) {
-//                itemsToShare.append(appStoreURL)
-//            }
-//        }
-//
-//        // Create an activity view controller
-//        let activityViewController = UIActivityViewController(activityItems: itemsToShare, applicationActivities: nil)
-//
-//        // Remove the excludedActivityTypes array to include all options
-//        activityViewController.excludedActivityTypes = nil
-//
-//        // Present the activity view controller
-//        if let popoverPresentationController = activityViewController.popoverPresentationController {
-//            popoverPresentationController.sourceView = self.view
-//            popoverPresentationController.sourceRect = self.shareButton.frame
-//        }
-//
-//        present(activityViewController, animated: true, completion: nil)
-//    }
-        
     @objc func shareButtonTapped() {
         guard let model = self.uploadedCourseDetailModel else {
             return
         }
-
+        
         let title = model.publicCourse.title
-        let courseId = model.publicCourse.courseId
+        let courseId = model.publicCourse.id // primaryKey
         let description = model.publicCourse.description
         let courseImage = model.publicCourse.image
+          
+        let dynamicLinksDomainURIPrefix = "https://runnect.page.link"
+        guard let link = URL(string: "\(dynamicLinksDomainURIPrefix)/?courseId=\(courseId)") else { return }
+        let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: dynamicLinksDomainURIPrefix)
+        linkBuilder!.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.runnect.Runnect-iOS")
+        linkBuilder!.iOSParameters?.appStoreID = "1663884202"
+        linkBuilder!.iOSParameters?.minimumAppVersion = "1.0.4"
 
-        // 딥 링크 URL 생성
-        let deepLinkURLString = "kakao27d01e20b51e5925bf386a6c5465849f://kakaolink?publicCourseId=\(courseId)"
-        print("🔥내가 누른 코스 아이디 \(courseId) \n 🔥내가 만든 딥링크 확인 \(deepLinkURLString)")
-        // KakaoLink 템플릿을 생성.
-        let link = Link(mobileWebUrl: URL(string: deepLinkURLString))
-        let appLink = Link(iosExecutionParams: ["publicCourseId": String(courseId)])
-        let button = Button(title: "앱에서 보기", link: appLink)
-        let content = Content(title: title,
-                              imageUrl: URL(string: courseImage)!,
-                              description: description,
-                              link: link)
-        let template = FeedTemplate(content: content, buttons: [button])
-
-        // 카카오톡으로 공유합니다.
-        if ShareApi.isKakaoTalkSharingAvailable() {
-            if let templateJsonData = (try? SdkJSONEncoder.custom.encode(template)) {
-                if let templateJsonObject = SdkUtils.toJsonObject(templateJsonData) {
-                    ShareApi.shared.shareDefault(templateObject: templateJsonObject) { (linkResult, error) in
-                        if let error = error {
-                            print("🔥카카오링크 공유 실패: error : \(error)🔥")
-                        } else {
-                            print("⭐️카카오 링크 공유 성공 success.⭐️")
-                            guard let linkResult = linkResult else { return }
-                            UIApplication.shared.open(linkResult.url, options: [:], completionHandler: nil)
-                        }
-                    }
-                }
-            }
-        } else {
-            // 카카오톡 앱이 없을 경우 근데 딥링크는 요거 아마 안됌.. Universial Link인가 그거해야함
-            print("⭐️카카오톡 없어서 앱스토어 가야지?")
-            let appBundleID = "com.runnect.Runnect-iOS"
-            let appStoreURLString = "https://itunes.apple.com/app/id\(appBundleID)"
-            if let url = URL(string: appStoreURLString), UIApplication.shared.canOpenURL(url) {
-                if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                } else {
-                    UIApplication.shared.openURL(url)
-                }
-            }
-        }
+        linkBuilder!.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
+        linkBuilder!.socialMetaTagParameters?.imageURL = URL(string: courseImage)
+        linkBuilder!.socialMetaTagParameters?.title = title
+        linkBuilder!.socialMetaTagParameters?.descriptionText = description
+        
+        guard let longDynamicLink = linkBuilder!.url else { return }
+        print("The long URL is: \(longDynamicLink)")
+        
+        /// 짧은 Dynamic Link로 변환
+        linkBuilder?.shorten(completion: { url, _, _ in
+            guard let url = url else { return }
+            print("The short URL is: \(url)")
+        })
+        
+        let activityVC = UIActivityViewController(activityItems: [longDynamicLink.absoluteString], applicationActivities: nil)
+        activityVC.popoverPresentationController?.sourceView = self.view
+        self.present(activityVC, animated: true, completion: nil)
+        
     }
 
     @objc func startButtonDidTap() {
@@ -327,6 +262,10 @@ extension CourseDetailVC {
 extension CourseDetailVC {
     func setCourseId(courseId: Int?, publicCourseId: Int?) {
         self.courseId = courseId
+        self.publicCourseId = publicCourseId
+    }
+    
+    func setPublicCourseId(publicCourseId: Int?) {
         self.publicCourseId = publicCourseId
     }
     
@@ -606,30 +545,3 @@ extension CourseDetailVC {
         }
     }
 }
-
-#if DEBUG
-import SwiftUI
-struct Preview: UIViewControllerRepresentable {
-    
-    func makeUIViewController(context: Context) -> UIViewController {
-        // 이부분
-        CourseDetailVC()
-        // 이거 보고싶은 현재 VC로 바꾸셈
-    }
-    
-    func updateUIViewController(_ uiView: UIViewController, context: Context) {
-        // leave this empty
-    }
-}
-
-struct ViewController_PreviewProvider: PreviewProvider {
-    static var previews: some View {
-        Group {
-            Preview()
-                .edgesIgnoringSafeArea(.all)
-                .previewDisplayName("Preview")
-                .previewDevice(PreviewDevice(rawValue: "iPhone 12 Pro"))
-        }
-    }
-}
-#endif

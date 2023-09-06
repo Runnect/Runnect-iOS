@@ -10,6 +10,7 @@ import UIKit
 import NMapsMap
 import KakaoSDKAuth
 import KakaoSDKCommon
+import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,10 +18,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        
+        print("🔥AppDelegate 의 openURLContexts 입니다 \n🔥")
         if let url = URLContexts.first?.url {
+            
+            
             if (AuthApi.isKakaoTalkLoginUrl(url)) {
                 _ = AuthController.handleOpenUrl(url: url)
             }
+            
+            
         }
     }
 
@@ -31,33 +38,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        FirebaseApp.configure()
         NMFAuthManager.shared().clientId = Config.naverMapClientId
         KakaoSDK.initSDK(appKey: Config.kakaoNativeAppKey)
         
         return true
     }
-    
-    // Handle deep linking
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        if let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
-           let host = components.host,
-           let queryItems = components.queryItems {
-            
-            // Handle deep link URL here
-            if host == "detail" {
-                if let courseId = queryItems.first(where: { $0.name == "courseId" })?.value {
-                    // Now you can navigate to your desired view controller based on the courseId
-                    if let navigationController = window?.rootViewController as? UINavigationController,
-                       let courseDetailVC = navigationController.viewControllers.first as? CourseDetailVC {
-                        // Call a method in your CourseDetailVC to navigate to the desired view
-                        courseDetailVC.navigateToCourseView(with: courseId)
-                    }
-                }
-            }
-        }
-        return false
-    }
-    
 
     // MARK: UISceneSession Lifecycle
 
