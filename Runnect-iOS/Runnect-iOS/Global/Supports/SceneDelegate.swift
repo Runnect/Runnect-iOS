@@ -19,15 +19,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        print("🔥 scene에서 willConnectTo 동작 🔥")
         guard let _ = (scene as? UIWindowScene) else { return }
         
         if let userActivity = connectionOptions.userActivities.first {
-            print("🔥 scene에서 userActivity 동작 🔥")
             self.scene(scene, continue: userActivity)
         }
         
-        print("🔥 scene에서 SplashVC() 동작 🔥")
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
@@ -39,10 +36,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        
         if let incomingURL = userActivity.webpageURL {
             let linkHandled = DynamicLinks.dynamicLinks()
                 .handleUniversalLink(incomingURL) { dynamicLink, error in
-                    
                     
                     if let courseId = self.handleDynamicLink(dynamicLink) {
                         guard let _ = (scene as? UIWindowScene) else { return }
@@ -50,15 +47,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         if let windowScene = scene as? UIWindowScene {
                             let window = UIWindow(windowScene: windowScene)
                             
-                            let rootVC = CourseDetailVC()
-                            rootVC.setPublicCourseId(publicCourseId: Int(courseId))
-                            rootVC.getUploadedCourseDetail(courseId: Int(courseId))
+                            let courseDetailVC = CourseDetailVC()
+                            courseDetailVC.setPublicCourseId(publicCourseId: Int(courseId))
+                            courseDetailVC.getUploadedCourseDetail(courseId: Int(courseId))
                             
-                            // CourseDetailVC를 NavigationController로 감싸고, rootViewController로 설정합니다.
-                            let navigationController = UINavigationController(rootViewController: rootVC)
+                            let tabBarController = TabBarController()
+                            let navigationController = UINavigationController(rootViewController: tabBarController)
+                            navigationController.navigationBar.isHidden = true
+                            navigationController.pushViewController(courseDetailVC, animated: false)
+                            
                             window.rootViewController = navigationController
                             window.makeKeyAndVisible()
                             self.window = window
+                          
                         }
                     }
                 }
@@ -66,36 +67,34 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        print("🔥 SceneDelegate의 openURLContexts입니다~ 🔥")
-        
-        print(URLContexts)
-        print(URLContexts.first!)
         
         if let url = URLContexts.first?.url {
             // Firebase Dynamic Links를 사용하여 딥 링크를 처리합니다.
-            print("🔥 SceneDelegate의 url은 : \(url) 🔥")
-            let linkHandled = DynamicLinks.dynamicLinks().handleUniversalLink(url) { dynamicLink, error in
-                if let courseId = self.handleDynamicLink(dynamicLink) {
-                    guard let _ = (scene as? UIWindowScene) else { return }
+            let linkHandled = DynamicLinks.dynamicLinks()
+                .handleUniversalLink(url) { dynamicLink, error in
                     
-                    if let windowScene = scene as? UIWindowScene {
-                        let window = UIWindow(windowScene: windowScene)
-                        window.overrideUserInterfaceStyle = .light
+                    if let courseId = self.handleDynamicLink(dynamicLink) {
+                        guard let _ = (scene as? UIWindowScene) else { return }
                         
-                        // CourseDetailVC 인스턴스를 생성합니다.
-                        let rootVC = CourseDetailVC()
-                        rootVC.setPublicCourseId(publicCourseId: Int(courseId))
-                        
-                        // CourseDetailVC를 NavigationController로 감싸고, rootViewController로 설정합니다.
-                        let navigationController = UINavigationController(rootViewController: rootVC)
-                        window.rootViewController = navigationController
-                        window.makeKeyAndVisible()
-                        self.window = window
+                        if let windowScene = scene as? UIWindowScene {
+                            let window = UIWindow(windowScene: windowScene)
+                            
+                            let courseDetailVC = CourseDetailVC()
+                            courseDetailVC.setPublicCourseId(publicCourseId: Int(courseId))
+                            courseDetailVC.getUploadedCourseDetail(courseId: Int(courseId))
+                            
+                            let tabBarController = TabBarController()
+                            let navigationController = UINavigationController(rootViewController: tabBarController)
+                            navigationController.navigationBar.isHidden = true
+                            navigationController.pushViewController(courseDetailVC, animated: false)
+                            
+                            window.rootViewController = navigationController
+                            window.makeKeyAndVisible()
+                            self.window = window
+                          
+                        }
                     }
                 }
-            }
-            print("🔥 바인딩 유무 ", linkHandled, "🔥")
-            
             // Kakao SDK가 처리해야 하는지 확인합니다.
             if AuthApi.isKakaoTalkLoginUrl(url) {
                 _ = AuthController.handleOpenUrl(url: url)
@@ -138,16 +137,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
            let queryItems = components.queryItems {
             for item in queryItems {
                 if item.name == "courseId", let courseId = item.value {
-                    // courseId를 사용하여 특정 뷰로 이동
-                    // 예: courseId를 기반으로 상세 화면을 열거나 특정 기능 수행
-                    print("🔥코스아이디가 제대로 여기까지 오는가!", courseId, "🔥")
+                    // 동적링크 핸들링 하여 courseId 추출
+
                     return courseId
                 }
             }
         }
         return nil
     }
-    
 }
 
 extension CourseDetailVC {

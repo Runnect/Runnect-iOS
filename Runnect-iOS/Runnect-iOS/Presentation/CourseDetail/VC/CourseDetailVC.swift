@@ -13,10 +13,11 @@ import NMapsMap
 import Moya
 import SafariServices
 import KakaoSDKCommon
-import KakaoSDKShare
-import KakaoSDKTemplate
 import FirebaseCore
 import FirebaseDynamicLinks
+import KakaoSDKShare
+import KakaoSDKTemplate
+
       
 final class CourseDetailVC: UIViewController {
     
@@ -184,6 +185,7 @@ extension CourseDetailVC {
         linkBuilder?.shorten(completion: { url, _, _ in
             guard let url = url else { return }
             print("The short URL is: \(url)")
+            
         })
         
         let activityVC = UIActivityViewController(activityItems: [longDynamicLink.absoluteString], applicationActivities: nil)
@@ -265,7 +267,7 @@ extension CourseDetailVC {
         self.publicCourseId = publicCourseId
     }
     
-    func setPublicCourseId(publicCourseId: Int?) {
+    func setPublicCourseId(publicCourseId: Int?) { // 추가한 것
         self.publicCourseId = publicCourseId
     }
     

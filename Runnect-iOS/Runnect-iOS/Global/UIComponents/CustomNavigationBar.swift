@@ -317,4 +317,3 @@ extension CustomNavigationBar: UITextFieldDelegate {
         return true
     }
 }
-
