@@ -70,11 +70,6 @@ final class CourseDetailVC: UIViewController {
         $0.addTarget(self, action: #selector(startButtonDidTap), for: .touchUpInside)
     }
     
-    private lazy var followButton = UIButton(type: .custom).then {
-        $0.setImage(ImageLiterals.icFollowButton, for: .normal)
-        $0.setImage(ImageLiterals.icFollowedButton, for: .selected)
-    }
-    
     private let mapImageView = UIImageView()
     private let profileImageView = UIImageView().then {
         $0.image = ImageLiterals.imgStampC3
@@ -150,10 +145,6 @@ extension CourseDetailVC {
         }
         
         scrapCourse(scrapTF: !sender.isSelected)
-    }
-    
-    @objc func followButtonTapped() {
-        followButton.isSelected.toggle()
     }
     
     @objc func shareButtonTapped() {
@@ -293,7 +284,6 @@ extension CourseDetailVC {
     private func setAddTarget() {
         likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
         moreButton.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
-        followButton.addTarget(self, action: #selector(followButtonTapped), for: .touchUpInside)
         shareButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
     }
     
@@ -378,7 +368,7 @@ extension CourseDetailVC {
             make.bottom.equalTo(thirdHorizontalDivideLine.snp.top)
         }
         
-        middleScorollView.addSubviews(mapImageView, profileImageView, profileNameLabel, runningLevelLabel, followButton, firstHorizontalDivideLine, courseTitleLabel, courseDetailStackView, secondHorizontalDivideLine, courseExplanationTextView)
+        middleScorollView.addSubviews(mapImageView, profileImageView, profileNameLabel, runningLevelLabel, firstHorizontalDivideLine, courseTitleLabel, courseDetailStackView, secondHorizontalDivideLine, courseExplanationTextView)
         
         mapImageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -400,11 +390,6 @@ extension CourseDetailVC {
         runningLevelLabel.snp.makeConstraints { make in
             make.bottom.equalTo(profileNameLabel.snp.bottom)
             make.leading.equalTo(profileNameLabel.snp.trailing).offset(10)
-        }
-        
-        followButton.snp.makeConstraints { make in
-            make.centerY.equalTo(profileNameLabel.snp.centerY)
-            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-16)
         }
         
         firstHorizontalDivideLine.snp.makeConstraints { make in
