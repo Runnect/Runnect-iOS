@@ -112,3 +112,4 @@ Config.swift
 Gemfile.lock
 report.xml
 Runnect-iOS/fastlane/.env.default
+GoogleService-Info.plist

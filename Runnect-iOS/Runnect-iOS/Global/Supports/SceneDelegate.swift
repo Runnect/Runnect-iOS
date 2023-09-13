@@ -68,30 +68,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         
+        print("🔥 scene openURLContexts 지점")
         if let url = URLContexts.first?.url {
             // Firebase Dynamic Links를 사용하여 딥 링크를 처리합니다.
             let linkHandled = DynamicLinks.dynamicLinks()
                 .handleUniversalLink(url) { dynamicLink, error in
-                    
+
                     if let courseId = self.handleDynamicLink(dynamicLink) {
                         guard let _ = (scene as? UIWindowScene) else { return }
-                        
+
                         if let windowScene = scene as? UIWindowScene {
                             let window = UIWindow(windowScene: windowScene)
-                            
+
                             let courseDetailVC = CourseDetailVC()
                             courseDetailVC.setPublicCourseId(publicCourseId: Int(courseId))
                             courseDetailVC.getUploadedCourseDetail(courseId: Int(courseId))
-                            
+
                             let tabBarController = TabBarController()
                             let navigationController = UINavigationController(rootViewController: tabBarController)
                             navigationController.navigationBar.isHidden = true
                             navigationController.pushViewController(courseDetailVC, animated: false)
-                            
+
                             window.rootViewController = navigationController
                             window.makeKeyAndVisible()
                             self.window = window
-                          
+
                         }
                     }
                 }

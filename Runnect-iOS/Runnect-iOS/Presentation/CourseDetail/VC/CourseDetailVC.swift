@@ -18,7 +18,6 @@ import FirebaseDynamicLinks
 import KakaoSDKShare
 import KakaoSDKTemplate
 
-      
 final class CourseDetailVC: UIViewController {
     
     // MARK: - Properties
