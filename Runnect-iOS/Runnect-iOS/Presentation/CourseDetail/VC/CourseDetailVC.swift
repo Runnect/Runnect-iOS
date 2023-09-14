@@ -173,14 +173,17 @@ extension CourseDetailVC {
         
         /// 짧은 Dynamic Link로 변환
         linkBuilder?.shorten(completion: { url, _, _ in
-            guard let url = url else { return }
-            print("The short URL is: \(url)")
+            guard let shortDynamicLink = url else { return }
+            print("The short URL is: \(shortDynamicLink)")
+            let activityVC = UIActivityViewController(activityItems: [shortDynamicLink.absoluteString], applicationActivities: nil)
+            activityVC.popoverPresentationController?.sourceView = self.view
+            self.present(activityVC, animated: true, completion: nil)
             
         })
         
-        let activityVC = UIActivityViewController(activityItems: [longDynamicLink.absoluteString], applicationActivities: nil)
-        activityVC.popoverPresentationController?.sourceView = self.view
-        self.present(activityVC, animated: true, completion: nil)
+//        let activityVC = UIActivityViewController(activityItems: [longDynamicLink.absoluteString], applicationActivities: nil)
+//        activityVC.popoverPresentationController?.sourceView = self.view
+//        self.present(activityVC, animated: true, completion: nil)
         
     }
 
