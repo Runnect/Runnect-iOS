@@ -114,4 +114,4 @@ report.xml
 Runnect-iOS/fastlane/.env.default
 
 ## dynamicLink
-GoogleService-Info.plist
+Runnect-iOS/Runnect-iOS/GoogleService-Info.plist
