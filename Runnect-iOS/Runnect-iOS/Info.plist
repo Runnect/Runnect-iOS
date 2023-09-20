@@ -23,9 +23,21 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string></string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>kakao27d01e20b51e5925bf386a6c5465849f</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>DynamicLink</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.runnect.Runnect-iOS</string>
 			</array>
 		</dict>
 	</array>

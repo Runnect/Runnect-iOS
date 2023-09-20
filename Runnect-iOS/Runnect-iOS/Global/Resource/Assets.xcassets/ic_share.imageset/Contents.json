@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "설문 조사 이벤트_iOS.png",
+      "filename" : "btn_share.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "btn_share@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "btn_share@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

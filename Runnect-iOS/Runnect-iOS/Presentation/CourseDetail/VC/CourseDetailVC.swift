@@ -12,6 +12,11 @@ import Then
 import NMapsMap
 import Moya
 import SafariServices
+import KakaoSDKCommon
+import FirebaseCore
+import FirebaseDynamicLinks
+import KakaoSDKShare
+import KakaoSDKTemplate
 
 final class CourseDetailVC: UIViewController {
     
@@ -31,11 +36,17 @@ final class CourseDetailVC: UIViewController {
     private var publicCourseId: Int?
     private var isMyCourse: Bool?
     
+    private var safariViewController: SFSafariViewController?
+    
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton)
     private let moreButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icMore, for: .normal)
+        $0.tintColor = .g1
+    }
+    private let shareButton = UIButton(type: .system).then {
+        $0.setImage(ImageLiterals.icShareButton, for: .normal)
         $0.tintColor = .g1
     }
     private lazy var middleScorollView = UIScrollView().then {
@@ -135,12 +146,52 @@ extension CourseDetailVC {
         scrapCourse(scrapTF: !sender.isSelected)
     }
     
+    @objc func shareButtonTapped() {
+        guard let model = self.uploadedCourseDetailModel else {
+            return
+        }
+        
+        let title = model.publicCourse.title
+        let courseId = model.publicCourse.id // primaryKey
+        let description = model.publicCourse.description
+        let courseImage = model.publicCourse.image
+          
+        let dynamicLinksDomainURIPrefix = "https://runnect.page.link"
+        guard let link = URL(string: "\(dynamicLinksDomainURIPrefix)/?courseId=\(courseId)") else { return }
+        let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: dynamicLinksDomainURIPrefix)
+        linkBuilder!.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.runnect.Runnect-iOS")
+        linkBuilder!.iOSParameters?.appStoreID = "1663884202"
+        linkBuilder!.iOSParameters?.minimumAppVersion = "1.0.4"
+
+        linkBuilder!.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
+        linkBuilder!.socialMetaTagParameters?.imageURL = URL(string: courseImage)
+        linkBuilder!.socialMetaTagParameters?.title = title
+        linkBuilder!.socialMetaTagParameters?.descriptionText = description
+        
+        guard let longDynamicLink = linkBuilder!.url else { return }
+        print("The long URL is: \(longDynamicLink)")
+        
+        /// 짧은 Dynamic Link로 변환
+        linkBuilder?.shorten(completion: { url, _, _ in
+            guard let shortDynamicLink = url else { return }
+            print("The short URL is: \(shortDynamicLink)")
+            let activityVC = UIActivityViewController(activityItems: [shortDynamicLink.absoluteString], applicationActivities: nil)
+            activityVC.popoverPresentationController?.sourceView = self.view
+            self.present(activityVC, animated: true, completion: nil)
+            
+        })
+        
+//        let activityVC = UIActivityViewController(activityItems: [longDynamicLink.absoluteString], applicationActivities: nil)
+//        activityVC.popoverPresentationController?.sourceView = self.view
+//        self.present(activityVC, animated: true, completion: nil)
+        
+    }
+
     @objc func startButtonDidTap() {
         guard handleVisitor() else { return }
         guard let courseId = self.courseId else { return }
         getCourseDetailWithPath(courseId: courseId)
     }
-    
     @objc func moreButtonDidTap() {
         guard let isMyCourse = self.isMyCourse, let uploadedCourseDetailModel = self.uploadedCourseDetailModel else { return }
         
@@ -209,6 +260,10 @@ extension CourseDetailVC {
         self.publicCourseId = publicCourseId
     }
     
+    func setPublicCourseId(publicCourseId: Int?) { // 추가한 것
+        self.publicCourseId = publicCourseId
+    }
+    
     func setData(model: UploadedCourseDetailResponseDto) {
         self.uploadedCourseDetailModel = model
         self.mapImageView.setImage(with: model.publicCourse.image)
@@ -231,6 +286,7 @@ extension CourseDetailVC {
     private func setAddTarget() {
         likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
         moreButton.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
+        shareButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
     }
     
     private func setNullUser() {
@@ -239,6 +295,7 @@ extension CourseDetailVC {
         self.profileNameLabel.text = "(알 수 없음)"
         self.runningLevelLabel.isHidden = true
     }
+    
 }
 
 // MARK: - Layout Helpers
@@ -248,6 +305,7 @@ extension CourseDetailVC {
     private func setNavigationBar() {
         view.addSubview(navibar)
         view.addSubview(moreButton)
+        view.addSubview(shareButton)
         navibar.snp.makeConstraints {  make in
             make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(48)
@@ -256,7 +314,10 @@ extension CourseDetailVC {
             make.trailing.equalTo(self.view.safeAreaLayoutGuide)
             make.centerY.equalTo(navibar)
         }
-        
+        shareButton.snp.makeConstraints { make in
+            make.trailing.trailing.equalTo(moreButton).offset(-50)
+            make.centerY.equalTo(navibar)
+        }
     }
     
     private func setUI() {
@@ -330,7 +391,7 @@ extension CourseDetailVC {
         
         runningLevelLabel.snp.makeConstraints { make in
             make.bottom.equalTo(profileNameLabel.snp.bottom)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(31)
+            make.leading.equalTo(profileNameLabel.snp.trailing).offset(10)
         }
         
         firstHorizontalDivideLine.snp.makeConstraints { make in

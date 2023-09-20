@@ -10,15 +10,21 @@ import UIKit
 import NMapsMap
 import KakaoSDKAuth
 import KakaoSDKCommon
+import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    var window: UIWindow?
+    
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         if let url = URLContexts.first?.url {
+            
             if (AuthApi.isKakaoTalkLoginUrl(url)) {
                 _ = AuthController.handleOpenUrl(url: url)
             }
+            
+            
         }
     }
 
@@ -29,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        FirebaseApp.configure()
         NMFAuthManager.shared().clientId = Config.naverMapClientId
         KakaoSDK.initSDK(appKey: Config.kakaoNativeAppKey)
         
@@ -49,4 +56,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 }
-
