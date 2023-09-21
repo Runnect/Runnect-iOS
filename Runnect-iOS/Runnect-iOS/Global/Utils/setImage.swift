@@ -32,7 +32,7 @@ public extension UIImageView {
     
     private func setNewImage(with urlString: String, placeholder: String? = "img_placeholder", completion: ((UIImage?) -> Void)? = nil) {
         guard let url = URL(string: urlString) else { return }
-        let resource = ImageResource(downloadURL: url, cacheKey: urlString)
+        let resource = Kingfisher.KF.ImageResource(downloadURL: url, cacheKey: urlString)
         let placeholderImage = UIImage(named: "img_placeholder")
         let placeholder = placeholderImage
         
