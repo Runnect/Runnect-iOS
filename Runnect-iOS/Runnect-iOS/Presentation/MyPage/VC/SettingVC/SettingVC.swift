@@ -21,21 +21,12 @@ final class SettingVC: UIViewController {
     private let bottomNavibarDiviedView = UIView()
     private let firstDiviedView = UIView()
     private let secondDiviedView = UIView()
-    private let thirdDiviedView = UIView()
-    
-    let reportUrl = NSURL(string: "https://docs.google.com/forms/d/e/1FAIpQLSek2rkClKfGaz1zwTEHX3Oojbq_pbF3ifPYMYezBU0_pe-_Tg/viewform")
-    lazy var reportSafariView: SFSafariViewController = SFSafariViewController(url: self.reportUrl! as URL)
     
     let termsOfServiceUrl = NSURL(string: "https://third-sight-046.notion.site/Runnect-5dfee19ccff04c388590e5ee335e77ed")
     lazy var termsOfServiceSafariView: SFSafariViewController = SFSafariViewController(url: self.termsOfServiceUrl! as URL)
     
     private lazy var personalInfoView = makeInfoView(title: "계정 정보").then {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpPersonalInfoView))
-        $0.addGestureRecognizer(tap)
-    }
-
-    private lazy var reportView = makeInfoView(title: "문의 및 신고하기").then {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpReportView))
         $0.addGestureRecognizer(tap)
     }
     
@@ -104,11 +95,6 @@ extension SettingVC {
     }
     
     @objc
-    private func touchUpReportView() {
-        self.present(self.reportSafariView, animated: true, completion: nil)
-    }
-    
-    @objc
     private func touchUpTermsOfServiceView() {
         self.present(self.termsOfServiceSafariView, animated: true, completion: nil)
     }
@@ -122,7 +108,6 @@ extension SettingVC {
         bottomNavibarDiviedView.backgroundColor = .g5
         firstDiviedView.backgroundColor = .g5
         secondDiviedView.backgroundColor = .g5
-        thirdDiviedView.backgroundColor = .g5
     }
     
     private func setLayout() {
@@ -140,7 +125,6 @@ extension SettingVC {
         }
         
         setPersonalInfoViewLayout()
-        setReportViewLayout()
         setTermsOfServiceViewLayout()
     }
     
@@ -160,32 +144,16 @@ extension SettingVC {
         }
     }
     
-    private func setReportViewLayout() {
-        view.addSubviews(reportView, secondDiviedView)
+    private func setTermsOfServiceViewLayout() {
+        view.addSubviews(termsOfServiceView, secondDiviedView)
         
-        reportView.snp.makeConstraints { make in
+        termsOfServiceView.snp.makeConstraints { make in
             make.top.equalTo(firstDiviedView.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(62)
         }
         
         secondDiviedView.snp.makeConstraints { make in
-            make.top.equalTo(reportView.snp.bottom).offset(1)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(0.5)
-        }
-    }
-    
-    private func setTermsOfServiceViewLayout() {
-        view.addSubviews(termsOfServiceView, thirdDiviedView)
-        
-        termsOfServiceView.snp.makeConstraints { make in
-            make.top.equalTo(secondDiviedView.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(62)
-        }
-        
-        thirdDiviedView.snp.makeConstraints { make in
             make.top.equalTo(termsOfServiceView.snp.bottom).offset(1)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(0.5)
