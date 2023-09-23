@@ -30,7 +30,7 @@ final class RNAlertVC: UIViewController {
     }
     
     private lazy var yesButton = UIButton(type: .custom).then {
-        $0.setTitle("예", for: .normal)
+        $0.setTitle("네", for: .normal)
         $0.titleLabel?.font = .h5
         $0.setTitleColor(.w1, for: .normal)
         $0.layer.backgroundColor = UIColor.m1.cgColor

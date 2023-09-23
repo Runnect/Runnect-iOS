@@ -32,6 +32,7 @@ final class MyPageVC: UIViewController {
     private let secondDivideView = UIView()
     private let thirdDivideView = UIView()
     private let fourthDivideView = UIView()
+    private let fifthDivideView = UIView()
     private let topVersionDivideView = UIView()
     private let bottomVersionDivideView = UIView()
     
@@ -71,13 +72,13 @@ final class MyPageVC: UIViewController {
     
     private let myRunnigProgressPercentLabel = UILabel()
     
-    private lazy var goalRewardInfoView = makeInfoView(title: "목표 보상").then {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpGoalRewardInfoView))
+    private lazy var activityRecordInfoView = makeInfoView(title: "러닝 기록").then {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpActivityRecordInfoView))
         $0.addGestureRecognizer(tap)
     }
     
-    private lazy var activityRecordInfoView = makeInfoView(title: "러닝 기록").then {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpActivityRecordInfoView))
+    private lazy var goalRewardInfoView = makeInfoView(title: "목표 보상").then {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpGoalRewardInfoView))
         $0.addGestureRecognizer(tap)
     }
     
@@ -88,6 +89,11 @@ final class MyPageVC: UIViewController {
 
     private lazy var settingView = makeInfoView(title: "설정").then {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpSettingView))
+        $0.addGestureRecognizer(tap)
+    }
+    
+    private lazy var kakaoChannelAsk = makeInfoView(title: "카카오톡 채널 문의").then {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpkakaoChannelAsk))
         $0.addGestureRecognizer(tap)
     }
     
@@ -222,13 +228,13 @@ extension MyPageVC {
 
 extension MyPageVC {
     @objc
-    private func touchUpGoalRewardInfoView() {
-        pushToGoalRewardInfoVC()
+    private func touchUpActivityRecordInfoView() {
+        pushToActivityRecordInfoVC()
     }
     
     @objc
-    private func touchUpActivityRecordInfoView() {
-        pushToActivityRecordInfoVC()
+    private func touchUpGoalRewardInfoView() {
+        pushToGoalRewardInfoVC()
     }
     
     @objc
@@ -245,6 +251,14 @@ extension MyPageVC {
     private func touchUpSettingView() {
         pushToSettingVC()
     }
+    
+    @objc
+    private func touchUpkakaoChannelAsk() {
+        if let url = URL(string: "https://pf.kakao.com/_hXduG") {
+            UIApplication.shared.open(url)
+        }
+    }
+    
 }
 
 // MARK: - UI & Layout
@@ -266,6 +280,7 @@ extension MyPageVC {
         secondDivideView.backgroundColor = .g4
         thirdDivideView.backgroundColor = .g4
         fourthDivideView.backgroundColor = .g4
+        fifthDivideView.backgroundColor = .g4
         topVersionDivideView.backgroundColor = .g5
         bottomVersionDivideView.backgroundColor = .g5
     }
@@ -277,8 +292,8 @@ extension MyPageVC {
         }
         
         view.addSubviews(myProfileView, myRunningProgressView, firstDivideView,
-            goalRewardInfoView, secondDivideView, activityRecordInfoView,
-            thirdDivideView, uploadedCourseInfoView, fourthDivideView, settingView)
+            activityRecordInfoView, secondDivideView, goalRewardInfoView,
+            thirdDivideView, uploadedCourseInfoView, fourthDivideView, settingView, fifthDivideView, kakaoChannelAsk)
         
         myProfileView.snp.makeConstraints { make in
             make.top.equalTo(navibar.snp.bottom).offset(6)
@@ -350,38 +365,32 @@ extension MyPageVC {
     }
     
     private func setInfoButtonLayout() {
-        goalRewardInfoView.snp.makeConstraints { make in
+        activityRecordInfoView.snp.makeConstraints { make in
             make.top.equalTo(firstDivideView.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(60)
         }
         
         secondDivideView.snp.makeConstraints { make in
-            make.top.equalTo(goalRewardInfoView.snp.bottom).offset(1)
+            make.top.equalTo(activityRecordInfoView.snp.bottom).offset(1)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(0.5)
         }
         
-        activityRecordInfoView.snp.makeConstraints { make in
+        goalRewardInfoView.snp.makeConstraints { make in
             make.top.equalTo(secondDivideView.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(60)
         }
         
         thirdDivideView.snp.makeConstraints { make in
-            make.top.equalTo(activityRecordInfoView.snp.bottom).offset(1)
+            make.top.equalTo(goalRewardInfoView.snp.bottom).offset(1)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(0.5)
         }
         
         uploadedCourseInfoView.snp.makeConstraints { make in
             make.top.equalTo(thirdDivideView.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(60)
-        }
-        
-        activityRecordInfoView.snp.makeConstraints { make in
-            make.top.equalTo(secondDivideView.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(60)
         }
@@ -395,22 +404,34 @@ extension MyPageVC {
         settingView.snp.makeConstraints { make in
             make.top.equalTo(fourthDivideView.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(100)
+            make.height.equalTo(60)
         }
-    
+        
+        fifthDivideView.snp.makeConstraints { make in
+            make.top.equalTo(settingView.snp.bottom).offset(1)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(0.5)
+        }
+        
+        kakaoChannelAsk.snp.makeConstraints { make in
+            make.top.equalTo(fifthDivideView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(62)
+        }
+
     }
     
     private func setVersionInfoLayout() {
         view.addSubviews(topVersionDivideView, versionInfoView, bottomVersionDivideView)
         
         topVersionDivideView.snp.makeConstraints { make in
-            make.top.equalTo(settingView.snp.bottom)
+            make.top.equalTo(kakaoChannelAsk.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(4)
         }
         
         versionInfoView.snp.makeConstraints { make in
-            make.top.equalTo(settingView.snp.bottom)
+            make.top.equalTo(kakaoChannelAsk.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(62)
         }
