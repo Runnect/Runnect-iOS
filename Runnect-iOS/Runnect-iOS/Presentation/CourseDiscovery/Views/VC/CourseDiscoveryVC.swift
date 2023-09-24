@@ -230,7 +230,7 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
         
         // 스크롤이 맨 아래에 도달하면 다음 페이지 데이터를 불러옵니다.
         if contentOffsetY >= collectionViewHeight - paginationY {
-            if courseList.count < pageNo * 12 { // 페이지 끝에 도달하면 현재 페이지에 더 이상 데이터가 없음을 의미합니다.
+            if courseList.count < pageNo * 24 { // 페이지 끝에 도달하면 현재 페이지에 더 이상 데이터가 없음을 의미합니다.
                 // 페이지네이션 중단 코드
                 return
             }
