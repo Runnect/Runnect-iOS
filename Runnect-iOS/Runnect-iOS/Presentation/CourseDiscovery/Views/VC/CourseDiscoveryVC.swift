@@ -225,10 +225,10 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let contentOffsetY = scrollView.contentOffset.y
-        let collectionViewHeight = scrollView.contentSize.height
+        let collectionViewHeight = mapCollectionView.contentSize.height
         let paginationY = collectionViewHeight * 0.2
         
-        // 스크롤이 맨 아래에 도달하면 다음 페이지 데이터를 불러옵니다.
+        // 스크롤이 80% (0.2)  까지 도달하면 다음 페이지 데이터를 불러옵니다.
         if contentOffsetY >= collectionViewHeight - paginationY {
             if courseList.count < pageNo * 24 { // 페이지 끝에 도달하면 현재 페이지에 더 이상 데이터가 없음을 의미합니다.
                 // 페이지네이션 중단 코드
