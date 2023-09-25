@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.7.1)
+  - CombineCocoa (0.4.1)
   - FirebaseCore (10.14.0):
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
@@ -42,6 +43,7 @@ PODS:
   - Then (3.0.0)
 
 DEPENDENCIES:
+  - CombineCocoa
   - FirebaseDynamicLinks
   - KakaoSDKAuth
   - KakaoSDKCommon
@@ -57,6 +59,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - CombineCocoa
     - FirebaseCore
     - FirebaseCoreInternal
     - FirebaseDynamicLinks
@@ -76,6 +79,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 0123a34370cb170936ae79a8df46cc62b2edeb88
+  CombineCocoa: e5210dbfb480ff251078929459ac17e750e7af1d
   FirebaseCore: 6fc17ac9f03509d51c131298aacb3ee5698b4f02
   FirebaseCoreInternal: d558159ee6cc4b823c2296ecc193de9f6d9a5bb3
   FirebaseDynamicLinks: 0eaabff2d0e5d0e576c0227227b00771aa2f3aaf
@@ -93,6 +97,6 @@ SPEC CHECKSUMS:
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
-PODFILE CHECKSUM: 43e89e9e217761b44c0c7e93fb4abfab29a82ece
+PODFILE CHECKSUM: 9cec08e47233bfd653e7a2b2c95bde1b7426add8
 
 COCOAPODS: 1.12.1
