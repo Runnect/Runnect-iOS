@@ -10,6 +10,7 @@
 		0AEBD608F3973389E8E1C6D6 /* Pods_Runnect_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */; };
 		23EE06C12AC1AD5200CB3FF8 /* LocationSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06C02AC1AD5200CB3FF8 /* LocationSelectView.swift */; };
 		23EE06C52AC1AE1900CB3FF8 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06C42AC1AE1900CB3FF8 /* BaseView.swift */; };
+		23EE06C92AC1DED100CB3FF8 /* GesturePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06C82AC1DED100CB3FF8 /* GesturePublisher.swift */; };
 		712F661D2A7B7BAB00D9539B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712F661C2A7B7BAB00D9539B /* Config.swift */; };
 		71DBF23E2ABB255A0013415B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 71DBF23D2ABB255A0013415B /* GoogleService-Info.plist */; };
 		A3305A97296EF58C000B1A10 /* GoalRewardInfoDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */; };
@@ -167,6 +168,7 @@
 		015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runnect_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		23EE06C02AC1AD5200CB3FF8 /* LocationSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectView.swift; sourceTree = "<group>"; };
 		23EE06C42AC1AE1900CB3FF8 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		23EE06C82AC1DED100CB3FF8 /* GesturePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GesturePublisher.swift; sourceTree = "<group>"; };
 		3C3033C911343B5C57EB68E7 /* Pods-Runnect-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runnect-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		7110A6032AA337DD009A7E99 /* Runnect-iOSDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Runnect-iOSDebug.entitlements"; sourceTree = "<group>"; };
 		712F661C2A7B7BAB00D9539B /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -1005,6 +1007,7 @@
 				CE58759F29601500005D967E /* Toast.swift */,
 				CE6655C9295D84DD00C64E12 /* UserDefaultKeyList.swift */,
 				CE29D583296416D800F47542 /* caculateStatusBarHeight.swift */,
+				23EE06C82AC1DED100CB3FF8 /* GesturePublisher.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1422,6 +1425,7 @@
 				CE21C02C299E601000F62AF5 /* ScrapRouter.swift in Sources */,
 				A3D1A78029CF142E00DD54EC /* UserManager.swift in Sources */,
 				A3D1A77929CF03D200DD54EC /* AuthRouter.swift in Sources */,
+				23EE06C92AC1DED100CB3FF8 /* GesturePublisher.swift in Sources */,
 				A3C38FED2A13212300FF196D /* SetInfoLayout.swift in Sources */,
 				CE6655D4295D865B00C64E12 /* Publisher+UIControl.swift in Sources */,
 				CE0D9FD329648DA300CEB5CD /* CustomAlertVC.swift in Sources */,
