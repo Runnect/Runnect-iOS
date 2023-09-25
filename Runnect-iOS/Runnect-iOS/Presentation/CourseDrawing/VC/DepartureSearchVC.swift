@@ -27,6 +27,21 @@ final class DepartureSearchVC: UIViewController {
         $0.backgroundColor = .g5
     }
     
+    private let selectDirectionView = LocationSelectView(type: .current)
+    private let selectMapView = LocationSelectView(type: .map)
+    
+    private lazy var locationSelectStackView = UIStackView().then {
+        $0.addArrangedSubview(selectDirectionView)
+        $0.addArrangedSubview(selectMapView)
+        $0.axis = .horizontal
+        $0.distribution = .fillEqually
+        $0.alignment = .center
+    }
+    
+    private let thinDividerView = UIView().then {
+        $0.backgroundColor = .g5
+    }
+    
     private let locationTableView = UITableView(frame: .zero, style: .plain).then {
         $0.backgroundColor = .white
         $0.separatorStyle = .none
@@ -92,7 +107,7 @@ extension DepartureSearchVC {
     }
     
     private func setLayout() {
-        view.addSubviews(naviBar, dividerView, locationTableView)
+        view.addSubviews(naviBar, dividerView, locationSelectStackView, thinDividerView, locationTableView)
         
         naviBar.snp.makeConstraints { make in
             make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -105,8 +120,30 @@ extension DepartureSearchVC {
             make.height.equalTo(6)
         }
         
-        locationTableView.snp.makeConstraints { make in
+        locationSelectStackView.snp.makeConstraints { make in
             make.top.equalTo(dividerView.snp.bottom)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(8)
+            make.height.equalTo(52)
+        }
+        
+        selectDirectionView.snp.makeConstraints { make in
+            make.height.equalTo(locationSelectStackView.snp.height)
+            make.centerY.equalTo(locationSelectStackView)
+        }
+        
+        selectMapView.snp.makeConstraints { make in
+            make.height.equalTo(locationSelectStackView.snp.height)
+            make.centerY.equalTo(locationSelectStackView)
+        }
+        
+        thinDividerView.snp.makeConstraints { make in
+            make.top.equalTo(locationSelectStackView.snp.bottom)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(1)
+        }
+        
+        locationTableView.snp.makeConstraints { make in
+            make.top.equalTo(thinDividerView.snp.bottom)
             make.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
         }
         
