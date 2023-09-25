@@ -21,8 +21,10 @@ final class CourseDiscoveryVC: UIViewController {
     
     private var courseList = [PublicCourse]()
     
-    // pagenation 을 위한 변수 입니다.
+    // pagination 에 꼭 필요한 위한 변수들 입니다.
     private var pageNo = 1
+    
+    private var isDataLoaded = false
     
     // MARK: - UIComponents
     
@@ -69,15 +71,8 @@ final class CourseDiscoveryVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        // 데이터 초기화
-        courseList.removeAll()
-        pageNo = 1
-
-        // 컬렉션 뷰를 리로드하여 초기화된 데이터를 화면에 표시
-        mapCollectionView.reloadData()
         self.hideTabBar(wantsToHide: false)
-        self.getCourseData()
+        setDataLoadIfNeeded()
     }
 }
 
@@ -106,6 +101,22 @@ extension CourseDiscoveryVC {
     private func setAddTarget() {
         self.searchButton.addTarget(self, action: #selector(pushToSearchVC), for: .touchUpInside)
         self.uploadButton.addTarget(self, action: #selector(pushToDiscoveryVC), for: .touchUpInside)
+    }
+    
+    private func setDataLoadIfNeeded() { /// 데이터를 받고 다른 뷰를 갔다가 와도 데이터가 유지되게끔 하기 위한 함수 입니다. (한번만 호출되면 되는 함수!)
+        if !isDataLoaded {
+            // 앱이 실행 될때 처음에만 데이터 초기화
+            courseList.removeAll()
+            pageNo = 1
+
+            // 컬렉션 뷰를 리로드하여 초기화된 데이터를 화면에 표시
+            mapCollectionView.reloadData()
+            self.getCourseData()
+            
+            isDataLoaded = true // 데이터가 로드되었음을 표시
+        } else {
+            return
+        }
     }
 }
 
