@@ -49,6 +49,8 @@ enum ImageLiterals {
     static var icFollowButton: UIImage {.load(named: "ic_follow_button")}
     static var icFollowedButton: UIImage {.load(named: "ic_followed_button")}
     static var icShareButton: UIImage {.load(named: "ic_share")}
+    static var icSmallMap: UIImage { .load(named: "ic_small_map")}
+    static var icDirection: UIImage { .load(named: "ic_direction")}
     
     // img
     static var imgBackground: UIImage { .load(named: "img_background") }
