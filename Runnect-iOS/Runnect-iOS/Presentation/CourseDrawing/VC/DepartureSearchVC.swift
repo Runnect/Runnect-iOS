@@ -7,15 +7,19 @@
 
 import UIKit
 
+import Combine
 import Moya
+import CoreLocation
 
-final class DepartureSearchVC: UIViewController {
+final class DepartureSearchVC: UIViewController, CLLocationManagerDelegate {
     
     // MARK: - Properties
     
     private let departureSearchingProvider = Providers.departureSearchingProvider
     
     private var addressList = [KakaoAddressResult]()
+    private var cancelBag = CancelBag()
+    var locationManager = CLLocationManager()
     
     // MARK: - UI Components
     
@@ -74,6 +78,7 @@ final class DepartureSearchVC: UIViewController {
         self.setLayout()
         self.setDelegate()
         self.registerCell()
+        self.setBinding()
     }
 }
 
@@ -95,6 +100,38 @@ extension DepartureSearchVC {
         self.addressList = data
         emptyDataView.isHidden = !data.isEmpty
         locationTableView.reloadData()
+    }
+    
+    private func setBinding() {
+        selectDirectionView.gesture().sink { _ in
+            self.setLocation()
+        }.store(in: cancelBag)
+        
+        selectMapView.gesture().sink { _ in
+           
+        }.store(in: cancelBag)
+    }
+    
+}
+
+// MARK: - Location
+extension DepartureSearchVC {
+    private func setLocation() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        
+        DispatchQueue.global().async { [self] in
+            if CLLocationManager.locationServicesEnabled() {
+                self.locationManager.startUpdatingLocation()
+                
+                guard let latitude = locationManager.location?.coordinate.latitude,
+                      let longitude = locationManager.location?.coordinate.longitude else { return }
+                searchLocationAddress(latitude: latitude, longitude: longitude)
+            }
+            else {
+                locationManager.startUpdatingLocation()
+            }
+        }
     }
 }
 
@@ -226,5 +263,35 @@ extension DepartureSearchVC {
                 self.showToast(message: "네트워크 통신 실패")
             }
         }
+    }
+    
+    private func searchLocationAddress(latitude: Double, longitude: Double) {
+        departureSearchingProvider
+            .request(.getLocationAddress(latitude: latitude, longitude: longitude)) { [weak self] response in
+                guard let self = self else { return }
+                switch response {
+                case .success(let result):
+                    let status = result.statusCode
+                    if 200..<300 ~= status {
+                        do {
+                            let responseDto = try result.map(DepartureAddressSearchingResponseDto.self)
+                            let courseDrawingVC = CourseDrawingVC()
+
+                            courseDrawingVC.setData(model: responseDto.toDepartureLocationModel(latitude: latitude, longitude: longitude))
+
+                            courseDrawingVC.hidesBottomBarWhenPushed = true
+                            self.navigationController?.pushViewController(courseDrawingVC, animated: true)
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    }
+                    if status >= 400 {
+                        print("400 error")
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self.showToast(message: "네트워크 통신 실패")
+                }
+            }
     }
 }
