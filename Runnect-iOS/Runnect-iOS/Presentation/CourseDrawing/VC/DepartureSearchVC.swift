@@ -126,7 +126,7 @@ extension DepartureSearchVC {
                 
                 guard let latitude = locationManager.location?.coordinate.latitude,
                       let longitude = locationManager.location?.coordinate.longitude else { return }
-                searchLocationAddress(latitude: latitude, longitude: longitude)
+                searchLocationTmapAddress(latitude: latitude, longitude: longitude)
             }
             else {
                 locationManager.startUpdatingLocation()
@@ -274,7 +274,38 @@ extension DepartureSearchVC {
                     let status = result.statusCode
                     if 200..<300 ~= status {
                         do {
-                            let responseDto = try result.map(DepartureAddressSearchingResponseDto.self)
+                            let responseDto = try result.map(KakakoAddressSearchingResponseDto.self)
+                            let courseDrawingVC = CourseDrawingVC()
+
+                            courseDrawingVC.setData(model: responseDto.toDepartureLocationModel(latitude: latitude, longitude: longitude))
+
+                            courseDrawingVC.hidesBottomBarWhenPushed = true
+                            self.navigationController?.pushViewController(courseDrawingVC, animated: true)
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    }
+                    if status >= 400 {
+                        print("400 error")
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self.showToast(message: "네트워크 통신 실패")
+                }
+            }
+    }
+    
+    private func searchLocationTmapAddress(latitude: Double, longitude: Double) {
+        print("여기에 안들어오나?")
+        departureSearchingProvider
+            .request(.getLocationTmapAddress(latitude: latitude, longitude: longitude)) { [weak self] response in
+                guard let self = self else { return }
+                switch response {
+                case .success(let result):
+                    let status = result.statusCode
+                    if 200..<300 ~= status {
+                        do {
+                            let responseDto = try result.map(TmapAddressSearchingResponseDto.self)
                             let courseDrawingVC = CourseDrawingVC()
 
                             courseDrawingVC.setData(model: responseDto.toDepartureLocationModel(latitude: latitude, longitude: longitude))

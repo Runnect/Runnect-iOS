@@ -11,7 +11,8 @@ import Moya
 
 enum DepartureSearchingRouter {
     case getAddress(keyword: String)
-    case getLocationAddress(latitude: Double, longitude: Double)
+    case getLocationAddress(latitude: Double, longitude: Double) // kakao
+    case getLocationTmapAddress(latitude: Double, longitude: Double) // tmap
 }
 
 extension DepartureSearchingRouter: TargetType {
@@ -19,10 +20,12 @@ extension DepartureSearchingRouter: TargetType {
         var urlString: String
         
         switch self {
-        case .getAddress(let keyword):
+        case .getAddress:
             urlString = Config.kakaoAddressBaseURL
         case .getLocationAddress:
             urlString = "https://dapi.kakao.com/v2/local/geo"
+        case .getLocationTmapAddress:
+            urlString = Config.tmapAddressBaseURL
         }
         
         guard let url = URL(string: urlString) else {
@@ -37,12 +40,14 @@ extension DepartureSearchingRouter: TargetType {
             return "/keyword.json"
         case .getLocationAddress:
             return "/coord2address.json"
+        case .getLocationTmapAddress:
+            return "/reversegeocoding"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .getAddress, .getLocationAddress:
+        case .getAddress, .getLocationAddress, .getLocationTmapAddress:
             return .get
         }
     }
@@ -53,6 +58,8 @@ extension DepartureSearchingRouter: TargetType {
             return .requestParameters(parameters: ["query": keyword], encoding: URLEncoding.default)
         case .getLocationAddress(let latitude, let longitude):
             return .requestParameters(parameters: ["x": longitude, "y": latitude], encoding: URLEncoding.default)
+        case .getLocationTmapAddress(let latitude, let longitude):
+            return .requestParameters(parameters: ["lat": latitude, "lon":longitude, "addressType": "A04","appKey": Config.tmapAPIKey], encoding: URLEncoding.default)
         }
     }
     
