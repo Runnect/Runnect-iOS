@@ -15,12 +15,19 @@ final class CourseDrawingVC: UIViewController {
     // MARK: - Properties
     
     private let courseProvider = Providers.courseProvider
+    private let departureSearchingProvider = Providers.departureSearchingProvider
     
     private var departureLocationModel: DepartureLocationModel?
     
     var pathImage: UIImage?
     var distance: Float = 0.0
-    var selectedType: SelectedType = .other
+    
+    var courseDrawingEventSubject = PassthroughSubject<SelectedType, Never>()
+    lazy var selectedType: SelectedType = .other {
+        didSet {
+            courseDrawingEventSubject.send(selectedType)
+        }
+    }
     
     private var cancelBag = CancelBag()
     
@@ -125,7 +132,6 @@ final class CourseDrawingVC: UIViewController {
         self.setAddTarget()
         self.bindMapView()
         self.setNavigationGesture(false)
-//        self.setCourseDrawingType()
     }
 }
 
@@ -134,9 +140,15 @@ final class CourseDrawingVC: UIViewController {
 extension CourseDrawingVC {
     func setData(model: DepartureLocationModel) {
         self.departureLocationModel = model
-        
         self.naviBar.setTextFieldText(text: model.departureName)
         self.mapView.makeStartMarker(at: model.toNMGLatLng(), withCameraMove: true, type: self.selectedType)
+        self.departureLocationLabel.text = model.departureName
+        self.departureDetailLocationLabel.text = model.departureAddress
+    }
+    
+    func updateData(model: DepartureLocationModel) {
+        self.departureLocationModel = model
+        self.naviBar.setTextFieldText(text: model.departureName)
         self.departureLocationLabel.text = model.departureName
         self.departureDetailLocationLabel.text = model.departureAddress
     }
@@ -166,14 +178,12 @@ extension CourseDrawingVC {
             self.pathImage = image
             self.uploadCourseDrawing()
         }.store(in: cancelBag)
+        
+        mapView.eventSubject.sink { [weak self] arr in
+            guard let self = self else { return }
+            self.searchLocationTmapAddress(latitude: arr[0], longitude: arr[1])
+        }.store(in: cancelBag)
     }
-    
-//    private func setCourseDrawingType() {
-//        if self.selectedType == .map {
-//            mapView.setDrawMode(to: true)
-//            print("draw mode 설정 되었음")
-//        }
-//    }
     
     private func setNavigationGesture(_ isEnabled: Bool) {
         navigationController?.interactivePopGestureRecognizer?.isEnabled = isEnabled
@@ -213,7 +223,13 @@ extension CourseDrawingVC {
 extension CourseDrawingVC {
     @objc private func decideDepartureButtonDidTap() {
         showHiddenViews(withDuration: 0.7)
-
+        
+        if self.selectedType == .map {
+            startMarkStackView.isHidden = true
+            guard let model = self.departureLocationModel else { return }
+            mapView.makeStartMarker(at: model.toNMGLatLng(), withCameraMove: true, type: .other)
+        }
+        
         mapView.setDrawMode(to: true)
     }
     
@@ -235,6 +251,7 @@ extension CourseDrawingVC {
         self.naviBarForEditing.backgroundColor = .clear
         self.departureInfoContainerView.layer.applyShadow(alpha: 0.35, x: 0, y: 3, blur: 10)
         self.distanceContainerView.layer.applyShadow(alpha: 0.2, x: 2, y: 4, blur: 9)
+        self.startMarkStackView.isHidden = self.selectedType == .map ? false : true
     }
     
     private func setLayout() {
@@ -411,6 +428,31 @@ extension CourseDrawingVC {
                 self.showNetworkFailureToast()
             }
         }
+    }
+    
+    private func searchLocationTmapAddress(latitude: Double, longitude: Double) {
+        departureSearchingProvider
+            .request(.getLocationTmapAddress(latitude: latitude, longitude: longitude)) { [weak self] response in
+                guard let self = self else { return }
+                switch response {
+                case .success(let result):
+                    let status = result.statusCode
+                    if 200..<300 ~= status {
+                        do {
+                            let responseDto = try result.map(TmapAddressSearchingResponseDto.self)
+                            self.updateData(model: responseDto.toDepartureLocationModel(latitude: latitude, longitude: longitude))
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    }
+                    if status >= 400 {
+                        print("400 error")
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self.showToast(message: "네트워크 통신 실패")
+                }
+            }
     }
 }
 

@@ -18,7 +18,9 @@ final class RNMapView: UIView {
     
     @Published var pathDistance: Double = 0
     @Published var markerCount = 0
-    static let shared = RN
+    
+    var eventSubject = PassthroughSubject<Array<Double>, Never>()
+    private var selectedType: SelectedType = .other
     
     private let screenWidth = UIScreen.main.bounds.width
     private let screenHeight = UIScreen.main.bounds.height
@@ -390,11 +392,12 @@ extension RNMapView: NMFMapViewCameraDelegate, NMFMapViewTouchDelegate {
         self.makeMarker(at: latlng)
     }
     
+    // 지도 이동 멈췄을 때 호출되는 메서드
     func mapViewCameraIdle(_ mapView: NMFMapView) {
         let latitude = mapView.cameraPosition.target.lat
         let longitude = mapView.cameraPosition.target.lng
-        
-        print(latitude, longitude)
+
+        eventSubject.send([latitude, longitude])
     }
 }
 

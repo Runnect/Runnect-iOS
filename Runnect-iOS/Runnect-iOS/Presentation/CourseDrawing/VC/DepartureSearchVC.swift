@@ -11,7 +11,7 @@ import Combine
 import Moya
 import CoreLocation
 
-// 현재 위치 | 검색 | 지도에서 선택 중 분기처리를 해주기 위함
+/// 현재 위치 | 검색 | 지도에서 선택 중 분기처리를 해주기 위함
 enum SelectedType {
     case other
     case map
@@ -307,7 +307,6 @@ extension DepartureSearchVC {
     }
     
     private func searchLocationTmapAddress(latitude: Double, longitude: Double) {
-        print("여기에 안들어오나?")
         departureSearchingProvider
             .request(.getLocationTmapAddress(latitude: latitude, longitude: longitude)) { [weak self] response in
                 guard let self = self else { return }
