@@ -11,6 +11,12 @@ import Combine
 import Moya
 import CoreLocation
 
+// 현재 위치 | 검색 | 지도에서 선택 중 분기처리를 해주기 위함
+enum SelectedType {
+    case other
+    case map
+}
+
 final class DepartureSearchVC: UIViewController, CLLocationManagerDelegate {
     
     // MARK: - Properties
@@ -20,6 +26,7 @@ final class DepartureSearchVC: UIViewController, CLLocationManagerDelegate {
     private var addressList = [KakaoAddressResult]()
     private var cancelBag = CancelBag()
     var locationManager = CLLocationManager()
+    var selectedType: SelectedType = .other
     
     // MARK: - UI Components
     
@@ -104,11 +111,13 @@ extension DepartureSearchVC {
     
     private func setBinding() {
         selectDirectionView.gesture().sink { _ in
+            self.selectedType = .other
             self.setLocation()
         }.store(in: cancelBag)
         
         selectMapView.gesture().sink { _ in
-           
+            self.selectedType = .map
+            self.setLocation()
         }.store(in: cancelBag)
     }
     
@@ -216,6 +225,7 @@ extension DepartureSearchVC: UITableViewDelegate, UITableViewDataSource {
         
         let departureLocationModel = addressList[indexPath.item].toDepartureLocationModel()
         courseDrawingVC.setData(model: departureLocationModel)
+        courseDrawingVC.selectedType = .other
         
         courseDrawingVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(courseDrawingVC, animated: true)
@@ -277,8 +287,9 @@ extension DepartureSearchVC {
                             let responseDto = try result.map(KakakoAddressSearchingResponseDto.self)
                             let courseDrawingVC = CourseDrawingVC()
 
+                            courseDrawingVC.selectedType = self.selectedType
                             courseDrawingVC.setData(model: responseDto.toDepartureLocationModel(latitude: latitude, longitude: longitude))
-
+                            
                             courseDrawingVC.hidesBottomBarWhenPushed = true
                             self.navigationController?.pushViewController(courseDrawingVC, animated: true)
                         } catch {
@@ -307,9 +318,10 @@ extension DepartureSearchVC {
                         do {
                             let responseDto = try result.map(TmapAddressSearchingResponseDto.self)
                             let courseDrawingVC = CourseDrawingVC()
-
+                            
+                            courseDrawingVC.selectedType = self.selectedType
                             courseDrawingVC.setData(model: responseDto.toDepartureLocationModel(latitude: latitude, longitude: longitude))
-
+                            
                             courseDrawingVC.hidesBottomBarWhenPushed = true
                             self.navigationController?.pushViewController(courseDrawingVC, animated: true)
                         } catch {

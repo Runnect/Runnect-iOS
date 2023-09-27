@@ -20,6 +20,7 @@ final class CourseDrawingVC: UIViewController {
     
     var pathImage: UIImage?
     var distance: Float = 0.0
+    var selectedType: SelectedType = .other
     
     private var cancelBag = CancelBag()
     
@@ -102,6 +103,19 @@ final class CourseDrawingVC: UIViewController {
     
     private let completeButton = CustomButton(title: "완성하기").setEnabled(false)
     
+    private let startMarkUIImage = UIImageView().then {
+        $0.image = ImageLiterals.icMapDeparture
+    }
+    private let startLabelUIImage = UIImageView().then {
+        $0.image = ImageLiterals.icMapStart
+    }
+    private lazy var startMarkStackView = UIStackView().then {
+        $0.addArrangedSubviews(startLabelUIImage, startMarkUIImage)
+        $0.axis = .vertical
+        $0.alignment = .center
+        $0.spacing = 1
+    }
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -111,6 +125,7 @@ final class CourseDrawingVC: UIViewController {
         self.setAddTarget()
         self.bindMapView()
         self.setNavigationGesture(false)
+//        self.setCourseDrawingType()
     }
 }
 
@@ -121,7 +136,7 @@ extension CourseDrawingVC {
         self.departureLocationModel = model
         
         self.naviBar.setTextFieldText(text: model.departureName)
-        self.mapView.makeStartMarker(at: model.toNMGLatLng(), withCameraMove: true)
+        self.mapView.makeStartMarker(at: model.toNMGLatLng(), withCameraMove: true, type: self.selectedType)
         self.departureLocationLabel.text = model.departureName
         self.departureDetailLocationLabel.text = model.departureAddress
     }
@@ -152,6 +167,13 @@ extension CourseDrawingVC {
             self.uploadCourseDrawing()
         }.store(in: cancelBag)
     }
+    
+//    private func setCourseDrawingType() {
+//        if self.selectedType == .map {
+//            mapView.setDrawMode(to: true)
+//            print("draw mode 설정 되었음")
+//        }
+//    }
     
     private func setNavigationGesture(_ isEnabled: Bool) {
         navigationController?.interactivePopGestureRecognizer?.isEnabled = isEnabled
@@ -218,6 +240,7 @@ extension CourseDrawingVC {
     private func setLayout() {
         setHiddenViewsLayout()
         self.view.addSubviews(naviBarContainerStackView, mapView, departureInfoContainerView)
+        self.view.addSubview(startMarkStackView)
         self.departureInfoContainerView.addSubviews(departureLocationLabel, departureDetailLocationLabel, decideDepartureButton)
         view.bringSubviewToFront(naviBarContainerStackView)
         
@@ -240,6 +263,21 @@ extension CourseDrawingVC {
         
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+        
+        startLabelUIImage.snp.makeConstraints { make in
+            make.height.equalTo(34)
+            make.width.equalTo(58)
+        }
+        startMarkUIImage.snp.makeConstraints { make in
+            make.height.width.equalTo(65)
+        }
+        
+        startMarkStackView.snp.makeConstraints { make in
+            make.height.equalTo(100)
+            make.width.equalTo(65)
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(-17)
         }
         
         departureInfoContainerView.snp.makeConstraints { make in
@@ -375,3 +413,4 @@ extension CourseDrawingVC {
         }
     }
 }
+
