@@ -81,6 +81,7 @@ final class CourseDetailVC: UIViewController {
         $0.text = "닉네임"
         $0.textColor = .g1
         $0.font = .h5
+        $0.isUserInteractionEnabled = true
     }
     
     private let runningLevelLabel = UILabel().then {
@@ -186,6 +187,10 @@ extension CourseDetailVC {
 //        self.present(activityVC, animated: true, completion: nil)
         
     }
+    @objc func pushToUserProfileVC() {
+        let userProfile = UserProfileVC()
+        self.navigationController?.pushViewController(userProfile, animated: true)
+    }
 
     @objc func startButtonDidTap() {
         guard handleVisitor() else { return }
@@ -287,6 +292,8 @@ extension CourseDetailVC {
         likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
         moreButton.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
         shareButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
+        let profileTouch = UITapGestureRecognizer(target: self, action: #selector(pushToUserProfileVC))
+        profileNameLabel.addGestureRecognizer(profileTouch)
     }
     
     private func setNullUser() {
