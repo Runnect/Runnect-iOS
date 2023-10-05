@@ -63,7 +63,7 @@ final class MyPageVC: UIViewController {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setProgress(0, animated: false)
         $0.progressTintColor = .m1
-        $0.trackTintColor = .m3
+        $0.trackTintColor = .m6
         $0.layer.cornerRadius = 6
         $0.clipsToBounds = true
         $0.layer.sublayers![1].cornerRadius = 6
@@ -275,7 +275,7 @@ extension MyPageVC {
     
     private func setUI() {
         view.backgroundColor = .w1
-        myProfileView.backgroundColor = .m3
+        myRunningProgressView.backgroundColor = .m3
         firstDivideView.backgroundColor = .g5
         secondDivideView.backgroundColor = .g4
         thirdDivideView.backgroundColor = .g4
@@ -305,9 +305,9 @@ extension MyPageVC {
         setRunningProgressLayout()
         
         firstDivideView.snp.makeConstraints { make in
-            make.top.equalTo(myRunningProgressView.snp.bottom).offset(34)
+            make.top.equalTo(myRunningProgressView.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(10)
+            make.height.equalTo(1)
         }
         
         setInfoButtonLayout()
@@ -337,9 +337,9 @@ extension MyPageVC {
         }
         
         myRunningProgressView.snp.makeConstraints { make in
-            make.top.equalTo(myProfileView.snp.bottom).offset(31)
-            make.leading.trailing.equalToSuperview().inset(32)
-            make.height.equalTo(61)
+            make.top.equalTo(myProfileView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(100)
         }
     }
     
@@ -348,19 +348,20 @@ extension MyPageVC {
                                           myRunnigProgressPercentLabel)
         
         myRunningLevelLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview().offset(3)
+            make.top.equalToSuperview().offset(20)
+            make.leading.equalToSuperview().offset(36)
         }
         
         myRunningProgressBar.snp.makeConstraints { make in
             make.top.equalTo(myRunningLevelLabel.snp.bottom).offset(6)
-            make.leading.trailing.equalToSuperview()
+            make.leading.equalToSuperview().offset(36.53)
+            make.trailing.equalToSuperview().inset(31.6)
             make.height.equalTo(11)
         }
         
         myRunnigProgressPercentLabel.snp.makeConstraints { make in
-            make.bottom.equalToSuperview()
-            make.trailing.equalToSuperview()
+            make.bottom.equalToSuperview().inset(20)
+            make.trailing.equalToSuperview().inset(31.6)
         }
     }
     
