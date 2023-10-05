@@ -79,7 +79,7 @@ final class UserProfileVC: UIViewController {
         super.viewWillAppear(animated)
         guard UserManager.shared.userType != .visitor else { return }
         self.getMyPageInfo()
-        self.hideTabBar(wantsToHide: false)
+        self.hideTabBar(wantsToHide: true)
     }
 }
 
