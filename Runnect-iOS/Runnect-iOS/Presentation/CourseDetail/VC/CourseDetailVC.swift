@@ -223,23 +223,23 @@ extension CourseDetailVC {
         menu.dataSource = items
         menu.show()
 
-        menu.selectionAction = { [unowned self] (index, item) in
+        menu.selectionAction = { [unowned self] (_, item) in
             menu.clearSelection()
-
+            
             switch item {
             case "수정하기":
                 let courseEditVC = CourseEditVC()
                 courseEditVC.loadData(model: uploadedCourseDetailModel)
                 courseEditVC.publicCourseId = self.publicCourseId
-                self.navigationController?.pushViewController(courseEditVC, animated: true)
+                self.navigationController?.pushViewController(courseEditVC, animated: false)
             case "삭제하기":
                 let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
-                self.navigationController?.pushViewController(deleteAlertVC, animated: true)
                 deleteAlertVC.modalPresentationStyle = .overFullScreen
-                deleteAlertVC.rightButtonTapAction = { [weak self] in
+                deleteAlertVC.rightButtonTapAction = {
                     deleteAlertVC.dismiss(animated: false)
-                    self?.deleteCourse()
+                    self.deleteCourse()
                 }
+                self.present(deleteAlertVC, animated: false)
             case "신고하기":
                 if !isMyCourse {
                     let formUrl = NSURL(string: "https://docs.google.com/forms/d/e/1FAIpQLSek2rkClKfGaz1zwTEHX3Oojbq_pbF3ifPYMYezBU0_pe-_Tg/viewform")
