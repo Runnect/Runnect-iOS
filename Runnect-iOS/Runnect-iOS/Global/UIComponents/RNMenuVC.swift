@@ -11,8 +11,10 @@ import Combine
 
 class RNMenuVC: UIViewController {
 
-    
     let menu = DropDown()
+    
+    private var items = [String]()
+    private var popUpImageArray = [UIImage]()
     
     let dropbutton = UIButton().then {
         $0.setTitle("DropDownClick", for: .normal)
@@ -27,6 +29,16 @@ class RNMenuVC: UIViewController {
     private let dropView = UIView().then {
         $0.backgroundColor = .w1
     }
+    
+//    init(ImageArray: [UIImage], items: [String]) {
+//        super.init(nibName: nil, bundle: nil)
+//        self.popUpImageArray = ImageArray
+//        self.items = items
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,21 +60,16 @@ class RNMenuVC: UIViewController {
     func setDropDown() {
         
         let items = ["수정하기", "삭제하기"]
+        let itemsCount = items.count
             
         menu.dataSource = items
-        menu.cellNib = UINib(nibName: "RNDropDownCell", bundle: nil)
         menu.anchorView = dropbutton
-//        dropDown.bottomOffset = CGPoint(x: -20, y: dropbutton.bounds.height + 50)
+        menu.bottomOffset = CGPoint(x: -20, y: dropbutton.bounds.height + 50)
         menu.width = 170
         menu.cellHeight = 40
         menu.cornerRadius = 10
         menu.dismissMode = .onTap
         
-//        dropDown.customCellConfiguration =  { (index: Index, item: String, cell: DropDownCell) -> Void in
-//            let dividerLine = UIView(frame: CGRect(x: 0, y: cell.frame.height - 4 , width: self.view.frame.width - 20, height: 1))
-//            dividerLine.backgroundColor = UIColor(hex: "EBEBEB")
-//            cell.addSubview(dividerLine)
-//            }
         menu.separatorColor = .black
     }
 
@@ -73,6 +80,8 @@ extension RNMenuVC {
     // DropDown UI 커스텀
     func initUI() {
         // DropDown View의 배경
+        
+        let imageArray: [UIImage] = [ImageLiterals.icModify, ImageLiterals.icRemove]
         dropView.backgroundColor = UIColor.init(hex: "#F1F1F1")
         dropView.layer.cornerRadius = 8
         
@@ -82,19 +91,27 @@ extension RNMenuVC {
         DropDown.appearance().selectionBackgroundColor = UIColor.lightGray // 선택한 아이템 배경 색상
         DropDown.appearance().setupCornerRadius(10)
         menu.dismissMode = .automatic // 팝업을 닫을 모드 설정
-        
-        menu.customCellConfiguration = { index, title, cell in
-            guard let cell = cell as? RNDropDownCell else {return}
-            
-            
-        }
+    
         menu.customCellConfiguration = { (index: Index, item: String, cell: DropDownCell) -> Void in
-            let lastdividerLineRemove = UIView(frame: CGRect(origin: CGPoint(x: 0, y: 119), size: CGSize(width: 170, height: 10)))
+            let lastdividerLineRemove = UIView(frame: CGRect(origin: CGPoint(x: 0, y: 79), size: CGSize(width: 170, height: 10)))
             lastdividerLineRemove.backgroundColor = .white
             cell.addSubview(lastdividerLineRemove)
+            cell.dropDownImage.image = imageArray[index]
+        }
+        
+        menu.selectionAction = { [unowned self] (index, item) in
+            
+            self.menu.clearSelection()
+            print("선택 index \(index)")
+            print("선택 item \(item)")
+            
         }
         
         // 마지막 줄만 없에는 코드 있으면 완벽함
+        
+    }
+    
+    private func setLayout() {
         
     }
     
