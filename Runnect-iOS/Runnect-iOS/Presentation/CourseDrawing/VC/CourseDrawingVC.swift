@@ -102,7 +102,7 @@ final class CourseDrawingVC: UIViewController {
         $0.setImage(ImageLiterals.icCancel, for: .normal)
     }
     
-    private let completeButton = CustomButton(title: "완성하기").setEnabled(false)
+    private let completeButton = CustomButton(title: "다음으로").setEnabled(false)
     
     private let startMarkUIImage = UIImageView().then {
         $0.image = ImageLiterals.icMapDeparture
@@ -233,9 +233,13 @@ extension CourseDrawingVC {
         mapView.undo()
     }
     
+    /// 다음으로 가기 버튼 여기 수정해야함~
     @objc private func completeButtonDidTap() {
-        guard handleVisitor() else { return }
-        mapView.capturePathImage()
+//        guard handleVisitor() else { return }
+//        mapView.capturePathImage()
+        let bottomSheetVC = CourseNameBottomSheetVC()
+        bottomSheetVC.modalPresentationStyle = .overFullScreen
+        self.present(bottomSheetVC, animated: false)
     }
 }
 
