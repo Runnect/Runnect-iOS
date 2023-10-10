@@ -125,6 +125,7 @@ extension DepartureSearchVC {
 
 // MARK: - Location
 extension DepartureSearchVC {
+    /// 현재 위도, 경도에 따른 주소 받아오는 함수
     private func setLocation() {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest

@@ -20,7 +20,11 @@ final class RNMapView: UIView {
     @Published var markerCount = 0
     
     var eventSubject = PassthroughSubject<Array<Double>, Never>()
-    private var selectedType: SelectedType = .other
+    var selectedType: SelectedType = .other {
+        didSet {
+            print("RNMapview:", selectedType)
+        }
+    }
     
     private let screenWidth = UIScreen.main.bounds.width
     private let screenHeight = UIScreen.main.bounds.height
@@ -373,6 +377,10 @@ extension RNMapView {
             }
         }
     }
+    
+    func setSelectedType(type: SelectedType) {
+        self.selectedType = type
+    }
 }
 
 // MARK: - @objc Function
@@ -396,8 +404,10 @@ extension RNMapView: NMFMapViewCameraDelegate, NMFMapViewTouchDelegate {
     func mapViewCameraIdle(_ mapView: NMFMapView) {
         let latitude = mapView.cameraPosition.target.lat
         let longitude = mapView.cameraPosition.target.lng
-
-        eventSubject.send([latitude, longitude])
+        
+        if self.selectedType == .map {
+            eventSubject.send([latitude, longitude])
+        }
     }
 }
 

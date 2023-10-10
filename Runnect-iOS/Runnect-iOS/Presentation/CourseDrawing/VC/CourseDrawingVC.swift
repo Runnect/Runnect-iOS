@@ -21,13 +21,7 @@ final class CourseDrawingVC: UIViewController {
     
     var pathImage: UIImage?
     var distance: Float = 0.0
-    
-    var courseDrawingEventSubject = PassthroughSubject<SelectedType, Never>()
-    lazy var selectedType: SelectedType = .other {
-        didSet {
-            courseDrawingEventSubject.send(selectedType)
-        }
-    }
+    var selectedType: SelectedType = .other
     
     private var cancelBag = CancelBag()
     
@@ -183,6 +177,8 @@ extension CourseDrawingVC {
             guard let self = self else { return }
             self.searchLocationTmapAddress(latitude: arr[0], longitude: arr[1])
         }.store(in: cancelBag)
+        
+        mapView.setSelectedType(type: self.selectedType)
     }
     
     private func setNavigationGesture(_ isEnabled: Bool) {
