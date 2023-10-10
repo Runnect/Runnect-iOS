@@ -17,6 +17,7 @@ import FirebaseCore
 import FirebaseDynamicLinks
 import KakaoSDKShare
 import KakaoSDKTemplate
+import DropDown
 
 final class CourseDetailVC: UIViewController {
     
@@ -194,41 +195,63 @@ extension CourseDetailVC {
     }
     @objc func moreButtonDidTap() {
         guard let isMyCourse = self.isMyCourse, let uploadedCourseDetailModel = self.uploadedCourseDetailModel else { return }
-        
-        let cancelAction = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
-        
-        if isMyCourse == true {
-            let editAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            
-            let editAction = UIAlertAction(title: "수정하기", style: .default, handler: {(_: UIAlertAction!) in
+
+        let menu = DropDown()
+        let items = isMyCourse ? ["수정하기", "삭제하기"] : ["신고하기"]
+        let imageArray: [UIImage] = isMyCourse ? [ImageLiterals.icModify, ImageLiterals.icRemove] : [ImageLiterals.icReport]
+
+        DropDown.appearance().textColor = UIColor.black
+        DropDown.appearance().selectedTextColor = UIColor.red
+        DropDown.appearance().selectionBackgroundColor = UIColor(hex: "#FFFFFF")
+        DropDown.appearance().backgroundColor = UIColor.white
+        DropDown.appearance().setupCornerRadius(12)
+
+        menu.customCellConfiguration = { (index: Index, item: String, cell: DropDownCell) -> Void in
+            let lastdividerLineRemove = UIView(frame: CGRect(origin: CGPoint(x: 0, y: isMyCourse ? 79 : 39), size: CGSize(width: 170, height: 10)))
+            lastdividerLineRemove.backgroundColor = .white
+            cell.separatorInset = .zero
+            cell.addSubview(lastdividerLineRemove)
+            cell.dropDownImage.image = imageArray[index]
+        }
+        menu.anchorView = moreButton
+        menu.bottomOffset = CGPoint(x: -136, y: moreButton.bounds.height - 10)
+        menu.width = 170
+        menu.cellHeight = 40
+        menu.cornerRadius = 12
+        menu.dismissMode = .onTap
+        menu.separatorColor = .black
+        menu.dataSource = items
+        menu.show()
+
+        menu.selectionAction = { [unowned self] (index, item) in
+            menu.clearSelection()
+
+            switch item {
+            case "수정하기":
                 let courseEditVC = CourseEditVC()
                 courseEditVC.loadData(model: uploadedCourseDetailModel)
                 courseEditVC.publicCourseId = self.publicCourseId
-                self.navigationController?.pushViewController(courseEditVC, animated: false)
-            })
-            let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
-            deleteAlertVC.rightButtonTapAction = { [weak self] in
-                deleteAlertVC.dismiss(animated: false)
-                self?.deleteCourse()
+                self.navigationController?.pushViewController(courseEditVC, animated: true)
+            case "삭제하기":
+                let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
+                self.navigationController?.pushViewController(deleteAlertVC, animated: true)
+                deleteAlertVC.modalPresentationStyle = .overFullScreen
+                deleteAlertVC.rightButtonTapAction = { [weak self] in
+                    deleteAlertVC.dismiss(animated: false)
+                    self?.deleteCourse()
+                }
+            case "신고하기":
+                if !isMyCourse {
+                    let formUrl = NSURL(string: "https://docs.google.com/forms/d/e/1FAIpQLSek2rkClKfGaz1zwTEHX3Oojbq_pbF3ifPYMYezBU0_pe-_Tg/viewform")
+                    let formSafariView: SFSafariViewController = SFSafariViewController(url: formUrl! as URL)
+                    self.present(formSafariView, animated: true, completion: nil)
+                }
+            default:
+                print("암것도 아님")
             }
-            deleteAlertVC.modalPresentationStyle = .overFullScreen
-            let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive, handler: {(_: UIAlertAction!) in
-                self.present(deleteAlertVC, animated: false, completion: nil)
-            })
-            [ editAction, deleteAction, cancelAction].forEach { editAlertController.addAction($0) }
-            present(editAlertController, animated: false, completion: nil)
-        } else {
-            // 신고폼 올라오는 거(유저아이디가 내가 아닌 경우)
-            let reportAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let formUrl = NSURL(string: "https://docs.google.com/forms/d/e/1FAIpQLSek2rkClKfGaz1zwTEHX3Oojbq_pbF3ifPYMYezBU0_pe-_Tg/viewform")
-            let formSafariView: SFSafariViewController = SFSafariViewController(url: formUrl! as URL)
-            let reportAction = UIAlertAction(title: "신고하기", style: .destructive, handler: {(_: UIAlertAction!) in
-                self.present(formSafariView, animated: true, completion: nil)
-            })
-            [ reportAction, cancelAction ].forEach { reportAlertController.addAction($0) }
-            present(reportAlertController, animated: true, completion: nil)
         }
     }
+
     
     private func pushToCountDownVC() {
         guard let courseModel = self.courseModel,
@@ -534,3 +557,11 @@ extension CourseDetailVC {
         }
     }
 }
+
+extension CourseDetailVC {
+    
+    func moreButtonDidTapped() {
+        
+    }
+}
+

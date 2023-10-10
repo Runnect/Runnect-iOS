@@ -11,19 +11,14 @@ import Combine
 
 class RNMenuVC: UIViewController {
 
-    let menu = DropDown()
+    private let menu = DropDown()
     
     private var items = [String]()
     private var popUpImageArray = [UIImage]()
     
-    let dropbutton = UIButton().then {
+    private let dropbutton = UIButton().then {
         $0.setTitle("DropDownClick", for: .normal)
         $0.tintColor = .m1
-    }
-    
-    let line = UIView().then {
-        $0.backgroundColor = .black
-        $0.frame.size.height = 30 // 구분선의 높이를 1로 설정
     }
     
     private let dropView = UIView().then {
@@ -71,6 +66,7 @@ class RNMenuVC: UIViewController {
         menu.dismissMode = .onTap
         
         menu.separatorColor = .black
+        // UIColor(hex: "#EBEBEB")
     }
 
 }
@@ -82,19 +78,20 @@ extension RNMenuVC {
         // DropDown View의 배경
         
         let imageArray: [UIImage] = [ImageLiterals.icModify, ImageLiterals.icRemove]
-        dropView.backgroundColor = UIColor.init(hex: "#F1F1F1")
+        dropView.backgroundColor = UIColor(hex: "#FFFFFF")
         dropView.layer.cornerRadius = 8
         
         DropDown.appearance().textColor = UIColor.black // 아이템 텍스트 색상
         DropDown.appearance().selectedTextColor = UIColor.red // 선택된 아이템 텍스트 색상
+        DropDown.appearance().selectionBackgroundColor = UIColor(hex: "#FFFFFF")         // 선택한 아이템 배경 색상
         DropDown.appearance().backgroundColor = UIColor.white // 아이템 팝업 배경 색상
-        DropDown.appearance().selectionBackgroundColor = UIColor.lightGray // 선택한 아이템 배경 색상
         DropDown.appearance().setupCornerRadius(10)
         menu.dismissMode = .automatic // 팝업을 닫을 모드 설정
-    
+        
         menu.customCellConfiguration = { (index: Index, item: String, cell: DropDownCell) -> Void in
             let lastdividerLineRemove = UIView(frame: CGRect(origin: CGPoint(x: 0, y: 79), size: CGSize(width: 170, height: 10)))
             lastdividerLineRemove.backgroundColor = .white
+            cell.separatorInset = .zero
             cell.addSubview(lastdividerLineRemove)
             cell.dropDownImage.image = imageArray[index]
         }
@@ -102,8 +99,18 @@ extension RNMenuVC {
         menu.selectionAction = { [unowned self] (index, item) in
             
             self.menu.clearSelection()
-            print("선택 index \(index)")
-            print("선택 item \(item)")
+            
+            switch item {
+            case "수정하기":
+                print("수정")
+            case "삭제하기":
+                print("삭제")
+            case "신고하기":
+                print("신고")
+            default:
+                print("암것도 아님")
+                
+            }
             
         }
         
@@ -124,30 +131,3 @@ extension RNMenuVC {
     }
     
 }
-
-#if DEBUG
-import SwiftUI
-struct Preview: UIViewControllerRepresentable {
-    
-    func makeUIViewController(context: Context) -> UIViewController {
-        // 이부분
-        RNMenuVC()
-        // 이거 보고싶은 현재 VC로 바꾸면됩니다.
-    }
-    
-    func updateUIViewController(_ uiView: UIViewController, context: Context) {
-        // leave this empty
-    }
-}
-
-struct ViewController_PreviewProvider: PreviewProvider {
-    static var previews: some View {
-        Group {
-            Preview()
-                .edgesIgnoringSafeArea(.all)
-                .previewDisplayName("Preview")
-                .previewDevice(PreviewDevice(rawValue: "iPhone 12 Pro"))
-        }
-    }
-}
-#endif
