@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0AEBD608F3973389E8E1C6D6 /* Pods_Runnect_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */; };
 		712F661D2A7B7BAB00D9539B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712F661C2A7B7BAB00D9539B /* Config.swift */; };
-		71CC64BD2ACFD9A100BC9235 /* RNMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC64BC2ACFD9A100BC9235 /* RNMenuVC.swift */; };
 		71DBF23E2ABB255A0013415B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 71DBF23D2ABB255A0013415B /* GoogleService-Info.plist */; };
 		A3305A97296EF58C000B1A10 /* GoalRewardInfoDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */; };
 		A3BC2F2B2962C3D500198261 /* GoalRewardInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */; };
@@ -167,7 +166,6 @@
 		3C3033C911343B5C57EB68E7 /* Pods-Runnect-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runnect-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		7110A6032AA337DD009A7E99 /* Runnect-iOSDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Runnect-iOSDebug.entitlements"; sourceTree = "<group>"; };
 		712F661C2A7B7BAB00D9539B /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		71CC64BC2ACFD9A100BC9235 /* RNMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNMenuVC.swift; sourceTree = "<group>"; };
 		71DBF23D2ABB255A0013415B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Runnect-iOS/Runnect-iOS/Runnect-iOS/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardInfoDto.swift; sourceTree = "<group>"; };
 		A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardInfoVC.swift; sourceTree = "<group>"; };
@@ -1052,7 +1050,6 @@
 				CEB0BCBB29D123350048CCD5 /* GuideView.swift */,
 				CED791B22A2626AF001BFCFB /* ShadowView.swift */,
 				A3C2CAD629E53B2900EC525B /* RNAlertVC.swift */,
-				71CC64BC2ACFD9A100BC9235 /* RNMenuVC.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -1358,7 +1355,6 @@
 				CE66560A295D924A00C64E12 /* Result+.swift in Sources */,
 				DA20D847296697A600F1581F /* MyCourseSelectVC.swift in Sources */,
 				CE10065529680F7000FD31FB /* DepartureSearchingResponseDto.swift in Sources */,
-				71CC64BD2ACFD9A100BC9235 /* RNMenuVC.swift in Sources */,
 				CE66560E295D92A500C64E12 /* setStatusBarBackgroundColor.swift in Sources */,
 				CE9291292965E01D0010959C /* RNTimeFormatter.swift in Sources */,
 				CE0C23792966D6AF00B45063 /* ViewPager.swift in Sources */,

@@ -16,7 +16,7 @@ target 'Runnect-iOS' do
 	pod 'KakaoSDKShare'
 	pod 'KakaoSDKTemplate'
 	pod 'FirebaseDynamicLinks'
-	pod 'DropDown'
+	pod 'DropDown', :git => 'https://github.com/thingineeer/DropDown.git', :commit => '95ee36f7bd925d466033c2c169979f1c574bf3b9'
 	
 
   # Pods for Runnect-iOS

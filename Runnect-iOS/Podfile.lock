@@ -43,7 +43,7 @@ PODS:
   - Then (3.0.0)
 
 DEPENDENCIES:
-  - DropDown
+  - DropDown (from `https://github.com/thingineeer/DropDown.git`, commit `95ee36f7bd925d466033c2c169979f1c574bf3b9`)
   - FirebaseDynamicLinks
   - KakaoSDKAuth
   - KakaoSDKCommon
@@ -59,7 +59,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
-    - DropDown
     - FirebaseCore
     - FirebaseCoreInternal
     - FirebaseDynamicLinks
@@ -77,9 +76,19 @@ SPEC REPOS:
     - SnapKit
     - Then
 
+EXTERNAL SOURCES:
+  DropDown:
+    :commit: 95ee36f7bd925d466033c2c169979f1c574bf3b9
+    :git: https://github.com/thingineeer/DropDown.git
+
+CHECKOUT OPTIONS:
+  DropDown:
+    :commit: 95ee36f7bd925d466033c2c169979f1c574bf3b9
+    :git: https://github.com/thingineeer/DropDown.git
+
 SPEC CHECKSUMS:
   Alamofire: 0123a34370cb170936ae79a8df46cc62b2edeb88
-  DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
+  DropDown: bf260fd688978138019ad7d94f63a2362dad85ba
   FirebaseCore: 6fc17ac9f03509d51c131298aacb3ee5698b4f02
   FirebaseCoreInternal: d558159ee6cc4b823c2296ecc193de9f6d9a5bb3
   FirebaseDynamicLinks: 0eaabff2d0e5d0e576c0227227b00771aa2f3aaf
@@ -97,6 +106,6 @@ SPEC CHECKSUMS:
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
-PODFILE CHECKSUM: 8c75b9b0a2cf370949980b5f04bcc016bcd48163
+PODFILE CHECKSUM: 1690034adc086f3ca4725818bc29571a720d60db
 
 COCOAPODS: 1.12.1

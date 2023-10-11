@@ -195,63 +195,35 @@ extension CourseDetailVC {
     }
     @objc func moreButtonDidTap() {
         guard let isMyCourse = self.isMyCourse, let uploadedCourseDetailModel = self.uploadedCourseDetailModel else { return }
-
-        let menu = DropDown()
+        
         let items = isMyCourse ? ["수정하기", "삭제하기"] : ["신고하기"]
         let imageArray: [UIImage] = isMyCourse ? [ImageLiterals.icModify, ImageLiterals.icRemove] : [ImageLiterals.icReport]
+        
+        let menu = DropDown().then {
+            $0.anchorView = moreButton
+            $0.backgroundColor = .w1
+            $0.bottomOffset = CGPoint(x: -136, y: moreButton.bounds.height - 10)
+            $0.width = 170
+            $0.cellHeight = 40
+            $0.cornerRadius = 12
+            $0.dismissMode = .onTap
+            $0.separatorColor = UIColor(hex: "#EBEBEB")
+            $0.dataSource = items
+            $0.textFont = .b3
+        }
 
-        DropDown.appearance().textColor = UIColor.black
-        DropDown.appearance().selectedTextColor = UIColor.red
-        DropDown.appearance().selectionBackgroundColor = UIColor(hex: "#FFFFFF")
-        DropDown.appearance().backgroundColor = UIColor.white
-        DropDown.appearance().setupCornerRadius(12)
-
-        menu.customCellConfiguration = { (index: Index, item: String, cell: DropDownCell) -> Void in
+        menu.customCellConfiguration = { (index: Index, _: String, cell: DropDownCell) -> Void in
             let lastdividerLineRemove = UIView(frame: CGRect(origin: CGPoint(x: 0, y: isMyCourse ? 79 : 39), size: CGSize(width: 170, height: 10)))
             lastdividerLineRemove.backgroundColor = .white
             cell.separatorInset = .zero
-            cell.addSubview(lastdividerLineRemove)
             cell.dropDownImage.image = imageArray[index]
+            cell.addSubview(lastdividerLineRemove)
         }
-        menu.anchorView = moreButton
-        menu.bottomOffset = CGPoint(x: -136, y: moreButton.bounds.height - 10)
-        menu.width = 170
-        menu.cellHeight = 40
-        menu.cornerRadius = 12
-        menu.dismissMode = .onTap
-        menu.separatorColor = .black
-        menu.dataSource = items
+        
+        dropDownTouchAction(menu: menu, uploadedCourseDetailModel: uploadedCourseDetailModel, isMyCourse: isMyCourse)
+        
         menu.show()
-
-        menu.selectionAction = { [unowned self] (_, item) in
-            menu.clearSelection()
-            
-            switch item {
-            case "수정하기":
-                let courseEditVC = CourseEditVC()
-                courseEditVC.loadData(model: uploadedCourseDetailModel)
-                courseEditVC.publicCourseId = self.publicCourseId
-                self.navigationController?.pushViewController(courseEditVC, animated: false)
-            case "삭제하기":
-                let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
-                deleteAlertVC.modalPresentationStyle = .overFullScreen
-                deleteAlertVC.rightButtonTapAction = {
-                    deleteAlertVC.dismiss(animated: false)
-                    self.deleteCourse()
-                }
-                self.present(deleteAlertVC, animated: false)
-            case "신고하기":
-                if !isMyCourse {
-                    let formUrl = NSURL(string: "https://docs.google.com/forms/d/e/1FAIpQLSek2rkClKfGaz1zwTEHX3Oojbq_pbF3ifPYMYezBU0_pe-_Tg/viewform")
-                    let formSafariView: SFSafariViewController = SFSafariViewController(url: formUrl! as URL)
-                    self.present(formSafariView, animated: true, completion: nil)
-                }
-            default:
-                print("암것도 아님")
-            }
-        }
     }
-
     
     private func pushToCountDownVC() {
         guard let courseModel = self.courseModel,
@@ -558,10 +530,43 @@ extension CourseDetailVC {
     }
 }
 
+// MARK: - DropDown
+
 extension CourseDetailVC {
-    
-    func moreButtonDidTapped() {
+    private func dropDownTouchAction(menu: DropDown, uploadedCourseDetailModel: UploadedCourseDetailResponseDto, isMyCourse: Bool) {
         
+        DropDown.appearance().textColor = .g1
+        DropDown.appearance().selectionBackgroundColor = .w1
+        DropDown.appearance().shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
+        DropDown.appearance().shadowOpacity = 1
+        DropDown.appearance().shadowRadius = 10
+        
+        menu.selectionAction = { [unowned self] (_, item) in
+            menu.clearSelection()
+            
+            switch item {
+            case "수정하기":
+                let courseEditVC = CourseEditVC()
+                courseEditVC.loadData(model: uploadedCourseDetailModel)
+                courseEditVC.publicCourseId = self.publicCourseId
+                self.navigationController?.pushViewController(courseEditVC, animated: false)
+            case "삭제하기":
+                let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
+                deleteAlertVC.modalPresentationStyle = .overFullScreen
+                deleteAlertVC.rightButtonTapAction = {
+                    deleteAlertVC.dismiss(animated: false)
+                    self.deleteCourse()
+                }
+                self.present(deleteAlertVC, animated: false)
+            case "신고하기":
+                if !isMyCourse {
+                    let formUrl = NSURL(string: "https://docs.google.com/forms/d/e/1FAIpQLSek2rkClKfGaz1zwTEHX3Oojbq_pbF3ifPYMYezBU0_pe-_Tg/viewform")
+                    let formSafariView: SFSafariViewController = SFSafariViewController(url: formUrl! as URL)
+                    self.present(formSafariView, animated: true, completion: nil)
+                }
+            default:
+                self.showToast(message: "없는 명령어 입니다.")
+            }
+        }
     }
 }
-
