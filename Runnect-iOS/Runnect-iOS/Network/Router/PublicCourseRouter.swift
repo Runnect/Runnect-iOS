@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 enum PublicCourseRouter {
-    case getCourseData
+    case getCourseData(pageNo: Int)
     case getCourseSearchData(keyword: String)
     case courseUploadingData(param: CourseUploadingRequestDto)
     case getUploadedCourseDetail(publicCourseId: Int)
@@ -59,6 +59,8 @@ extension PublicCourseRouter: TargetType {
     
     var task: Moya.Task {
         switch self {
+        case .getCourseData(let pageNo):
+            return .requestParameters(parameters: ["pageNo": pageNo], encoding: URLEncoding.default)
         case .getCourseSearchData(let keyword):
             return .requestParameters(parameters: ["keyword": keyword], encoding: URLEncoding.default)
         case .courseUploadingData(param: let param):
@@ -73,7 +75,7 @@ extension PublicCourseRouter: TargetType {
                 fatalError("Encoding 실패")}
         case .deleteUploadedCourse(let publicCourseIdList):
             return .requestParameters(parameters: ["publicCourseIdList": publicCourseIdList], encoding: JSONEncoding.default)
-        case .getCourseData, .getUploadedCourseDetail, .getUploadedCourseInfo:
+        case .getUploadedCourseDetail, .getUploadedCourseInfo:
             return .requestPlain
         }
     }

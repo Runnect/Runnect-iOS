@@ -21,6 +21,11 @@ final class CourseDiscoveryVC: UIViewController {
     
     private var courseList = [PublicCourse]()
     
+    // pagination 에 꼭 필요한 위한 변수들 입니다.
+    private var pageNo = 1
+    
+    private var isDataLoaded = false
+    
     // MARK: - UIComponents
     
     private lazy var naviBar = CustomNavigationBar(self, type: .title).setTitle("코스 발견")
@@ -67,7 +72,7 @@ final class CourseDiscoveryVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.hideTabBar(wantsToHide: false)
-        self.getCourseData()
+        setDataLoadIfNeeded()
     }
 }
 
@@ -96,6 +101,22 @@ extension CourseDiscoveryVC {
     private func setAddTarget() {
         self.searchButton.addTarget(self, action: #selector(pushToSearchVC), for: .touchUpInside)
         self.uploadButton.addTarget(self, action: #selector(pushToDiscoveryVC), for: .touchUpInside)
+    }
+    
+    private func setDataLoadIfNeeded() { /// 데이터를 받고 다른 뷰를 갔다가 와도 데이터가 유지되게끔 하기 위한 함수 입니다. (한번만 호출되면 되는 함수!)
+        if !isDataLoaded {
+            // 앱이 실행 될때 처음에만 데이터 초기화
+            courseList.removeAll()
+            pageNo = 1
+
+            // 컬렉션 뷰를 리로드하여 초기화된 데이터를 화면에 표시
+            mapCollectionView.reloadData()
+            self.getCourseData()
+            
+            isDataLoaded = true // 데이터가 로드되었음을 표시
+        } else {
+            return
+        }
     }
 }
 
@@ -212,6 +233,28 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
             return cell
         }
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let contentOffsetY = scrollView.contentOffset.y
+        let collectionViewHeight = mapCollectionView.contentSize.height
+        let paginationY = collectionViewHeight * 0.2
+        
+        // 스크롤이 80% (0.2)  까지 도달하면 다음 페이지 데이터를 불러옵니다.
+        if contentOffsetY >= collectionViewHeight - paginationY {
+            if courseList.count < pageNo * 24 { // 페이지 끝에 도달하면 현재 페이지에 더 이상 데이터가 없음을 의미합니다.
+                // 페이지네이션 중단 코드
+                return
+            }
+            
+            // 다음 페이지 번호를 증가시킵니다.
+            pageNo += 1
+            print("🔥다음 페이지 로드: \(pageNo)🔥")
+            
+            // 여기에서 다음 페이지 데이터를 불러오는 함수를 호출하세요.
+            getCourseData()
+        }
+    }
+
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -288,7 +331,7 @@ extension CourseDiscoveryVC: CourseListCVCDeleagte {
 extension CourseDiscoveryVC {
     private func getCourseData() {
         LoadingIndicator.showLoading()
-        PublicCourseProvider.request(.getCourseData) { response in
+        PublicCourseProvider.request(.getCourseData(pageNo: pageNo)) { response in
             LoadingIndicator.hideLoading()
             switch response {
             case .success(let result):
@@ -297,7 +340,13 @@ extension CourseDiscoveryVC {
                     do {
                         let responseDto = try result.map(BaseResponse<PickedMapListResponseDto>.self)
                         guard let data = responseDto.data else { return }
-                        self.setData(courseList: data.publicCourses)
+                        
+                        // 새로 받은 데이터를 기존 리스트에 추가 (쌓기 위함)
+                        self.courseList.append(contentsOf: data.publicCourses)
+                        
+                        // UI를 업데이트하여 추가된 데이터를 반영합니다.
+                        self.mapCollectionView.reloadData()
+                        
                     } catch {
                         print(error.localizedDescription)
                     }
@@ -312,7 +361,7 @@ extension CourseDiscoveryVC {
             }
         }
     }
-    
+
     private func scrapCourse(publicCourseId: Int, scrapTF: Bool) {
         LoadingIndicator.showLoading()
         scrapProvider.request(.createAndDeleteScrap(publicCourseId: publicCourseId, scrapTF: scrapTF)) { [weak self] response in
