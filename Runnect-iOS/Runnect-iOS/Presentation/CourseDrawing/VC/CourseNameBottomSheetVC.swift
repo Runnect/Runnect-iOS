@@ -11,7 +11,7 @@ import Combine
 import SnapKit
 import Then
 
-final class CourseNameBottomSheetVC: UIViewController {
+final class CourseNameBottomSheetVC: UIViewController, UITextFieldDelegate {
     // MARK: - UI
     private let backgroundView = UIView().then {
         $0.backgroundColor = .black.withAlphaComponent(0.65)
@@ -49,19 +49,20 @@ final class CourseNameBottomSheetVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setLayout()
-//        self.setAddTarget()
+        self.setDelegate()
+        self.setAddTarget()
         self.addKeyboardNotification()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         showBottomSheet()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
+
         disappearBottomSheet()
     }
 }
@@ -133,35 +134,71 @@ extension CourseNameBottomSheetVC {
         )
     }
     
-//    private func addKeyboardNotification() {
-//        NotificationCenter.default.addObserver(
-//          self,
-//          selector: #selector(keyboardWillShow),
-//          name: UIResponder.keyboardWillShowNotification,
-//          object: nil
-//        )
-//
-//        NotificationCenter.default.addObserver(
-//          self,
-//          selector: #selector(keyboardWillHide),
-//          name: UIResponder.keyboardWillHideNotification,
-//          object: nil
-//        )
-//      }
-//
-//    @objc private func keyboardWillShow(_ notification: Notification) {
-//      if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-//        let keybaordRectangle = keyboardFrame.cgRectValue
-//        let keyboardHeight = keybaordRectangle.height
-//          bottomSheetView.frame.origin.y -= keyboardHeight
-//      }
-//    }
-//
-//    @objc private func keyboardWillHide(_ notification: Notification) {
-//      if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-//        let keybaordRectangle = keyboardFrame.cgRectValue
-//        let keyboardHeight = keybaordRectangle.height
-//          bottomSheetView.frame.origin.y += keyboardHeight
-//      }
-//    }
+    private func setAddTarget() {
+        self.textfield.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
+        self.completeButton.addTarget(self, action: #selector(completeButtonDidTap), for: .touchUpInside)
+    }
+    
+    private func setDelegate() {
+        textfield.delegate = self
+    }
+    
+    private func addKeyboardNotification() {
+        NotificationCenter.default.addObserver(
+          self,
+          selector: #selector(keyboardWillShow),
+          name: UIResponder.keyboardWillShowNotification,
+          object: nil
+        )
+
+        NotificationCenter.default.addObserver(
+          self,
+          selector: #selector(keyboardWillHide),
+          name: UIResponder.keyboardWillHideNotification,
+          object: nil
+        )
+      }
+}
+
+// MARK: - @obj function
+extension CourseNameBottomSheetVC {
+    @objc private func completeButtonDidTap() {
+        print("버튼 눌렸음")
+    }
+    
+    @objc private func textFieldTextDidChange() {
+        guard let text = textfield.text else { return }
+        
+        completeButton.isEnabled = !text.isEmpty
+        textfield.layer.borderColor = !text.isEmpty ? UIColor.m1.cgColor : UIColor.g3.cgColor
+    }
+    
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keybaordRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keybaordRectangle.height
+            bottomSheetView.snp.remakeConstraints {
+                $0.leading.trailing.equalToSuperview()
+                $0.height.equalTo(204)
+                $0.bottom.equalToSuperview().inset(keyboardHeight)
+            }
+            
+            UIView.animate(
+                withDuration: 0.3,
+                animations: self.view.layoutIfNeeded
+            )
+        }
+    }
+
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        bottomSheetView.snp.remakeConstraints {
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(204)
+        }
+        
+        UIView.animate(
+            withDuration: 0.3,
+            animations: self.view.layoutIfNeeded
+        )
+    }
 }
