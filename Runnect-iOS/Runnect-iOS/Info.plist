@@ -52,6 +52,8 @@
 	<array>
 		<string>kakaokompassauth</string>
 		<string>kakaolink</string>
+        <!-- 카카오톡 채널 -->
+        <string>kakaoplus</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
