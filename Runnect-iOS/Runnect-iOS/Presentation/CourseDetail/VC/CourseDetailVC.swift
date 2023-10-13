@@ -213,11 +213,11 @@ extension CourseDetailVC {
         }
 
         menu.customCellConfiguration = { (index: Index, _: String, cell: DropDownCell) -> Void in
-            let lastdividerLineRemove = UIView(frame: CGRect(origin: CGPoint(x: 0, y: isMyCourse ? 79 : 39), size: CGSize(width: 170, height: 10)))
-            lastdividerLineRemove.backgroundColor = .white
+            let lastDividerLineRemove = UIView(frame: CGRect(origin: CGPoint(x: 0, y: isMyCourse ? 79 : 39), size: CGSize(width: 170, height: 10)))
+            lastDividerLineRemove.backgroundColor = .white
             cell.separatorInset = .zero
             cell.dropDownImage.image = imageArray[index]
-            cell.addSubview(lastdividerLineRemove)
+            cell.addSubview(lastDividerLineRemove)
         }
         
         dropDownTouchAction(menu: menu, uploadedCourseDetailModel: uploadedCourseDetailModel, isMyCourse: isMyCourse)
