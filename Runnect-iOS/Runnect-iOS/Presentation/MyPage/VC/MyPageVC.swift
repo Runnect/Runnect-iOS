@@ -10,6 +10,8 @@ import UIKit
 import SnapKit
 import Then
 import Moya
+import KakaoSDKUser
+import KakaoSDKTalk
 
 final class MyPageVC: UIViewController {
 
