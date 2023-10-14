@@ -100,6 +100,7 @@ final class UploadedCourseInfoVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.hideTabBar(wantsToHide: true)
+        getUploadedCourseInfo()
     }
 }
 
