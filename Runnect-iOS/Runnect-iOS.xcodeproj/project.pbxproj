@@ -10,6 +10,7 @@
 		0AEBD608F3973389E8E1C6D6 /* Pods_Runnect_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */; };
 		712F661D2A7B7BAB00D9539B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712F661C2A7B7BAB00D9539B /* Config.swift */; };
 		7150917D2ACE5009003B67DB /* UserProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7150917C2ACE5009003B67DB /* UserProfileVC.swift */; };
+		717A70762ADA9AAF00B1FBE0 /* UserProfileDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717A70752ADA9AAF00B1FBE0 /* UserProfileDTO.swift */; };
 		71DBF23E2ABB255A0013415B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 71DBF23D2ABB255A0013415B /* GoogleService-Info.plist */; };
 		A3305A97296EF58C000B1A10 /* GoalRewardInfoDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */; };
 		A3BC2F2B2962C3D500198261 /* GoalRewardInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */; };
@@ -168,6 +169,7 @@
 		7110A6032AA337DD009A7E99 /* Runnect-iOSDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Runnect-iOSDebug.entitlements"; sourceTree = "<group>"; };
 		712F661C2A7B7BAB00D9539B /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		7150917C2ACE5009003B67DB /* UserProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileVC.swift; sourceTree = "<group>"; };
+		717A70752ADA9AAF00B1FBE0 /* UserProfileDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileDTO.swift; sourceTree = "<group>"; };
 		71DBF23D2ABB255A0013415B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Runnect-iOS/Runnect-iOS/Runnect-iOS/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardInfoDto.swift; sourceTree = "<group>"; };
 		A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardInfoVC.swift; sourceTree = "<group>"; };
@@ -476,6 +478,7 @@
 			isa = PBXGroup;
 			children = (
 				A3F67AE1296D33AC001598A2 /* MyPageDto.swift */,
+				717A70752ADA9AAF00B1FBE0 /* UserProfileDTO.swift */,
 				A3F67AE9296E4936001598A2 /* ActivityRecordInfoDto.swift */,
 				A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */,
 				CEFA9A2E29FC263700F2D0CF /* UserDeleteResponseDto.swift */,
@@ -1393,6 +1396,7 @@
 				A3C2CAD529E4F85400EC525B /* PersonalInfoVC.swift in Sources */,
 				DAD5A3DA296C6DA500C8166B /* TitleCollectionViewCell.swift in Sources */,
 				CEC2A68A2962ADCD00160BF7 /* RNMapView.swift in Sources */,
+				717A70762ADA9AAF00B1FBE0 /* UserProfileDTO.swift in Sources */,
 				CE6655F0295D891B00C64E12 /* UITextView+.swift in Sources */,
 				CEC2A6922962BE2900160BF7 /* DepartureSearchVC.swift in Sources */,
 				CE6655EE295D88E600C64E12 /* UITextField+.swift in Sources */,
