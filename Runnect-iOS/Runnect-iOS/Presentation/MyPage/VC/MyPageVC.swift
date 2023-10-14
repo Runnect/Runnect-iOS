@@ -10,6 +10,8 @@ import UIKit
 import SnapKit
 import Then
 import Moya
+import KakaoSDKTalk
+import KakaoSDKUser
 
 final class MyPageVC: UIViewController {
 
@@ -254,7 +256,8 @@ extension MyPageVC {
     
     @objc
     private func touchUpkakaoChannelAsk() {
-        if let url = URL(string: "https://pf.kakao.com/_hXduG") {
+        
+        if let url = TalkApi.shared.makeUrlForChannelChat(channelPublicId: "_hXduG") {
             UIApplication.shared.open(url)
         }
     }

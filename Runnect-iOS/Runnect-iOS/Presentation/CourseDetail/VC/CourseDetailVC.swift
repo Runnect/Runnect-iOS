@@ -17,6 +17,7 @@ import FirebaseCore
 import FirebaseDynamicLinks
 import KakaoSDKShare
 import KakaoSDKTemplate
+import DropDown
 
 final class CourseDetailVC: UIViewController {
     
@@ -200,39 +201,33 @@ extension CourseDetailVC {
     @objc func moreButtonDidTap() {
         guard let isMyCourse = self.isMyCourse, let uploadedCourseDetailModel = self.uploadedCourseDetailModel else { return }
         
-        let cancelAction = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
+        let items = isMyCourse ? ["수정하기", "삭제하기"] : ["신고하기"]
+        let imageArray: [UIImage] = isMyCourse ? [ImageLiterals.icModify, ImageLiterals.icRemove] : [ImageLiterals.icReport]
         
-        if isMyCourse == true {
-            let editAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            
-            let editAction = UIAlertAction(title: "수정하기", style: .default, handler: {(_: UIAlertAction!) in
-                let courseEditVC = CourseEditVC()
-                courseEditVC.loadData(model: uploadedCourseDetailModel)
-                courseEditVC.publicCourseId = self.publicCourseId
-                self.navigationController?.pushViewController(courseEditVC, animated: false)
-            })
-            let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
-            deleteAlertVC.rightButtonTapAction = { [weak self] in
-                deleteAlertVC.dismiss(animated: false)
-                self?.deleteCourse()
-            }
-            deleteAlertVC.modalPresentationStyle = .overFullScreen
-            let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive, handler: {(_: UIAlertAction!) in
-                self.present(deleteAlertVC, animated: false, completion: nil)
-            })
-            [ editAction, deleteAction, cancelAction].forEach { editAlertController.addAction($0) }
-            present(editAlertController, animated: false, completion: nil)
-        } else {
-            // 신고폼 올라오는 거(유저아이디가 내가 아닌 경우)
-            let reportAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let formUrl = NSURL(string: "https://docs.google.com/forms/d/e/1FAIpQLSek2rkClKfGaz1zwTEHX3Oojbq_pbF3ifPYMYezBU0_pe-_Tg/viewform")
-            let formSafariView: SFSafariViewController = SFSafariViewController(url: formUrl! as URL)
-            let reportAction = UIAlertAction(title: "신고하기", style: .destructive, handler: {(_: UIAlertAction!) in
-                self.present(formSafariView, animated: true, completion: nil)
-            })
-            [ reportAction, cancelAction ].forEach { reportAlertController.addAction($0) }
-            present(reportAlertController, animated: true, completion: nil)
+        let menu = DropDown().then {
+            $0.anchorView = moreButton
+            $0.backgroundColor = .w1
+            $0.bottomOffset = CGPoint(x: -136, y: moreButton.bounds.height - 10)
+            $0.width = 170
+            $0.cellHeight = 40
+            $0.cornerRadius = 12
+            $0.dismissMode = .onTap
+            $0.separatorColor = UIColor(hex: "#EBEBEB")
+            $0.dataSource = items
+            $0.textFont = .b3
         }
+
+        menu.customCellConfiguration = { (index: Index, _: String, cell: DropDownCell) -> Void in
+            let lastDividerLineRemove = UIView(frame: CGRect(origin: CGPoint(x: 0, y: isMyCourse ? 79 : 39), size: CGSize(width: 170, height: 10)))
+            lastDividerLineRemove.backgroundColor = .white
+            cell.separatorInset = .zero
+            cell.dropDownImage.image = imageArray[index]
+            cell.addSubview(lastDividerLineRemove)
+        }
+        
+        dropDownTouchAction(menu: menu, uploadedCourseDetailModel: uploadedCourseDetailModel, isMyCourse: isMyCourse)
+        
+        menu.show()
     }
     
     private func pushToCountDownVC() {
@@ -537,6 +532,48 @@ extension CourseDetailVC {
             case .failure(let error):
                 print(error.localizedDescription)
                 self.showNetworkFailureToast()
+            }
+        }
+    }
+}
+
+// MARK: - DropDown
+
+extension CourseDetailVC {
+    private func dropDownTouchAction(menu: DropDown, uploadedCourseDetailModel: UploadedCourseDetailResponseDto, isMyCourse: Bool) {
+        
+        DropDown.appearance().textColor = .g1
+        DropDown.appearance().selectionBackgroundColor = .w1
+        DropDown.appearance().shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
+        DropDown.appearance().shadowOpacity = 1
+        DropDown.appearance().shadowRadius = 10
+        
+        menu.selectionAction = { [unowned self] (_, item) in
+            menu.clearSelection()
+            
+            switch item {
+            case "수정하기":
+                let courseEditVC = CourseEditVC()
+                courseEditVC.loadData(model: uploadedCourseDetailModel)
+                courseEditVC.publicCourseId = self.publicCourseId
+                self.navigationController?.pushViewController(courseEditVC, animated: false)
+            case "삭제하기":
+                let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
+                deleteAlertVC.modalPresentationStyle = .overFullScreen
+                deleteAlertVC.rightButtonTapAction = {
+                    deleteAlertVC.dismiss(animated: false)
+                    self.deleteCourse()
+                    self.navigationController?.popViewController(animated: true)
+                }
+                self.present(deleteAlertVC, animated: false)
+            case "신고하기":
+                if !isMyCourse {
+                    let formUrl = NSURL(string: "https://docs.google.com/forms/d/e/1FAIpQLSek2rkClKfGaz1zwTEHX3Oojbq_pbF3ifPYMYezBU0_pe-_Tg/viewform")
+                    let formSafariView: SFSafariViewController = SFSafariViewController(url: formUrl! as URL)
+                    self.present(formSafariView, animated: true, completion: nil)
+                }
+            default:
+                self.showToast(message: "없는 명령어 입니다.")
             }
         }
     }
