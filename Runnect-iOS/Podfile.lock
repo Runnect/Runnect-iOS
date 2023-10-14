@@ -26,6 +26,9 @@ PODS:
   - KakaoSDKShare (2.16.0):
     - KakaoSDKCommon (= 2.16.0)
     - KakaoSDKTemplate (= 2.16.0)
+  - KakaoSDKTalk (2.16.0):
+    - KakaoSDKTemplate (= 2.16.0)
+    - KakaoSDKUser (= 2.16.0)
   - KakaoSDKTemplate (2.16.0):
     - KakaoSDKCommon/Common (= 2.16.0)
   - KakaoSDKUser (2.16.0):
@@ -48,6 +51,7 @@ DEPENDENCIES:
   - KakaoSDKAuth
   - KakaoSDKCommon
   - KakaoSDKShare
+  - KakaoSDKTalk
   - KakaoSDKTemplate
   - KakaoSDKUser
   - Kingfisher (~> 7.0)
@@ -66,6 +70,7 @@ SPEC REPOS:
     - KakaoSDKAuth
     - KakaoSDKCommon
     - KakaoSDKShare
+    - KakaoSDKTalk
     - KakaoSDKTemplate
     - KakaoSDKUser
     - Kingfisher
@@ -96,6 +101,7 @@ SPEC CHECKSUMS:
   KakaoSDKAuth: 1b85ed7c41b0517bfd1fc9dc46c292c75b8cb610
   KakaoSDKCommon: d6579aa2e9d963d74e13d741cbf1cce48b8b0c17
   KakaoSDKShare: efc0415c4f33274232604eeaf96fb03641facdca
+  KakaoSDKTalk: 44545bd9a1ebc144795eb6e927960b10cf8252f5
   KakaoSDKTemplate: 7e478a3cda6f5879b475546bfcd667b464fbb6d0
   KakaoSDKUser: 427e5b3884abd19ee6d9a7bd6e3f3029eb2968b8
   Kingfisher: 59f908b6d2f403b0a3e539debb0eec05cb27002c
@@ -106,6 +112,6 @@ SPEC CHECKSUMS:
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
-PODFILE CHECKSUM: 1690034adc086f3ca4725818bc29571a720d60db
+PODFILE CHECKSUM: 5bd73b39108f7bc1302e8303d79fefc7783805a5
 
 COCOAPODS: 1.12.1
