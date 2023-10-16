@@ -41,24 +41,52 @@ final class CustomBottomSheetVC: UIViewController {
     }
     
     private let contentsLabel = UILabel().then {
-        $0.text = "수고하셨습니다! 러닝을 완료했어요!"
+        $0.text = "코스 이름"
         $0.font = .h5
-        $0.textColor = .g2
+        $0.textColor = .g1
     }
+    
+    private let completeButton = CustomButton(title: "완료").setColor(bgColor: .m1, disableColor: .g3).setEnabled(false)
     
     private let mainImageView = UIImageView().then {
         $0.image = ImageLiterals.imgSpaceship
     }
     
-    private let completeButton = CustomButton(title: "기록 보러 가기")
+    private lazy var bottomSheetTextField = UITextField().then {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        $0.attributedPlaceholder = NSAttributedString(string: "코스의 이름을 입력해 주세요", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g3, .paragraphStyle: paragraphStyle])
+        $0.font = .h5
+        $0.textColor = .g1
+        $0.textAlignment = .center
+        $0.layer.cornerRadius = 10
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.g3.cgColor
+        $0.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
+    }
+    
+    // MARK: - initializtion
+    init(type: SheetType) {
+        super.init(nibName: nil, bundle: nil)
+        self.BottomsheetType = type
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUI()
-        self.setLayout()
+        self.setLayout(BottomsheetType)
+        self.setDelegate()
+        self.setTapGesture()
+        self.setAddTarget()
+        
     }
+
 }
 
 // MARK: - Methods
