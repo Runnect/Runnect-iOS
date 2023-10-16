@@ -106,16 +106,68 @@ extension CustomBottomSheetVC {
         self.completeButton.changeTitle(attributedString: title)
         return self
     }
+    
+    /// 이미지 교체
+    @discardableResult
+    public func setImage(_ image: UIImage) -> Self {
+        self.mainImageView.image = image
+        return self
+    }
+    
+    private func setDelegate() {
+        bottomSheetTextField.delegate = self
+    }
+    
+    private func dismissBottomSheet() {
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+            self.backgroundTapAction?()
+        }, completion: nil)
+    }
+    
+    private func setTapGesture() {
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleBackgroundTap))
+        backgroundView.addGestureRecognizer(tapGesture)
+    }
+    
+    private func setAddTarget() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil)
+    }
 }
 
 // MARK: - UI & Layout
 
 extension CustomBottomSheetVC {
     private func setUI() {
-        view.backgroundColor = .black.withAlphaComponent(0.8)
+        view.addSubview(backgroundView)
+        backgroundView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
-    private func setLayout() {
+    private func setLayout(_ type: SheetType) {
+        switch type {
+        case .Image:
+            setImageLayout()
+        case .TextField:
+            setTextFieldLayout()
+        }
+    }
+    
+    private func setImageLayout() {
         view.addSubviews(bottomSheetView)
         bottomSheetView.addSubviews(contentsLabel, mainImageView, completeButton)
         
