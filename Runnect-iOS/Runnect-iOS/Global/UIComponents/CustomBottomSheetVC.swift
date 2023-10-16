@@ -8,9 +8,23 @@
 import UIKit
 import Combine
 
+@frozen
+enum SheetType {
+    case Image // 가운에 이미지가 있는 시트
+    case TextField // 가운데 텍스트필드가 있는 시트
+}
+
 final class CustomBottomSheetVC: UIViewController {
     
     // MARK: - Properties
+    
+    private let backgroundView = UIView().then {
+        $0.backgroundColor = .black.withAlphaComponent(0.7)
+    }
+    private let titleNameMaxLength = 20
+    private var BottomsheetType: SheetType!
+    
+    var backgroundTapAction: (() -> Void)?
     
     var completeButtonTapped: Driver<Void> {
         completeButton.publisher(for: .touchUpInside)
