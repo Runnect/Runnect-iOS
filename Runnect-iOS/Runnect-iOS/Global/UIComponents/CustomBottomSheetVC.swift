@@ -194,4 +194,81 @@ extension CustomBottomSheetVC {
             make.leading.trailing.equalToSuperview().inset(16)
         }
     }
+
+    private func setTextFieldLayout() {
+        view.addSubviews(bottomSheetView)
+        bottomSheetView.addSubviews(contentsLabel, bottomSheetTextField, completeButton)
+        
+        bottomSheetView.snp.makeConstraints { make in
+            make.leading.bottom.trailing.equalToSuperview()
+            make.height.equalTo(241)
+        }
+        
+        contentsLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().inset(34)
+        }
+        
+        bottomSheetTextField.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(contentsLabel.snp.bottom).offset(19)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(44)
+        }
+        
+        completeButton.snp.makeConstraints { make in
+            make.top.equalTo(bottomSheetTextField.snp.bottom).offset(10)
+            make.height.equalTo(44)
+            make.leading.trailing.equalToSuperview().inset(16)
+        }
+    }
+}
+
+// MARK: - @objc Function
+
+extension CustomBottomSheetVC {
+    @objc private func keyboardWillShow(_ sender: Notification) {
+        self.view.frame.origin.y = -241
+    }
+        
+    @objc private func keyboardWillHide(_ sender: Notification) {
+        self.view.frame.origin.y = 0
+    }
+    
+    @objc private func endEditing() { /// return 누를시 키보드 종료
+        bottomSheetTextField.resignFirstResponder()
+    }
+    
+    @objc private func handleBackgroundTap() {
+        dismissBottomSheet()
+    }
+    
+    @objc private func textFieldTextDidChange() {
+        guard let text = bottomSheetTextField.text else { return }
+        
+        completeButton.isEnabled = !text.isEmpty
+        changeTextFieldLayerColor(!text.isEmpty)
+        
+        if text.count > titleNameMaxLength {
+            let index = text.index(text.startIndex, offsetBy: titleNameMaxLength)
+            let newString = text[text.startIndex..<index]
+            self.bottomSheetTextField.text = String(newString)
+            self.showToast(message: "20자가 넘어갑니다")
+        }
+    }
+
+}
+
+// MARK: - UITextFieldDelegate
+
+extension CustomBottomSheetVC: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    private func changeTextFieldLayerColor(_ isEditing: Bool) {
+        bottomSheetTextField.layer.borderColor = isEditing ? UIColor.m1.cgColor : UIColor.g3.cgColor
+    }
 }
