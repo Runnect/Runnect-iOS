@@ -17,6 +17,7 @@ final class RunningWaitingVC: UIViewController {
     private var courseId: Int?
     private var publicCourseId: Int?
     private var courseModel: Course?
+    private var courseTitle: String?
     
     private let courseProvider = Providers.courseProvider
     
@@ -24,7 +25,7 @@ final class RunningWaitingVC: UIViewController {
     
     // MARK: - UI Components
 
-    private lazy var naviBar = CustomNavigationBar(self, type: .titleWithLeftButton)
+    private lazy var naviBar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle(courseTitle!)
     
     private let mapView = RNMapView()
     
@@ -72,9 +73,10 @@ final class RunningWaitingVC: UIViewController {
 // MARK: - Methods
 
 extension RunningWaitingVC {
-    func setData(courseId: Int, publicCourseId: Int?) {
+    func setData(courseId: Int, publicCourseId: Int?, courseTitle: String) {
         self.courseId = courseId
         self.publicCourseId = publicCourseId
+        self.courseTitle = courseTitle
         
         getCourseDetail(courseId: courseId)
     }
@@ -140,7 +142,7 @@ extension RunningWaitingVC {
         view.bringSubviewToFront(naviBar)
         
         mapView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
         distanceContainerView.snp.makeConstraints { make in
