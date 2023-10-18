@@ -9,6 +9,7 @@ import UIKit
 
 import NMapsMap
 import Moya
+import DropDown
 
 final class RunningWaitingVC: UIViewController {
     
@@ -26,6 +27,11 @@ final class RunningWaitingVC: UIViewController {
     // MARK: - UI Components
 
     private lazy var naviBar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle(courseTitle!)
+    
+    private let moreButton = UIButton(type: .system).then {
+        $0.setImage(ImageLiterals.icMore, for: .normal)
+        $0.tintColor = .g1
+    }
     
     private let mapView = RNMapView()
     
@@ -96,6 +102,7 @@ extension RunningWaitingVC {
     
     private func setAddTarget() {
         self.startButton.addTarget(self, action: #selector(startButtonDidTap), for: .touchUpInside)
+        moreButton.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
     }
 }
 
@@ -117,6 +124,38 @@ extension RunningWaitingVC {
         countDownVC.setData(runningModel: runningModel)
         self.navigationController?.pushViewController(countDownVC, animated: true)
     }
+    
+    @objc private func moreButtonDidTap() {
+        guard let courseModel = self.courseModel else {return}
+        
+        let items = ["수정하기", "삭제하기"]
+        let imageArray: [UIImage] = [ImageLiterals.icModify, ImageLiterals.icRemove]
+        
+        let menu = DropDown().then {
+            $0.anchorView = moreButton
+            $0.backgroundColor = .w1
+            $0.bottomOffset = CGPoint(x: -136, y: moreButton.bounds.height - 10)
+            $0.width = 170
+            $0.cellHeight = 40
+            $0.cornerRadius = 12
+            $0.dismissMode = .onTap
+            $0.separatorColor = UIColor(hex: "#EBEBEB")
+            $0.dataSource = items
+            $0.textFont = .b3
+        }
+
+        menu.customCellConfiguration = { (index: Index, _: String, cell: DropDownCell) -> Void in
+            let lastDividerLineRemove = UIView(frame: CGRect(origin: CGPoint(x: 0, y: 79), size: CGSize(width: 170, height: 10)))
+            lastDividerLineRemove.backgroundColor = .white
+            cell.separatorInset = .zero
+            cell.dropDownImage.image = imageArray[index]
+            cell.addSubview(lastDividerLineRemove)
+        }
+        
+        dropDownTouchAction(menu: menu, courseModel: courseModel)
+        
+        menu.show()
+    }
 }
 
 // MARK: - UI & Layout
@@ -125,11 +164,11 @@ extension RunningWaitingVC {
     private func setUI() {
         self.view.backgroundColor = .w1
         self.distanceContainerView.layer.applyShadow(alpha: 0.2, x: 2, y: 4, blur: 9)
-        self.naviBar.backgroundColor = .clear
     }
     
     private func setLayout() {
         view.addSubviews(naviBar,
+                         moreButton,
                          mapView,
                          distanceContainerView,
                          startButton)
@@ -140,6 +179,12 @@ extension RunningWaitingVC {
         }
         
         view.bringSubviewToFront(naviBar)
+        
+        moreButton.snp.makeConstraints { make in
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide)
+            make.centerY.equalTo(naviBar)
+        }
+        view.bringSubviewToFront(moreButton)
         
         mapView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
@@ -197,6 +242,66 @@ extension RunningWaitingVC {
                     } catch {
                         print(error.localizedDescription)
                     }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
+    }
+}
+
+// MARK: - DropDown
+
+extension RunningWaitingVC {
+    private func dropDownTouchAction(menu: DropDown, courseModel: Course) {
+        DropDown.appearance().textColor = .g1
+        DropDown.appearance().selectionBackgroundColor = .w1
+        DropDown.appearance().shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
+        DropDown.appearance().shadowOpacity = 1
+        DropDown.appearance().shadowRadius = 10
+        
+        menu.selectionAction = { [unowned self] (_, item) in
+            menu.clearSelection()
+            
+            switch item {
+            case "수정하기":
+                let bottomSheet = CustomBottomSheetVC()
+                self.navigationController?.pushViewController(bottomSheet, animated: false)
+            case "삭제하기":
+                let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
+                deleteAlertVC.modalPresentationStyle = .overFullScreen
+                deleteAlertVC.rightButtonTapAction = {
+                    deleteAlertVC.dismiss(animated: false)
+                    self.deleteCourse()
+                    self.navigationController?.popViewController(animated: true)
+                }
+                self.present(deleteAlertVC, animated: false)
+            default:
+                self.showToast(message: "없는 명령어 입니다.")
+            }
+        }
+    }
+}
+    // MARK: - Network
+    
+extension RunningWaitingVC {
+    private func deleteCourse() {
+        guard let courseId = self.courseId else { return }
+        LoadingIndicator.showLoading()
+        courseProvider.request(.deleteCourse(courseIdList: [courseId])) { [weak self] response in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                print("리절트", result)
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    print("삭제 성공")
                 }
                 if status >= 400 {
                     print("400 error")
