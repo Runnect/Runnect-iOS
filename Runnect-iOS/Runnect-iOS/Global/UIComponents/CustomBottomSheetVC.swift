@@ -19,7 +19,7 @@ final class CustomBottomSheetVC: UIViewController {
     // MARK: - Properties
     
     private let backgroundView = UIView().then {
-        $0.backgroundColor = .black.withAlphaComponent(0.7)
+        $0.backgroundColor = .black.withAlphaComponent(0.65)
     }
     private let titleNameMaxLength = 20
     private var BottomsheetType: SheetType!
@@ -31,6 +31,11 @@ final class CustomBottomSheetVC: UIViewController {
             .map { _ in }
             .asDriver()
     }
+    // 바텀 시트 높이
+    let bottomHeight: CGFloat = 241
+        
+    // bottomSheet가 view의 상단에서 떨어진 거리
+    private var bottomSheetViewTopConstraint: NSLayoutConstraint!
     
     // MARK: - UI Components
     
@@ -44,6 +49,11 @@ final class CustomBottomSheetVC: UIViewController {
         $0.text = "코스 이름"
         $0.font = .h5
         $0.textColor = .g1
+    }
+    
+    private let dismissIndicatorView = UIView().then {
+        $0.backgroundColor = .g3
+        $0.layer.cornerRadius = 3
     }
     
     private let completeButton = CustomButton(title: "완료").setColor(bgColor: .m1, disableColor: .g3).setEnabled(false)
@@ -84,7 +94,10 @@ final class CustomBottomSheetVC: UIViewController {
         self.setDelegate()
         self.setTapGesture()
         self.setAddTarget()
-        
+        if BottomsheetType == .TextField {
+            showBottomSheet()
+            setupGestureRecognizer()
+        }
     }
 
 }
@@ -121,7 +134,6 @@ extension CustomBottomSheetVC {
     private func dismissBottomSheet() {
         UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
-            self.backgroundTapAction?()
         }, completion: nil)
     }
     
@@ -160,10 +172,10 @@ extension CustomBottomSheetVC {
     
     private func setLayout(_ type: SheetType) {
         switch type {
-        case .Image:
-            setImageLayout()
         case .TextField:
             setTextFieldLayout()
+        case .Image:
+            setImageLayout()
         }
     }
     
@@ -197,11 +209,22 @@ extension CustomBottomSheetVC {
 
     private func setTextFieldLayout() {
         view.addSubviews(bottomSheetView)
-        bottomSheetView.addSubviews(contentsLabel, bottomSheetTextField, completeButton)
+        let topConstant = view.safeAreaInsets.bottom + view.safeAreaLayoutGuide.layoutFrame.height
+        bottomSheetViewTopConstraint = bottomSheetView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: topConstant)
+        bottomSheetView.addSubviews(contentsLabel, bottomSheetTextField, dismissIndicatorView, completeButton)
         
         bottomSheetView.snp.makeConstraints { make in
             make.leading.bottom.trailing.equalToSuperview()
-            make.height.equalTo(241)
+            make.height.equalTo(bottomHeight)
+        }
+        
+        NSLayoutConstraint.activate([bottomSheetViewTopConstraint])
+        
+        dismissIndicatorView.snp.makeConstraints { make in
+            make.width.equalTo(102)
+            make.height.equalTo(7)
+            make.top.equalTo(bottomSheetView.snp.top).inset(12)
+            make.centerX.equalToSuperview()
         }
         
         contentsLabel.snp.makeConstraints { make in
@@ -222,11 +245,54 @@ extension CustomBottomSheetVC {
             make.leading.trailing.equalToSuperview().inset(16)
         }
     }
+    
+    private func showBottomSheet() {
+
+        let safeAreaHeight: CGFloat = view.safeAreaLayoutGuide.layoutFrame.height
+        let bottomPadding: CGFloat = view.safeAreaInsets.bottom
+        
+        bottomSheetViewTopConstraint.constant = (safeAreaHeight + bottomPadding) - bottomHeight
+        
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
+            self.backgroundView.alpha = 0.65
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+
+    }
+    
+    // 바텀 시트 사라지는 애니메이션
+    private func hideBottomSheetAndGoBack() {
+        let safeAreaHeight = view.safeAreaLayoutGuide.layoutFrame.height
+        let bottomPadding = view.safeAreaInsets.bottom
+        bottomSheetViewTopConstraint.constant = safeAreaHeight + bottomPadding
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
+            self.backgroundView.alpha = 0.0
+            self.view.layoutIfNeeded()
+        }) { _ in
+            if self.presentingViewController != nil {
+                self.dismiss(animated: false, completion: nil)
+            }
+        }
+    }
+    
+    // GestureRecognizer 세팅 작업
+    private func setupGestureRecognizer() {
+        // 흐린 부분 탭할 때, 바텀시트를 내리는 TapGesture
+        let dimmedTap = UITapGestureRecognizer(target: self, action: #selector(dimmedViewTapped(_:)))
+        backgroundView.addGestureRecognizer(dimmedTap)
+        backgroundView.isUserInteractionEnabled = true
+        
+        // 스와이프 했을 때, 바텀시트를 내리는 swipeGesture
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(panGesture))
+        swipeGesture.direction = .down
+        view.addGestureRecognizer(swipeGesture)
+    }
 }
 
 // MARK: - @objc Function
 
 extension CustomBottomSheetVC {
+    
     @objc private func keyboardWillShow(_ sender: Notification) {
         self.view.frame.origin.y = -241
     }
@@ -254,6 +320,23 @@ extension CustomBottomSheetVC {
             let newString = text[text.startIndex..<index]
             self.bottomSheetTextField.text = String(newString)
             self.showToast(message: "20자가 넘어갑니다")
+        }
+    }
+    
+    // UITapGestureRecognizer 연결 함수 부분
+    @objc private func dimmedViewTapped(_ tapRecognizer: UITapGestureRecognizer) {
+        hideBottomSheetAndGoBack()
+    }
+    
+    // UISwipeGestureRecognizer 연결 함수 부분
+    @objc func panGesture(_ recognizer: UISwipeGestureRecognizer) {
+        if recognizer.state == .ended {
+            switch recognizer.direction {
+            case .down:
+                hideBottomSheetAndGoBack()
+            default:
+                break
+            }
         }
     }
 
