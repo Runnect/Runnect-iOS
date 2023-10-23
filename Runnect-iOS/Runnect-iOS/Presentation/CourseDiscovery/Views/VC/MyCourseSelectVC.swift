@@ -88,6 +88,9 @@ extension MyCourseSelectVC {
         self.courseList = courseList
         mapCollectionView.reloadData()
         self.emptyView.isHidden = !courseList.isEmpty
+        self.firstDivideView.isHidden = courseList.isEmpty
+        self.guidelineView.isHidden = courseList.isEmpty
+        self.guidelineLabel.isHidden = courseList.isEmpty
         self.selectButton.isHidden = courseList.isEmpty
     }
 
