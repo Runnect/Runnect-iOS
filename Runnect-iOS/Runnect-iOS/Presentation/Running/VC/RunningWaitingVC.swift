@@ -254,39 +254,6 @@ extension RunningWaitingVC {
         }
     }
 }
-
-// MARK: - DropDown
-
-extension RunningWaitingVC {
-    private func dropDownTouchAction(menu: DropDown, courseModel: Course) {
-        DropDown.appearance().textColor = .g1
-        DropDown.appearance().selectionBackgroundColor = .w1
-        DropDown.appearance().shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
-        DropDown.appearance().shadowOpacity = 1
-        DropDown.appearance().shadowRadius = 10
-        
-        menu.selectionAction = { [unowned self] (_, item) in
-            menu.clearSelection()
-            
-            switch item {
-            case "수정하기":
-                let bottomSheet = CustomBottomSheetVC()
-                self.navigationController?.pushViewController(bottomSheet, animated: false)
-            case "삭제하기":
-                let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
-                deleteAlertVC.modalPresentationStyle = .overFullScreen
-                deleteAlertVC.rightButtonTapAction = {
-                    deleteAlertVC.dismiss(animated: false)
-                    self.deleteCourse()
-                    self.navigationController?.popViewController(animated: true)
-                }
-                self.present(deleteAlertVC, animated: false)
-            default:
-                self.showToast(message: "없는 명령어 입니다.")
-            }
-        }
-    }
-}
     // MARK: - Network
     
 extension RunningWaitingVC {
@@ -310,6 +277,40 @@ extension RunningWaitingVC {
             case .failure(let error):
                 print(error.localizedDescription)
                 self.showNetworkFailureToast()
+            }
+        }
+    }
+}
+
+// MARK: - DropDown
+
+extension RunningWaitingVC {
+    private func dropDownTouchAction(menu: DropDown, courseModel: Course) {
+        DropDown.appearance().textColor = .g1
+        DropDown.appearance().selectionBackgroundColor = .w1
+        DropDown.appearance().shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
+        DropDown.appearance().shadowOpacity = 1
+        DropDown.appearance().shadowRadius = 10
+        
+        menu.selectionAction = { [unowned self] (_, item) in
+            menu.clearSelection()
+            
+            switch item {
+            case "수정하기":
+                let bottomSheet = CustomBottomSheetVC()
+                // 현재 코스 모델의 이름 변경
+                self.navigationController?.pushViewController(bottomSheet, animated: false)
+            case "삭제하기":
+                let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
+                deleteAlertVC.modalPresentationStyle = .overFullScreen
+                deleteAlertVC.rightButtonTapAction = {
+                    deleteAlertVC.dismiss(animated: false)
+                    self.deleteCourse()
+                    self.navigationController?.popViewController(animated: true)
+                }
+                self.present(deleteAlertVC, animated: false)
+            default:
+                self.showToast(message: "없는 명령어 입니다.")
             }
         }
     }

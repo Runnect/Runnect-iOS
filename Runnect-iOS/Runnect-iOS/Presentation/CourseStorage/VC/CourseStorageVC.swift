@@ -103,7 +103,7 @@ extension CourseStorageVC {
             guard let self = self else { return }
             let runningWaitingVC = RunningWaitingVC()
             runningWaitingVC.setData(courseId: self.privateCourseList[index].id, publicCourseId: nil, courseTitle: self.privateCourseList[index].departure.city)
-            /// 코스 이름을 여기서 가져오는 로직 
+            /// 코스 이름을 여기서 가져오는 로직
             
             runningWaitingVC.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(runningWaitingVC, animated: true)
