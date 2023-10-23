@@ -235,7 +235,13 @@ extension MyCourseSelectVC: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return self.collectionViewInset
+        if section == 0 {
+            // Apply custom inset for the first section (top)
+            return UIEdgeInsets(top: 0, left: self.collectionViewInset.left, bottom: self.collectionViewInset.bottom, right: self.collectionViewInset.right)
+        } else {
+            // Use the regular inset for other sections
+            return self.collectionViewInset
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
