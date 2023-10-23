@@ -159,7 +159,7 @@ extension MyCourseSelectVC {
         guidelineView.snp.makeConstraints { make in
             make.top.equalTo(firstDivideView.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(35)
+            make.height.equalTo(36)
         }
         
         guidelineLabel.snp.makeConstraints { make in
