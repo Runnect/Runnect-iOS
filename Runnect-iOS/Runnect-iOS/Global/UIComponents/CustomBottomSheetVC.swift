@@ -2,7 +2,7 @@
 //  CustomBottomSheetVC.swift
 //  Runnect-iOS
 //
-//  Created by sejin on 2023/01/04.
+//  Created by 이명진 on 11/6/23.
 //
 
 import UIKit
