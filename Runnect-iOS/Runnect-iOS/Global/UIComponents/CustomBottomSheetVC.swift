@@ -294,7 +294,7 @@ extension CustomBottomSheetVC {
 extension CustomBottomSheetVC {
     
     @objc private func keyboardWillShow(_ sender: Notification) {
-        self.view.frame.origin.y = -241
+        self.view.frame.origin.y = -341
     }
         
     @objc private func keyboardWillHide(_ sender: Notification) {
