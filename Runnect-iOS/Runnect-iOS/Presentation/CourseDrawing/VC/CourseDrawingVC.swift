@@ -49,6 +49,20 @@ final class CourseDrawingVC: UIViewController {
         $0.axis = .vertical
     }
     
+    private let underlineView = UIView().then {
+        $0.backgroundColor = .g4
+    }
+    
+    private let aboutMapNoticeView = UIView().then {
+        $0.backgroundColor = .w1
+    }
+    
+    private let aboutMapNoticeLabel = UILabel().then {
+        $0.font = .b4
+        $0.textColor = .g2
+        $0.text = "지도를 움직여 출발지를 설정해 주세요"
+    }
+    
     private let mapView = RNMapView().makeNaverLogoMargin(inset: UIEdgeInsets(top: 52, left: 0, bottom: 0, right: 0))
     
     private let departureLocationLabel = UILabel().then {
@@ -325,6 +339,25 @@ extension CourseDrawingVC {
             make.top.equalTo(departureDetailLocationLabel.snp.bottom).offset(24)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(44)
+        }
+        
+        if self.selectedType == .map {
+            self.aboutMapNoticeView.addSubview(aboutMapNoticeLabel)
+            self.naviBarContainerStackView.addArrangedSubviews(underlineView,aboutMapNoticeView)
+            
+            underlineView.snp.makeConstraints {
+                $0.leading.trailing.equalToSuperview()
+                $0.height.equalTo(1)
+            }
+            
+            aboutMapNoticeView.snp.makeConstraints {
+                $0.leading.trailing.equalToSuperview()
+                $0.height.equalTo(32)
+            }
+            
+            aboutMapNoticeLabel.snp.makeConstraints {
+                $0.centerX.centerY.equalToSuperview()
+            }
         }
     }
     
