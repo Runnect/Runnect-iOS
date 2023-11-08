@@ -20,11 +20,7 @@ final class RNMapView: UIView {
     @Published var markerCount = 0
     
     var eventSubject = PassthroughSubject<Array<Double>, Never>()
-    var selectedType: SelectedType = .other {
-        didSet {
-            print("RNMapview:", selectedType)
-        }
-    }
+    var selectedType: SelectedType = .other
     
     private let screenWidth = UIScreen.main.bounds.width
     private let screenHeight = UIScreen.main.bounds.height
@@ -102,6 +98,7 @@ extension RNMapView {
     /// 지정 위치에 startMarker와 출발 infoWindow 생성 (기존의 startMarker는 제거)
     @discardableResult
     func makeStartMarker(at location: NMGLatLng, withCameraMove: Bool = false, type: SelectedType) -> Self {
+        /// 지도에서 선택한 경우 가상의 마커를 보여주기 때문에 분기처리
         if type == .other {
             self.startMarker.position = location
         }

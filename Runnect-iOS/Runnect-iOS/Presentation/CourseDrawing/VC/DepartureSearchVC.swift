@@ -26,7 +26,7 @@ final class DepartureSearchVC: UIViewController, CLLocationManagerDelegate {
     private var addressList = [KakaoAddressResult]()
     private var cancelBag = CancelBag()
     var locationManager = CLLocationManager()
-    var selectedType: SelectedType = .other
+    private var selectedType: SelectedType = .other
     
     // MARK: - UI Components
     

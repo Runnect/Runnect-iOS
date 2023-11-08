@@ -212,6 +212,12 @@ extension CourseDrawingVC {
         
         self.present(alertVC, animated: false)
     }
+    
+    /// 수정 필요 - 바텀시트에서 완료 버튼을 누른 경우
+    /// 아래의 코드를 호출해주어야함
+    /// guard let self = self else { return }
+    /// guard handleVisitor() else { return }
+    /// self.mapView.capturePathImage()
 }
 
 // MARK: - @objc Function
@@ -233,13 +239,11 @@ extension CourseDrawingVC {
         mapView.undo()
     }
     
-    /// 다음으로 가기 버튼 여기 수정해야함~
+    /// 수정 필요 - 다음으로 버튼 눌린 경우 호출될 함수
     @objc private func completeButtonDidTap() {
-//        guard handleVisitor() else { return }
-//        mapView.capturePathImage()
-        let bottomSheetVC = CourseNameBottomSheetVC()
-        bottomSheetVC.modalPresentationStyle = .overFullScreen
-        self.present(bottomSheetVC, animated: false)
+//        let bottomSheetVC = CourseNameBottomSheetVC()
+//        bottomSheetVC.modalPresentationStyle = .overFullScreen
+//        self.present(bottomSheetVC, animated: false)
     }
 }
 
