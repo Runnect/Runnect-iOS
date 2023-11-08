@@ -276,37 +276,6 @@ extension DepartureSearchVC {
         }
     }
     
-    private func searchLocationAddress(latitude: Double, longitude: Double) {
-        departureSearchingProvider
-            .request(.getLocationAddress(latitude: latitude, longitude: longitude)) { [weak self] response in
-                guard let self = self else { return }
-                switch response {
-                case .success(let result):
-                    let status = result.statusCode
-                    if 200..<300 ~= status {
-                        do {
-                            let responseDto = try result.map(KakakoAddressSearchingResponseDto.self)
-                            let courseDrawingVC = CourseDrawingVC()
-
-                            courseDrawingVC.selectedType = self.selectedType
-                            courseDrawingVC.setData(model: responseDto.toDepartureLocationModel(latitude: latitude, longitude: longitude))
-                            
-                            courseDrawingVC.hidesBottomBarWhenPushed = true
-                            self.navigationController?.pushViewController(courseDrawingVC, animated: true)
-                        } catch {
-                            print(error.localizedDescription)
-                        }
-                    }
-                    if status >= 400 {
-                        print("400 error")
-                    }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    self.showToast(message: "네트워크 통신 실패")
-                }
-            }
-    }
-    
     private func searchLocationTmapAddress(latitude: Double, longitude: Double) {
         departureSearchingProvider
             .request(.getLocationTmapAddress(latitude: latitude, longitude: longitude)) { [weak self] response in
