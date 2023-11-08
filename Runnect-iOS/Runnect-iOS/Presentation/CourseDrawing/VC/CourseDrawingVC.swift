@@ -31,9 +31,10 @@ final class CourseDrawingVC: UIViewController {
         $0.backgroundColor = .w1
     }
     
-    private lazy var naviBar = CustomNavigationBar(self, type: .search)
-        .setTextFieldText(text: "검색 결과")
+    private lazy var naviBar = CustomNavigationBar(self, type: self.selectedType == .map ? .titleWithLeftButton : .search)
         .hideRightButton()
+        .changeTitleWithLeftButton(.b1, .g1)
+        .setTitle("지도에서 선택")
     
     private lazy var naviBarForEditing = CustomNavigationBar(self, type: .titleWithLeftButton)
         .then {
@@ -145,6 +146,10 @@ extension CourseDrawingVC {
         self.naviBar.setTextFieldText(text: model.departureName)
         self.departureLocationLabel.text = model.departureName
         self.departureDetailLocationLabel.text = model.departureAddress
+        
+        if self.selectedType == .other {
+            self.naviBar.setTextFieldText(text: model.departureName)
+        }
     }
     
     private func setAddTarget() {
