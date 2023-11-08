@@ -392,7 +392,8 @@ extension CourseEditVC {
             case .success(let result):
                 let status = result.statusCode
                 if 200..<300 ~= status {
-                    self.showToast(message: "게시글 수정이 완료되었어요")
+                    self.navigationController?.popViewController(animated: true) /// 추가한 부분 수정 필요
+                    showToast(message: "게시글 수정이 완료되었어요")
                 }
                 if status >= 400 {
                     print("400 error")

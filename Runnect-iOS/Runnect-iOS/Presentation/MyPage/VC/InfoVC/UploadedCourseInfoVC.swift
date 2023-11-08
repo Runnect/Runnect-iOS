@@ -100,6 +100,7 @@ final class UploadedCourseInfoVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.hideTabBar(wantsToHide: true)
+        getUploadedCourseInfo()
     }
 }
 
@@ -342,6 +343,7 @@ extension UploadedCourseInfoVC {
                         let responseDto = try result.map(BaseResponse<PickedMapListResponseDto>.self)
                         guard let data = responseDto.data else { return }
                         self.setData(courseList: data.publicCourses)
+                        UploadedCourseInfoCollectionView.reloadData()
                     } catch {
                         print(error.localizedDescription)
                     }
