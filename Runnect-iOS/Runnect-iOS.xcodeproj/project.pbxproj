@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0AEBD608F3973389E8E1C6D6 /* Pods_Runnect_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */; };
-		234CB8092AD53C28004B3A56 /* CourseNameBottomSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234CB8082AD53C28004B3A56 /* CourseNameBottomSheetVC.swift */; };
 		23EE06C12AC1AD5200CB3FF8 /* LocationSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06C02AC1AD5200CB3FF8 /* LocationSelectView.swift */; };
 		23EE06C52AC1AE1900CB3FF8 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06C42AC1AE1900CB3FF8 /* BaseView.swift */; };
 		23EE06C92AC1DED100CB3FF8 /* GesturePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06C82AC1DED100CB3FF8 /* GesturePublisher.swift */; };
@@ -169,7 +168,6 @@
 
 /* Begin PBXFileReference section */
 		015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runnect_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		234CB8082AD53C28004B3A56 /* CourseNameBottomSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseNameBottomSheetVC.swift; sourceTree = "<group>"; };
 		23EE06C02AC1AD5200CB3FF8 /* LocationSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectView.swift; sourceTree = "<group>"; };
 		23EE06C42AC1AE1900CB3FF8 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		23EE06C82AC1DED100CB3FF8 /* GesturePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GesturePublisher.swift; sourceTree = "<group>"; };
@@ -681,7 +679,6 @@
 				CEEC6B392961C4F300D00E1E /* CourseDrawingHomeVC.swift */,
 				CEC2A6912962BE2900160BF7 /* DepartureSearchVC.swift */,
 				CE29D581296402B500F47542 /* CourseDrawingVC.swift */,
-				234CB8082AD53C28004B3A56 /* CourseNameBottomSheetVC.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -1483,7 +1480,6 @@
 				CE40BB2D296808B00030ABCA /* DepartureSearchingRouter.swift in Sources */,
 				CE15F5A4296C932E0023827C /* RunningModel.swift in Sources */,
 				CE17F02D2961BBA100E1DED0 /* ColorLiterals.swift in Sources */,
-				234CB8092AD53C28004B3A56 /* CourseNameBottomSheetVC.swift in Sources */,
 				CEC2A68E2962AF2C00160BF7 /* RNMarker.swift in Sources */,
 				CE6655D2295D862A00C64E12 /* Publisher+Driver.swift in Sources */,
 				DA0587F22A05D54100B72869 /* EditCourseRequestDto.swift in Sources */,
