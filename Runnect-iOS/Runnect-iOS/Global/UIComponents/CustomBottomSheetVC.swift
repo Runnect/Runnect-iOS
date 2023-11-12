@@ -32,10 +32,7 @@ final class CustomBottomSheetVC: UIViewController {
             .asDriver()
     }
     // 바텀 시트 높이
-    let bottomHeight: CGFloat = 241
-        
-    // bottomSheet가 view의 상단에서 떨어진 거리
-    private var bottomSheetViewTopConstraint: NSLayoutConstraint!
+    let bottomHeight: CGFloat = 206
     
     // MARK: - UI Components
     
@@ -137,6 +134,7 @@ extension CustomBottomSheetVC {
         }, completion: nil)
     }
     
+    // 중복 작업 통일 필요 (1. 배경화면 누를시, 2.스와이프 할시)
     private func setTapGesture() {
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         tap.cancelsTouchesInView = false
@@ -209,16 +207,16 @@ extension CustomBottomSheetVC {
 
     private func setTextFieldLayout() {
         view.addSubviews(bottomSheetView)
-        let topConstant = view.safeAreaInsets.bottom + view.safeAreaLayoutGuide.layoutFrame.height
-        bottomSheetViewTopConstraint = bottomSheetView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: topConstant)
+        
+        let topConst = view.safeAreaInsets.bottom + view.safeAreaLayoutGuide.layoutFrame.height
+        
         bottomSheetView.addSubviews(contentsLabel, bottomSheetTextField, dismissIndicatorView, completeButton)
         
         bottomSheetView.snp.makeConstraints { make in
             make.leading.bottom.trailing.equalToSuperview()
+            make.top.equalTo(view.snp.top).offset(topConst)
             make.height.equalTo(bottomHeight)
         }
-        
-        NSLayoutConstraint.activate([bottomSheetViewTopConstraint])
         
         dismissIndicatorView.snp.makeConstraints { make in
             make.width.equalTo(102)
@@ -251,7 +249,13 @@ extension CustomBottomSheetVC {
         let safeAreaHeight: CGFloat = view.safeAreaLayoutGuide.layoutFrame.height
         let bottomPadding: CGFloat = view.safeAreaInsets.bottom
         
-        bottomSheetViewTopConstraint.constant = (safeAreaHeight + bottomPadding) - bottomHeight
+        let topConst = (safeAreaHeight + bottomPadding) - bottomHeight
+        
+        bottomSheetView.snp.remakeConstraints { make in
+            make.leading.bottom.trailing.equalToSuperview()
+            make.top.equalTo(view.snp.top).offset(topConst)
+            make.height.equalTo(bottomHeight)
+        }
         
         UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
             self.backgroundView.alpha = 0.65
@@ -264,7 +268,15 @@ extension CustomBottomSheetVC {
     private func hideBottomSheetAndGoBack() {
         let safeAreaHeight = view.safeAreaLayoutGuide.layoutFrame.height
         let bottomPadding = view.safeAreaInsets.bottom
-        bottomSheetViewTopConstraint.constant = safeAreaHeight + bottomPadding
+        
+        let topConst = (safeAreaHeight + bottomPadding)
+        
+        bottomSheetView.snp.remakeConstraints { make in
+            make.leading.bottom.trailing.equalToSuperview()
+            make.top.equalTo(view.snp.top).offset(topConst)
+            make.height.equalTo(bottomHeight)
+        }
+
         UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
             self.backgroundView.alpha = 0.0
             self.view.layoutIfNeeded()
