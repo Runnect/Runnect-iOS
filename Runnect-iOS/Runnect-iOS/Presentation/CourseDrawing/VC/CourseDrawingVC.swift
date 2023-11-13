@@ -15,11 +15,13 @@ final class CourseDrawingVC: UIViewController {
     // MARK: - Properties
     
     private let courseProvider = Providers.courseProvider
+    private let departureSearchingProvider = Providers.departureSearchingProvider
     
     private var departureLocationModel: DepartureLocationModel?
     
     var pathImage: UIImage?
     var distance: Float = 0.0
+    var selectedType: SelectedType = .other
     
     private var cancelBag = CancelBag()
     
@@ -29,9 +31,10 @@ final class CourseDrawingVC: UIViewController {
         $0.backgroundColor = .w1
     }
     
-    private lazy var naviBar = CustomNavigationBar(self, type: .search)
-        .setTextFieldText(text: "검색 결과")
+    private lazy var naviBar = CustomNavigationBar(self, type: self.selectedType == .map ? .titleWithLeftButton : .search)
         .hideRightButton()
+        .changeTitleWithLeftButton(.b1, .g1)
+        .setTitle("지도에서 선택")
     
     private lazy var naviBarForEditing = CustomNavigationBar(self, type: .titleWithLeftButton)
         .then {
@@ -44,6 +47,20 @@ final class CourseDrawingVC: UIViewController {
         arrangedSubviews: [notchCoverView, naviBar]
     ).then {
         $0.axis = .vertical
+    }
+    
+    private let underlineView = UIView().then {
+        $0.backgroundColor = .g4
+    }
+    
+    private let aboutMapNoticeView = UIView().then {
+        $0.backgroundColor = .w1
+    }
+    
+    private let aboutMapNoticeLabel = UILabel().then {
+        $0.font = .b4
+        $0.textColor = .g2
+        $0.text = "지도를 움직여 출발지를 설정해 주세요"
     }
     
     private let mapView = RNMapView().makeNaverLogoMargin(inset: UIEdgeInsets(top: 52, left: 0, bottom: 0, right: 0))
@@ -100,7 +117,20 @@ final class CourseDrawingVC: UIViewController {
         $0.setImage(ImageLiterals.icCancel, for: .normal)
     }
     
-    private let completeButton = CustomButton(title: "완성하기").setEnabled(false)
+    private let completeButton = CustomButton(title: "다음으로").setEnabled(false)
+    
+    private let startMarkUIImage = UIImageView().then {
+        $0.image = ImageLiterals.icMapDeparture
+    }
+    private let startLabelUIImage = UIImageView().then {
+        $0.image = ImageLiterals.icMapStart
+    }
+    private lazy var startMarkStackView = UIStackView().then {
+        $0.addArrangedSubviews(startLabelUIImage, startMarkUIImage)
+        $0.axis = .vertical
+        $0.alignment = .center
+        $0.spacing = 1
+    }
     
     // MARK: - View Life Cycle
     
@@ -119,11 +149,21 @@ final class CourseDrawingVC: UIViewController {
 extension CourseDrawingVC {
     func setData(model: DepartureLocationModel) {
         self.departureLocationModel = model
-        
         self.naviBar.setTextFieldText(text: model.departureName)
-        self.mapView.makeStartMarker(at: model.toNMGLatLng(), withCameraMove: true)
+        self.mapView.makeStartMarker(at: model.toNMGLatLng(), withCameraMove: true, type: self.selectedType)
         self.departureLocationLabel.text = model.departureName
         self.departureDetailLocationLabel.text = model.departureAddress
+    }
+    
+    func updateData(model: DepartureLocationModel) {
+        self.departureLocationModel = model
+        self.naviBar.setTextFieldText(text: model.departureName)
+        self.departureLocationLabel.text = model.departureName
+        self.departureDetailLocationLabel.text = model.departureAddress
+        
+        if self.selectedType == .other {
+            self.naviBar.setTextFieldText(text: model.departureName)
+        }
     }
     
     private func setAddTarget() {
@@ -151,6 +191,13 @@ extension CourseDrawingVC {
             self.pathImage = image
             self.uploadCourseDrawing()
         }.store(in: cancelBag)
+        
+        mapView.eventSubject.sink { [weak self] arr in
+            guard let self = self else { return }
+            self.searchLocationTmapAddress(latitude: arr[0], longitude: arr[1])
+        }.store(in: cancelBag)
+        
+        mapView.setSelectedType(type: self.selectedType)
     }
     
     private func setNavigationGesture(_ isEnabled: Bool) {
@@ -184,6 +231,12 @@ extension CourseDrawingVC {
         
         self.present(alertVC, animated: false)
     }
+    
+    /// 수정 필요 - 바텀시트에서 완료 버튼을 누른 경우
+    /// 아래의 코드를 호출해주어야함
+    /// guard let self = self else { return }
+    /// guard handleVisitor() else { return }
+    /// self.mapView.capturePathImage()
 }
 
 // MARK: - @objc Function
@@ -191,7 +244,13 @@ extension CourseDrawingVC {
 extension CourseDrawingVC {
     @objc private func decideDepartureButtonDidTap() {
         showHiddenViews(withDuration: 0.7)
-
+        
+        if self.selectedType == .map {
+            startMarkStackView.isHidden = true
+            guard let model = self.departureLocationModel else { return }
+            mapView.makeStartMarker(at: model.toNMGLatLng(), withCameraMove: true, type: .other)
+        }
+        
         mapView.setDrawMode(to: true)
     }
     
@@ -199,9 +258,11 @@ extension CourseDrawingVC {
         mapView.undo()
     }
     
+    /// 수정 필요 - 다음으로 버튼 눌린 경우 호출될 함수
     @objc private func completeButtonDidTap() {
-        guard handleVisitor() else { return }
-        mapView.capturePathImage()
+//        let bottomSheetVC = CourseNameBottomSheetVC()
+//        bottomSheetVC.modalPresentationStyle = .overFullScreen
+//        self.present(bottomSheetVC, animated: false)
     }
 }
 
@@ -213,11 +274,13 @@ extension CourseDrawingVC {
         self.naviBarForEditing.backgroundColor = .clear
         self.departureInfoContainerView.layer.applyShadow(alpha: 0.35, x: 0, y: 3, blur: 10)
         self.distanceContainerView.layer.applyShadow(alpha: 0.2, x: 2, y: 4, blur: 9)
+        self.startMarkStackView.isHidden = self.selectedType == .map ? false : true
     }
     
     private func setLayout() {
         setHiddenViewsLayout()
         self.view.addSubviews(naviBarContainerStackView, mapView, departureInfoContainerView)
+        self.view.addSubview(startMarkStackView)
         self.departureInfoContainerView.addSubviews(departureLocationLabel, departureDetailLocationLabel, decideDepartureButton)
         view.bringSubviewToFront(naviBarContainerStackView)
         
@@ -242,6 +305,21 @@ extension CourseDrawingVC {
             make.edges.equalToSuperview()
         }
         
+        startLabelUIImage.snp.makeConstraints { make in
+            make.height.equalTo(34)
+            make.width.equalTo(58)
+        }
+        startMarkUIImage.snp.makeConstraints { make in
+            make.height.width.equalTo(65)
+        }
+        
+        startMarkStackView.snp.makeConstraints { make in
+            make.height.equalTo(100)
+            make.width.equalTo(65)
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(-17)
+        }
+        
         departureInfoContainerView.snp.makeConstraints { make in
             make.leading.bottom.trailing.equalToSuperview()
             make.height.equalTo(172)
@@ -261,6 +339,25 @@ extension CourseDrawingVC {
             make.top.equalTo(departureDetailLocationLabel.snp.bottom).offset(24)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(44)
+        }
+        
+        if self.selectedType == .map {
+            self.aboutMapNoticeView.addSubview(aboutMapNoticeLabel)
+            self.naviBarContainerStackView.addArrangedSubviews(underlineView,aboutMapNoticeView)
+            
+            underlineView.snp.makeConstraints {
+                $0.leading.trailing.equalToSuperview()
+                $0.height.equalTo(1)
+            }
+            
+            aboutMapNoticeView.snp.makeConstraints {
+                $0.leading.trailing.equalToSuperview()
+                $0.height.equalTo(32)
+            }
+            
+            aboutMapNoticeLabel.snp.makeConstraints {
+                $0.centerX.centerY.equalToSuperview()
+            }
         }
     }
     
@@ -374,4 +471,30 @@ extension CourseDrawingVC {
             }
         }
     }
+    
+    private func searchLocationTmapAddress(latitude: Double, longitude: Double) {
+        departureSearchingProvider
+            .request(.getLocationTmapAddress(latitude: latitude, longitude: longitude)) { [weak self] response in
+                guard let self = self else { return }
+                switch response {
+                case .success(let result):
+                    let status = result.statusCode
+                    if 200..<300 ~= status {
+                        do {
+                            let responseDto = try result.map(TmapAddressSearchingResponseDto.self)
+                            self.updateData(model: responseDto.toDepartureLocationModel(latitude: latitude, longitude: longitude))
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    }
+                    if status >= 400 {
+                        print("400 error")
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self.showToast(message: "네트워크 통신 실패")
+                }
+            }
+    }
 }
+

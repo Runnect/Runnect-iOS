@@ -19,6 +19,9 @@ final class RNMapView: UIView {
     @Published var pathDistance: Double = 0
     @Published var markerCount = 0
     
+    var eventSubject = PassthroughSubject<Array<Double>, Never>()
+    private var selectedType: SelectedType = .other
+    
     private let screenWidth = UIScreen.main.bounds.width
     private let screenHeight = UIScreen.main.bounds.height
     
@@ -94,8 +97,12 @@ extension RNMapView {
     
     /// 지정 위치에 startMarker와 출발 infoWindow 생성 (기존의 startMarker는 제거)
     @discardableResult
-    func makeStartMarker(at location: NMGLatLng, withCameraMove: Bool = false) -> Self {
-        self.startMarker.position = location
+    func makeStartMarker(at location: NMGLatLng, withCameraMove: Bool = false, type: SelectedType) -> Self {
+        /// 지도에서 선택한 경우 가상의 마커를 보여주기 때문에 분기처리
+        if type == .other {
+            self.startMarker.position = location
+        }
+        
         self.startMarker.mapView = self.map.mapView
         self.startMarker.showInfoWindow()
         if withCameraMove {
@@ -141,7 +148,7 @@ extension RNMapView {
     func makeMarkersWithStartMarker(at locations: [NMGLatLng], moveCameraToStartMarker: Bool) -> Self {
         removeMarkers()
         if locations.count < 2 { return self }
-        makeStartMarker(at: locations[0], withCameraMove: moveCameraToStartMarker)
+        makeStartMarker(at: locations[0], withCameraMove: moveCameraToStartMarker, type: .other)
         locations[1...].forEach { location in
             makeMarker(at: location)
         }
@@ -367,6 +374,10 @@ extension RNMapView {
             }
         }
     }
+    
+    func setSelectedType(type: SelectedType) {
+        self.selectedType = type
+    }
 }
 
 // MARK: - @objc Function
@@ -386,10 +397,13 @@ extension RNMapView: NMFMapViewCameraDelegate, NMFMapViewTouchDelegate {
         self.makeMarker(at: latlng)
     }
     
-    func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
-        let locationOverlay = map.mapView.locationOverlay
-        if locationOverlay.icon != locationOverlayIcon {
-            setLocationOverlay()
+    // 지도 이동 멈췄을 때 호출되는 메서드
+    func mapViewCameraIdle(_ mapView: NMFMapView) {
+        let latitude = mapView.cameraPosition.target.lat
+        let longitude = mapView.cameraPosition.target.lng
+        
+        if self.selectedType == .map {
+            eventSubject.send([latitude, longitude])
         }
     }
 }

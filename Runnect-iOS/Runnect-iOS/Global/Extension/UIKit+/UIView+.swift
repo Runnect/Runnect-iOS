@@ -36,6 +36,12 @@ extension UIView {
         layer.cornerRadius = cornerRadius
         layer.maskedCorners = CACornerMask(arrayLiteral: maskedCorners)
     }
+    
+    /// view에 tap gesture를 연결해주는 함수
+    func gesture(_ gestureType: GestureType = .tap()) ->
+        GesturePublisher {
+            .init(view: self, gestureType: gestureType)
+        }
 }
 
 class XibView: UIView {
