@@ -15,7 +15,6 @@
 		23EE06D12AC2F44E00CB3FF8 /* TmapAddressSearchingResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06D02AC2F44E00CB3FF8 /* TmapAddressSearchingResponseDto.swift */; };
 		712F661D2A7B7BAB00D9539B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712F661C2A7B7BAB00D9539B /* Config.swift */; };
 		7136BF8A2AF921A900679364 /* CustomBottomSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7136BF892AF921A900679364 /* CustomBottomSheetVC.swift */; };
-		71DBF23E2ABB255A0013415B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 71DBF23D2ABB255A0013415B /* GoogleService-Info.plist */; };
 		A3305A97296EF58C000B1A10 /* GoalRewardInfoDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */; };
 		A3BC2F2B2962C3D500198261 /* GoalRewardInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */; };
 		A3BC2F2D2962C3F200198261 /* ActivityRecordInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F2C2962C3F200198261 /* ActivityRecordInfoVC.swift */; };
@@ -168,6 +167,7 @@
 
 /* Begin PBXFileReference section */
 		015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runnect_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2349CD512B024E5B00EE7C4A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Runnect-iOS/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		23EE06C02AC1AD5200CB3FF8 /* LocationSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectView.swift; sourceTree = "<group>"; };
 		23EE06C42AC1AE1900CB3FF8 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		23EE06C82AC1DED100CB3FF8 /* GesturePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GesturePublisher.swift; sourceTree = "<group>"; };
@@ -797,6 +797,7 @@
 		CE4545BC295D7AF4003201E1 = {
 			isa = PBXGroup;
 			children = (
+				2349CD512B024E5B00EE7C4A /* GoogleService-Info.plist */,
 				CE665614295D989A00C64E12 /* .swiftlint.yml */,
 				CE4545C7295D7AF4003201E1 /* Runnect-iOS */,
 				CE4545C6295D7AF4003201E1 /* Products */,
@@ -1274,7 +1275,6 @@
 			files = (
 				CE665615295D989A00C64E12 /* .swiftlint.yml in Resources */,
 				CE17F0342961BEF800E1DED0 /* Pretendard-Bold.otf in Resources */,
-				71DBF23E2ABB255A0013415B /* GoogleService-Info.plist in Resources */,
 				CE17F0352961BEF800E1DED0 /* Pretendard-SemiBold.otf in Resources */,
 				CE17F0332961BEF800E1DED0 /* Pretendard-Medium.otf in Resources */,
 				CE6655BF295D82E200C64E12 /* .gitkeep in Resources */,

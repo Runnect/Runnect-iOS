@@ -20,7 +20,15 @@ target 'Runnect-iOS' do
 	pod 'DropDown', :git => 'https://github.com/thingineeer/DropDown.git', :commit => '95ee36f7bd925d466033c2c169979f1c574bf3b9'
 	pod 'CombineCocoa'
 	
-
+end
   # Pods for Runnect-iOS
 
+post_install do |installer|
+    installer.generated_projects.each do |project|
+          project.targets.each do |target|
+              target.build_configurations.each do |config|
+                  config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+               end
+          end
+   end
 end
