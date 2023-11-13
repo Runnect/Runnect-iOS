@@ -20,7 +20,7 @@ final class RNMapView: UIView {
     @Published var markerCount = 0
     
     var eventSubject = PassthroughSubject<Array<Double>, Never>()
-    var selectedType: SelectedType = .other
+    private var selectedType: SelectedType = .other
     
     private let screenWidth = UIScreen.main.bounds.width
     private let screenHeight = UIScreen.main.bounds.height

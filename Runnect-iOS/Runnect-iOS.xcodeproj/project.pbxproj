@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0AEBD608F3973389E8E1C6D6 /* Pods_Runnect_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */; };
+		2349CD532B026EA500EE7C4A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2349CD512B024E5B00EE7C4A /* GoogleService-Info.plist */; };
 		23EE06C12AC1AD5200CB3FF8 /* LocationSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06C02AC1AD5200CB3FF8 /* LocationSelectView.swift */; };
 		23EE06C52AC1AE1900CB3FF8 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06C42AC1AE1900CB3FF8 /* BaseView.swift */; };
 		23EE06C92AC1DED100CB3FF8 /* GesturePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06C82AC1DED100CB3FF8 /* GesturePublisher.swift */; };
@@ -1273,6 +1274,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2349CD532B026EA500EE7C4A /* GoogleService-Info.plist in Resources */,
 				CE665615295D989A00C64E12 /* .swiftlint.yml in Resources */,
 				CE17F0342961BEF800E1DED0 /* Pretendard-Bold.otf in Resources */,
 				CE17F0352961BEF800E1DED0 /* Pretendard-SemiBold.otf in Resources */,
