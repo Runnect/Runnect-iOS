@@ -170,7 +170,7 @@ extension DepartureSearchVC {
         locationSelectStackView.snp.makeConstraints { make in
             make.top.equalTo(dividerView.snp.bottom)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(8)
-            make.height.equalTo(52)
+            make.height.equalTo(50)
         }
         
         selectDirectionView.snp.makeConstraints { make in
