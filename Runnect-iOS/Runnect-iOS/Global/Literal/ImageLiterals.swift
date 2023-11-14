@@ -52,6 +52,8 @@ enum ImageLiterals {
     static var icModify: UIImage {.load(named: "ic_modify")}
     static var icRemove: UIImage {.load(named: "ic_remove")}
     static var icReport: UIImage {.load(named: "ic_report")}
+    static var icSmallMap: UIImage { .load(named: "ic_small_map")}
+    static var icDirection: UIImage { .load(named: "ic_direction")}
     
     // img
     static var imgBackground: UIImage { .load(named: "img_background") }
