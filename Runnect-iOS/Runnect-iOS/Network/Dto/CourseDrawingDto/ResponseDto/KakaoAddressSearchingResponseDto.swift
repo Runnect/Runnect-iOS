@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - DepartureAddressSearchingResponseDto
-struct KakakoAddressSearchingResponseDto: Codable {
+struct KakaoAddressSearchingResponseDto: Codable {
     let meta: Meta
     let documents: [Document]
     

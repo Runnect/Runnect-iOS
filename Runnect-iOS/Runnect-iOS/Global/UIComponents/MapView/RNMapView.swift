@@ -20,7 +20,6 @@ final class RNMapView: UIView {
     @Published var markerCount = 0
     
     var eventSubject = PassthroughSubject<Array<Double>, Never>()
-    private var selectedType: SelectedType = .other
     
     private let screenWidth = UIScreen.main.bounds.width
     private let screenHeight = UIScreen.main.bounds.height
@@ -97,9 +96,9 @@ extension RNMapView {
     
     /// 지정 위치에 startMarker와 출발 infoWindow 생성 (기존의 startMarker는 제거)
     @discardableResult
-    func makeStartMarker(at location: NMGLatLng, withCameraMove: Bool = false, type: SelectedType) -> Self {
+    func makeStartMarker(at location: NMGLatLng, withCameraMove: Bool = false) -> Self {
         /// 지도에서 선택한 경우 가상의 마커를 보여주기 때문에 분기처리
-        if type == .other {
+        if SelectedInfo.shared.type == .other {
             self.startMarker.position = location
         }
         
@@ -148,7 +147,7 @@ extension RNMapView {
     func makeMarkersWithStartMarker(at locations: [NMGLatLng], moveCameraToStartMarker: Bool) -> Self {
         removeMarkers()
         if locations.count < 2 { return self }
-        makeStartMarker(at: locations[0], withCameraMove: moveCameraToStartMarker, type: .other)
+        makeStartMarker(at: locations[0], withCameraMove: moveCameraToStartMarker)
         locations[1...].forEach { location in
             makeMarker(at: location)
         }
@@ -374,10 +373,6 @@ extension RNMapView {
             }
         }
     }
-    
-    func setSelectedType(type: SelectedType) {
-        self.selectedType = type
-    }
 }
 
 // MARK: - @objc Function
@@ -402,7 +397,7 @@ extension RNMapView: NMFMapViewCameraDelegate, NMFMapViewTouchDelegate {
         let latitude = mapView.cameraPosition.target.lat
         let longitude = mapView.cameraPosition.target.lng
         
-        if self.selectedType == .map {
+        if SelectedInfo.shared.type == .map {
             eventSubject.send([latitude, longitude])
         }
     }

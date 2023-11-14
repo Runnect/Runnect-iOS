@@ -21,7 +21,6 @@ final class CourseDrawingVC: UIViewController {
     
     var pathImage: UIImage?
     var distance: Float = 0.0
-    var selectedType: SelectedType = .other
     
     private var cancelBag = CancelBag()
     
@@ -31,7 +30,7 @@ final class CourseDrawingVC: UIViewController {
         $0.backgroundColor = .w1
     }
     
-    private lazy var naviBar = CustomNavigationBar(self, type: self.selectedType == .map ? .titleWithLeftButton : .search)
+    private lazy var naviBar = CustomNavigationBar(self, type: SelectedInfo.shared.type == .map ? .titleWithLeftButton : .search)
         .hideRightButton()
         .changeTitleWithLeftButton(.b1, .g1)
         .setTitle("지도에서 선택")
@@ -150,7 +149,7 @@ extension CourseDrawingVC {
     func setData(model: DepartureLocationModel) {
         self.departureLocationModel = model
         self.naviBar.setTextFieldText(text: model.departureName)
-        self.mapView.makeStartMarker(at: model.toNMGLatLng(), withCameraMove: true, type: self.selectedType)
+        self.mapView.makeStartMarker(at: model.toNMGLatLng(), withCameraMove: true)
         self.departureLocationLabel.text = model.departureName
         self.departureDetailLocationLabel.text = model.departureAddress
     }
@@ -161,7 +160,7 @@ extension CourseDrawingVC {
         self.departureLocationLabel.text = model.departureName
         self.departureDetailLocationLabel.text = model.departureAddress
         
-        if self.selectedType == .other {
+        if SelectedInfo.shared.type == .other {
             self.naviBar.setTextFieldText(text: model.departureName)
         }
     }
@@ -196,8 +195,6 @@ extension CourseDrawingVC {
             guard let self = self else { return }
             self.searchLocationTmapAddress(latitude: arr[0], longitude: arr[1])
         }.store(in: cancelBag)
-        
-        mapView.setSelectedType(type: self.selectedType)
     }
     
     private func setNavigationGesture(_ isEnabled: Bool) {
@@ -245,10 +242,10 @@ extension CourseDrawingVC {
     @objc private func decideDepartureButtonDidTap() {
         showHiddenViews(withDuration: 0.7)
         
-        if self.selectedType == .map {
+        if SelectedInfo.shared.type == .map {
             startMarkStackView.isHidden = true
             guard let model = self.departureLocationModel else { return }
-            mapView.makeStartMarker(at: model.toNMGLatLng(), withCameraMove: true, type: .other)
+            mapView.makeStartMarker(at: model.toNMGLatLng(), withCameraMove: true)
         }
         
         mapView.setDrawMode(to: true)
@@ -274,7 +271,7 @@ extension CourseDrawingVC {
         self.naviBarForEditing.backgroundColor = .clear
         self.departureInfoContainerView.layer.applyShadow(alpha: 0.35, x: 0, y: 3, blur: 10)
         self.distanceContainerView.layer.applyShadow(alpha: 0.2, x: 2, y: 4, blur: 9)
-        self.startMarkStackView.isHidden = self.selectedType == .map ? false : true
+        self.startMarkStackView.isHidden = SelectedInfo.shared.type == .map ? false : true
     }
     
     private func setLayout() {
@@ -341,7 +338,7 @@ extension CourseDrawingVC {
             make.height.equalTo(44)
         }
         
-        if self.selectedType == .map {
+        if SelectedInfo.shared.type == .map {
             self.aboutMapNoticeView.addSubview(aboutMapNoticeLabel)
             self.naviBarContainerStackView.addArrangedSubviews(underlineView,aboutMapNoticeView)
             

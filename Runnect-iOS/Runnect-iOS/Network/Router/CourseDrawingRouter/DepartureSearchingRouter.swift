@@ -15,6 +15,19 @@ enum DepartureSearchingRouter {
     case getLocationTmapAddress(latitude: Double, longitude: Double) // tmap
 }
 
+/// 현재 위치 | 검색 | 지도에서 선택 중 분기처리를 해주기 위함
+enum SelectedType {
+    case other
+    case map
+}
+
+final class SelectedInfo {
+    static let shared = SelectedInfo()
+    var type: SelectedType = .other
+    
+    private init() {}
+}
+
 extension DepartureSearchingRouter: TargetType {
     var baseURL: URL {
         var urlString: String

@@ -11,12 +11,6 @@ import Combine
 import Moya
 import CoreLocation
 
-/// 현재 위치 | 검색 | 지도에서 선택 중 분기처리를 해주기 위함
-enum SelectedType {
-    case other
-    case map
-}
-
 final class DepartureSearchVC: UIViewController, CLLocationManagerDelegate {
     
     // MARK: - Properties
@@ -26,7 +20,6 @@ final class DepartureSearchVC: UIViewController, CLLocationManagerDelegate {
     private var addressList = [KakaoAddressResult]()
     private var cancelBag = CancelBag()
     private var locationManager = CLLocationManager()
-    private var selectedType: SelectedType = .other
     
     // MARK: - UI Components
     
@@ -111,12 +104,12 @@ extension DepartureSearchVC {
     
     private func setBinding() {
         selectDirectionView.gesture().sink { _ in
-            self.selectedType = .other
+            SelectedInfo.shared.type = .other
             self.setLocation()
         }.store(in: cancelBag)
         
         selectMapView.gesture().sink { _ in
-            self.selectedType = .map
+            SelectedInfo.shared.type = .map
             self.setLocation()
         }.store(in: cancelBag)
     }
@@ -170,7 +163,7 @@ extension DepartureSearchVC {
         locationSelectStackView.snp.makeConstraints { make in
             make.top.equalTo(dividerView.snp.bottom)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(8)
-            make.height.equalTo(52)
+            make.height.equalTo(50)
         }
         
         selectDirectionView.snp.makeConstraints { make in
@@ -226,7 +219,7 @@ extension DepartureSearchVC: UITableViewDelegate, UITableViewDataSource {
         
         let departureLocationModel = addressList[indexPath.item].toDepartureLocationModel()
         courseDrawingVC.setData(model: departureLocationModel)
-        courseDrawingVC.selectedType = .other
+        SelectedInfo.shared.type = .other
         
         courseDrawingVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(courseDrawingVC, animated: true)
@@ -288,7 +281,6 @@ extension DepartureSearchVC {
                             let responseDto = try result.map(TmapAddressSearchingResponseDto.self)
                             let courseDrawingVC = CourseDrawingVC()
                             
-                            courseDrawingVC.selectedType = self.selectedType
                             courseDrawingVC.setData(model: responseDto.toDepartureLocationModel(latitude: latitude, longitude: longitude))
                             
                             courseDrawingVC.hidesBottomBarWhenPushed = true
