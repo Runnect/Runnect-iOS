@@ -17,6 +17,8 @@ final class CourseDrawingVC: UIViewController {
     private let courseProvider = Providers.courseProvider
     private let departureSearchingProvider = Providers.departureSearchingProvider
     
+    private let networkProvider = NetworkProvider<DepartureSearchingRouter>(withAuth: false)
+    
     private var departureLocationModel: DepartureLocationModel?
     
     var pathImage: UIImage?
@@ -193,7 +195,8 @@ extension CourseDrawingVC {
         
         mapView.eventSubject.sink { [weak self] arr in
             guard let self = self else { return }
-            self.searchLocationTmapAddress(latitude: arr[0], longitude: arr[1])
+//            self.searchLocationTmapAddress(latitude: arr[0], longitude: arr[1])
+            self.searchTest(latitude: arr[0], longitude: arr[1])
         }.store(in: cancelBag)
     }
     
@@ -492,6 +495,15 @@ extension CourseDrawingVC {
                     self.showToast(message: "네트워크 통신 실패")
                 }
             }
+    }
+    
+    private func searchTest(latitude: Double, longitude: Double) {
+        networkProvider.request(target: .getLocationTmapAddress(latitude: latitude, longitude: longitude), instance: TmapAddressSearchingResponseDto.self, vc: self) { result in
+            switch result {
+            case .success(let data):
+                self.updateData(model: data.toDepartureLocationModel(latitude: latitude, longitude: longitude))
+            }
+        }
     }
 }
 

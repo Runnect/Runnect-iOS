@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0AEBD608F3973389E8E1C6D6 /* Pods_Runnect_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */; };
+		232686362B03AF4400675A17 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232686352B03AF4400675A17 /* NetworkProvider.swift */; };
 		2349CD532B026EA500EE7C4A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2349CD512B024E5B00EE7C4A /* GoogleService-Info.plist */; };
 		23EE06C12AC1AD5200CB3FF8 /* LocationSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06C02AC1AD5200CB3FF8 /* LocationSelectView.swift */; };
 		23EE06C52AC1AE1900CB3FF8 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06C42AC1AE1900CB3FF8 /* BaseView.swift */; };
@@ -168,6 +169,7 @@
 
 /* Begin PBXFileReference section */
 		015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runnect_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		232686352B03AF4400675A17 /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
 		2349CD512B024E5B00EE7C4A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Runnect-iOS/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		23EE06C02AC1AD5200CB3FF8 /* LocationSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectView.swift; sourceTree = "<group>"; };
 		23EE06C42AC1AE1900CB3FF8 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
@@ -963,6 +965,7 @@
 				CE6655BE295D82E200C64E12 /* .gitkeep */,
 				CE102C4929DBAD3D00E23E69 /* AuthInterceptor.swift */,
 				CEE59FD929DD6F7D00C791F1 /* Providers.swift */,
+				232686352B03AF4400675A17 /* NetworkProvider.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1482,6 +1485,7 @@
 				CE40BB2D296808B00030ABCA /* DepartureSearchingRouter.swift in Sources */,
 				CE15F5A4296C932E0023827C /* RunningModel.swift in Sources */,
 				CE17F02D2961BBA100E1DED0 /* ColorLiterals.swift in Sources */,
+				232686362B03AF4400675A17 /* NetworkProvider.swift in Sources */,
 				CEC2A68E2962AF2C00160BF7 /* RNMarker.swift in Sources */,
 				CE6655D2295D862A00C64E12 /* Publisher+Driver.swift in Sources */,
 				DA0587F22A05D54100B72869 /* EditCourseRequestDto.swift in Sources */,
