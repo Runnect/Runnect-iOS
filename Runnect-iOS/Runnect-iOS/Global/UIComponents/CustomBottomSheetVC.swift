@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import CombineCocoa
 
 @frozen
 enum SheetType {
@@ -25,14 +26,11 @@ final class CustomBottomSheetVC: UIViewController {
     private var BottomsheetType: SheetType!
     
     var backgroundTapAction: (() -> Void)?
+    var completeButtonTapAction: ((String) -> Void)?
     
-    var completeButtonTapped: Driver<Void> {
-        completeButton.publisher(for: .touchUpInside)
-            .map { _ in }
-            .asDriver()
-    }
     // 바텀 시트 높이
     let bottomHeight: CGFloat = 206
+    private var cancelBag = CancelBag()
     
     // MARK: - UI Components
     
@@ -91,6 +89,7 @@ final class CustomBottomSheetVC: UIViewController {
         self.setDelegate()
         self.setTapGesture()
         self.setAddTarget()
+        self.setBinding()
         if BottomsheetType == .TextField {
             showBottomSheet()
             setupGestureRecognizer()
@@ -242,6 +241,14 @@ extension CustomBottomSheetVC {
             make.height.equalTo(44)
             make.leading.trailing.equalToSuperview().inset(16)
         }
+    }
+    
+    private func setBinding() {
+        self.completeButton.tapPublisher.sink { [weak self] _ in
+            guard let self = self else { return }
+            guard let text = self.bottomSheetTextField.text else { return }
+            self.completeButtonTapAction?(text)
+        }.store(in: cancelBag)
     }
     
     private func showBottomSheet() {
