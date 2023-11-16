@@ -8,8 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		0AEBD608F3973389E8E1C6D6 /* Pods_Runnect_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */; };
+		2349CD532B026EA500EE7C4A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2349CD512B024E5B00EE7C4A /* GoogleService-Info.plist */; };
+		23EE06C12AC1AD5200CB3FF8 /* LocationSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06C02AC1AD5200CB3FF8 /* LocationSelectView.swift */; };
+		23EE06C52AC1AE1900CB3FF8 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06C42AC1AE1900CB3FF8 /* BaseView.swift */; };
+		23EE06C92AC1DED100CB3FF8 /* GesturePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06C82AC1DED100CB3FF8 /* GesturePublisher.swift */; };
+		23EE06CB2AC2AF3E00CB3FF8 /* KakaoAddressSearchingResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06CA2AC2AF3E00CB3FF8 /* KakaoAddressSearchingResponseDto.swift */; };
+		23EE06D12AC2F44E00CB3FF8 /* TmapAddressSearchingResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06D02AC2F44E00CB3FF8 /* TmapAddressSearchingResponseDto.swift */; };
 		712F661D2A7B7BAB00D9539B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712F661C2A7B7BAB00D9539B /* Config.swift */; };
-		71DBF23E2ABB255A0013415B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 71DBF23D2ABB255A0013415B /* GoogleService-Info.plist */; };
+		7136BF8A2AF921A900679364 /* CustomBottomSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7136BF892AF921A900679364 /* CustomBottomSheetVC.swift */; };
 		A3305A97296EF58C000B1A10 /* GoalRewardInfoDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */; };
 		A3BC2F2B2962C3D500198261 /* GoalRewardInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */; };
 		A3BC2F2D2962C3F200198261 /* ActivityRecordInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F2C2962C3F200198261 /* ActivityRecordInfoVC.swift */; };
@@ -43,7 +49,6 @@
 		CE102C4A29DBAD3D00E23E69 /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE102C4929DBAD3D00E23E69 /* AuthInterceptor.swift */; };
 		CE146770296568DC00DCEA1B /* RunTrackingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14676F296568DC00DCEA1B /* RunTrackingVC.swift */; };
 		CE14677829658C7200DCEA1B /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14677729658C7200DCEA1B /* Stopwatch.swift */; };
-		CE14677A2965A80700DCEA1B /* CustomBottomSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1467792965A80700DCEA1B /* CustomBottomSheetVC.swift */; };
 		CE14677C2965C1B100DCEA1B /* RunningRecordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14677B2965C1B100DCEA1B /* RunningRecordVC.swift */; };
 		CE15F5A4296C932E0023827C /* RunningModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE15F5A3296C932E0023827C /* RunningModel.swift */; };
 		CE17F02D2961BBA100E1DED0 /* ColorLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17F02C2961BBA100E1DED0 /* ColorLiterals.swift */; };
@@ -163,9 +168,16 @@
 
 /* Begin PBXFileReference section */
 		015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runnect_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2349CD512B024E5B00EE7C4A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Runnect-iOS/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		23EE06C02AC1AD5200CB3FF8 /* LocationSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectView.swift; sourceTree = "<group>"; };
+		23EE06C42AC1AE1900CB3FF8 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		23EE06C82AC1DED100CB3FF8 /* GesturePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GesturePublisher.swift; sourceTree = "<group>"; };
+		23EE06CA2AC2AF3E00CB3FF8 /* KakaoAddressSearchingResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoAddressSearchingResponseDto.swift; sourceTree = "<group>"; };
+		23EE06D02AC2F44E00CB3FF8 /* TmapAddressSearchingResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TmapAddressSearchingResponseDto.swift; sourceTree = "<group>"; };
 		3C3033C911343B5C57EB68E7 /* Pods-Runnect-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runnect-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		7110A6032AA337DD009A7E99 /* Runnect-iOSDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Runnect-iOSDebug.entitlements"; sourceTree = "<group>"; };
 		712F661C2A7B7BAB00D9539B /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		7136BF892AF921A900679364 /* CustomBottomSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheetVC.swift; sourceTree = "<group>"; };
 		71DBF23D2ABB255A0013415B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Runnect-iOS/Runnect-iOS/Runnect-iOS/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardInfoDto.swift; sourceTree = "<group>"; };
 		A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardInfoVC.swift; sourceTree = "<group>"; };
@@ -206,7 +218,6 @@
 		CE102C4929DBAD3D00E23E69 /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
 		CE14676F296568DC00DCEA1B /* RunTrackingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunTrackingVC.swift; sourceTree = "<group>"; };
 		CE14677729658C7200DCEA1B /* Stopwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
-		CE1467792965A80700DCEA1B /* CustomBottomSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheetVC.swift; sourceTree = "<group>"; };
 		CE14677B2965C1B100DCEA1B /* RunningRecordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningRecordVC.swift; sourceTree = "<group>"; };
 		CE15F5A3296C932E0023827C /* RunningModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningModel.swift; sourceTree = "<group>"; };
 		CE17F02C2961BBA100E1DED0 /* ColorLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorLiterals.swift; sourceTree = "<group>"; };
@@ -343,6 +354,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		23EE06C32AC1AE0600CB3FF8 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				23EE06C42AC1AE1900CB3FF8 /* BaseView.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
 		3F7098551CF7A77F3FE7EB2B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -669,6 +688,7 @@
 			isa = PBXGroup;
 			children = (
 				CEB8416D2962C45300BF8080 /* LocationSearchResultTVC.swift */,
+				23EE06C02AC1AD5200CB3FF8 /* LocationSelectView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -761,6 +781,8 @@
 			children = (
 				CE10065429680F7000FD31FB /* DepartureSearchingResponseDto.swift */,
 				CE320F37296C8FAB009F89A7 /* CourseDrawingResponseData.swift */,
+				23EE06CA2AC2AF3E00CB3FF8 /* KakaoAddressSearchingResponseDto.swift */,
+				23EE06D02AC2F44E00CB3FF8 /* TmapAddressSearchingResponseDto.swift */,
 			);
 			path = ResponseDto;
 			sourceTree = "<group>";
@@ -776,6 +798,7 @@
 		CE4545BC295D7AF4003201E1 = {
 			isa = PBXGroup;
 			children = (
+				2349CD512B024E5B00EE7C4A /* GoogleService-Info.plist */,
 				CE665614295D989A00C64E12 /* .swiftlint.yml */,
 				CE4545C7295D7AF4003201E1 /* Runnect-iOS */,
 				CE4545C6295D7AF4003201E1 /* Products */,
@@ -884,6 +907,7 @@
 		CE6655AA295D7FAE00C64E12 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				23EE06C32AC1AE0600CB3FF8 /* Base */,
 				CE6655B6295D803C00C64E12 /* UIComponents */,
 				CE6655B5295D803800C64E12 /* Literal */,
 				CE6655B4295D803400C64E12 /* Resource */,
@@ -991,6 +1015,7 @@
 				CE58759F29601500005D967E /* Toast.swift */,
 				CE6655C9295D84DD00C64E12 /* UserDefaultKeyList.swift */,
 				CE29D583296416D800F47542 /* caculateStatusBarHeight.swift */,
+				23EE06C82AC1DED100CB3FF8 /* GesturePublisher.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1042,8 +1067,8 @@
 				CEC2A6882962ADB900160BF7 /* MapView */,
 				CEEC6B4A2961D89700D00E1E /* CustomNavigationBar.swift */,
 				CEC2A6842961F92C00160BF7 /* CustomButton.swift */,
+				7136BF892AF921A900679364 /* CustomBottomSheetVC.swift */,
 				CE0D9FD229648DA300CEB5CD /* CustomAlertVC.swift */,
-				CE1467792965A80700DCEA1B /* CustomBottomSheetVC.swift */,
 				CE9291242965C9FB0010959C /* CourseDetailInfoView.swift */,
 				CE9291262965D0ED0010959C /* StatsInfoView.swift */,
 				CE6B63D729673450003F900F /* ListEmptyView.swift */,
@@ -1249,9 +1274,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2349CD532B026EA500EE7C4A /* GoogleService-Info.plist in Resources */,
 				CE665615295D989A00C64E12 /* .swiftlint.yml in Resources */,
 				CE17F0342961BEF800E1DED0 /* Pretendard-Bold.otf in Resources */,
-				71DBF23E2ABB255A0013415B /* GoogleService-Info.plist in Resources */,
 				CE17F0352961BEF800E1DED0 /* Pretendard-SemiBold.otf in Resources */,
 				CE17F0332961BEF800E1DED0 /* Pretendard-Medium.otf in Resources */,
 				CE6655BF295D82E200C64E12 /* .gitkeep in Resources */,
@@ -1343,6 +1368,7 @@
 				CE6655F4295D898400C64E12 /* UIViewController+.swift in Sources */,
 				CE14677829658C7200DCEA1B /* Stopwatch.swift in Sources */,
 				CE21C026299E5FF300F62AF5 /* CourseRouter.swift in Sources */,
+				23EE06C52AC1AE1900CB3FF8 /* BaseView.swift in Sources */,
 				CE40BB22296806140030ABCA /* NetworkHelper.swift in Sources */,
 				CE5645162961B72E000A2856 /* ImageLiterals.swift in Sources */,
 				CE4942AD296FCD2300736701 /* UploadedCourseDetailResponseDto.swift in Sources */,
@@ -1378,6 +1404,7 @@
 				CE14677C2965C1B100DCEA1B /* RunningRecordVC.swift in Sources */,
 				CE6B63D829673450003F900F /* ListEmptyView.swift in Sources */,
 				CE6655F6295D90B600C64E12 /* addToolBar.swift in Sources */,
+				7136BF8A2AF921A900679364 /* CustomBottomSheetVC.swift in Sources */,
 				A3C2CAD529E4F85400EC525B /* PersonalInfoVC.swift in Sources */,
 				DAD5A3DA296C6DA500C8166B /* TitleCollectionViewCell.swift in Sources */,
 				CEC2A68A2962ADCD00160BF7 /* RNMapView.swift in Sources */,
@@ -1397,6 +1424,7 @@
 				CE6655FE295D912300C64E12 /* calculateTopInset.swift in Sources */,
 				CEEC6B492961C5E200D00E1E /* SplashVC.swift in Sources */,
 				CE6655D0295D85FF00C64E12 /* CancelBag.swift in Sources */,
+				23EE06C12AC1AD5200CB3FF8 /* LocationSelectView.swift in Sources */,
 				CE102C4A29DBAD3D00E23E69 /* AuthInterceptor.swift in Sources */,
 				A3BC2F432966A93100198261 /* CourseDetailVC.swift in Sources */,
 				DAD5A3D8296C6D9600C8166B /* AdImageCollectionViewCell.swift in Sources */,
@@ -1404,8 +1432,10 @@
 				CE6655DC295D873500C64E12 /* UIButton+.swift in Sources */,
 				CEFA9A2F29FC263700F2D0CF /* UserDeleteResponseDto.swift in Sources */,
 				CE21C02C299E601000F62AF5 /* ScrapRouter.swift in Sources */,
+				23EE06D12AC2F44E00CB3FF8 /* TmapAddressSearchingResponseDto.swift in Sources */,
 				A3D1A78029CF142E00DD54EC /* UserManager.swift in Sources */,
 				A3D1A77929CF03D200DD54EC /* AuthRouter.swift in Sources */,
+				23EE06C92AC1DED100CB3FF8 /* GesturePublisher.swift in Sources */,
 				A3C38FED2A13212300FF196D /* SetInfoLayout.swift in Sources */,
 				CE6655D4295D865B00C64E12 /* Publisher+UIControl.swift in Sources */,
 				CE0D9FD329648DA300CEB5CD /* CustomAlertVC.swift in Sources */,
@@ -1446,7 +1476,6 @@
 				A3BC2F4129667A0D00198261 /* NicknameEditorVC.swift in Sources */,
 				CE0C23742966D62A00B45063 /* PagedView.swift in Sources */,
 				CE3A53C5296C6017003D518C /* KeychainManager.swift in Sources */,
-				CE14677A2965A80700DCEA1B /* CustomBottomSheetVC.swift in Sources */,
 				CEEC6B4B2961D89700D00E1E /* CustomNavigationBar.swift in Sources */,
 				CE09037D296E9ED900BEA710 /* ScrapCourseResponseDto.swift in Sources */,
 				CED791B32A2626AF001BFCFB /* ShadowView.swift in Sources */,
@@ -1464,6 +1493,7 @@
 				CE102C4829DB1D6B00E23E69 /* GetNewTokenResponseDto.swift in Sources */,
 				CE6655CA295D84DD00C64E12 /* UserDefaultKeyList.swift in Sources */,
 				712F661D2A7B7BAB00D9539B /* Config.swift in Sources */,
+				23EE06CB2AC2AF3E00CB3FF8 /* KakaoAddressSearchingResponseDto.swift in Sources */,
 				CE6655F2295D894D00C64E12 /* UIView+.swift in Sources */,
 				CE9291252965C9FB0010959C /* CourseDetailInfoView.swift in Sources */,
 				CE665600295D915D00C64E12 /* getClassName.swift in Sources */,
