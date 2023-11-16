@@ -152,41 +152,53 @@ extension CourseDetailVC {
         guard let model = self.uploadedCourseDetailModel else {
             return
         }
-        
-        let title = model.publicCourse.title
-        let courseId = model.publicCourse.id // primaryKey
-        let description = model.publicCourse.description
-        let courseImage = model.publicCourse.image
-          
-        let dynamicLinksDomainURIPrefix = "https://runnect.page.link"
-        guard let link = URL(string: "\(dynamicLinksDomainURIPrefix)/?courseId=\(courseId)") else { return }
-        let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: dynamicLinksDomainURIPrefix)
-        linkBuilder!.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.runnect.Runnect-iOS")
-        linkBuilder!.iOSParameters?.appStoreID = "1663884202"
-        linkBuilder!.iOSParameters?.minimumAppVersion = "1.0.4"
 
-        linkBuilder!.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
-        linkBuilder!.socialMetaTagParameters?.imageURL = URL(string: courseImage)
-        linkBuilder!.socialMetaTagParameters?.title = title
-        linkBuilder!.socialMetaTagParameters?.descriptionText = description
-        
-        guard let longDynamicLink = linkBuilder!.url else { return }
+        let publicCourse = model.publicCourse
+        let title = publicCourse.title
+        let courseId = publicCourse.id // primaryKey
+        let description = publicCourse.description
+        let courseImage = publicCourse.image
+
+        let dynamicLinksDomainURIPrefix = "https://runnect.page.link"
+        guard let link = URL(string: "\(dynamicLinksDomainURIPrefix)/?courseId=\(courseId)") else {
+            return
+        }
+
+        guard let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: dynamicLinksDomainURIPrefix) else {
+            return
+        }
+
+        linkBuilder.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.runnect.Runnect-iOS")
+        linkBuilder.iOSParameters?.appStoreID = "1663884202"
+        linkBuilder.iOSParameters?.minimumAppVersion = "1.0.4"
+
+        linkBuilder.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
+        linkBuilder.socialMetaTagParameters?.imageURL = URL(string: courseImage)
+        linkBuilder.socialMetaTagParameters?.title = title
+        linkBuilder.socialMetaTagParameters?.descriptionText = description
+
+        guard let longDynamicLink = linkBuilder.url else {
+            return
+        }
         print("The long URL is: \(longDynamicLink)")
-        
-        /// 짧은 Dynamic Link로 변환
-        linkBuilder?.shorten(completion: { url, _, _ in
-            guard let shortDynamicLink = url else { return }
-            print("The short URL is: \(shortDynamicLink)")
-            let activityVC = UIActivityViewController(activityItems: [shortDynamicLink.absoluteString], applicationActivities: nil)
-            activityVC.popoverPresentationController?.sourceView = self.view
-            self.present(activityVC, animated: true, completion: nil)
-            
-        })
-        
-//        let activityVC = UIActivityViewController(activityItems: [longDynamicLink.absoluteString], applicationActivities: nil)
-//        activityVC.popoverPresentationController?.sourceView = self.view
-//        self.present(activityVC, animated: true, completion: nil)
-        
+
+        /// 짧은 Dynamic Link로 변환하는 부분 입니다.
+        linkBuilder.shorten { [weak self] url, warnings, error in
+            guard let shortDynamicLink = url else {
+                if let error = error {
+                    print("❌Error shortening dynamic link: \(error)")
+                }
+                return
+            }
+
+            print("🔥The short URL is: \(shortDynamicLink)")
+
+            DispatchQueue.main.async {
+                let activityVC = UIActivityViewController(activityItems: [shortDynamicLink.absoluteString], applicationActivities: nil)
+                activityVC.popoverPresentationController?.sourceView = self?.view
+                self?.present(activityVC, animated: true, completion: nil)
+            }
+        }
     }
     @objc func pushToUserProfileVC() {
         let userProfile = UserProfileVC()

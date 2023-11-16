@@ -7,62 +7,54 @@
 
 import UIKit
 import Combine
+import CombineCocoa
 
 @frozen
 enum SheetType {
-    case Image // 가운에 이미지가 있는 시트
-    case TextField // 가운데 텍스트필드가 있는 시트
+    case image // 가운에 이미지가 있는 시트
+    case textField // 가운데 텍스트필드가 있는 시트
 }
 
 final class CustomBottomSheetVC: UIViewController {
-    
     // MARK: - Properties
-    
     private let backgroundView = UIView().then {
         $0.backgroundColor = .black.withAlphaComponent(0.65)
     }
     private let titleNameMaxLength = 20
-    private var BottomsheetType: SheetType!
-    
+    private var bottomSheetType: SheetType!
     var backgroundTapAction: (() -> Void)?
+    var completeButtonTapAction: ((String) -> Void)?
     
-    var completeButtonTapped: Driver<Void> {
-        completeButton.publisher(for: .touchUpInside)
-            .map { _ in }
-            .asDriver()
-    }
     // 바텀 시트 높이
     let bottomHeight: CGFloat = 206
+    private var cancelBag = CancelBag()
     
     // MARK: - UI Components
-    
     private let bottomSheetView = UIView().then {
         $0.backgroundColor = .w1
         $0.layer.cornerRadius = 20
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
-    
     private let contentsLabel = UILabel().then {
         $0.text = "코스 이름"
         $0.font = .h5
         $0.textColor = .g1
     }
-    
     private let dismissIndicatorView = UIView().then {
-        $0.backgroundColor = .g3
+        $0.backgroundColor = .g4
         $0.layer.cornerRadius = 3
     }
-    
     private let completeButton = CustomButton(title: "완료").setColor(bgColor: .m1, disableColor: .g3).setEnabled(false)
-    
     private let mainImageView = UIImageView().then {
         $0.image = ImageLiterals.imgSpaceship
     }
-    
     private lazy var bottomSheetTextField = UITextField().then {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
-        $0.attributedPlaceholder = NSAttributedString(string: "코스의 이름을 입력해 주세요", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g3, .paragraphStyle: paragraphStyle])
+        $0.attributedPlaceholder = NSAttributedString(
+            string: "코스의 이름을 입력해 주세요",
+            attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g3, .paragraphStyle: paragraphStyle]
+        )
         $0.font = .h5
         $0.textColor = .g1
         $0.textAlignment = .center
@@ -72,55 +64,47 @@ final class CustomBottomSheetVC: UIViewController {
         $0.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
     }
     
-    // MARK: - initializtion
+    // MARK: - Initialization
     init(type: SheetType) {
         super.init(nibName: nil, bundle: nil)
-        self.BottomsheetType = type
+        self.bottomSheetType = type
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - View Life Cycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUI()
-        self.setLayout(BottomsheetType)
+        self.setLayout(bottomSheetType)
         self.setDelegate()
         self.setTapGesture()
         self.setAddTarget()
-        if BottomsheetType == .TextField {
+        self.setBinding()
+        if bottomSheetType == .textField {
             showBottomSheet()
             setupGestureRecognizer()
         }
     }
-
-}
-
-// MARK: - Methods
-
-extension CustomBottomSheetVC {
     
-    /// 바텀 시트의 라벨에 들어갈 텍스트 설정
+    // MARK: - Methods
     @discardableResult
     func setContentsText(text: String) -> Self {
-        self.contentsLabel.text = text
+        contentsLabel.text = text
         return self
     }
     
-    /// 하단 버튼의 텍스트 변경
     @discardableResult
-    public func setBottomButtonTitle(_ title: NSAttributedString) -> Self {
-        self.completeButton.changeTitle(attributedString: title)
+    func setBottomButtonTitle(_ title: NSAttributedString) -> Self {
+        completeButton.changeTitle(attributedString: title)
         return self
     }
     
-    /// 이미지 교체
     @discardableResult
-    public func setImage(_ image: UIImage) -> Self {
-        self.mainImageView.image = image
+    func setImage(_ image: UIImage) -> Self {
+        mainImageView.image = image
         return self
     }
     
@@ -134,7 +118,6 @@ extension CustomBottomSheetVC {
         }, completion: nil)
     }
     
-    // 중복 작업 통일 필요 (1. 배경화면 누를시, 2.스와이프 할시)
     private func setTapGesture() {
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         tap.cancelsTouchesInView = false
@@ -149,17 +132,18 @@ extension CustomBottomSheetVC {
             self,
             selector: #selector(keyboardWillShow),
             name: UIResponder.keyboardWillShowNotification,
-            object: nil)
+            object: nil
+        )
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillHide),
             name: UIResponder.keyboardWillHideNotification,
-            object: nil)
+            object: nil
+        )
     }
 }
 
 // MARK: - UI & Layout
-
 extension CustomBottomSheetVC {
     private func setUI() {
         view.addSubview(backgroundView)
@@ -170,9 +154,9 @@ extension CustomBottomSheetVC {
     
     private func setLayout(_ type: SheetType) {
         switch type {
-        case .TextField:
+        case .textField:
             setTextFieldLayout()
-        case .Image:
+        case .image:
             setImageLayout()
         }
     }
@@ -204,7 +188,7 @@ extension CustomBottomSheetVC {
             make.leading.trailing.equalToSuperview().inset(16)
         }
     }
-
+    
     private func setTextFieldLayout() {
         view.addSubviews(bottomSheetView)
         
@@ -219,9 +203,9 @@ extension CustomBottomSheetVC {
         }
         
         dismissIndicatorView.snp.makeConstraints { make in
-            make.width.equalTo(102)
-            make.height.equalTo(7)
-            make.top.equalTo(bottomSheetView.snp.top).inset(12)
+            make.width.equalTo(42)
+            make.height.equalTo(4)
+            make.top.equalTo(bottomSheetView.snp.top).inset(16)
             make.centerX.equalToSuperview()
         }
         
@@ -244,8 +228,15 @@ extension CustomBottomSheetVC {
         }
     }
     
+    private func setBinding() {
+        self.completeButton.tapPublisher.sink { [weak self] _ in
+            guard let self = self else { return }
+            guard let text = self.bottomSheetTextField.text else { return }
+            self.completeButtonTapAction?(text)
+        }.store(in: cancelBag)
+    }
+    
     private func showBottomSheet() {
-
         let safeAreaHeight: CGFloat = view.safeAreaLayoutGuide.layoutFrame.height
         let bottomPadding: CGFloat = view.safeAreaInsets.bottom
         
@@ -261,10 +252,8 @@ extension CustomBottomSheetVC {
             self.backgroundView.alpha = 0.65
             self.view.layoutIfNeeded()
         }, completion: nil)
-
     }
     
-    // 바텀 시트 사라지는 애니메이션
     private func hideBottomSheetAndGoBack() {
         let safeAreaHeight = view.safeAreaLayoutGuide.layoutFrame.height
         let bottomPadding = view.safeAreaInsets.bottom
@@ -276,7 +265,7 @@ extension CustomBottomSheetVC {
             make.top.equalTo(view.snp.top).offset(topConst)
             make.height.equalTo(bottomHeight)
         }
-
+        
         UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
             self.backgroundView.alpha = 0.0
             self.view.layoutIfNeeded()
@@ -287,14 +276,11 @@ extension CustomBottomSheetVC {
         }
     }
     
-    // GestureRecognizer 세팅 작업
     private func setupGestureRecognizer() {
-        // 흐린 부분 탭할 때, 바텀시트를 내리는 TapGesture
         let dimmedTap = UITapGestureRecognizer(target: self, action: #selector(dimmedViewTapped(_:)))
         backgroundView.addGestureRecognizer(dimmedTap)
         backgroundView.isUserInteractionEnabled = true
         
-        // 스와이프 했을 때, 바텀시트를 내리는 swipeGesture
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(panGesture))
         swipeGesture.direction = .down
         view.addGestureRecognizer(swipeGesture)
@@ -302,18 +288,16 @@ extension CustomBottomSheetVC {
 }
 
 // MARK: - @objc Function
-
 extension CustomBottomSheetVC {
-    
     @objc private func keyboardWillShow(_ sender: Notification) {
-        self.view.frame.origin.y = -341
+        self.view.frame.origin.y = -291
     }
-        
+    
     @objc private func keyboardWillHide(_ sender: Notification) {
         self.view.frame.origin.y = 0
     }
     
-    @objc private func endEditing() { /// return 누를시 키보드 종료
+    @objc private func endEditing() {
         bottomSheetTextField.resignFirstResponder()
     }
     
@@ -335,12 +319,10 @@ extension CustomBottomSheetVC {
         }
     }
     
-    // UITapGestureRecognizer 연결 함수 부분
     @objc private func dimmedViewTapped(_ tapRecognizer: UITapGestureRecognizer) {
         hideBottomSheetAndGoBack()
     }
     
-    // UISwipeGestureRecognizer 연결 함수 부분
     @objc func panGesture(_ recognizer: UISwipeGestureRecognizer) {
         if recognizer.state == .ended {
             switch recognizer.direction {
@@ -351,13 +333,10 @@ extension CustomBottomSheetVC {
             }
         }
     }
-
 }
 
 // MARK: - UITextFieldDelegate
-
 extension CustomBottomSheetVC: UITextFieldDelegate {
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

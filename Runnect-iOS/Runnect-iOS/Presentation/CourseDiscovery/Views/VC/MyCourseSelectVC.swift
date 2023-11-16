@@ -29,7 +29,13 @@ class MyCourseSelectVC: UIViewController {
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("불러오기")
-    
+    private let firstDivideView = UIView()
+    private let guidelineView = UIView()
+    private let guidelineLabel = UILabel().then {
+        $0.text = "모든 코스는 한 번만 업로드할 수 있어요"
+        $0.font = .b4
+        $0.textColor = .g2
+    }
     private lazy var selectButton = CustomButton(title: "선택하기").setEnabled(false).then {
         $0.isHidden = true
     }
@@ -82,6 +88,9 @@ extension MyCourseSelectVC {
         self.courseList = courseList
         mapCollectionView.reloadData()
         self.emptyView.isHidden = !courseList.isEmpty
+        self.firstDivideView.isHidden = courseList.isEmpty
+        self.guidelineView.isHidden = courseList.isEmpty
+        self.guidelineLabel.isHidden = courseList.isEmpty
         self.selectButton.isHidden = courseList.isEmpty
     }
 
@@ -127,10 +136,11 @@ extension MyCourseSelectVC {
         view.backgroundColor = .w1
         self.tabBarController?.tabBar.isHidden = true
         self.emptyView.isHidden = true
+        firstDivideView.backgroundColor = .g4
     }
         
     private func setLayout() {
-        view.addSubviews(selectButton, mapCollectionView)
+        view.addSubviews(firstDivideView, guidelineView, guidelineLabel, selectButton, mapCollectionView)
         self.view.bringSubviewToFront(selectButton)
         mapCollectionView.addSubview(emptyView)
         
@@ -140,8 +150,25 @@ extension MyCourseSelectVC {
             make.bottom.equalToSuperview().inset(34)
         }
         
-        mapCollectionView.snp.makeConstraints { make in
+        firstDivideView.snp.makeConstraints { make in
             make.top.equalTo(navibar.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(1)
+        }
+        
+        guidelineView.snp.makeConstraints { make in
+            make.top.equalTo(firstDivideView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(36)
+        }
+        
+        guidelineLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(guidelineView)
+            make.top.equalTo(guidelineView.snp.top).offset(8)
+        }
+        
+        mapCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(guidelineView.snp.bottom)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(selectButton.snp.top).inset(-25)
         }
@@ -208,7 +235,13 @@ extension MyCourseSelectVC: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return self.collectionViewInset
+        if section == 0 {
+            // Apply custom inset for the first section (top)
+            return UIEdgeInsets(top: 0, left: self.collectionViewInset.left, bottom: self.collectionViewInset.bottom, right: self.collectionViewInset.right)
+        } else {
+            // Use the regular inset for other sections
+            return self.collectionViewInset
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

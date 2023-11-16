@@ -21,6 +21,7 @@ final class CourseDrawingVC: UIViewController {
     
     var pathImage: UIImage?
     var distance: Float = 0.0
+    private var courseName = String()
     
     private var cancelBag = CancelBag()
     
@@ -228,12 +229,6 @@ extension CourseDrawingVC {
         
         self.present(alertVC, animated: false)
     }
-    
-    /// 수정 필요 - 바텀시트에서 완료 버튼을 누른 경우
-    /// 아래의 코드를 호출해주어야함
-    /// guard let self = self else { return }
-    /// guard handleVisitor() else { return }
-    /// self.mapView.capturePathImage()
 }
 
 // MARK: - @objc Function
@@ -245,6 +240,7 @@ extension CourseDrawingVC {
         if SelectedInfo.shared.type == .map {
             startMarkStackView.isHidden = true
             guard let model = self.departureLocationModel else { return }
+            SelectedInfo.shared.type = .other
             mapView.makeStartMarker(at: model.toNMGLatLng(), withCameraMove: true)
         }
         
@@ -255,11 +251,17 @@ extension CourseDrawingVC {
         mapView.undo()
     }
     
-    /// 수정 필요 - 다음으로 버튼 눌린 경우 호출될 함수
     @objc private func completeButtonDidTap() {
-//        let bottomSheetVC = CourseNameBottomSheetVC()
-//        bottomSheetVC.modalPresentationStyle = .overFullScreen
-//        self.present(bottomSheetVC, animated: false)
+        let bottomSheetVC = CustomBottomSheetVC(type: .textField)
+        bottomSheetVC.modalPresentationStyle = .overFullScreen
+        bottomSheetVC.completeButtonTapAction = { [weak self] text in
+            guard let self = self else { return }
+            guard handleVisitor() else { return }
+            self.courseName = text
+            self.mapView.capturePathImage()
+            self.dismiss(animated: true)
+        }
+        self.present(bottomSheetVC, animated: false)
     }
 }
 
@@ -430,6 +432,7 @@ extension CourseDrawingVC {
         guard let departureLocationModel = self.departureLocationModel else { return nil }
         let path = mapView.getMarkersLatLng().map { $0.toRNLocationModel() }
         let courseDrawingRequestData = CourseDrawingRequestData(path: path,
+//                                                                title : self.courseName,
                                                                 distance: self.distance,
                                                                 departureAddress: departureLocationModel.departureAddress,
                                                                 departureName: departureLocationModel.departureName)
@@ -441,8 +444,8 @@ extension CourseDrawingVC {
     
     private func uploadCourseDrawing() {
         guard let requestDto = makecourseDrawingRequestDto() else { return }
-        
         LoadingIndicator.showLoading()
+        
         courseProvider.request(.uploadCourseDrawing(param: requestDto)) {[weak self] response in
             guard let self = self else { return }
             LoadingIndicator.hideLoading()
