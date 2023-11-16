@@ -252,7 +252,7 @@ extension CourseDrawingVC {
     }
     
     @objc private func completeButtonDidTap() {
-        let bottomSheetVC = CustomBottomSheetVC(type: .TextField)
+        let bottomSheetVC = CustomBottomSheetVC(type: .textField)
         bottomSheetVC.modalPresentationStyle = .overFullScreen
         bottomSheetVC.completeButtonTapAction = { [weak self] text in
             guard let self = self else { return }
