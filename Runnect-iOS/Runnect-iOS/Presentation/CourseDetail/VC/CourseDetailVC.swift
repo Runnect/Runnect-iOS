@@ -524,6 +524,9 @@ extension CourseDetailVC {
                 let status = result.statusCode
                 if 200..<300 ~= status {
                     print("삭제 성공")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        self.navigationController?.popViewController(animated: true)
+                    }
                 }
                 if status >= 400 {
                     print("400 error")
@@ -563,7 +566,6 @@ extension CourseDetailVC {
                 deleteAlertVC.rightButtonTapAction = {
                     deleteAlertVC.dismiss(animated: false)
                     self.deleteCourse()
-                    self.navigationController?.popViewController(animated: true)
                 }
                 self.present(deleteAlertVC, animated: false)
             case "신고하기":

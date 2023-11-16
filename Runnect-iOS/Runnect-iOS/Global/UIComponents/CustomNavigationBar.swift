@@ -160,6 +160,13 @@ extension CustomNavigationBar {
         self.reportButton.isHidden = true
         return self
     }
+    
+    @discardableResult
+    func changeTitleWithLeftButton(_ font: UIFont, _ color: UIColor) -> Self {
+        centerTitleLabel.font = font
+        centerTitleLabel.textColor = color
+        return self
+    }
 }
 
 // MARK: - @objc Function
