@@ -18,6 +18,7 @@ struct CourseDrawingRequestDto: Codable {
 
 struct CourseDrawingRequestData: Codable {
     let path: [RNLocationModel]
+//    let title: String
     let distance: Float
     let departureAddress, departureName: String
 }
