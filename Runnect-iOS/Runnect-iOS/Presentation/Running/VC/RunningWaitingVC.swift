@@ -297,9 +297,10 @@ extension RunningWaitingVC {
             
             switch item {
             case "수정하기":
-                let bottomSheet = CustomBottomSheetVC()
                 // 현재 코스 모델의 이름 변경
-                self.navigationController?.pushViewController(bottomSheet, animated: false)
+                let bottomSheetVC = CustomBottomSheetVC(type: .textField)
+                bottomSheetVC.modalPresentationStyle = .overFullScreen
+                self.present(bottomSheetVC, animated: false)
             case "삭제하기":
                 let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
                 deleteAlertVC.modalPresentationStyle = .overFullScreen
@@ -315,3 +316,5 @@ extension RunningWaitingVC {
         }
     }
 }
+
+
