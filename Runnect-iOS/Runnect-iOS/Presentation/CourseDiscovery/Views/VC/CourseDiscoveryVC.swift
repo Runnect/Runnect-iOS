@@ -21,6 +21,8 @@ final class CourseDiscoveryVC: UIViewController {
     
     private var courseList = [PublicCourse]()
     
+    private var specialList = [String]()
+    
     // pagination 에 꼭 필요한 위한 변수들 입니다.
     private var pageNo = 1
     
@@ -49,7 +51,6 @@ final class CourseDiscoveryVC: UIViewController {
     private lazy var mapCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.isScrollEnabled = true
@@ -93,7 +94,10 @@ extension CourseDiscoveryVC {
     }
     
     private func register() {
+        
         self.mapCollectionView.register(AdImageCollectionViewCell.self, forCellWithReuseIdentifier: AdImageCollectionViewCell.className)
+        self.mapCollectionView.register(MarathonTitleCollectionViewCell.self, forCellWithReuseIdentifier: MarathonTitleCollectionViewCell.className)
+        self.mapCollectionView.register(MarathonMapCollectionViewCell.self, forCellWithReuseIdentifier: MarathonMapCollectionViewCell.className)
         self.mapCollectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: TitleCollectionViewCell.className)
         self.mapCollectionView.register(CourseListCVC.self, forCellWithReuseIdentifier: CourseListCVC.className)
     }
@@ -202,14 +206,14 @@ extension CourseDiscoveryVC {
 
 extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-        case 0, 1:
+        case 0, 1, 2, 3:
             return 1
-        case 2:
+        case 4:
             return self.courseList.count
         default:
             return 0
@@ -221,6 +225,13 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdImageCollectionViewCell.className, for: indexPath) as? AdImageCollectionViewCell else { return UICollectionViewCell() }
             return cell
         } else if indexPath.section == 1 {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MarathonTitleCollectionViewCell.className, for: indexPath) as? MarathonTitleCollectionViewCell else { return UICollectionViewCell() }
+            return cell
+        } else if indexPath.section == 2 {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MarathonMapCollectionViewCell.className, for: indexPath) as? MarathonMapCollectionViewCell else { return UICollectionViewCell() }
+            return cell
+
+        } else if indexPath.section == 3 {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TitleCollectionViewCell.className, for: indexPath) as? TitleCollectionViewCell else { return UICollectionViewCell() }
             return cell
         } else {
@@ -238,18 +249,18 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
         let contentOffsetY = scrollView.contentOffset.y
         let collectionViewHeight = mapCollectionView.contentSize.height
         let paginationY = collectionViewHeight * 0.2
-        
+
         // 스크롤이 80% (0.2)  까지 도달하면 다음 페이지 데이터를 불러옵니다.
         if contentOffsetY >= collectionViewHeight - paginationY {
             if courseList.count < pageNo * 24 { // 페이지 끝에 도달하면 현재 페이지에 더 이상 데이터가 없음을 의미합니다.
                 // 페이지네이션 중단 코드
                 return
             }
-            
+
             // 다음 페이지 번호를 증가시킵니다.
             pageNo += 1
             print("🔥다음 페이지 로드: \(pageNo)🔥")
-            
+
             // 여기에서 다음 페이지 데이터를 불러오는 함수를 호출하세요.
             getCourseData()
         }
@@ -268,10 +279,14 @@ extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
         
         switch indexPath.section {
         case 0:
-            return CGSize(width: screenWidth, height: screenWidth * (183/390))
+            return CGSize(width: screenWidth, height: screenWidth * (174/390))
         case 1:
-            return CGSize(width: screenWidth, height: 80)
+            return CGSize(width: screenWidth, height: 98)
         case 2:
+            return CGSize(width: screenWidth, height: 160)
+        case 3:
+            return CGSize(width: screenWidth, height: 106)
+        case 4:
             let cellWidth = (screenWidth - 42) / 2
             let cellHeight = CourseListCVCType.getCellHeight(type: .all, cellWidth: cellWidth)
             return CGSize(width: cellWidth, height: cellHeight)
@@ -281,28 +296,28 @@ extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        if section == 2 {
+        if section == 4 {
             return 20
         }
         return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        if section == 2 {
+        if section == 4 {
             return 10
         }
         return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        if section == 2 {
+        if section == 4 {
             return UIEdgeInsets(top: 0, left: 16, bottom: 20, right: 16)
         }
         return .zero
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 2 {
+        if indexPath.section == 4 {
             let courseDetailVC = CourseDetailVC()
             let courseModel = courseList[indexPath.item]
             courseDetailVC.setCourseId(courseId: courseModel.courseId, publicCourseId: courseModel.id)
