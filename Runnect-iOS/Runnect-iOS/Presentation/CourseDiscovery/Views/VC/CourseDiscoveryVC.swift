@@ -2,7 +2,7 @@
 //  CourseDiscoveryVC.swift
 //  Runnect-iOS
 //
-//  Created by sejin on 2023/01/01.
+//  Created by 이명진 on 2023/11/21.
 //
 
 import UIKit
@@ -305,10 +305,10 @@ extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
         }
     }
     
+    /// section 이 4일때만 정해진 레이아웃 리턴
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return section == Section.courseList ? Layout.cellSpacing : 0
     }
-    // section 이 4일때만 정해진 레이아웃 리턴
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return section == Section.courseList ? Layout.interitemSpacing : 0

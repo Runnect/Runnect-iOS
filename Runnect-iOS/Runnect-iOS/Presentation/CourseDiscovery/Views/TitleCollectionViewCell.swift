@@ -2,7 +2,7 @@
 //  TitleCollectionViewCell.swift
 //  Runnect-iOS
 //
-//  Created by YEONOO on 2023/01/10.
+//  Created by 이명진 on 2023/11/21.
 //
 
 import UIKit
@@ -20,20 +20,25 @@ class TitleCollectionViewCell: UICollectionViewCell {
         $0.alignment = .leading
     }
     
-    private let divideView = UIView()
+    private let divideView = UIView().then {
+        $0.backgroundColor = .g4
+    }
     
     private let mainLabel: UILabel = {
-        let label = UILabel()
-        label.text = "이런 코스 어때요?"
-        label.font =  UIFont.h3
-        label.textColor = UIColor.g1
+        let label = UILabel().then {
+            $0.text = "이런 코스 어때요?"
+            $0.font = UIFont.h3
+            $0.textColor = UIColor.g1
+        }
         return label
     }()
+    
     private let subLabel: UILabel = {
-        let label = UILabel()
-        label.text = "나에게 최적화된 코스를 찾아보세요"
-        label.font =  UIFont.b6
-        label.textColor = UIColor.g2
+        let label = UILabel().then {
+            $0.text = "나에게 최적화된 코스를 찾아보세요"
+            $0.font = UIFont.b6
+            $0.textColor = UIColor.g2
+        }
         return label
     }()
     
@@ -55,21 +60,18 @@ class TitleCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         layout()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
-// MARK: - Extensions
+
+// MARK: - Layout
 
 extension TitleCollectionViewCell {
-    
-    // MARK: - Layout Helpers
-    
     func layout() {
         contentView.backgroundColor = .clear
         contentView.addSubviews(titleStackView, divideView, dateSort, scrapSort)
-        
-        divideView.backgroundColor = .g4
         
         titleStackView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
