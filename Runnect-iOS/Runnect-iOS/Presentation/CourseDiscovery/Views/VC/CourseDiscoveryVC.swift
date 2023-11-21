@@ -97,7 +97,7 @@ extension CourseDiscoveryVC {
         
         self.mapCollectionView.register(AdImageCollectionViewCell.self, forCellWithReuseIdentifier: AdImageCollectionViewCell.className)
         self.mapCollectionView.register(MarathonTitleCollectionViewCell.self, forCellWithReuseIdentifier: MarathonTitleCollectionViewCell.className)
-        self.mapCollectionView.register(MarathonMapCollectionViewCell.self, forCellWithReuseIdentifier: MarathonMapCollectionViewCell.className)
+        self.mapCollectionView.register(RecommendedMapCollectionViewCell.self, forCellWithReuseIdentifier: RecommendedMapCollectionViewCell.className)
         self.mapCollectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: TitleCollectionViewCell.className)
         self.mapCollectionView.register(CourseListCVC.self, forCellWithReuseIdentifier: CourseListCVC.className)
     }
@@ -228,7 +228,7 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MarathonTitleCollectionViewCell.className, for: indexPath) as? MarathonTitleCollectionViewCell else { return UICollectionViewCell() }
             return cell
         } else if indexPath.section == 2 {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MarathonMapCollectionViewCell.className, for: indexPath) as? MarathonMapCollectionViewCell else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecommendedMapCollectionViewCell.className, for: indexPath) as? RecommendedMapCollectionViewCell else { return UICollectionViewCell() }
             return cell
 
         } else if indexPath.section == 3 {
@@ -283,7 +283,7 @@ extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
         case 1:
             return CGSize(width: screenWidth, height: 98)
         case 2:
-            return CGSize(width: screenWidth, height: 160)
+            return CGSize(width: screenWidth, height: 194)
         case 3:
             return CGSize(width: screenWidth, height: 106)
         case 4:
@@ -317,7 +317,7 @@ extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 4 {
+        if indexPath.section == 2 || indexPath.section == 4 {
             let courseDetailVC = CourseDetailVC()
             let courseModel = courseList[indexPath.item]
             courseDetailVC.setCourseId(courseId: courseModel.courseId, publicCourseId: courseModel.id)

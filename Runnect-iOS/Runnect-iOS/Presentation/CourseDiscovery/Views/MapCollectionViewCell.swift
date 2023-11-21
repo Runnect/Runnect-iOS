@@ -5,6 +5,9 @@
 //  Created by YEONOO on 2023/01/10.
 //
 
+///  여기 있는 코드는 사용되지 않습니다.
+///  CourseDiscoveryVC에 따로 선언 되어있습니다.
+
 import UIKit
 import SnapKit
 
