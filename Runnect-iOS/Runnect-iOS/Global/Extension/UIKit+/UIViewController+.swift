@@ -39,7 +39,7 @@ extension UIViewController {
     }
     
     func presentSignInRequestAlertVC() {
-        let alertVC = CustomAlertVC()
+        let alertVC = CustomAlertVC(type: .image)
             .setTitle("가입 후 로그인 시 코스를 저장하고 달릴 수 있어요!")
             .setLeftButtonTitle(NSAttributedString(string: "닫기", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.m1]))
             .setRightButtonTitle(NSAttributedString(string: "가입하기", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.w1]))
