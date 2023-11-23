@@ -6,12 +6,17 @@
 //
 
 import UIKit
-import SnapKit
+import Combine
 
-import Then
+protocol TitleCollectionViewCellDelegate: AnyObject {
+    func didTapSortButton(ordering: String)
+}
 
 class TitleCollectionViewCell: UICollectionViewCell {
     
+    private var cancellables: Set<AnyCancellable> = []
+    weak var delegate: TitleCollectionViewCellDelegate?
+
     // MARK: - UI Components
     
     private lazy var titleStackView = UIStackView(arrangedSubviews: [mainLabel, subLabel]).then {
@@ -42,19 +47,8 @@ class TitleCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private lazy var dateSort = UIButton(type: .custom).then {
-        $0.setTitle("최신순", for: .normal)
-        $0.titleLabel?.font = .b3
-        $0.setTitleColor(.m1, for: .normal)
-        $0.setTitleColor(.g2, for: .disabled)
-    }
-    
-    private lazy var scrapSort = UIButton(type: .custom).then {
-        $0.setTitle("스크랩순", for: .normal)
-        $0.titleLabel?.font = .b3
-        $0.setTitleColor(.g2, for: .normal)
-        $0.setTitleColor(.m1, for: .disabled)
-    }
+    private lazy var dateSortButton = createSortButton(title: "최신순", ordering: "date")
+    private lazy var scrapSortButton = createSortButton(title: "스크랩순", ordering: "scrap")
     
     // MARK: - Life cycle
     
@@ -68,12 +62,43 @@ class TitleCollectionViewCell: UICollectionViewCell {
     }
 }
 
+
+
+// MARK: - Method
+
+extension TitleCollectionViewCell {
+    
+    private func createSortButton(title: String, ordering: String) -> UIButton {
+            let button = UIButton(type: .custom).then {
+                $0.setTitle(title, for: .normal)
+                $0.titleLabel?.font = .b3
+                $0.setTitleColor(.m1, for: .normal)
+                $0.setTitleColor(.g2, for: .disabled)
+            }
+            button.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
+            button.tapPublisher
+                .sink { [weak self] in
+                    guard let self = self else { return }
+                    self.delegate?.didTapSortButton(ordering: ordering)
+                }
+                .store(in: &cancellables)
+            return button
+        }
+    
+    @objc private func sortButtonTapped(sender: UIButton) {
+        guard let ordering = sender == dateSortButton ? "date" : "scrap" else {
+            return
+        }
+        delegate?.didTapSortButton(ordering: ordering)
+    }
+}
+
 // MARK: - Layout
 
 extension TitleCollectionViewCell {
     func layout() {
         contentView.backgroundColor = .clear
-        contentView.addSubviews(titleStackView, divideView, dateSort, scrapSort)
+        contentView.addSubviews(titleStackView, divideView, dateSortButton, scrapSortButton)
         
         titleStackView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
@@ -87,14 +112,14 @@ extension TitleCollectionViewCell {
             $0.height.equalTo(1)
         }
         
-        dateSort.snp.makeConstraints {
+        dateSortButton.snp.makeConstraints {
             $0.top.equalTo(divideView.snp.bottom).offset(54)
             $0.leading.equalTo(titleStackView.snp.trailing).offset(57)
         }
         
-        scrapSort.snp.makeConstraints {
+        scrapSortButton.snp.makeConstraints {
             $0.top.equalTo(divideView.snp.bottom).offset(54)
-            $0.leading.equalTo(dateSort.snp.trailing).offset(8)
+            $0.leading.equalTo(dateSortButton.snp.trailing).offset(8)
         }
     }
 }
