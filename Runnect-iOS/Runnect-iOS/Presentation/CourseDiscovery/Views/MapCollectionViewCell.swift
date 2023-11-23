@@ -7,6 +7,7 @@
 
 ///  여기 있는 코드는 사용되지 않습니다.
 ///  CourseDiscoveryVC에 따로 선언 되어있습니다.
+///  추가 사용안할시 삭제 예정
 
 import UIKit
 import SnapKit

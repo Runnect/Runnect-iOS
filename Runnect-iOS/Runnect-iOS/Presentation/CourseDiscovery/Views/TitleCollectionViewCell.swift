@@ -44,14 +44,16 @@ class TitleCollectionViewCell: UICollectionViewCell {
     
     private lazy var dateSort = UIButton(type: .custom).then {
         $0.setTitle("최신순", for: .normal)
-        $0.titleLabel?.font = .h5
-        $0.setTitleColor(.g2, for: .normal)
+        $0.titleLabel?.font = .b3
+        $0.setTitleColor(.m1, for: .normal)
+        $0.setTitleColor(.g2, for: .disabled)
     }
     
     private lazy var scrapSort = UIButton(type: .custom).then {
         $0.setTitle("스크랩순", for: .normal)
-        $0.titleLabel?.font = .h5
+        $0.titleLabel?.font = .b3
         $0.setTitleColor(.g2, for: .normal)
+        $0.setTitleColor(.m1, for: .disabled)
     }
     
     // MARK: - Life cycle
