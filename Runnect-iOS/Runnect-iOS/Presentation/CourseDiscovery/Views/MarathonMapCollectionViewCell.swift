@@ -1,5 +1,5 @@
 //
-//  RecommendedMapCollectionViewCell.swift
+//  MarathonMapCollectionViewCell.swift
 //  Runnect-iOS
 //
 //  Created by 이명진 on 11/18/23.
@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
-class RecommendedMapCollectionViewCell: UICollectionViewCell {
+class MarathonMapCollectionViewCell: UICollectionViewCell {
     private let PublicCourseProvider = Providers.publicCourseProvider
     
     private lazy var recommendedCollectionView: UICollectionView = {
@@ -42,7 +42,7 @@ class RecommendedMapCollectionViewCell: UICollectionViewCell {
     }
 }
 
-extension RecommendedMapCollectionViewCell {
+extension MarathonMapCollectionViewCell {
     
     private func setDelegate() {
         recommendedCollectionView.delegate = self
@@ -55,7 +55,7 @@ extension RecommendedMapCollectionViewCell {
 }
 // MARK: - Extensions
 
-extension RecommendedMapCollectionViewCell {
+extension MarathonMapCollectionViewCell {
     
     // MARK: - Layout Helpers
     
@@ -77,7 +77,7 @@ extension RecommendedMapCollectionViewCell {
 }
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
-extension RecommendedMapCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
+extension MarathonMapCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return courseList.count
     }
@@ -96,7 +96,7 @@ extension RecommendedMapCollectionViewCell: UICollectionViewDelegate, UICollecti
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension RecommendedMapCollectionViewCell: UICollectionViewDelegateFlowLayout {
+extension MarathonMapCollectionViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 156, height: 160)
     } // 셀사이즈 RecommendedCVC와  연결 되면 변경
@@ -119,10 +119,10 @@ extension RecommendedMapCollectionViewCell: UICollectionViewDelegateFlowLayout {
 
 // 원래 서버에서 1페이지만 가져온 데이터로 테스트
 
-extension RecommendedMapCollectionViewCell {
+extension MarathonMapCollectionViewCell {
     private func getCourseData() {
         LoadingIndicator.showLoading()
-        PublicCourseProvider.request(.getCourseData(pageNo: 1)) { response in
+        PublicCourseProvider.request(.getCourseData(pageNo: 1, sort: "date")) { response in
             LoadingIndicator.hideLoading()
             switch response {
             case .success(let result):

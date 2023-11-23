@@ -21,6 +21,7 @@ final class CourseDiscoveryVC: UIViewController {
     private var courseList = [PublicCourse]()
     private var specialList = [String]()
     private var pageNo = 1
+    private var sort = "date"
     private var isDataLoaded = false
     
     // MARK: - UIComponents
@@ -93,7 +94,7 @@ extension CourseDiscoveryVC {
         
         let cellTypes: [UICollectionViewCell.Type] = [AdImageCollectionViewCell.self,
                                                       MarathonTitleCollectionViewCell.self,
-                                                      RecommendedMapCollectionViewCell.self,
+                                                      MarathonMapCollectionViewCell.self,
                                                       TitleCollectionViewCell.self,
                                                       CourseListCVC.self]
         cellTypes.forEach { cellType in
@@ -240,10 +241,11 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MarathonTitleCollectionViewCell.className, for: indexPath) as? MarathonTitleCollectionViewCell else { return UICollectionViewCell() }
             return cell
         case Section.recommendedList:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecommendedMapCollectionViewCell.className, for: indexPath) as? RecommendedMapCollectionViewCell else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MarathonMapCollectionViewCell.className, for: indexPath) as? MarathonMapCollectionViewCell else { return UICollectionViewCell() }
             return cell
         case Section.title:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TitleCollectionViewCell.className, for: indexPath) as? TitleCollectionViewCell else { return UICollectionViewCell() }
+            cell.delegate = self
             return cell
         case Section.courseList:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath) as? CourseListCVC else { return UICollectionViewCell() }
@@ -348,7 +350,7 @@ extension CourseDiscoveryVC: CourseListCVCDeleagte {
 extension CourseDiscoveryVC {
     private func getCourseData() {
         LoadingIndicator.showLoading()
-        publicCourseProvider.request(.getCourseData(pageNo: pageNo)) { response in
+        publicCourseProvider.request(.getCourseData(pageNo: pageNo, sort: sort)) { response in
             LoadingIndicator.hideLoading()
             switch response {
             case .success(let result):
@@ -379,6 +381,7 @@ extension CourseDiscoveryVC {
         }
     }
     
+    
     private func scrapCourse(publicCourseId: Int, scrapTF: Bool) {
         LoadingIndicator.showLoading()
         scrapProvider.request(.createAndDeleteScrap(publicCourseId: publicCourseId, scrapTF: scrapTF)) { [weak self] response in
@@ -407,5 +410,14 @@ extension CourseDiscoveryVC {
 extension CourseDiscoveryVC: ListEmptyViewDelegate {
     func emptyViewButtonTapped() {
         self.tabBarController?.selectedIndex = 0
+    }
+}
+
+extension CourseDiscoveryVC: TitleCollectionViewCellDelegate {
+    func didTapSortButton(ordering: String) {
+        // 기존의 getCourseData 함수 호출을 getSortedCourseData로 변경
+        pageNo = 1
+        sort = ordering
+        getCourseData()
     }
 }

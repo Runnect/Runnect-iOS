@@ -9,14 +9,14 @@ import Foundation
 import Moya
 
 enum PublicCourseRouter {
-    case getCourseData(pageNo: Int)
+    case getCourseData(pageNo: Int, sort: String)
     case getCourseSearchData(keyword: String)
     case courseUploadingData(param: CourseUploadingRequestDto)
     case getUploadedCourseDetail(publicCourseId: Int)
     case getUploadedCourseInfo
     case updatePublicCourse(publicCourseId: Int, editCourseRequestDto: EditCourseRequestDto)
     case deleteUploadedCourse(publicCourseIdList: [Int])
-}     
+}
 
 extension PublicCourseRouter: TargetType {
     
@@ -59,8 +59,9 @@ extension PublicCourseRouter: TargetType {
     
     var task: Moya.Task {
         switch self {
-        case .getCourseData(let pageNo):
-            return .requestParameters(parameters: ["pageNo": pageNo], encoding: URLEncoding.default)
+        case .getCourseData(let pageNo, let sort):
+            var parameters: [String: Any] = ["pageNo": pageNo, "sort": sort]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
         case .getCourseSearchData(let keyword):
             return .requestParameters(parameters: ["keyword": keyword], encoding: URLEncoding.default)
         case .courseUploadingData(param: let param):
