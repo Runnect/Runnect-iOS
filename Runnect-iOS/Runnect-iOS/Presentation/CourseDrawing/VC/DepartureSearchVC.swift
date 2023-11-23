@@ -25,7 +25,6 @@ final class DepartureSearchVC: UIViewController, CLLocationManagerDelegate {
     
     private lazy var naviBar = CustomNavigationBar(self, type: .search)
         .setTextFieldPlaceholder(placeholder: "출발지를 설정해주세요")
-        .showKeyboard()
     
     private let dividerView = UIView().then {
         $0.backgroundColor = .g5
@@ -79,6 +78,12 @@ final class DepartureSearchVC: UIViewController, CLLocationManagerDelegate {
         self.setDelegate()
         self.registerCell()
         self.setBinding()
+        self.setAuthorization()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.naviBar.showKeyboard()
     }
 }
 
@@ -89,6 +94,7 @@ extension DepartureSearchVC {
         self.naviBar.delegate = self
         self.locationTableView.delegate = self
         self.locationTableView.dataSource = self
+        self.locationManager.delegate = self
     }
     
     private func registerCell() {
@@ -103,12 +109,14 @@ extension DepartureSearchVC {
     }
     
     private func setBinding() {
-        selectDirectionView.gesture().sink { _ in
+        selectDirectionView.gesture().sink { [weak self] _ in
+            guard let self = self else { return }
             SelectedInfo.shared.type = .other
             self.setLocation()
         }.store(in: cancelBag)
         
-        selectMapView.gesture().sink { _ in
+        selectMapView.gesture().sink { [weak self] _ in
+            guard let self = self else { return }
             SelectedInfo.shared.type = .map
             self.setLocation()
         }.store(in: cancelBag)
@@ -120,7 +128,6 @@ extension DepartureSearchVC {
 extension DepartureSearchVC {
     /// 현재 위도, 경도에 따른 주소 받아오는 함수
     private func setLocation() {
-        locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         
         DispatchQueue.global().async { [self] in
@@ -135,6 +142,71 @@ extension DepartureSearchVC {
                 locationManager.startUpdatingLocation()
             }
         }
+    }
+    
+    private func setAuthorization() {
+        let authorizationStatus: CLAuthorizationStatus
+        if #available(iOS 14.0, *) {
+            authorizationStatus = locationManager.authorizationStatus
+        }else {
+            authorizationStatus = CLLocationManager.authorizationStatus()
+        }
+        
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
+            if CLLocationManager.locationServicesEnabled() {
+                switch authorizationStatus {
+                case .notDetermined ,.restricted ,.denied:
+                    DispatchQueue.main.async {
+                        self.presentAlertVC()
+                    }
+                default:
+                    DispatchQueue.main.async {
+                        self.naviBar.showKeyboard()
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.presentServiceAlertVC()
+                }
+            }
+        }
+    }
+    
+    private func presentServiceAlertVC() {
+        let requestLocationServiceAlert = UIAlertController(title: "위치 정보 이용", message: "위치 서비스를 사용할 수 없습니다.\n디바이스의 '설정 > 개인정보 보호'에서\n위치 서비스를 먼저 켜주세요.", preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        }
+        requestLocationServiceAlert.addAction(cancel)
+        
+        present(requestLocationServiceAlert, animated: true)
+    }
+    
+    private func presentAlertVC() {
+        let alertVC = CustomAlertVC(type: .text)
+            .setTitle("위치 접근을 허용해야 사용할 수 있어요.\n[설정] - [애플리케이션] - [위치접근]을\n허용해 주세요.")
+            .setLeftButtonTitle(NSAttributedString(string: "아니오", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.m1]))
+            .setRightButtonTitle(NSAttributedString(string: "예", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.w1]))
+        alertVC.modalPresentationStyle = .overFullScreen
+        
+        alertVC.leftButtonTapped.sink { [weak self] _ in
+            guard let self = self else { return }
+            alertVC.dismiss(animated: false)
+            self.navigationController?.popViewController(animated: true)
+        }.store(in: cancelBag)
+
+        alertVC.rightButtonTapped.sink { [weak self] _ in
+            guard let self = self else { return }
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url)
+                alertVC.dismiss(animated: false)
+            }
+            self.navigationController?.popViewController(animated: true)
+            
+        }.store(in: cancelBag)
+
+        self.present(alertVC, animated: false)
     }
 }
 
