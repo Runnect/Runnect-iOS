@@ -290,7 +290,12 @@ extension CustomBottomSheetVC {
 // MARK: - @objc Function
 extension CustomBottomSheetVC {
     @objc private func keyboardWillShow(_ sender: Notification) {
-        self.view.frame.origin.y = -291
+        if let keyboardFrame: NSValue = sender.userInfo? [UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+          let keybaordRectangle = keyboardFrame.cgRectValue
+          let keyboardHeight = keybaordRectangle.height
+          
+          self.view.frame.origin.y -= (keyboardHeight - view.safeAreaInsets.bottom)
+        }
     }
     
     @objc private func keyboardWillHide(_ sender: Notification) {
