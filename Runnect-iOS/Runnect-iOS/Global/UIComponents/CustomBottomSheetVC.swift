@@ -80,12 +80,11 @@ final class CustomBottomSheetVC: UIViewController {
         self.setUI()
         self.setLayout(bottomSheetType)
         self.setDelegate()
-        self.setTapGesture()
-        self.setAddTarget()
         self.setBinding()
         if bottomSheetType == .textField {
             showBottomSheet()
             setupGestureRecognizer()
+            self.setAddTarget()
         }
     }
     
@@ -110,21 +109,6 @@ final class CustomBottomSheetVC: UIViewController {
     
     private func setDelegate() {
         bottomSheetTextField.delegate = self
-    }
-    
-    private func dismissBottomSheet() {
-        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
-            self.view.layoutIfNeeded()
-        }, completion: nil)
-    }
-    
-    private func setTapGesture() {
-        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleBackgroundTap))
-        backgroundView.addGestureRecognizer(tapGesture)
     }
     
     private func setAddTarget() {
@@ -249,31 +233,8 @@ extension CustomBottomSheetVC {
         }
         
         UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
-            self.backgroundView.alpha = 0.65
             self.view.layoutIfNeeded()
         }, completion: nil)
-    }
-    
-    private func hideBottomSheetAndGoBack() {
-        let safeAreaHeight = view.safeAreaLayoutGuide.layoutFrame.height
-        let bottomPadding = view.safeAreaInsets.bottom
-        
-        let topConst = (safeAreaHeight + bottomPadding)
-        
-        bottomSheetView.snp.remakeConstraints { make in
-            make.leading.bottom.trailing.equalToSuperview()
-            make.top.equalTo(view.snp.top).offset(topConst)
-            make.height.equalTo(bottomHeight)
-        }
-        
-        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
-            self.backgroundView.alpha = 0.0
-            self.view.layoutIfNeeded()
-        }) { _ in
-            if self.presentingViewController != nil {
-                self.dismiss(animated: false, completion: nil)
-            }
-        }
     }
     
     private func setupGestureRecognizer() {
@@ -281,9 +242,8 @@ extension CustomBottomSheetVC {
         backgroundView.addGestureRecognizer(dimmedTap)
         backgroundView.isUserInteractionEnabled = true
         
-        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(panGesture))
-        swipeGesture.direction = .down
-        view.addGestureRecognizer(swipeGesture)
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGesture(_:)))
+        view.addGestureRecognizer(panGesture)
     }
 }
 
@@ -325,17 +285,16 @@ extension CustomBottomSheetVC {
     }
     
     @objc private func dimmedViewTapped(_ tapRecognizer: UITapGestureRecognizer) {
-        hideBottomSheetAndGoBack()
+        let safeAreaHeight = view.safeAreaLayoutGuide.layoutFrame.height
     }
     
-    @objc func panGesture(_ recognizer: UISwipeGestureRecognizer) {
-        if recognizer.state == .ended {
-            switch recognizer.direction {
-            case .down:
-                hideBottomSheetAndGoBack()
-            default:
-                break
-            }
+    // 클래스 내에 저장할 변수 추가
+    
+    @objc func panGesture(_ recognizer: UIPanGestureRecognizer) {
+        
+        let translation = recognizer.translation(in: bottomSheetView)
+        default:
+            break
         }
     }
 }
