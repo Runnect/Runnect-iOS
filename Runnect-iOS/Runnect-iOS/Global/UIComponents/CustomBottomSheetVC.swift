@@ -231,12 +231,12 @@ extension CustomBottomSheetVC {
             make.top.equalTo(view.snp.top).offset(topConst)
             make.height.equalTo(bottomHeight)
         }
-        
+
         UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
-    
+
     private func setupGestureRecognizer() {
         let dimmedTap = UITapGestureRecognizer(target: self, action: #selector(dimmedViewTapped(_:)))
         backgroundView.addGestureRecognizer(dimmedTap)
@@ -289,16 +289,14 @@ extension CustomBottomSheetVC {
         }
         
         UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
-             self.view.layoutIfNeeded()
-         }, completion: { _ in
-             if self.presentingViewController != nil {
+            self.view.layoutIfNeeded()
+        }, completion: { _ in
+            if self.presentingViewController != nil {
                 self.dismiss(animated: false, completion: nil)
-             }
-         }) // 하나 이상의 클로저 인수를 전달할때, 후행 클로저 구문을 사용하면 안된다는 경고로 (_) 로 수정
+            }
+        }) // 하나 이상의 클로저 인수를 전달할때, 후행 클로저 구문을 사용하면 안된다는 경고로 (_) 로 수정
         
     }
-    
-    // 클래스 내에 저장할 변수 추가
     
     @objc func panGesture(_ recognizer: UIPanGestureRecognizer) {
         
@@ -306,28 +304,21 @@ extension CustomBottomSheetVC {
         let velocity = recognizer.velocity(in: bottomSheetView)
         
         switch recognizer.state {
-        case .began:
-            // 제스처 시작 지점의 좌표를 기록
-            let startPoint = recognizer.location(in: bottomSheetView)
-            print("startPoint = \(startPoint.y)")
         case .changed:
-            // 상하로 스와이프 할 때 위로 스와이프가 안되게 해주기 위해서 조건 설정
-            if velocity.y > 0 {
+            if velocity.y > 0 {             // 아래로만 Pan 가능한 로직
                 backgroundView.alpha = 0
                 UIView.animate(withDuration: 0.25, animations: {
                     self.view.transform = CGAffineTransform(translationX: 0, y: translation.y)
                 })
             }
         case .ended:
-            print("translation.y = \(translation.y)")
-            // 해당 뷰의 y값이 80보다 작으면(작게 이동 시) 뷰의 위치를 다시 원상복구하겠다. = 즉, 다시 y=0인 지점으로 리셋
+            // translation.y 값이 75보다 작으면(작게 이동 시) 뷰의 위치를 다시 원상복구하겠다. = 즉, 다시 y=0인 지점으로 리셋
             if translation.y < 75 {
                 UIView.animate(withDuration: 0.25, animations: {
                     self.view.transform = .identity
                 })
                 backgroundView.alpha = 0.65
-                // 뷰의 값이 75 이상이면 해당 화면 dismiss (MIU 내규에 따름)
-            } else {
+            } else { // translation.y 75 이상이면 해당 화면 dismiss 직접 사용해보니 적절한 값이 75라고 판단
                 self.backgroundView.alpha = 0
                 dismiss(animated: true, completion: nil)
             }
