@@ -18,7 +18,7 @@ enum SheetType {
 final class CustomBottomSheetVC: UIViewController {
     // MARK: - Properties
     private let backgroundView = UIView().then {
-        $0.backgroundColor = .g1.withAlphaComponent(0.65)
+        $0.backgroundColor = .clear
     }
     private let titleNameMaxLength = 20
     private var bottomSheetType: SheetType!

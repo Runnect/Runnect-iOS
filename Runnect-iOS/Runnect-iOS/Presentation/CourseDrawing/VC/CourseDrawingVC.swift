@@ -261,7 +261,8 @@ extension CourseDrawingVC {
             self.mapView.capturePathImage()
             self.dismiss(animated: true)
         }
-        self.present(bottomSheetVC, animated: false)
+        self.present(bottomSheetVC, animated: true)
+        // 일단 true로 설정 (background 색 관련하여 여기서 설정할지, 바텀시트에서 설정할지 생각)
     }
 }
 
