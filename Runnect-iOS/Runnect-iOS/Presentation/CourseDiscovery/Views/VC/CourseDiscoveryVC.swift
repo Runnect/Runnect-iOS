@@ -23,6 +23,7 @@ final class CourseDiscoveryVC: UIViewController {
     private var pageNo = 1
     private var sort = "date"
     private var isDataLoaded = false
+    private var totalPageNum = 0
     
     // MARK: - UIComponents
     
@@ -65,6 +66,7 @@ final class CourseDiscoveryVC: UIViewController {
         layout()
         setAddTarget()
         setCombineEvent()
+        getTotalPageNum()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -208,11 +210,11 @@ extension CourseDiscoveryVC {
 
 extension CourseDiscoveryVC {
     private enum Section {
-        static let adImage = 0
-        static let marathonTitle = 1
-        static let recommendedList = 2
-        static let title = 3
-        static let courseList = 4
+        static let adImage = 0 // 광고 이미지
+        static let marathonTitle = 1 // 마라톤 코스 설명
+        static let recommendedList = 2 // 마라톤 코스
+        static let title = 3 // 추천 코스 설명
+        static let courseList = 4 // 추천 코스
     }
     
     private enum Layout {
@@ -388,6 +390,34 @@ extension CourseDiscoveryVC {
                         // UI를 업데이트하여 추가된 데이터를 반영합니다.
                         self.mapCollectionView.reloadData()
                         
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if status >= 400 {
+                    print("400 error")
+                    self.showNetworkFailureToast()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.showNetworkFailureToast()
+            }
+        }
+    }
+    
+    private func getTotalPageNum() {
+        LoadingIndicator.showLoading()
+        publicCourseProvider.request(.getTotalPageCount) { response in
+            LoadingIndicator.hideLoading()
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    do {
+                        let responseDto = try result.map(BaseResponse<TotalPageCountDto>.self)
+                        guard let data = responseDto.data else { return }
+                        self.totalPageNum = data.totalPageCount
+                        print("추천코스의 코스의 수는 \(self.totalPageNum) 입니다. 🏃‍♀️\n")
                     } catch {
                         print(error.localizedDescription)
                     }
