@@ -16,6 +16,7 @@
 		712F661D2A7B7BAB00D9539B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712F661C2A7B7BAB00D9539B /* Config.swift */; };
 		7136BF8A2AF921A900679364 /* CustomBottomSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7136BF892AF921A900679364 /* CustomBottomSheetVC.swift */; };
 		71717B072B063E14004EA8DA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 71DBF23D2ABB255A0013415B /* GoogleService-Info.plist */; };
+		717916DA2B13613B009CEF97 /* MarathonListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717916D92B13613B009CEF97 /* MarathonListResponseDto.swift */; };
 		71F7804E2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F7804D2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift */; };
 		71F780502B0893D700B53253 /* MarathonMapCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F7804F2B0893D700B53253 /* MarathonMapCollectionViewCell.swift */; };
 		71F7BF072B0CDFE300B752B3 /* RecommendedListCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F7BF062B0CDFE300B752B3 /* RecommendedListCVC.swift */; };
@@ -180,6 +181,7 @@
 		7110A6032AA337DD009A7E99 /* Runnect-iOSDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Runnect-iOSDebug.entitlements"; sourceTree = "<group>"; };
 		712F661C2A7B7BAB00D9539B /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		7136BF892AF921A900679364 /* CustomBottomSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheetVC.swift; sourceTree = "<group>"; };
+		717916D92B13613B009CEF97 /* MarathonListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonListResponseDto.swift; sourceTree = "<group>"; };
 		71DBF23D2ABB255A0013415B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Runnect-iOS/Runnect-iOS/Runnect-iOS/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		71F7804D2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonTitleCollectionViewCell.swift; sourceTree = "<group>"; };
 		71F7804F2B0893D700B53253 /* MarathonMapCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonMapCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1215,6 +1217,7 @@
 		DAD5A3E0296D4C2A00C8166B /* ResponseDto */ = {
 			isa = PBXGroup;
 			children = (
+				717916D92B13613B009CEF97 /* MarathonListResponseDto.swift */,
 				DAD5A3E1296D4C6500C8166B /* PickedMapListResponseDto.swift */,
 			);
 			path = ResponseDto;
@@ -1486,6 +1489,7 @@
 				A3BC2F4129667A0D00198261 /* NicknameEditorVC.swift in Sources */,
 				CE0C23742966D62A00B45063 /* PagedView.swift in Sources */,
 				CE3A53C5296C6017003D518C /* KeychainManager.swift in Sources */,
+				717916DA2B13613B009CEF97 /* MarathonListResponseDto.swift in Sources */,
 				CEEC6B4B2961D89700D00E1E /* CustomNavigationBar.swift in Sources */,
 				CE09037D296E9ED900BEA710 /* ScrapCourseResponseDto.swift in Sources */,
 				CED791B32A2626AF001BFCFB /* ShadowView.swift in Sources */,
