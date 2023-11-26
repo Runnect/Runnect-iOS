@@ -6,7 +6,6 @@
 //
 
 import UIKit
-
 import Then
 import SnapKit
 import Combine
@@ -19,6 +18,7 @@ final class CourseDiscoveryVC: UIViewController {
     private let publicCourseProvider = Providers.publicCourseProvider
     private let scrapProvider = Providers.scrapProvider
     private var courseList = [PublicCourse]()
+    private var cancelBag = CancelBag()
     private var specialList = [String]()
     private var pageNo = 1
     private var sort = "date"
@@ -64,6 +64,7 @@ final class CourseDiscoveryVC: UIViewController {
         setDelegate()
         layout()
         setAddTarget()
+        setCombineEvent()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -114,6 +115,14 @@ extension CourseDiscoveryVC {
             getCourseData()
             isDataLoaded = true
         }
+    }
+    
+    private func setCombineEvent() {
+        CourseSelectionPublisher.shared.didSelectCourse
+            .sink { [weak self] indexPath in
+                self?.handleCourseSelection(at: indexPath)
+            }
+            .store(in: cancelBag)
     }
 }
 
@@ -320,13 +329,23 @@ extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == Section.recommendedList || indexPath.section == Section.courseList {
+        if indexPath.section == Section.courseList {
             let courseDetailVC = CourseDetailVC()
             let courseModel = courseList[indexPath.item]
             courseDetailVC.setCourseId(courseId: courseModel.courseId, publicCourseId: courseModel.id)
             courseDetailVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(courseDetailVC, animated: true)
         }
+    }
+    
+    private func handleCourseSelection(at indexPath: IndexPath) {
+        // 여기서 외부에서 Marathon Cell에서 받아오는 indexPath를 처리 합니다.
+        // 머지전 주석 삭제
+        let courseDetailVC = CourseDetailVC()
+        let courseModel = courseList[indexPath.item]
+        courseDetailVC.setCourseId(courseId: courseModel.courseId, publicCourseId: courseModel.id)
+        courseDetailVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(courseDetailVC, animated: true)
     }
 }
 
