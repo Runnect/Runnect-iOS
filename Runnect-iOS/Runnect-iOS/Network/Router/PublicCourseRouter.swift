@@ -12,6 +12,7 @@ enum PublicCourseRouter {
     case getCourseData(pageNo: Int, sort: String)
     case getCourseSearchData(keyword: String)
     case getMarathonCourseData
+    case getTotalPageCount
     case courseUploadingData(param: CourseUploadingRequestDto)
     case getUploadedCourseDetail(publicCourseId: Int)
     case getUploadedCourseInfo
@@ -36,6 +37,8 @@ extension PublicCourseRouter: TargetType {
             return "/public-course/marathon"
         case .getCourseSearchData:
             return "/public-course/search"
+        case .getTotalPageCount:
+            return "public-course/total-page-count"
         case .getUploadedCourseDetail(let publicCourseId):
             return "/public-course/detail/\(publicCourseId)"
         case .getUploadedCourseInfo:
@@ -49,7 +52,7 @@ extension PublicCourseRouter: TargetType {
     
     var method: Moya.Method {
         switch self {
-        case .getCourseData, .getCourseSearchData, .getMarathonCourseData, .getUploadedCourseDetail, .getUploadedCourseInfo:
+        case .getCourseData, .getCourseSearchData, .getMarathonCourseData, .getUploadedCourseDetail, .getUploadedCourseInfo, .getTotalPageCount:
             return .get
         case .courseUploadingData:
             return .post
@@ -79,7 +82,7 @@ extension PublicCourseRouter: TargetType {
                 fatalError("Encoding 실패")}
         case .deleteUploadedCourse(let publicCourseIdList):
             return .requestParameters(parameters: ["publicCourseIdList": publicCourseIdList], encoding: JSONEncoding.default)
-        case .getMarathonCourseData, .getUploadedCourseDetail, .getUploadedCourseInfo:
+        case .getMarathonCourseData, .getTotalPageCount, .getUploadedCourseDetail, .getUploadedCourseInfo:
             return .requestPlain
         }
     }
