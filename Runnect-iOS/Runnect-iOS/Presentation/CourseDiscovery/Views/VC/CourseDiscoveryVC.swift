@@ -54,7 +54,6 @@ final class CourseDiscoveryVC: UIViewController {
         return collectionView
     }()
     
-    
     // MARK: - View Life Cycle
     
     override func viewDidLoad () {
