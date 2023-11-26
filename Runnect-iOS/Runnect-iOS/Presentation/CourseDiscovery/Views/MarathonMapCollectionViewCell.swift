@@ -27,7 +27,7 @@ class MarathonMapCollectionViewCell: UICollectionViewCell {
     final let collectionViewInset = UIEdgeInsets(top: 0, left: 16, bottom: 34, right: 16)
     final let itemSpacing: CGFloat = 10
     final let lineSpacing: CGFloat = 10
-    private var courseList = [PublicCourse]()
+    private var courseList = [marathonCourse]()
     
     // MARK: - Life cycle
     override init(frame: CGRect) {
@@ -35,7 +35,7 @@ class MarathonMapCollectionViewCell: UICollectionViewCell {
         layout()
         register()
         setDelegate()
-        getCourseData()
+        getMarathonCourseData()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -69,7 +69,7 @@ extension MarathonMapCollectionViewCell {
         }
     }
     
-    func setData(courseList: [PublicCourse]) {
+    func setData(courseList: [marathonCourse]) {
         self.courseList = courseList
         recommendedCollectionView.reloadData()
     }
@@ -117,27 +117,19 @@ extension MarathonMapCollectionViewCell: UICollectionViewDelegateFlowLayout {
     
 }
 
-// 원래 서버에서 1페이지만 가져온 데이터로 테스트
-
 extension MarathonMapCollectionViewCell {
-    private func getCourseData() {
+    private func getMarathonCourseData() {
         LoadingIndicator.showLoading()
-        PublicCourseProvider.request(.getCourseData(pageNo: 1, sort: "date")) { response in
+        PublicCourseProvider.request(.getMarathonCourseData) { response in
             LoadingIndicator.hideLoading()
             switch response {
             case .success(let result):
                 let status = result.statusCode
                 if 200..<300 ~= status {
                     do {
-                        let responseDto = try result.map(BaseResponse<PickedMapListResponseDto>.self)
+                        let responseDto = try result.map(BaseResponse<MarathonListResponseDto>.self)
                         guard let data = responseDto.data else { return }
-                        
-                        // 새로 받은 데이터를 기존 리스트에 추가 (쌓기 위함)
-                        self.courseList.append(contentsOf: data.publicCourses)
-                        
-                        // UI를 업데이트하여 추가된 데이터를 반영합니다.
-                        self.setData(courseList: self.courseList)
-                        
+                        self.setData(courseList: data.marathonPublicCourses)
                     } catch {
                         print(error.localizedDescription)
                     }
@@ -150,5 +142,4 @@ extension MarathonMapCollectionViewCell {
             }
         }
     }
-    
 }
