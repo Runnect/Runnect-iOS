@@ -63,7 +63,6 @@ class TitleCollectionViewCell: UICollectionViewCell {
 }
 
 
-
 // MARK: - Method
 
 extension TitleCollectionViewCell {
