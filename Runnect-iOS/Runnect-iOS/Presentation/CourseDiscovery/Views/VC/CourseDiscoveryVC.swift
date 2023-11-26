@@ -256,13 +256,7 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
             cell.delegate = self
             return cell
         case Section.courseList:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath) as? CourseListCVC else { return UICollectionViewCell() }
-            cell.setCellType(type: .all)
-            cell.delegate = self
-            let model = self.courseList[indexPath.item]
-            let location = "\(model.departure.region) \(model.departure.city)"
-            cell.setData(imageURL: model.image, title: model.title, location: location, didLike: model.scrap, indexPath: indexPath.item)
-            return cell
+            return courseListCell(collectionView: collectionView, indexPath: indexPath)
         default:
             return UICollectionViewCell()
         }
@@ -287,6 +281,16 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
             // 여기에서 다음 페이지 데이터를 불러오는 함수를 호출하세요.
             getCourseData()
         }
+    }
+    
+    private func courseListCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath) as? CourseListCVC else { return UICollectionViewCell() }
+        cell.setCellType(type: .all)
+        cell.delegate = self
+        let model = self.courseList[indexPath.item]
+        let location = "\(model.departure.region) \(model.departure.city)"
+        cell.setData(imageURL: model.image, title: model.title, location: location, didLike: model.scrap, indexPath: indexPath.item)
+        return cell
     }
     
 }
@@ -398,7 +402,6 @@ extension CourseDiscoveryVC {
             }
         }
     }
-    
     
     private func scrapCourse(publicCourseId: Int, scrapTF: Bool) {
         LoadingIndicator.showLoading()
