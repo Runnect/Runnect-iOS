@@ -17,19 +17,19 @@ enum SheetType {
 
 final class CustomBottomSheetVC: UIViewController {
     // MARK: - Properties
-    private let backgroundView = UIView().then {
-        $0.backgroundColor = .clear
-    }
-    private let titleNameMaxLength = 20
-    private var bottomSheetType: SheetType!
+    
     var backgroundTapAction: (() -> Void)?
     var completeButtonTapAction: ((String) -> Void)?
     
-    // 바텀 시트 높이
-    let bottomHeight: CGFloat = 206
+    private let titleNameMaxLength = 20
+    private let bottomHeight: CGFloat = 206
+    private let backgroundView = UIView().then { $0.backgroundColor = .g1.withAlphaComponent(0.65) }
+    
     private var cancelBag = CancelBag()
+    private var bottomSheetType: SheetType!
     
     // MARK: - UI Components
+    
     private let bottomSheetView = UIView().then {
         $0.backgroundColor = .w1
         $0.layer.cornerRadius = 20
@@ -65,6 +65,7 @@ final class CustomBottomSheetVC: UIViewController {
     }
     
     // MARK: - Initialization
+    
     init(type: SheetType) {
         super.init(nibName: nil, bundle: nil)
         self.bottomSheetType = type
@@ -75,20 +76,22 @@ final class CustomBottomSheetVC: UIViewController {
     }
     
     // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUI()
         self.setLayout(bottomSheetType)
         self.setDelegate()
         self.setBinding()
+        self.showBottomSheet()
         if bottomSheetType == .textField {
-            showBottomSheet()
-            setupGestureRecognizer()
+            self.setGesture()
             self.setAddTarget()
         }
     }
     
     // MARK: - Methods
+    
     @discardableResult
     func setContentsText(text: String) -> Self {
         contentsLabel.text = text
@@ -128,6 +131,7 @@ final class CustomBottomSheetVC: UIViewController {
 }
 
 // MARK: - UI & Layout
+
 extension CustomBottomSheetVC {
     private func setUI() {
         view.addSubview(backgroundView)
@@ -228,13 +232,13 @@ extension CustomBottomSheetVC {
             make.leading.bottom.trailing.equalToSuperview()
             make.top.equalTo(view.snp.top).offset(topConst)
         }
-
+        
         UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
-
-    private func setupGestureRecognizer() {
+    
+    private func setGesture() {
         let dimmedTap = UITapGestureRecognizer(target: self, action: #selector(dimmedViewTapped(_:)))
         backgroundView.addGestureRecognizer(dimmedTap)
         backgroundView.isUserInteractionEnabled = true
@@ -245,18 +249,22 @@ extension CustomBottomSheetVC {
 }
 
 // MARK: - @objc Function
+
 extension CustomBottomSheetVC {
-    @objc private func keyboardWillShow(_ sender: Notification) {
-        if let keyboardFrame: NSValue = sender.userInfo? [UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keybaordRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keybaordRectangle.height
-            
-            self.view.frame.origin.y -= (keyboardHeight - view.safeAreaInsets.bottom)
+    @objc private func keyboardWillShow(_ sender: Notification) {         // 키보드의 높이만큼 화면을 올려줍니다.
+        if let keyboardFrame: NSValue = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            self.view.frame.origin.y -= keyboardHeight
         }
     }
     
-    @objc private func keyboardWillHide(_ sender: Notification) {
-        self.view.frame.origin.y = 0
+    @objc private func keyboardWillHide(_ sender: Notification) {         // 키보드의 높이만큼 화면을 내려줍니다.
+        if let keyboardFrame: NSValue = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            self.view.frame.origin.y += keyboardHeight
+        }
     }
     
     @objc private func textFieldTextDidChange() {
@@ -285,12 +293,13 @@ extension CustomBottomSheetVC {
         }
         
         UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
+            self.backgroundView.alpha = 0
             self.view.layoutIfNeeded()
         }, completion: { _ in
             if self.presentingViewController != nil {
-                self.dismiss(animated: false, completion: nil)
+                self.dismiss(animated: true, completion: nil)
             }
-        }) // 하나 이상의 클로저 인수를 전달할때, 후행 클로저 구문을 사용하면 안된다는 경고로 (_) 로 수정
+        }) // 하나 이상의 클로저 인수를 전달할때, 후행 클로저 구문을 사용하면 안된다는 경고로 일부 수정
         
     }
     
@@ -300,6 +309,8 @@ extension CustomBottomSheetVC {
         let velocity = recognizer.velocity(in: bottomSheetView)
         
         switch recognizer.state {
+        case .began:
+            backgroundView.alpha = 0 // 시작할때 드래그 시작할때 alpha 값 0
         case .changed:
             if velocity.y > 0 {             // 아래로만 Pan 가능한 로직
                 backgroundView.alpha = 0
@@ -310,10 +321,10 @@ extension CustomBottomSheetVC {
         case .ended:
             // translation.y 값이 75보다 작으면(작게 이동 시) 뷰의 위치를 다시 원상복구하겠다. = 즉, 다시 y=0인 지점으로 리셋
             if translation.y < 75 {
+                backgroundView.alpha = 0.65
                 UIView.animate(withDuration: 0.25, animations: {
                     self.view.transform = .identity
                 })
-                backgroundView.alpha = 0.65
             } else { // translation.y 75 이상이면 해당 화면 dismiss 직접 사용해보니 적절한 값이 75라고 판단
                 self.backgroundView.alpha = 0
                 dismiss(animated: true, completion: nil)
@@ -325,6 +336,7 @@ extension CustomBottomSheetVC {
 }
 
 // MARK: - UITextFieldDelegate
+
 extension CustomBottomSheetVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
