@@ -7,15 +7,15 @@
 
 import Foundation
 
-// MARK: - DataClass
+// MARK: - UserProfileDto
 struct UserProfileDto {
     let user: UserInfo
-    let courses: [CourseInfo]
+    let courses: [UserCourseInfo]
 }
 
-// MARK: - Course
-struct CourseInfo {
-    let publicCourseID, courseID: Int
+// MARK: - UserCourseInfo
+struct UserCourseInfo {
+    let publicCourseId, courseId: Int
     let title: String
     let image: String
     let departure: Departure
@@ -29,7 +29,7 @@ struct Departure {
     let name: String
 }
 
-// MARK: - User
+// MARK: - UserInfo
 struct UserInfo {
     let nickname, latestStamp: String
     let level, levelPercent: Int
