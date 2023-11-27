@@ -303,7 +303,7 @@ extension CustomBottomSheetVC {
         
     }
     
-    @objc func panGesture(_ recognizer: UIPanGestureRecognizer) {
+    @objc private func panGesture(_ recognizer: UIPanGestureRecognizer) {
         
         let translation = recognizer.translation(in: bottomSheetView)
         let velocity = recognizer.velocity(in: bottomSheetView)
