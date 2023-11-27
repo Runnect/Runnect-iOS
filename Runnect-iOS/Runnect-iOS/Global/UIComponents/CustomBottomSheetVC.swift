@@ -183,7 +183,6 @@ extension CustomBottomSheetVC {
         bottomSheetView.snp.makeConstraints { make in
             make.leading.bottom.trailing.equalToSuperview()
             make.top.equalTo(view.snp.top).offset(topConst)
-            make.height.equalTo(bottomHeight)
         }
         
         dismissIndicatorView.snp.makeConstraints { make in
@@ -199,7 +198,6 @@ extension CustomBottomSheetVC {
         }
         
         bottomSheetTextField.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
             make.top.equalTo(contentsLabel.snp.bottom).offset(19)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(44)
@@ -229,7 +227,6 @@ extension CustomBottomSheetVC {
         bottomSheetView.snp.remakeConstraints { make in
             make.leading.bottom.trailing.equalToSuperview()
             make.top.equalTo(view.snp.top).offset(topConst)
-            make.height.equalTo(bottomHeight)
         }
 
         UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
@@ -285,7 +282,6 @@ extension CustomBottomSheetVC {
         bottomSheetView.snp.remakeConstraints { make in
             make.leading.bottom.trailing.equalToSuperview()
             make.top.equalTo(view.snp.top).offset(topConst)
-            make.height.equalTo(bottomHeight)
         }
         
         UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
