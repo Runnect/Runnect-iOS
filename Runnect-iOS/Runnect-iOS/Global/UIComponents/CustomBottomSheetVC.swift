@@ -244,7 +244,7 @@ extension CustomBottomSheetVC {
         backgroundView.isUserInteractionEnabled = true
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGesture(_:)))
-        view.addGestureRecognizer(panGesture)
+        bottomSheetView.addGestureRecognizer(panGesture)
     }
 }
 
@@ -311,21 +311,29 @@ extension CustomBottomSheetVC {
         switch recognizer.state {
         case .began:
             backgroundView.alpha = 0 // 시작할때 드래그 시작할때 alpha 값 0
+            recognizer.setTranslation(CGPoint.zero, in: bottomSheetView)
         case .changed:
-            if velocity.y > 0 {             // 아래로만 Pan 가능한 로직
+            if velocity.y > 0 && translation.y > 0 {   // 아래로만 Pan 가능한 로직 , 여기서 translation.y > 0 이거 추가 안해주면 재밌게 에니메이션이 움직인다..
                 backgroundView.alpha = 0
+                UIView.animate(withDuration: 0.25, animations: {
+                    self.view.transform = CGAffineTransform(translationX: 0, y: translation.y)
+                })
+            } else if velocity.y < 0 && translation.y > 0 {
+                // 위로도 움직이게는 하지만, 한계설정을 바텀시트의 높이로 설정, 즉 위쪽으로 하나도 못 움직이게 설정 ( translation.y > 0 ) 한계점 설정
                 UIView.animate(withDuration: 0.25, animations: {
                     self.view.transform = CGAffineTransform(translationX: 0, y: translation.y)
                 })
             }
         case .ended:
-            // translation.y 값이 75보다 작으면(작게 이동 시) 뷰의 위치를 다시 원상복구하겠다. = 즉, 다시 y=0인 지점으로 리셋
+            // 끝나는 지점의 translation.y 값이 75보다 작으면(작게 이동 시) 뷰의 위치를 다시 원상복구하겠다. = 즉, 다시 y=0인 지점으로 리셋
             if translation.y < 75 {
-                backgroundView.alpha = 0.65
                 UIView.animate(withDuration: 0.25, animations: {
                     self.view.transform = .identity
+                }, completion: { _ in
+                    // 애니메이션이 끝나면 실행될 코드
                     self.backgroundView.alpha = 0.6
                 })
+                recognizer.setTranslation(CGPoint.zero, in: bottomSheetView)
             } else { // translation.y 75 이상이면 해당 화면 dismiss 직접 사용해보니 적절한 값이 75라고 판단
                 self.backgroundView.alpha = 0
                 dismiss(animated: true, completion: nil)
