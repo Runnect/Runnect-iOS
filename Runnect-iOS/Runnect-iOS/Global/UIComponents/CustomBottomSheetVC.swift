@@ -23,7 +23,7 @@ final class CustomBottomSheetVC: UIViewController {
     
     private let titleNameMaxLength = 20
     private let bottomHeight: CGFloat = 206
-    private let backgroundView = UIView().then { $0.backgroundColor = .g1.withAlphaComponent(0.65) }
+    private let backgroundView = UIView().then { $0.backgroundColor = .g1.withAlphaComponent(0.6) }
     
     private var cancelBag = CancelBag()
     private var bottomSheetType: SheetType!
@@ -324,6 +324,7 @@ extension CustomBottomSheetVC {
                 backgroundView.alpha = 0.65
                 UIView.animate(withDuration: 0.25, animations: {
                     self.view.transform = .identity
+                    self.backgroundView.alpha = 0.6
                 })
             } else { // translation.y 75 이상이면 해당 화면 dismiss 직접 사용해보니 적절한 값이 75라고 판단
                 self.backgroundView.alpha = 0
