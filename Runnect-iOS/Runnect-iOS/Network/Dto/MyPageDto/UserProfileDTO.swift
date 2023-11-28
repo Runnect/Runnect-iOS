@@ -13,6 +13,12 @@ struct UserProfileDto {
     let courses: [UserCourseInfo]
 }
 
+// MARK: - UserInfo
+struct UserInfo {
+    let nickname, latestStamp: String
+    let level, levelPercent: Int
+}
+
 // MARK: - UserCourseInfo
 struct UserCourseInfo {
     let publicCourseId, courseId: Int
@@ -27,10 +33,4 @@ struct Departure {
     let region, city, town: String
     let detail: String?
     let name: String
-}
-
-// MARK: - UserInfo
-struct UserInfo {
-    let nickname, latestStamp: String
-    let level, levelPercent: Int
 }

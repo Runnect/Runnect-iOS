@@ -18,8 +18,8 @@ final class UserProfileVC: UIViewController {
     private var userProvider = Providers.userProvider
     private var uploadedCourseProvider = Providers.publicCourseProvider
     let stampNameImageDictionary: [String: UIImage] = GoalRewardInfoModel.stampNameImageDictionary
-    
-    private var uploadedCourseList = [PublicCourse]()
+    private var uploadedCourseList = [UserCourseInfo]()
+    private var userId: Int?
     
     // MARK: - UI Components
     
@@ -115,6 +115,11 @@ extension UserProfileVC {
         return containerView
     }
     
+//    private func setCourseId(courseId: Int?, publicCourseId: Int?) {
+//        self.courseId = courseId
+//        self.publicCourseId = publicCourseId
+//    }
+    
     private func setData(model: MyPageDto) {
         self.myProfileNameLabel.text = model.user.nickname
         self.myRunningProgressBar.setProgress(Float(model.user.levelPercent)/100, animated: false)
@@ -124,7 +129,7 @@ extension UserProfileVC {
 
     }
     
-    private func setCourseData(courseList: [PublicCourse]) {
+    private func setCourseData(courseList: [UserCourseInfo]) {
         self.uploadedCourseList = courseList
         self.UploadedCourseInfoCollectionView.reloadData()
     }
@@ -250,8 +255,9 @@ extension UserProfileVC: NicknameEditorVCDelegate {
 
 extension UserProfileVC {
     func getMyPageInfo() {
+        guard let userId = self.userId else { return }
         LoadingIndicator.showLoading()
-        userProvider.request(.getMyPageInfo) { [weak self] response in
+        userProvider.request(.getUserProfileInfo(userId: userId)) { [weak self] response in
             LoadingIndicator.hideLoading()
             guard let self = self else { return }
             switch response {
