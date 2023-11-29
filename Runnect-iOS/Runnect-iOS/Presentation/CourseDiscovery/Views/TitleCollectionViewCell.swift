@@ -62,7 +62,6 @@ class TitleCollectionViewCell: UICollectionViewCell {
     }
 }
 
-
 // MARK: - Method
 
 extension TitleCollectionViewCell {
@@ -74,7 +73,6 @@ extension TitleCollectionViewCell {
                 $0.setTitleColor(.m1, for: .normal)
                 $0.setTitleColor(.g2, for: .disabled)
             }
-            button.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
             button.tapPublisher
                 .sink { [weak self] in
                     guard let self = self else { return }
@@ -82,13 +80,6 @@ extension TitleCollectionViewCell {
                 }
                 .store(in: &cancellables)
             return button
-        }
-    
-    @objc private func sortButtonTapped(sender: UIButton) {
-        guard let ordering = sender == dateSortButton ? "date" : "scrap" else {
-            return
-        }
-        delegate?.didTapSortButton(ordering: ordering)
     }
 }
 
