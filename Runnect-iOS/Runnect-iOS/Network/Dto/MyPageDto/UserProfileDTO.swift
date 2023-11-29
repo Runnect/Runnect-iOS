@@ -8,19 +8,19 @@
 import Foundation
 
 // MARK: - UserProfileDto
-struct UserProfileDto {
+struct UserProfileDto: Codable {
     let user: UserInfo
     let courses: [UserCourseInfo]
 }
 
 // MARK: - UserInfo
-struct UserInfo {
+struct UserInfo: Codable {
     let nickname, latestStamp: String
     let level, levelPercent: Int
 }
 
 // MARK: - UserCourseInfo
-struct UserCourseInfo {
+struct UserCourseInfo: Codable {
     let publicCourseId, courseId: Int
     let title: String
     let image: String
@@ -29,7 +29,7 @@ struct UserCourseInfo {
 }
 
 // MARK: - Departure
-struct Departure {
+struct Departure: Codable {
     let region, city, town: String
     let detail: String?
     let name: String
