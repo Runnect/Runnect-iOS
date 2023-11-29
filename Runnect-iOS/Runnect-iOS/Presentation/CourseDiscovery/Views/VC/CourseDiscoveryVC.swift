@@ -18,6 +18,7 @@ final class CourseDiscoveryVC: UIViewController {
     private let publicCourseProvider = Providers.publicCourseProvider
     private let scrapProvider = Providers.scrapProvider
     private let serverResponseNumber = 24
+    
     private var courseList = [PublicCourse]()
     private var cancelBag = CancelBag()
     private var specialList = [String]()
@@ -43,6 +44,9 @@ final class CourseDiscoveryVC: UIViewController {
     
     private let emptyView = ListEmptyView(description: "공유할 수 있는 코스가 없어요!\n코스를 그려주세요",
                                           buttonTitle: "코스 그리기")
+    private let refreshControl =  UIRefreshControl()
+    // refreshControl 사용시 사용
+    // 마지막 머지에 사용안하면 삭제
     
     // MARK: - collectionview
     
@@ -67,13 +71,15 @@ final class CourseDiscoveryVC: UIViewController {
         layout()
         setAddTarget()
         setCombineEvent()
-        getTotalPageNum()
+        //        getTotalPageNum()
+        self.getCourseData()
+        self.totalPageNum = 5 // test 코드
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.hideTabBar(wantsToHide: false)
-        setDataLoadIfNeeded()
+        // 여기에 기존 데이터 한번에 불러오는 코스 작성 page 순서만 asyc로 작업
     }
 }
 
@@ -110,15 +116,15 @@ extension CourseDiscoveryVC {
         self.uploadButton.addTarget(self, action: #selector(pushToDiscoveryVC), for: .touchUpInside)
     }
     
-    private func setDataLoadIfNeeded() { /// 데이터를 받고 다른 뷰를 갔다가 와도 데이터가 유지되게끔 하기 위한 함수 입니다. (한번만 호출되면 되는 함수!)
-        if !isDataLoaded {
-            courseList.removeAll()
-            pageNo = 1
-            mapCollectionView.reloadData()
-            getCourseData()
-            isDataLoaded = true
-        }
-    }
+    //    private func setDataLoadIfNeeded() { /// 데이터를 받고 다른 뷰를 갔다가 와도 데이터가 유지되게끔 하기 위한 함수 입니다. (한번만 호출되면 되는 함수!)
+    //        if !isDataLoaded {
+    //            courseList.removeAll()
+    //            pageNo = 1
+    //            mapCollectionView.reloadData()
+    //            getCourseData()
+    //            isDataLoaded = true
+    //        }
+    //    }
     
     private func setCombineEvent() {
         CourseSelectionPublisher.shared.didSelectCourse
@@ -266,23 +272,26 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let contentOffsetY = scrollView.contentOffset.y
-        let collectionViewHeight = mapCollectionView.contentSize.height
-        let paginationY = collectionViewHeight * 0.2
+        let contentOffsetY = mapCollectionView.contentOffset.y // 우리가 보는 화면
+        let collectionViewHeight = mapCollectionView.contentSize.height // 전체 사이즈
+        let paginationY = mapCollectionView.bounds.size.height // 유저 화면의 가장 아래 y축 이라고 생각
         
-        // 스크롤이 80% (0.2)  까지 도달하면 다음 페이지 데이터를 불러옵니다.
-        if contentOffsetY >= collectionViewHeight - paginationY {
-            if courseList.count < pageNo * 24 { // 페이지 끝에 도달하면 현재 페이지에 더 이상 데이터가 없음을 의미합니다.
+        if contentOffsetY > collectionViewHeight - paginationY {
+            if courseList.count < pageNo * serverResponseNumber {
+                // 페이지 끝에 도달하면 현재 페이지에 더 이상 데이터가 없음을 의미
+                // 새로온 데이터의 갯수가 원래 서버에서 응답에서 온 갯수보다 작으면 페이지네이션 금지
                 // 페이지네이션 중단 코드
                 return
             }
-            
-            // 다음 페이지 번호를 증가시킵니다.
-            pageNo += 1
-            print("🔥다음 페이지 로드: \(pageNo)🔥")
-            
-            // 여기에서 다음 페이지 데이터를 불러오는 함수를 호출하세요.
-            getCourseData()
+            print("🫠\(pageNo)")
+            if pageNo < totalPageNum {
+                if !isDataLoaded {
+                    isDataLoaded = true
+                    getCourseData()
+                    pageNo += 1
+                    isDataLoaded = false
+                }
+            }
         }
     }
     
@@ -374,34 +383,37 @@ extension CourseDiscoveryVC: CourseListCVCDeleagte {
 
 extension CourseDiscoveryVC {
     private func getCourseData() {
-        LoadingIndicator.showLoading()
-        publicCourseProvider.request(.getCourseData(pageNo: pageNo, sort: sort)) { response in
-            LoadingIndicator.hideLoading()
-            switch response {
-            case .success(let result):
-                let status = result.statusCode
-                if 200..<300 ~= status {
-                    do {
-                        let responseDto = try result.map(BaseResponse<PickedMapListResponseDto>.self)
-                        guard let data = responseDto.data else { return }
-                        
-                        // 새로 받은 데이터를 기존 리스트에 추가 (쌓기 위함)
-                        self.courseList.append(contentsOf: data.publicCourses)
-                        
-                        // UI를 업데이트하여 추가된 데이터를 반영합니다.
-                        self.mapCollectionView.reloadData()
-                        
-                    } catch {
-                        print(error.localizedDescription)
+        LoadingIndicator.showLoading() // 항상 0.7초 늦게 로딩이 되어 버림 0.7초를 넣은 이유는 pagination을 구현할때 한번에 다 받아오지 않게 하기 위함
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [self] in
+            publicCourseProvider.request(.getCourseData(pageNo: pageNo, sort: sort)) { response in
+                LoadingIndicator.hideLoading()
+                print("‼️ 이번 sort 는 요?? \(self.sort) ‼️\n")
+                switch response {
+                case .success(let result):
+                    let status = result.statusCode
+                    
+                    if 200..<300 ~= status {
+                        do {
+                            let responseDto = try result.map(BaseResponse<PickedMapListResponseDto>.self)
+                            guard let data = responseDto.data else { return }
+                            
+                            self.courseList.append(contentsOf: data.publicCourses)
+                            self.mapCollectionView.reloadData()
+                            
+                        } catch {
+                            print(error.localizedDescription)
+                        }
                     }
-                }
-                if status >= 400 {
-                    print("400 error")
+                    
+                    if status >= 400 {
+                        print("400 error")
+                        self.showNetworkFailureToast()
+                    }
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
                     self.showNetworkFailureToast()
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                self.showNetworkFailureToast()
             }
         }
     }
@@ -469,7 +481,9 @@ extension CourseDiscoveryVC: TitleCollectionViewCellDelegate {
     func didTapSortButton(ordering: String) {
         // 기존의 getCourseData 함수 호출을 getSortedCourseData로 변경
         pageNo = 1
+        print("‼️\(ordering)‼️ 터치 하셨습니다. 0.7초 후에 ‼️\(ordering)‼️ 으로 정렬이 되는 데이터가 불러 옵니다.")
         sort = ordering
+        self.courseList.removeAll()
         getCourseData()
     }
 }
