@@ -120,7 +120,7 @@ extension UserProfileVC {
 //        self.publicCourseId = publicCourseId
 //    }
     
-    private func setData(model: MyPageDto) {
+    private func setData(model: UserProfileDto) {
         self.myProfileNameLabel.text = model.user.nickname
         self.myRunningProgressBar.setProgress(Float(model.user.levelPercent)/100, animated: false)
         setMyRunningLevelLabel(label: myRunningLevelLabel, model: model)
@@ -134,19 +134,19 @@ extension UserProfileVC {
         self.UploadedCourseInfoCollectionView.reloadData()
     }
     
-    private func setMyRunningLevelLabel(label: UILabel, model: MyPageDto) {
+    private func setMyRunningLevelLabel(label: UILabel, model: UserProfileDto) {
         let attributedString = NSMutableAttributedString(string: "LV ", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1])
         attributedString.append(NSAttributedString(string: String(model.user.level), attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1]))
         label.attributedText = attributedString
     }
     
-    private func setMyRunningProgressPercentLabel(label: UILabel, model: MyPageDto) {
+    private func setMyRunningProgressPercentLabel(label: UILabel, model: UserProfileDto) {
         let attributedString = NSMutableAttributedString(string: String(model.user.levelPercent), attributes: [.font: UIFont.b5, .foregroundColor: UIColor.g1])
         attributedString.append(NSAttributedString(string: " /100", attributes: [.font: UIFont.b5, .foregroundColor: UIColor.g2]))
         label.attributedText = attributedString
     }
     
-    private func setMyProfileImage(model: MyPageDto) {
+    private func setMyProfileImage(model: UserProfileDto) {
         guard let profileImage = stampNameImageDictionary[model.user.latestStamp] else { return }
         myProfileImage.image = profileImage
     }
@@ -265,7 +265,7 @@ extension UserProfileVC {
                 let status = result.statusCode
                 if 200..<300 ~= status {
                     do {
-                        let responseDto = try result.map(BaseResponse<MyPageDto>.self)
+                        let responseDto = try result.map(BaseResponse<UserProfileDto>.self)
                         guard let data = responseDto.data else { return }
                         self.setData(model: data)
                     } catch {
