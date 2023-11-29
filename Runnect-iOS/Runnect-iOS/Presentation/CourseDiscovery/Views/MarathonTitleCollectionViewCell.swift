@@ -17,20 +17,17 @@ class MarathonTitleCollectionViewCell: UICollectionViewCell {
         $0.alignment = .leading
     }
     
-    private let mainLabel: UILabel = {
-        let label = UILabel()
-        label.text = "2023 마라톤 코스"
-        label.font =  UIFont.h3
-        label.textColor = UIColor.g1
-        return label
-    }()
-    private let subLabel: UILabel = {
-        let label = UILabel()
-        label.text = "실제 마라톤 코스를 만나보세요"
-        label.font =  UIFont.b6
-        label.textColor = UIColor.g2
-        return label
-    }()
+    private let mainLabel: UILabel = UILabel().then {
+        $0.text = "2023 마라톤 코스"
+        $0.font = UIFont.h3
+        $0.textColor = UIColor.g1
+    }
+
+    private let subLabel: UILabel = UILabel().then {
+        $0.text = "실제 마라톤 코스를 만나보세요"
+        $0.font = UIFont.b6
+        $0.textColor = UIColor.g2
+    }
     
     // MARK: - Life cycle
     

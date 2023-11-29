@@ -29,23 +29,17 @@ class TitleCollectionViewCell: UICollectionViewCell {
         $0.backgroundColor = .g4
     }
     
-    private let mainLabel: UILabel = {
-        let label = UILabel().then {
-            $0.text = "이런 코스 어때요?"
-            $0.font = UIFont.h3
-            $0.textColor = UIColor.g1
-        }
-        return label
-    }()
-    
-    private let subLabel: UILabel = {
-        let label = UILabel().then {
-            $0.text = "나에게 최적화된 코스를 찾아보세요"
-            $0.font = UIFont.b6
-            $0.textColor = UIColor.g2
-        }
-        return label
-    }()
+    private let mainLabel: UILabel = UILabel().then {
+        $0.text = "이런 코스 어때요?"
+        $0.font = UIFont.h3
+        $0.textColor = UIColor.g1
+    }
+
+    private let subLabel: UILabel = UILabel().then {
+        $0.text = "나에게 최적화된 코스를 찾아보세요"
+        $0.font = UIFont.b6
+        $0.textColor = UIColor.g2
+    }
     
     private lazy var dateSortButton = createSortButton(title: "최신순", ordering: "date")
     private lazy var scrapSortButton = createSortButton(title: "스크랩순", ordering: "scrap")

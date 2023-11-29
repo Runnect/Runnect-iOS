@@ -430,7 +430,7 @@ extension CourseDiscoveryVC {
                         let responseDto = try result.map(BaseResponse<TotalPageCountDto>.self)
                         guard let data = responseDto.data else { return }
                         self.totalPageNum = data.totalPageCount
-                        print("추천코스의 코스의 수는 \(self.totalPageNum) 입니다. 🏃‍♀️\n")
+                        print("추천 코스의 코스의 수는 \(self.totalPageNum) 입니다. 🏃‍♀️\n")
                     } catch {
                         print(error.localizedDescription)
                     }
