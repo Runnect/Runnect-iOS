@@ -17,6 +17,7 @@ final class CourseDiscoveryVC: UIViewController {
     
     private let publicCourseProvider = Providers.publicCourseProvider
     private let scrapProvider = Providers.scrapProvider
+    private let serverResponseNumber = 24
     private var courseList = [PublicCourse]()
     private var cancelBag = CancelBag()
     private var specialList = [String]()
