@@ -53,7 +53,6 @@ final class UserManager {
                         self.isKakao = provider == "KAKAO" ? true : false
                         UserManager.shared.userType = .registered
                         completion(.success(data.type)) // 로그인인지 회원가입인지 전달
-                        print("\n\n 🥰\(String(describing: data.email))\n\n")
                     } catch {
                         print(error.localizedDescription)
                         completion(.failure(.networkFail))
@@ -67,7 +66,7 @@ final class UserManager {
                 print(error.localizedDescription)
                 if let response = error.response {
                     if let responseData = String(data: response.data, encoding: .utf8) {
-                        print("\n\n SignIn 메세지 ‼️🔥\(responseData)\n\n")
+                        print("\n 🔥 SignIn 메세지 \(responseData)\n")   // 이 코드는 2차 업데이트 토큰 부분 디버깅 용으로 사용합니다. (업데이트 이후 제거)
                     } else {
                         print(error.localizedDescription)
                     }
@@ -103,17 +102,18 @@ final class UserManager {
                     completion(.failure(.networkFail))
                 }
             case .failure(let error):
-                if let response = error.response {
-                    if let responseData = String(data: response.data, encoding: .utf8) {
-                        print("\n\n getNewToken 메세지 ‼️🔥\(responseData)\n\n")
-                    } else {
-                        print(error.localizedDescription)
-                    }
-                } else {
-                    print(error.localizedDescription)
-                }
-                
                 print(error.localizedDescription)
+                // 아래 코드는 2차 업데이트 토큰 부분 디버깅 용으로 사용합니다. (업데이트 이후 제거)
+//                if let response = error.response {
+//                    if let responseData = String(data: response.data, encoding: .utf8) {
+//                        print("\n getNewToken 메세지 ‼️🔥\(responseData)\n")
+//                    } else {
+//                        print(error.localizedDescription)
+//                    }
+//                } else {
+//                    print(error.localizedDescription)
+//                }
+                
                 completion(.failure(.networkFail))
             }
         }
