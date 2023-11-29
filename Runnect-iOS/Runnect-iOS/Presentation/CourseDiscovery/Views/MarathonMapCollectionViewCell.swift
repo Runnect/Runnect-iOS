@@ -8,7 +8,6 @@
 import UIKit
 import Combine
 
-
 class CourseSelectionPublisher {
     static let shared = CourseSelectionPublisher()
     
@@ -58,8 +57,8 @@ extension MarathonMapCollectionViewCell {
         recommendedCollectionView.dataSource = self
     }
     private func register() {
-        recommendedCollectionView.register(CourseListCVC.self,
-                                           forCellWithReuseIdentifier: CourseListCVC.className)
+        recommendedCollectionView.register(MarathonCourseListCVC.self,
+                                           forCellWithReuseIdentifier: MarathonCourseListCVC.className)
     }
 }
 // MARK: - Extensions
@@ -93,9 +92,9 @@ extension MarathonMapCollectionViewCell: UICollectionViewDelegate, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className,
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MarathonCourseListCVC.className,
                                                             for: indexPath)
-                as? CourseListCVC else { return UICollectionViewCell() }
+                as? MarathonCourseListCVC else { return UICollectionViewCell() }
         cell.setCellType(type: .all)
         let model = self.marathonCourseList[indexPath.item]
         let location = "\(model.departure.region) \(model.departure.city)"

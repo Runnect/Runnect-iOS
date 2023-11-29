@@ -1,5 +1,5 @@
 //
-//  RecommendedListCVC.swift
+//  MarathonCourseListCVC.swift
 //  Runnect-iOS
 //
 //  Created by 이명진 on 11/21/23.
@@ -7,12 +7,12 @@
 
 import UIKit
 
-protocol RecommendedListCVCDeleagte: AnyObject {
+protocol MarathonCourseListCVCDeleagte: AnyObject {
     func likeButtonTapped(wantsTolike: Bool, index: Int)
 }
 
 @frozen
-enum RecommendedListCVCType {
+enum MarathonCourseListCVCType {
     case title
     case titleWithLocation
     case all
@@ -28,11 +28,11 @@ enum RecommendedListCVCType {
     }
 }
 
-final class RecommendedListCVC: UICollectionViewCell {
+final class MarathonCourseListCVC: UICollectionViewCell {
     
     // MARK: - Properties
     
-    weak var delegate: RecommendedListCVCDeleagte?
+    weak var delegate: MarathonCourseListCVCDeleagte?
     
     private var indexPath: Int?
     
@@ -100,7 +100,7 @@ final class RecommendedListCVC: UICollectionViewCell {
 
 // MARK: - Methods
 
-extension RecommendedListCVC {
+extension MarathonCourseListCVC {
     private func setAddTarget() {
         likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
     }
@@ -135,7 +135,7 @@ extension RecommendedListCVC {
 
 // MARK: - @objc Function
 
-extension RecommendedListCVC {
+extension MarathonCourseListCVC {
     @objc func likeButtonDidTap(_ sender: UIButton) {
         guard let indexPath = self.indexPath else { return }
         if UserManager.shared.userType != .visitor {
@@ -147,7 +147,7 @@ extension RecommendedListCVC {
 
 // MARK: - UI & Layout
 
-extension RecommendedListCVC {
+extension MarathonCourseListCVC {
     private func setUI() {
         self.contentView.backgroundColor = .w1
     }
@@ -186,7 +186,7 @@ extension RecommendedListCVC {
         }
     }
     
-    func setCellType(type: RecommendedListCVCType) {
+    func setCellType(type: MarathonCourseListCVCType) {
         switch type {
         case .title:
             self.locationLabel.isHidden = true
