@@ -43,15 +43,18 @@ final class ActivityRecordDetailVC: UIViewController {
         $0.font = .h4
     }
     
-    private let courseTitleTextField = UITextField().then {
-        $0.resignFirstResponder()
+    private lazy var courseTitleTextField = UITextField().then {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        
         $0.attributedPlaceholder = NSAttributedString(
             string: "글 제목",
-            attributes: [.font: UIFont.h4, .foregroundColor: UIColor.g3]
+            attributes: [.font: UIFont.h4, .foregroundColor: UIColor.g3, .paragraphStyle: paragraphStyle]
         )
         $0.font = .h4
         $0.textColor = .g1
         $0.addLeftPadding(width: 2)
+        $0.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
     }
     
     private let recordDateInfoView = CourseDetailInfoView(title: "날짜", description: String())
@@ -71,7 +74,7 @@ final class ActivityRecordDetailVC: UIViewController {
     private lazy var recordDistanceLabel = SetInfoLayout.makeGreySmailTitleLabel().then {
         $0.text = "거리"
     }
-
+    
     private lazy var recordRunningTimeLabel = SetInfoLayout.makeGreySmailTitleLabel().then {
         $0.text = "이동 시간"
     }
@@ -79,7 +82,7 @@ final class ActivityRecordDetailVC: UIViewController {
     private lazy var recordAveragePaceLabel = SetInfoLayout.makeGreySmailTitleLabel().then {
         $0.text = "평균 페이스"
     }
-
+    
     private lazy var recordDistanceValueLabel = SetInfoLayout.makeBlackTitleLabel()
     
     private lazy var recordRunningTimeValueLabel = SetInfoLayout.makeBlackTitleLabel()
@@ -211,6 +214,7 @@ extension ActivityRecordDetailVC {
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+        
     }
     
     @objc private func presentToQuitEditAlertVC() {
@@ -315,8 +319,11 @@ extension ActivityRecordDetailVC {
 
 extension ActivityRecordDetailVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
         if textField == self.courseTitleTextField {
-            self.finishEditButtonDidTap()
+            if finishEditButton.isEnabled == true {
+                self.finishEditButtonDidTap()
+            }
         }
         return true
     }
@@ -427,7 +434,7 @@ extension ActivityRecordDetailVC {
     
     private func setEditMode() {
         self.navibar.isHidden = false // true
-
+        
         mapImageView.snp.remakeConstraints { make in
             make.top.equalToSuperview()
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -439,13 +446,13 @@ extension ActivityRecordDetailVC {
         self.courseTitleTextField.text = self.courseTitleLabel.text
         
         middleScorollView.addSubview(courseTitleTextField)
-                
+        
         courseTitleTextField.snp.makeConstraints { make in
             make.top.equalTo(mapImageView.snp.bottom).offset(27)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(35)
         }
-    
+        
         self.finishEditButton.isHidden = false
         
         firstHorizontalDivideLine.snp.remakeConstraints { make in
@@ -469,9 +476,9 @@ extension ActivityRecordDetailVC {
             make.top.equalTo(secondHorizontalDivideLine.snp.bottom).offset(22)
             make.centerX.equalToSuperview()
         }
-                
+        
         middleScorollView.addSubview(finishEditButton)
-
+        
         finishEditButton.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(30)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
@@ -526,6 +533,7 @@ extension ActivityRecordDetailVC {
                 if 200..<300 ~= status {
                     print("제목 수정 성공")
                     self.showToast(message: "제목 수정이 완료되었어요")
+                    self.finishEditButton.isEnabled = false
                 }
                 if status >= 400 {
                     print("400 error")
