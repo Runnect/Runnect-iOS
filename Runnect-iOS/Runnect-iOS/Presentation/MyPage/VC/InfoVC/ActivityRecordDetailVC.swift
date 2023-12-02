@@ -10,21 +10,22 @@ import UIKit
 import SnapKit
 import Then
 import Moya
+import DropDown
 
 final class ActivityRecordDetailVC: UIViewController {
     
     // MARK: - Properties
     
     private let recordProvider = Providers.recordProvider
-        
+    
     private var recordId: Int?
-        
+    
     private let courseTitleMaxLength = 20
-            
+    
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton)
-        
+    
     private let moreButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icMore, for: .normal)
         $0.tintColor = .g1
@@ -125,25 +126,35 @@ final class ActivityRecordDetailVC: UIViewController {
 
 extension ActivityRecordDetailVC {
     @objc func moreButtonDidTap() {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let editAction = UIAlertAction(title: "수정하기", style: .default, handler: {(_: UIAlertAction!) in
-            // 수정 모드일 때
-            self.setEditMode()
-        })
-        let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
-        deleteAlertVC.modalPresentationStyle = .overFullScreen
-        let deleteAlertAction = UIAlertAction(title: "삭제하기", style: .destructive, handler: {(_: UIAlertAction!) in
-            self.present(deleteAlertVC, animated: false, completion: nil)})
         
-        deleteAlertVC.rightButtonTapAction = { [weak self] in
-            deleteAlertVC.dismiss(animated: false)
-            self?.deleteRecord()
+        let hideLastCellSeparatorBoxSize = 79
+        let items = ["수정하기", "삭제하기"]
+        let imageArray: [UIImage] = [ImageLiterals.icModify, ImageLiterals.icRemove]
+        
+        let menu = DropDown().then {
+            $0.anchorView = moreButton
+            $0.backgroundColor = .w1
+            $0.bottomOffset = CGPoint(x: -136, y: moreButton.bounds.height - 10)
+            $0.width = 170
+            $0.cellHeight = 40
+            $0.cornerRadius = 12
+            $0.dismissMode = .onTap
+            $0.separatorColor = UIColor(hex: "#EBEBEB")
+            $0.dataSource = items
+            $0.textFont = .b3
         }
         
-        let cancelAction = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
+        menu.customCellConfiguration = { (index: Index, _: String, cell: DropDownCell) -> Void in
+            let lastDividerLineRemove = UIView(frame: CGRect(origin: CGPoint(x: 0, y: hideLastCellSeparatorBoxSize), size: CGSize(width: 170, height: 10)))
+            lastDividerLineRemove.backgroundColor = .white
+            cell.separatorInset = .zero
+            cell.dropDownImage.image = imageArray[index]
+            cell.addSubview(lastDividerLineRemove)
+        }
         
-        [ editAction, deleteAlertAction, cancelAction ].forEach { alertController.addAction($0) }
-        present(alertController, animated: true, completion: nil)
+        dropDownTouchAction(menu: menu)
+        
+        menu.show()
     }
     
     @objc private func textFieldTextDidChange() {
@@ -166,29 +177,27 @@ extension ActivityRecordDetailVC {
         }
     }
     
-    @objc private func keyboardWillShow(_ notification: Notification) {
-        guard let userInfo = notification.userInfo,
-            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
-                return
+    @objc private func keyboardWillShow(_ sender: Notification) {         // 키보드의 높이만큼 화면을 올려줍니다.
+        if let keyboardFrame: NSValue = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            self.view.frame.origin.y -= keyboardHeight
         }
-
-        let contentInset = UIEdgeInsets(
-            top: 0.0,
-            left: 0.0,
-            bottom: keyboardFrame.size.height,
-            right: 0.0)
-        middleScorollView.contentInset = contentInset
-        middleScorollView.scrollIndicatorInsets = contentInset
     }
     
-    @objc private func keyboardWillHide() {
-        let contentInset = UIEdgeInsets.zero
-        middleScorollView.contentInset = contentInset
-        middleScorollView.scrollIndicatorInsets = contentInset
+    @objc private func keyboardWillHide(_ sender: Notification) {         // 키보드의 높이만큼 화면을 내려줍니다.
+        if let keyboardFrame: NSValue = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            self.view.frame.origin.y += keyboardHeight
+        }
     }
     
     @objc private func finishEditButtonDidTap() {
         editRecordTitle()
+        
+        // 키보드가 올라와 있을때 내려가는 코드 추가
+        view.endEditing(true)
         
         // 수정이 완료되면 팝업 뜨지 않음
         self.navibar.resetLeftButtonAction({ [weak self] in
@@ -245,7 +254,6 @@ extension ActivityRecordDetailVC {
     
     private func setAddTarget() {
         self.moreButton.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
-        self.courseTitleTextField.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
         self.finishEditButton.addTarget(self, action: #selector(finishEditButtonDidTap), for: .touchUpInside)
     }
     
@@ -526,6 +534,37 @@ extension ActivityRecordDetailVC {
             case .failure(let error):
                 print(error.localizedDescription)
                 self.showNetworkFailureToast()
+            }
+        }
+    }
+}
+// MARK: - DropDown
+
+extension ActivityRecordDetailVC {
+    private func dropDownTouchAction(menu: DropDown) {
+        
+        DropDown.appearance().textColor = .g1
+        DropDown.appearance().selectionBackgroundColor = .w1
+        DropDown.appearance().shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
+        DropDown.appearance().shadowOpacity = 1
+        DropDown.appearance().shadowRadius = 10
+        
+        menu.selectionAction = { [unowned self] (_, item) in
+            menu.clearSelection()
+            
+            switch item {
+            case "수정하기":
+                self.setEditMode()
+            case "삭제하기":
+                let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
+                deleteAlertVC.modalPresentationStyle = .overFullScreen
+                deleteAlertVC.rightButtonTapAction = {
+                    deleteAlertVC.dismiss(animated: false)
+                    self.deleteRecord()
+                }
+                self.present(deleteAlertVC, animated: false)
+            default:
+                self.showToast(message: "없는 명령어 입니다.")
             }
         }
     }
