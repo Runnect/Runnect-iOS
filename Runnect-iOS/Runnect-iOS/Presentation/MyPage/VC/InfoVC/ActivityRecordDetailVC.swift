@@ -44,12 +44,10 @@ final class ActivityRecordDetailVC: UIViewController {
     }
     
     private lazy var courseTitleTextField = UITextField().then {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .center
         
         $0.attributedPlaceholder = NSAttributedString(
             string: "글 제목",
-            attributes: [.font: UIFont.h4, .foregroundColor: UIColor.g3, .paragraphStyle: paragraphStyle]
+            attributes: [.font: UIFont.h4, .foregroundColor: UIColor.g3]
         )
         $0.font = .h4
         $0.textColor = .g1
@@ -199,7 +197,7 @@ extension ActivityRecordDetailVC {
     @objc private func finishEditButtonDidTap() {
         editRecordTitle()
         
-        // 키보드가 올라와 있을때 내려가는 코드 추가
+        // 키보드가 올라와 있다면 내려가는 코드 추가
         view.endEditing(true)
         
         // 수정이 완료되면 팝업 뜨지 않음
