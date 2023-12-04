@@ -320,16 +320,10 @@ extension UserProfileVC {
     }
 }
 
-extension UserProfileVC: NicknameEditorVCDelegate {
-    func nicknameEditDidSuccess() {
-        getMyPageInfo()
-    }
-}
-
 // MARK: - Network
 
 extension UserProfileVC {
-    func getMyPageInfo() {
+    private func getMyPageInfo() {
         guard let userId = self.userId else { return }
         LoadingIndicator.showLoading()
         userProvider.request(.getUserProfileInfo(userId: userId)) { [weak self] response in
@@ -343,6 +337,7 @@ extension UserProfileVC {
                         let responseDto = try result.map(BaseResponse<UserProfileDto>.self)
                         guard let data = responseDto.data else { return }
                         self.setData(model: data)
+                        self.UploadedCourseInfoCollectionView.reloadData()
                     } catch {
                         print(error.localizedDescription)
                     }
