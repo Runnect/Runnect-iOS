@@ -78,8 +78,7 @@ final class UserProfileVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         guard UserManager.shared.userType != .visitor else { return }
-        self.getMyPageInfo()
-        print("‼️uploadedCourseList= \(uploadedCourseList)")
+        getMyPageInfo()
         self.hideTabBar(wantsToHide: true)
     }
 }
@@ -120,39 +119,26 @@ extension UserProfileVC {
         return containerView
     }
     
-//    private func setCourseId(courseId: Int?, publicCourseId: Int?) {
-//        self.courseId = courseId
-//        self.publicCourseId = publicCourseId
-//    }
-    
-    func setUserId(userId: Int) {
-        self.userId = userId
-    }
-    
     private func setData(model: UserProfileDto) {
-        self.myProfileNameLabel.text = model.user.nickname
-        self.myRunningProgressBar.setProgress(Float(model.user.levelPercent)/100, animated: false)
-        setMyRunningLevelLabel(label: myRunningLevelLabel, model: model)
-        setMyRunningProgressPercentLabel(label: myRunnigProgressPercentLabel, model: model)
+        myProfileNameLabel.text = model.user.nickname
+        myRunningProgressBar.setProgress(Float(model.user.levelPercent) / 100, animated: false)
+        setMyRunningLevelLabel(model: model)
+        setMyRunningProgressPercentLabel(model: model)
         setMyProfileImage(model: model)
-
-    }
-    
-    private func setCourseData(courseList: [UserCourseInfo]) {
-        self.uploadedCourseList = courseList
-        self.UploadedCourseInfoCollectionView.reloadData()
-    }
-    
-    private func setMyRunningLevelLabel(label: UILabel, model: UserProfileDto) {
+        uploadedCourseList = model.courses
+        UploadedCourseInfoCollectionView.reloadData()
+        }
+        
+    private func setMyRunningLevelLabel(model: UserProfileDto) {
         let attributedString = NSMutableAttributedString(string: "LV ", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1])
         attributedString.append(NSAttributedString(string: String(model.user.level), attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1]))
-        label.attributedText = attributedString
+        myRunningLevelLabel.attributedText = attributedString
     }
     
-    private func setMyRunningProgressPercentLabel(label: UILabel, model: UserProfileDto) {
+    private func setMyRunningProgressPercentLabel(model: UserProfileDto) {
         let attributedString = NSMutableAttributedString(string: String(model.user.levelPercent), attributes: [.font: UIFont.b5, .foregroundColor: UIColor.g1])
         attributedString.append(NSAttributedString(string: " /100", attributes: [.font: UIFont.b5, .foregroundColor: UIColor.g2]))
-        label.attributedText = attributedString
+        myRunnigProgressPercentLabel.attributedText = attributedString
     }
     
     private func setMyProfileImage(model: UserProfileDto) {
@@ -160,12 +146,91 @@ extension UserProfileVC {
         myProfileImage.image = profileImage
     }
     
+    private func setDelegate() {
+        UploadedCourseInfoCollectionView.delegate = self
+        UploadedCourseInfoCollectionView.dataSource = self
+    }
+    
+    private func register() {
+        UploadedCourseInfoCollectionView.register(CourseListCVC.self, forCellWithReuseIdentifier: CourseListCVC.className)
+    }
+    
 }
 
-// MARK: - @objc Function
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
-extension UserProfileVC {
+extension UserProfileVC: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return uploadedCourseList.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath) as? CourseListCVC else { return UICollectionViewCell() }
+        configureCourseCell(cell, at: indexPath)
+        return cell
+    }
+    
+    private func configureCourseCell(_ cell: CourseListCVC, at indexPath: IndexPath) {
+        cell.setCellType(type: .all)
+        let model = uploadedCourseList[indexPath.item]
+        let location = "\(model.departure.region) \(model.departure.city)"
+        cell.setData(imageURL: model.image, title: model.title, location: location, didLike: model.scrapTF, indexPath: indexPath.item)
+    }
+}
 
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension UserProfileVC: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        _ = UICollectionViewCell()
+        
+        let screenWidth = UIScreen.main.bounds.width
+        
+        let cellWidth = (screenWidth - 42) / 2
+        let cellHeight = CourseListCVCType.getCellHeight(type: .all, cellWidth: cellWidth)
+        return CGSize(width: cellWidth, height: cellHeight)
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 20
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 16, bottom: 20, right: 16)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        pushToCourseDetail(at: indexPath)
+    }
+    
+    private func pushToCourseDetail(at indexPath: IndexPath) {
+        let courseDetailVC = CourseDetailVC()
+        let courseModel = uploadedCourseList[indexPath.item]
+        courseDetailVC.setCourseId(courseId: courseModel.courseId, publicCourseId: courseModel.publicCourseId)
+        courseDetailVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(courseDetailVC, animated: true)
+    }
+}
+
+// MARK: - CourseListCVCDeleagte
+
+extension UserProfileVC: CourseListCVCDeleagte {
+    func likeButtonTapped(wantsTolike: Bool, index: Int) {
+        guard UserManager.shared.userType != .visitor else {
+            showToastOnWindow(text: "러넥트에 가입하면 코스를 스크랩할 수 있어요")
+            return
+        }
+        
+        let publicCourseId = uploadedCourseList[index].publicCourseId
+        scrapCourse(publicCourseId: publicCourseId, scrapTF: wantsTolike)
+    }
 }
 
 // MARK: - UI & Layout
@@ -187,7 +252,7 @@ extension UserProfileVC {
     }
     
     private func setLayout() {
-        view.addSubviews(myProfileView, myRunningProgressView, uploadedCourseInfoView, UploadedCourseInfoCollectionView)
+        view.addSubviews(myProfileView, myRunningProgressView, uploadedCourseInfoLabel, UploadedCourseInfoCollectionView)
         
         myProfileView.snp.makeConstraints { make in
             make.top.equalTo(navibar.snp.bottom).offset(6)
@@ -198,13 +263,14 @@ extension UserProfileVC {
         setMyProfileLayout()
         setRunningProgressLayout()
         
-        uploadedCourseInfoView.snp.makeConstraints { make in
+        uploadedCourseInfoLabel.snp.makeConstraints { make in
             make.top.equalTo(myRunningProgressView.snp.bottom)
             make.leading.trailing.equalToSuperview()
         }
         
         UploadedCourseInfoCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(uploadedCourseInfoView.snp.bottom)
+            make.top.equalTo(uploadedCourseInfoLabel.snp.bottom).offset(62)
+            make.leading.trailing.height.equalTo(view.safeAreaLayoutGuide)
         }
         
     }
