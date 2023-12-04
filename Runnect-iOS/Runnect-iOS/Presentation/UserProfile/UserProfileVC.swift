@@ -79,7 +79,6 @@ final class UserProfileVC: UIViewController {
         super.viewWillAppear(animated)
         guard UserManager.shared.userType != .visitor else { return }
         getMyPageInfo()
-        self.hideTabBar(wantsToHide: true)
     }
 }
 
@@ -104,16 +103,15 @@ extension UserProfileVC {
         
         containerView.addSubviews(icStar, label)
         
-        icStar.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(22)
-            make.leading.equalToSuperview().offset(17)
-            make.width.equalTo(14)
-            make.height.equalTo(14)
+        icStar.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(22)
+            $0.leading.equalToSuperview().offset(17)
+            $0.width.height.equalTo(14)
         }
         
-        label.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(21)
-            make.leading.equalTo(icStar.snp.trailing).offset(8)
+        label.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(21)
+            $0.leading.equalTo(icStar.snp.trailing).offset(8)
         }
         
         return containerView
@@ -127,8 +125,8 @@ extension UserProfileVC {
         setMyProfileImage(model: model)
         uploadedCourseList = model.courses
         UploadedCourseInfoCollectionView.reloadData()
-        }
-        
+    }
+    
     private func setMyRunningLevelLabel(model: UserProfileDto) {
         let attributedString = NSMutableAttributedString(string: "LV ", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1])
         attributedString.append(NSAttributedString(string: String(model.user.level), attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1]))
@@ -183,27 +181,29 @@ extension UserProfileVC: UICollectionViewDelegate, UICollectionViewDataSource {
 
 extension UserProfileVC: UICollectionViewDelegateFlowLayout {
     
+    private struct Constants {
+        static let cellSpacing: CGFloat = 20
+        static let cellPadding: CGFloat = 10
+        static let sectionInsets = UIEdgeInsets(top: 0, left: 16, bottom: 20, right: 16)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        _ = UICollectionViewCell()
-        
         let screenWidth = UIScreen.main.bounds.width
-        
-        let cellWidth = (screenWidth - 42) / 2
+        let cellWidth = (screenWidth - 2 * Constants.sectionInsets.left - Constants.cellSpacing) / 2
         let cellHeight = CourseListCVCType.getCellHeight(type: .all, cellWidth: cellWidth)
         return CGSize(width: cellWidth, height: cellHeight)
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 20
+        return Constants.cellSpacing
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        return Constants.cellPadding
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 16, bottom: 20, right: 16)
+        return Constants.sectionInsets
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -239,9 +239,9 @@ extension UserProfileVC {
     private func setNavigationBar() {
         view.addSubview(navibar)
         
-        navibar.snp.makeConstraints { make in
-            make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
+        navibar.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(48)
         }
     }
     
@@ -254,68 +254,65 @@ extension UserProfileVC {
     private func setLayout() {
         view.addSubviews(myProfileView, myRunningProgressView, uploadedCourseInfoLabel, UploadedCourseInfoCollectionView)
         
-        myProfileView.snp.makeConstraints { make in
-            make.top.equalTo(navibar.snp.bottom).offset(6)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(84)
+        myProfileView.snp.makeConstraints {
+            $0.top.equalTo(navibar.snp.bottom).offset(6)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(84)
         }
         
         setMyProfileLayout()
         setRunningProgressLayout()
         
-        uploadedCourseInfoLabel.snp.makeConstraints { make in
-            make.top.equalTo(myRunningProgressView.snp.bottom)
-            make.leading.trailing.equalToSuperview()
+        uploadedCourseInfoLabel.snp.makeConstraints {
+            $0.top.equalTo(myRunningProgressView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
         }
         
-        UploadedCourseInfoCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(uploadedCourseInfoLabel.snp.bottom).offset(62)
-            make.leading.trailing.height.equalTo(view.safeAreaLayoutGuide)
+        UploadedCourseInfoCollectionView.snp.makeConstraints {
+            $0.top.equalTo(uploadedCourseInfoLabel.snp.bottom).offset(62)
+            $0.leading.trailing.height.equalTo(view.safeAreaLayoutGuide)
         }
-        
     }
     
     private func setMyProfileLayout() {
         myProfileView.addSubviews(myProfileImage, myProfileNameLabel, myRunningProgressView)
         
-        myProfileImage.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(11)
-            make.leading.equalToSuperview().offset(23)
-            make.width.equalTo(63)
-            make.height.equalTo(63)
+        myProfileImage.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(11)
+            $0.leading.equalToSuperview().offset(23)
+            $0.width.height.equalTo(63)
         }
         
-        myProfileNameLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(32)
-            make.leading.equalTo(myProfileImage.snp.trailing).offset(10)
+        myProfileNameLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(32)
+            $0.leading.equalTo(myProfileImage.snp.trailing).offset(10)
         }
         
-        myRunningProgressView.snp.makeConstraints { make in
-            make.top.equalTo(myProfileView.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(100)
+        myRunningProgressView.snp.makeConstraints {
+            $0.top.equalTo(myProfileView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(100)
         }
     }
     
     private func setRunningProgressLayout() {
-        myRunningProgressView.addSubviews(myRunningLevelLabel, myRunningProgressBar,
-                                          myRunnigProgressPercentLabel)
+        myRunningProgressView.addSubviews(myRunningLevelLabel, myRunningProgressBar, myRunnigProgressPercentLabel)
         
-        myRunningLevelLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
-            make.leading.equalToSuperview().offset(36)
+        myRunningLevelLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(20)
+            $0.leading.equalToSuperview().offset(36)
         }
         
-        myRunningProgressBar.snp.makeConstraints { make in
-            make.top.equalTo(myRunningLevelLabel.snp.bottom).offset(6)
-            make.leading.equalToSuperview().offset(36.53)
-            make.trailing.equalToSuperview().inset(31.6)
-            make.height.equalTo(11)
+        myRunningProgressBar.snp.makeConstraints {
+            $0.top.equalTo(myRunningLevelLabel.snp.bottom).offset(6)
+            $0.leading.equalToSuperview().offset(36.53)
+            $0.trailing.equalToSuperview().inset(31.6)
+            $0.height.equalTo(11)
         }
         
-        myRunnigProgressPercentLabel.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(20)
-            make.trailing.equalToSuperview().inset(31.6)
+        myRunnigProgressPercentLabel.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(31.6)
         }
     }
 }
