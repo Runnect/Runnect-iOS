@@ -120,6 +120,10 @@ extension UserProfileVC {
 //        self.publicCourseId = publicCourseId
 //    }
     
+    func setUserId(userId: Int) {
+        self.userId = userId
+    }
+    
     private func setData(model: UserProfileDto) {
         self.myProfileNameLabel.text = model.user.nickname
         self.myRunningProgressBar.setProgress(Float(model.user.levelPercent)/100, animated: false)

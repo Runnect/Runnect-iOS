@@ -35,6 +35,7 @@ final class CourseDetailVC: UIViewController {
     
     private var courseId: Int?
     private var publicCourseId: Int?
+    private var userId: Int?
     private var isMyCourse: Bool?
     
     private var safariViewController: SFSafariViewController?
@@ -201,7 +202,9 @@ extension CourseDetailVC {
         }
     }
     @objc func pushToUserProfileVC() {
+        guard let userId = self.userId else {return}
         let userProfile = UserProfileVC()
+        userProfile.setUserId(userId: userId)
         self.navigationController?.pushViewController(userProfile, animated: true)
     }
 
@@ -278,6 +281,7 @@ extension CourseDetailVC {
     
     func setData(model: UploadedCourseDetailResponseDto) {
         self.uploadedCourseDetailModel = model
+        self.userId = model.user.id
         self.mapImageView.setImage(with: model.publicCourse.image)
         self.profileImageView.image = GoalRewardInfoModel.stampNameImageDictionary[model.user.image]
         // 탈퇴 유저 처리
