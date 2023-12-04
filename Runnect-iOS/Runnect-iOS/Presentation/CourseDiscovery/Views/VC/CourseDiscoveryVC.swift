@@ -68,7 +68,7 @@ final class CourseDiscoveryVC: UIViewController {
         register()
         setNavigationBar()
         setDelegate()
-        layout()
+        setLayout()
         setAddTarget()
         setCombineEvent()
         //        getTotalPageNum()
@@ -177,7 +177,7 @@ extension CourseDiscoveryVC {
         }
     }
     
-    private func layout() {
+    private func setLayout() {
         view.addSubviews(uploadButton, mapCollectionView)
         view.bringSubviewToFront(uploadButton)
         mapCollectionView.addSubview(emptyView)

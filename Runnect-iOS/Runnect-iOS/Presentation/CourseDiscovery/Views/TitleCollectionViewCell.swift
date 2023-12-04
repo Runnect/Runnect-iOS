@@ -16,7 +16,7 @@ class TitleCollectionViewCell: UICollectionViewCell {
     
     private var cancellables: Set<AnyCancellable> = []
     weak var delegate: TitleCollectionViewCellDelegate?
-
+    
     // MARK: - UI Components
     
     private lazy var titleStackView = UIStackView(arrangedSubviews: [mainLabel, subLabel]).then {
@@ -34,7 +34,7 @@ class TitleCollectionViewCell: UICollectionViewCell {
         $0.font = UIFont.h3
         $0.textColor = UIColor.g1
     }
-
+    
     private let subLabel: UILabel = UILabel().then {
         $0.text = "나에게 최적화된 코스를 찾아보세요"
         $0.font = UIFont.b6
@@ -48,7 +48,7 @@ class TitleCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        layout()
+        setLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -61,26 +61,26 @@ class TitleCollectionViewCell: UICollectionViewCell {
 extension TitleCollectionViewCell {
     
     private func createSortButton(title: String, ordering: String) -> UIButton {
-            let button = UIButton(type: .custom).then {
-                $0.setTitle(title, for: .normal)
-                $0.titleLabel?.font = .b3
-                $0.setTitleColor(.m1, for: .normal)
-                $0.setTitleColor(.g2, for: .disabled)
+        let button = UIButton(type: .custom).then {
+            $0.setTitle(title, for: .normal)
+            $0.titleLabel?.font = .b3
+            $0.setTitleColor(.m1, for: .normal)
+            $0.setTitleColor(.g2, for: .disabled)
+        }
+        button.tapPublisher
+            .sink { [weak self] in
+                guard let self = self else { return }
+                self.delegate?.didTapSortButton(ordering: ordering)
             }
-            button.tapPublisher
-                .sink { [weak self] in
-                    guard let self = self else { return }
-                    self.delegate?.didTapSortButton(ordering: ordering)
-                }
-                .store(in: &cancellables)
-            return button
+            .store(in: &cancellables)
+        return button
     }
 }
 
 // MARK: - Layout
 
 extension TitleCollectionViewCell {
-    func layout() {
+    private func setLayout() {
         contentView.backgroundColor = .clear
         contentView.addSubviews(titleStackView, divideView, dateSortButton, scrapSortButton)
         

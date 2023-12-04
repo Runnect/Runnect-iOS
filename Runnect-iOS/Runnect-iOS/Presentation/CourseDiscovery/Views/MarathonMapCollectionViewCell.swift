@@ -20,7 +20,7 @@ class MarathonMapCollectionViewCell: UICollectionViewCell {
     private let PublicCourseProvider = Providers.publicCourseProvider
     private var marathonCourseList = [marathonCourse]()
     
-    private lazy var recommendedCollectionView: UICollectionView = {
+    private lazy var marathonCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -40,7 +40,7 @@ class MarathonMapCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        layout()
+        setLayout()
         register()
         setDelegate()
         getMarathonCourseData()
@@ -50,41 +50,43 @@ class MarathonMapCollectionViewCell: UICollectionViewCell {
     }
 }
 
+    
+    // MARK: - Method
+
 extension MarathonMapCollectionViewCell {
     
     private func setDelegate() {
-        recommendedCollectionView.delegate = self
-        recommendedCollectionView.dataSource = self
+        marathonCollectionView.delegate = self
+        marathonCollectionView.dataSource = self
     }
     private func register() {
-        recommendedCollectionView.register(MarathonCourseListCVC.self,
-                                           forCellWithReuseIdentifier: MarathonCourseListCVC.className)
+        marathonCollectionView.register(CourseListCVC.self,
+                                        forCellWithReuseIdentifier: CourseListCVC.className)
     }
 }
-// MARK: - Extensions
 
 extension MarathonMapCollectionViewCell {
     
     // MARK: - Layout Helpers
     
-    func layout() {
+    private func setLayout() {
         contentView.backgroundColor = .clear
-        contentView.addSubview(recommendedCollectionView)
+        contentView.addSubview(marathonCollectionView)
         
-        recommendedCollectionView.snp.makeConstraints {
+        marathonCollectionView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalTo(contentView.safeAreaLayoutGuide)
             $0.bottom.equalToSuperview()
         }
     }
     
-    func setData(marathonCourseList: [marathonCourse]) {
+    private func setData(marathonCourseList: [marathonCourse]) {
         self.marathonCourseList = marathonCourseList
-        recommendedCollectionView.reloadData()
+        marathonCollectionView.reloadData()
     }
     
 }
-// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+    // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
 extension MarathonMapCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -92,9 +94,9 @@ extension MarathonMapCollectionViewCell: UICollectionViewDelegate, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MarathonCourseListCVC.className,
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className,
                                                             for: indexPath)
-                as? MarathonCourseListCVC else { return UICollectionViewCell() }
+                as? CourseListCVC else { return UICollectionViewCell() }
         cell.setCellType(type: .all)
         let model = self.marathonCourseList[indexPath.item]
         let location = "\(model.departure.region) \(model.departure.city)"
@@ -103,7 +105,7 @@ extension MarathonMapCollectionViewCell: UICollectionViewDelegate, UICollectionV
     }
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout
+    // MARK: - UICollectionViewDelegateFlowLayout
 
 extension MarathonMapCollectionViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -126,10 +128,13 @@ extension MarathonMapCollectionViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         CourseSelectionPublisher.shared.didSelectCourse.send(indexPath)
-        // 코스 발견에 전달
+        // 코스 발견에 이벤트 전달
     }
     
 }
+
+
+    // MARK: - NetWork
 
 extension MarathonMapCollectionViewCell {
     private func getMarathonCourseData() {
