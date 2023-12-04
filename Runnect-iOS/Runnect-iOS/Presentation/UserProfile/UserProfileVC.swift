@@ -326,6 +326,7 @@ extension UserProfileVC {
         userProvider.request(.getUserProfileInfo(userId: userId)) { [weak self] response in
             LoadingIndicator.hideLoading()
             guard let self = self else { return }
+            
             switch response {
             case .success(let result):
                 let status = result.statusCode
@@ -345,7 +346,10 @@ extension UserProfileVC {
                 }
             case .failure(let error):
                 print(error.localizedDescription)
-                self.showNetworkFailureToast()
+                self.showToast(message: "탈퇴한 유저 입니다.", duration: 1.2)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    self.navigationController?.popViewController(animated: true)
+                }
             }
         }
     }
@@ -370,5 +374,39 @@ extension UserProfileVC {
                 self.showNetworkFailureToast()
             }
         }
+    }
+}
+
+extension UserProfileVC {
+    func showToast(message: String, duration: TimeInterval = 1.0) {
+        let toastLabel = UILabel().then {
+            $0.backgroundColor = .g1.withAlphaComponent(0.6)
+            $0.textColor = UIColor.white
+            $0.textAlignment = .center
+            $0.font = UIFont.systemFont(ofSize: 12)
+            $0.text = message
+            $0.alpha = 0.0
+            $0.layer.cornerRadius = 10
+            $0.clipsToBounds = true
+        }
+        
+        view.addSubview(toastLabel)
+        
+        toastLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-100)
+            make.width.equalTo(300)
+            make.height.equalTo(35)
+        }
+        
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
+            toastLabel.alpha = 1.0
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.5, delay: duration, options: .curveEaseIn, animations: {
+                toastLabel.alpha = 0.0
+            }, completion: { _ in
+                toastLabel.removeFromSuperview()
+            })
+        })
     }
 }
