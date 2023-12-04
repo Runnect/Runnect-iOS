@@ -15,6 +15,7 @@ struct UserProfileDto: Codable {
 
 // MARK: - UserInfo
 struct UserInfo: Codable {
+    let userId: Int
     let nickname, latestStamp: String
     let level, levelPercent: Int
 }
