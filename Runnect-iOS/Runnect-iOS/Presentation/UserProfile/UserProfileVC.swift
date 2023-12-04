@@ -378,7 +378,7 @@ extension UserProfileVC {
 }
 
 extension UserProfileVC {
-    func showToast(message: String, duration: TimeInterval = 1.0) {
+    private func showToast(message: String, duration: TimeInterval = 1.0) {
         let toastLabel = UILabel().then {
             $0.backgroundColor = .g1.withAlphaComponent(0.6)
             $0.textColor = UIColor.white
