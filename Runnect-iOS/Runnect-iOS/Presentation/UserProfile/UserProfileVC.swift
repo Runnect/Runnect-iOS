@@ -12,12 +12,14 @@ import Then
 import Moya
 
 final class UserProfileVC: UIViewController {
-
+    
     // MARK: - Properties
     
-    private var userProvider = Providers.userProvider
-    private var uploadedCourseProvider = Providers.publicCourseProvider
-    let stampNameImageDictionary: [String: UIImage] = GoalRewardInfoModel.stampNameImageDictionary
+    private let userProvider = Providers.userProvider
+    private let uploadedCourseProvider = Providers.publicCourseProvider
+    private let scrapProvider = Providers.scrapProvider
+    private let stampNameImageDictionary: [String: UIImage] = GoalRewardInfoModel.stampNameImageDictionary
+    
     private var uploadedCourseList = [UserCourseInfo]()
     private var userId: Int?
     
@@ -49,29 +51,27 @@ final class UserProfileVC: UIViewController {
     }
     private let myRunnigProgressPercentLabel = UILabel()
     
-    private lazy var uploadedCourseInfoView = makeInfoView(title: "업로드한 코스")
+    private lazy var uploadedCourseInfoLabel = makeInfoView(title: "업로드한 코스")
     
     private lazy var UploadedCourseInfoCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
         collectionView.isScrollEnabled = true
         collectionView.showsVerticalScrollIndicator = false
-        
         return collectionView
     }()
-    
-    private let collectionViewLayout = UICollectionViewFlowLayout().then {
-        $0.scrollDirection = .vertical
-    }
     
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setNavigationBar()
         setUI()
+        register()
+        setNavigationBar()
+        setDelegate()
         setLayout()
     }
     
@@ -79,6 +79,7 @@ final class UserProfileVC: UIViewController {
         super.viewWillAppear(animated)
         guard UserManager.shared.userType != .visitor else { return }
         self.getMyPageInfo()
+        print("‼️uploadedCourseList= \(uploadedCourseList)")
         self.hideTabBar(wantsToHide: true)
     }
 }
@@ -86,6 +87,10 @@ final class UserProfileVC: UIViewController {
 // MARK: - Methods
 
 extension UserProfileVC {
+    func setUserId(userId: Int) {
+        self.userId = userId
+    }
+    
     private func makeInfoView(title: String) -> UIView {
         let containerView = UIView()
         let icStar = UIImageView().then {
