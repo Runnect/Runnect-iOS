@@ -218,8 +218,8 @@ extension DepartureSearchVC: UITableViewDelegate, UITableViewDataSource {
         let courseDrawingVC = CourseDrawingVC()
         
         let departureLocationModel = addressList[indexPath.item].toDepartureLocationModel()
-        courseDrawingVC.setData(model: departureLocationModel)
         SelectedInfo.shared.type = .other
+        courseDrawingVC.setData(model: departureLocationModel)
         
         courseDrawingVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(courseDrawingVC, animated: true)
