@@ -80,11 +80,6 @@ final class DepartureSearchVC: UIViewController, CLLocationManagerDelegate {
         self.setBinding()
         self.setAuthorization()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.naviBar.showKeyboard()
-    }
 }
 
 // MARK: - Methods
@@ -184,27 +179,21 @@ extension DepartureSearchVC {
     }
     
     private func presentAlertVC() {
-        let alertVC = CustomAlertVC(type: .text)
-            .setTitle("위치 접근을 허용해야 사용할 수 있어요.\n[설정] - [애플리케이션] - [위치접근]을\n허용해 주세요.")
-            .setLeftButtonTitle(NSAttributedString(string: "아니오", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.m1]))
-            .setRightButtonTitle(NSAttributedString(string: "예", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.w1]))
+        let alertVC = RNAlertVC(description: "위치 접근을 허용해야 사용할 수 있어요.\n[설정] - [애플리케이션] - [위치접근]을\n허용해 주세요.")
         alertVC.modalPresentationStyle = .overFullScreen
+        alertVC.alertType = .custom
         
-        alertVC.leftButtonTapped.sink { [weak self] _ in
-            guard let self = self else { return }
+        alertVC.leftButtonTapAction = {
             alertVC.dismiss(animated: false)
             self.navigationController?.popViewController(animated: true)
-        }.store(in: cancelBag)
-
-        alertVC.rightButtonTapped.sink { [weak self] _ in
-            guard let self = self else { return }
+        }
+        alertVC.rightButtonTapAction = {
             if let url = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(url)
                 alertVC.dismiss(animated: false)
             }
             self.navigationController?.popViewController(animated: true)
-            
-        }.store(in: cancelBag)
+        }
 
         self.present(alertVC, animated: false)
     }

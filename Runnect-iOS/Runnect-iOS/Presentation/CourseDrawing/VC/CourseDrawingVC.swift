@@ -203,7 +203,7 @@ extension CourseDrawingVC {
     }
     
     private func presentAlertVC(courseId: Int) {
-        let alertVC = CustomAlertVC(type: .image)
+        let alertVC = CustomAlertVC()
         alertVC.modalPresentationStyle = .overFullScreen
         
         alertVC.leftButtonTapped.sink { [weak self] _ in
