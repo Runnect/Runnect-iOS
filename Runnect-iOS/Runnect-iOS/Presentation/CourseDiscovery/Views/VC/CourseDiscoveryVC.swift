@@ -22,10 +22,11 @@ final class CourseDiscoveryVC: UIViewController {
     private var courseList = [PublicCourse]()
     private var cancelBag = CancelBag()
     private var specialList = [String]()
+    private var totalPageNum = 0
     private var pageNo = 1
     private var sort = "date"
     private var isDataLoaded = false
-    private var totalPageNum = 0
+    private var uploadButtonChanged = false
     
     // MARK: - UIComponents
     
@@ -42,11 +43,12 @@ final class CourseDiscoveryVC: UIViewController {
         $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
     }
     
+    private let miniUploadButton = UIButton(type: .system).then {
+        $0.setImage(ImageLiterals.icPlusButton, for: .normal)
+    }
+    
     private let emptyView = ListEmptyView(description: "공유할 수 있는 코스가 없어요!\n코스를 그려주세요",
                                           buttonTitle: "코스 그리기")
-    private let refreshControl =  UIRefreshControl()
-    // refreshControl 사용시 사용
-    // 마지막 머지에 사용안하면 삭제
     
     // MARK: - collectionview
     
@@ -114,6 +116,7 @@ extension CourseDiscoveryVC {
     private func setAddTarget() {
         self.searchButton.addTarget(self, action: #selector(pushToSearchVC), for: .touchUpInside)
         self.uploadButton.addTarget(self, action: #selector(pushToDiscoveryVC), for: .touchUpInside)
+        self.miniUploadButton.addTarget(self, action: #selector(pushToDiscoveryVC), for: .touchUpInside)
     }
     
     //    private func setDataLoadIfNeeded() { /// 데이터를 받고 다른 뷰를 갔다가 와도 데이터가 유지되게끔 하기 위한 함수 입니다. (한번만 호출되면 되는 함수!)
@@ -129,7 +132,7 @@ extension CourseDiscoveryVC {
     private func setCombineEvent() {
         CourseSelectionPublisher.shared.didSelectCourse
             .sink { [weak self] indexPath in
-                self?.handleCourseSelection(at: indexPath)
+                self?.setMarathonCourseSelection(at: indexPath)
             }
             .store(in: cancelBag)
     }
@@ -161,6 +164,8 @@ extension CourseDiscoveryVC {
         view.backgroundColor = .w1
         mapCollectionView.backgroundColor = .w1
         self.emptyView.isHidden = true
+        self.miniUploadButton.isHidden = true
+        self.uploadButton.isHidden = false
     }
     
     private func setNavigationBar() {
@@ -178,8 +183,9 @@ extension CourseDiscoveryVC {
     }
     
     private func setLayout() {
-        view.addSubviews(uploadButton, mapCollectionView)
+        view.addSubviews(mapCollectionView, uploadButton, miniUploadButton)
         view.bringSubviewToFront(uploadButton)
+        view.bringSubviewToFront(miniUploadButton)
         mapCollectionView.addSubview(emptyView)
         
         mapCollectionView.snp.makeConstraints {
@@ -194,22 +200,20 @@ extension CourseDiscoveryVC {
             make.width.equalTo(92)
         }
         
+        miniUploadButton.snp.makeConstraints { make in
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(38)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(20)
+            make.width.height.equalTo(41)
+        }
+        
         emptyView.snp.makeConstraints { make in
             make.top.equalTo(naviBar.snp.bottom).offset(300)
             make.centerX.equalTo(naviBar)
         }
         
-        let shadowView = ShadowView()
-        self.view.addSubview(shadowView)
-        
-        shadowView.snp.makeConstraints { make in
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(16)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(20)
-            make.height.equalTo(40)
-            make.width.equalTo(92)
-        }
-        
         self.view.bringSubviewToFront(uploadButton)
+        self.view.bringSubviewToFront(miniUploadButton)
+        
     }
 }
 
@@ -271,30 +275,6 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
         }
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let contentOffsetY = mapCollectionView.contentOffset.y // 우리가 보는 화면
-        let collectionViewHeight = mapCollectionView.contentSize.height // 전체 사이즈
-        let paginationY = mapCollectionView.bounds.size.height // 유저 화면의 가장 아래 y축 이라고 생각
-        
-        if contentOffsetY > collectionViewHeight - paginationY {
-            if courseList.count < pageNo * serverResponseNumber {
-                // 페이지 끝에 도달하면 현재 페이지에 더 이상 데이터가 없음을 의미
-                // 새로온 데이터의 갯수가 원래 서버에서 응답에서 온 갯수보다 작으면 페이지네이션 금지
-                // 페이지네이션 중단 코드
-                return
-            }
-            print("🫠\(pageNo)")
-            if pageNo < totalPageNum {
-                if !isDataLoaded {
-                    isDataLoaded = true
-                    getCourseData()
-                    pageNo += 1
-                    isDataLoaded = false
-                }
-            }
-        }
-    }
-    
     private func courseListCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath) as? CourseListCVC else { return UICollectionViewCell() }
         cell.setCellType(type: .all)
@@ -304,7 +284,6 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
         cell.setData(imageURL: model.image, title: model.title, location: location, didLike: model.scrap, indexPath: indexPath.item)
         return cell
     }
-    
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -354,9 +333,8 @@ extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
         }
     }
     
-    private func handleCourseSelection(at indexPath: IndexPath) {
-        // 여기서 외부에서 Marathon Cell에서 받아오는 indexPath를 처리 합니다.
-        // 머지전 주석 삭제
+    // 외부에서 Marathon Cell에서 받아오는 indexPath를 처리 합니다.
+    private func setMarathonCourseSelection(at indexPath: IndexPath) {
         let courseDetailVC = CourseDetailVC()
         let courseModel = courseList[indexPath.item]
         courseDetailVC.setCourseId(courseId: courseModel.courseId, publicCourseId: courseModel.id)
@@ -370,6 +348,7 @@ extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
 extension CourseDiscoveryVC: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         performPagination()
+        changeButtonStyleOnScroll()
     }
     
     private func performPagination() {
@@ -396,6 +375,40 @@ extension CourseDiscoveryVC: UIScrollViewDelegate {
         }
     }
     
+    private func changeButtonStyleOnScroll() {
+        let contentOffsetY = mapCollectionView.contentOffset.y
+        let scrollThreshold = mapCollectionView.bounds.size.height * 0.3 // 30% 스크롤 했으면 UI 변경
+        
+        if contentOffsetY > scrollThreshold {
+            handleButtonVisibility(uploadButtonChanged: true, hidden: true, miniHidden: false)
+        } else {
+            handleButtonVisibility(uploadButtonChanged: false, hidden: false, miniHidden: true)
+        }
+    }
+    
+    private func handleButtonVisibility(uploadButtonChanged: Bool, hidden: Bool, miniHidden: Bool) {
+        guard self.uploadButtonChanged != uploadButtonChanged else {
+            return
+        }
+        
+        toggleUploadButtons(hidden: hidden, miniHidden: miniHidden)
+        self.uploadButtonChanged = uploadButtonChanged
+    }
+    
+    private func toggleUploadButtons(hidden: Bool, miniHidden: Bool) {
+        animateButtonTransition(button: uploadButton, hidden: hidden)
+        animateButtonTransition(button: miniUploadButton, hidden: miniHidden)
+    }
+    
+    private func animateButtonTransition(button: UIButton, hidden: Bool) {
+        UIView.transition(with: button, duration: 0.5, options: .transitionFlipFromRight, animations: {
+            button.isHidden = hidden
+        }, completion: nil)
+    }
+}
+
+// MARK: - CourseListCVCDelegate
+
 extension CourseDiscoveryVC: CourseListCVCDeleagte {
     func likeButtonTapped(wantsTolike: Bool, index: Int) {
         guard UserManager.shared.userType != .visitor else {
@@ -404,7 +417,7 @@ extension CourseDiscoveryVC: CourseListCVCDeleagte {
         }
         
         let publicCourseId = courseList[index].id
-        scrapCourse(publicCourseId: publicCourseId, scrapTF: wantsTolike)
+        self.scrapCourse(publicCourseId: publicCourseId, scrapTF: wantsTolike)
     }
 }
 
@@ -420,7 +433,6 @@ extension CourseDiscoveryVC {
                 switch response {
                 case .success(let result):
                     let status = result.statusCode
-                    
                     if 200..<300 ~= status {
                         do {
                             let responseDto = try result.map(BaseResponse<PickedMapListResponseDto>.self)
@@ -433,12 +445,10 @@ extension CourseDiscoveryVC {
                             print(error.localizedDescription)
                         }
                     }
-                    
                     if status >= 400 {
                         print("400 error")
                         self.showNetworkFailureToast()
                     }
-                    
                 case .failure(let error):
                     print(error.localizedDescription)
                     self.showNetworkFailureToast()
