@@ -10,11 +10,17 @@ import UIKit
 import SnapKit
 import Then
 
+enum AlertType {
+    case defaultType
+    case custom
+}
+
 final class RNAlertVC: UIViewController {
     
     // MARK: - Properties
-    
+    var leftButtonTapAction: (()-> Void)?
     var rightButtonTapAction: (() -> Void)?
+    var alertType: AlertType = .defaultType
                 
     // MARK: - UI Components
     
@@ -69,8 +75,10 @@ final class RNAlertVC: UIViewController {
 extension RNAlertVC {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        if let touch = touches.first, touch.view == self.view {
-            dismiss(animated: false)
+        if alertType == .defaultType {
+            if let touch = touches.first, touch.view == self.view {
+                dismiss(animated: false)
+            }
         }
     }
     
@@ -91,7 +99,8 @@ extension RNAlertVC {
 
 extension RNAlertVC {
     @objc private func touchUpNoButton() {
-        dismiss(animated: false)
+        alertType == .defaultType
+            ? dismiss(animated: false) : self.leftButtonTapAction? ()
     }
     
     @objc private func touchYesButton() {
