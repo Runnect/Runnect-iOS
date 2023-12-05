@@ -365,8 +365,37 @@ extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
-// MARK: - CourseListCVCDeleagte
+// MARK: - UIScrollViewDelegate
 
+extension CourseDiscoveryVC: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        performPagination()
+    }
+    
+    private func performPagination() {
+        let contentOffsetY = mapCollectionView.contentOffset.y // 우리가 보는 화면
+        let collectionViewHeight = mapCollectionView.contentSize.height // 전체 사이즈
+        let paginationY = mapCollectionView.bounds.size.height // 유저 화면의 가장 아래 y축 이라고 생각
+        
+        if contentOffsetY > collectionViewHeight - paginationY {
+            if courseList.count < pageNo * serverResponseNumber {
+                // 페이지 끝에 도달하면 현재 페이지에 더 이상 데이터가 없음을 의미
+                // 새로온 데이터의 갯수가 원래 서버에서 응답에서 온 갯수보다 작으면 페이지네이션 금지
+                // 페이지네이션 중단 코드
+                return
+            }
+            print("🫠\(pageNo)")
+            if pageNo < totalPageNum {
+                if !isDataLoaded {
+                    isDataLoaded = true
+                    getCourseData()
+                    pageNo += 1
+                    isDataLoaded = false
+                }
+            }
+        }
+    }
+    
 extension CourseDiscoveryVC: CourseListCVCDeleagte {
     func likeButtonTapped(wantsTolike: Bool, index: Int) {
         guard UserManager.shared.userType != .visitor else {
