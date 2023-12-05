@@ -8,11 +8,6 @@
 import UIKit
 import Combine
 
-enum CustomAlertType {
-    case text
-    case image
-}
-
 final class CustomAlertVC: UIViewController {
     
     // MARK: - Properties
@@ -31,7 +26,6 @@ final class CustomAlertVC: UIViewController {
     
     var leftButtonTapAction: (() -> Void)?
     var rightButtonTapAction: (() -> Void)?
-    private var alertType: CustomAlertType!
     
     private var cancelBag = CancelBag()
     
@@ -46,7 +40,7 @@ final class CustomAlertVC: UIViewController {
         $0.font = .b4
         $0.textColor = .g2
         $0.textAlignment = .center
-        $0.numberOfLines = 3
+        $0.numberOfLines = 2
     }
     
     private let leftButton = CustomButton(title: "보관함 가기")
@@ -61,19 +55,10 @@ final class CustomAlertVC: UIViewController {
         }
     
     // MARK: - View Life Cycle
-    init(type: CustomAlertType) {
-        super.init(nibName: nil, bundle: nil)
-        self.alertType = type
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUI()
-        self.setLayout(self.alertType)
+        self.setLayout()
         self.bindViews()
     }
 }
@@ -131,45 +116,28 @@ extension CustomAlertVC {
         alertView.layer.cornerRadius = 20
     }
     
-    private func setLayout(_ type: CustomAlertType) {
+    private func setLayout() {
         view.addSubviews(alertView)
         
-        switch type {
-        case .text:
-            alertView.addSubviews( contentsLabel, buttonStackView)
-            
-            alertView.snp.makeConstraints { make in
-                make.center.equalTo(view.safeAreaLayoutGuide)
-                make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(31)
-            }
-            
-            contentsLabel.snp.makeConstraints { make in
-                make.top.equalTo(alertView.snp.top).offset(24)
-                make.leading.trailing.equalToSuperview().inset(10)
-                make.centerX.equalToSuperview()
-            }
-        case .image:
-            alertView.addSubviews(alertImageView, contentsLabel, buttonStackView)
-            
-            alertView.snp.makeConstraints { make in
-                make.center.equalTo(view.safeAreaLayoutGuide)
-                make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(31)
-            }
-            
-            alertImageView.snp.makeConstraints { make in
-                make.top.equalToSuperview().inset(38)
-                make.centerX.equalToSuperview()
-                make.width.equalTo(189)
-                make.height.equalTo(169)
-            }
-            
-            contentsLabel.snp.makeConstraints { make in
-                make.top.equalTo(alertImageView.snp.bottom).offset(24)
-                make.leading.trailing.equalToSuperview().inset(10)
-                make.centerX.equalToSuperview()
-            }
+        alertView.addSubviews(alertImageView, contentsLabel, buttonStackView)
+        
+        alertView.snp.makeConstraints { make in
+            make.center.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(31)
         }
         
+        alertImageView.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(38)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(189)
+            make.height.equalTo(169)
+        }
+        
+        contentsLabel.snp.makeConstraints { make in
+            make.top.equalTo(alertImageView.snp.bottom).offset(24)
+            make.leading.trailing.equalToSuperview().inset(10)
+            make.centerX.equalToSuperview()
+        }
         buttonStackView.snp.makeConstraints { make in
             make.top.equalTo(contentsLabel.snp.bottom).offset(26)
             make.leading.trailing.equalToSuperview().inset(14)
