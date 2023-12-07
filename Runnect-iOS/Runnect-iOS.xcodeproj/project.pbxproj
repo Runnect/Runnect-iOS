@@ -15,7 +15,7 @@
 		23EE06D12AC2F44E00CB3FF8 /* TmapAddressSearchingResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06D02AC2F44E00CB3FF8 /* TmapAddressSearchingResponseDto.swift */; };
 		712F661D2A7B7BAB00D9539B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712F661C2A7B7BAB00D9539B /* Config.swift */; };
 		7136BF8A2AF921A900679364 /* CustomBottomSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7136BF892AF921A900679364 /* CustomBottomSheetVC.swift */; };
-		71717B072B063E14004EA8DA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 71DBF23D2ABB255A0013415B /* GoogleService-Info.plist */; };
+		713BA40B2B218AF8009091A8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 713BA40A2B218AF8009091A8 /* GoogleService-Info.plist */; };
 		717916DA2B13613B009CEF97 /* MarathonListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717916D92B13613B009CEF97 /* MarathonListResponseDto.swift */; };
 		717916DE2B137DC3009CEF97 /* TotalPageCountDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717916DD2B137DC3009CEF97 /* TotalPageCountDto.swift */; };
 		71F7804E2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F7804D2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift */; };
@@ -182,9 +182,9 @@
 		7110A6032AA337DD009A7E99 /* Runnect-iOSDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Runnect-iOSDebug.entitlements"; sourceTree = "<group>"; };
 		712F661C2A7B7BAB00D9539B /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		7136BF892AF921A900679364 /* CustomBottomSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheetVC.swift; sourceTree = "<group>"; };
+		713BA40A2B218AF8009091A8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		717916D92B13613B009CEF97 /* MarathonListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonListResponseDto.swift; sourceTree = "<group>"; };
 		717916DD2B137DC3009CEF97 /* TotalPageCountDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalPageCountDto.swift; sourceTree = "<group>"; };
-		71DBF23D2ABB255A0013415B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Runnect-iOS/Runnect-iOS/Runnect-iOS/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		71F7804D2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonTitleCollectionViewCell.swift; sourceTree = "<group>"; };
 		71F7804F2B0893D700B53253 /* MarathonMapCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonMapCollectionViewCell.swift; sourceTree = "<group>"; };
 		71F7BF062B0CDFE300B752B3 /* MarathonCourseListCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonCourseListCVC.swift; sourceTree = "<group>"; };
@@ -834,7 +834,7 @@
 				CE6655A9295D7FAA00C64E12 /* Network */,
 				CE6655A8295D7F7D00C64E12 /* Presentation */,
 				CE4545D6295D7AF5003201E1 /* Info.plist */,
-				71DBF23D2ABB255A0013415B /* GoogleService-Info.plist */,
+				713BA40A2B218AF8009091A8 /* GoogleService-Info.plist */,
 			);
 			path = "Runnect-iOS";
 			sourceTree = "<group>";
@@ -1289,7 +1289,7 @@
 			files = (
 				CE665615295D989A00C64E12 /* .swiftlint.yml in Resources */,
 				CE17F0342961BEF800E1DED0 /* Pretendard-Bold.otf in Resources */,
-				71717B072B063E14004EA8DA /* GoogleService-Info.plist in Resources */,
+				713BA40B2B218AF8009091A8 /* GoogleService-Info.plist in Resources */,
 				CE17F0352961BEF800E1DED0 /* Pretendard-SemiBold.otf in Resources */,
 				CE17F0332961BEF800E1DED0 /* Pretendard-Medium.otf in Resources */,
 				CE6655BF295D82E200C64E12 /* .gitkeep in Resources */,
