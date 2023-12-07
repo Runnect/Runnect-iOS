@@ -387,9 +387,7 @@ extension CourseDiscoveryVC: UIScrollViewDelegate {
     }
     
     private func handleButtonVisibility(uploadButtonChanged: Bool, hidden: Bool, miniHidden: Bool) {
-        guard self.uploadButtonChanged != uploadButtonChanged else {
-            return
-        }
+        guard self.uploadButtonChanged != uploadButtonChanged else { return }
         
         toggleUploadButtons(hidden: hidden, miniHidden: miniHidden)
         self.uploadButtonChanged = uploadButtonChanged
@@ -401,10 +399,21 @@ extension CourseDiscoveryVC: UIScrollViewDelegate {
     }
     
     private func animateButtonTransition(button: UIButton, hidden: Bool) {
-        UIView.transition(with: button, duration: 0.5, options: .transitionFlipFromRight, animations: {
+        let scale: CGFloat = hidden ? 0.1 : 1.0
+        let alpha: CGFloat = hidden ? 0.0 : 1.0
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            button.transform = CGAffineTransform(scaleX: scale, y: scale)
+            button.alpha = alpha
+        }) { _ in
             button.isHidden = hidden
-        }, completion: nil)
+            
+            // Reset transform after animation completes
+            button.transform = CGAffineTransform.identity
+        }
     }
+
+
 }
 
 // MARK: - CourseListCVCDelegate
