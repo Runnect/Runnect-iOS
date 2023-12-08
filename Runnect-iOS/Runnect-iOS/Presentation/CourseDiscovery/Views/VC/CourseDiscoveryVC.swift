@@ -23,6 +23,7 @@ final class CourseDiscoveryVC: UIViewController {
     private var cancelBag = CancelBag()
     private var specialList = [String]()
     private var totalPageNum = 0
+    private var isEnd = false
     private var pageNo = 1
     private var sort = "date"
     private var isDataLoaded = false
@@ -444,10 +445,11 @@ extension CourseDiscoveryVC {
                         do {
                             let responseDto = try result.map(BaseResponse<PickedMapListResponseDto>.self)
                             guard let data = responseDto.data else { return }
-                            
+                            self.totalPageNum = data.totalPageSize
+                            self.isEnd = data.isEnd
                             self.courseList.append(contentsOf: data.publicCourses)
                             self.mapCollectionView.reloadData()
-                            
+                            print("isEnd= \(self.isEnd), totalPageNum= \(self.totalPageNum)")
                         } catch {
                             print(error.localizedDescription)
                         }
