@@ -149,27 +149,31 @@ extension DepartureSearchVC {
         
         DispatchQueue.global().async { [weak self] in
             guard let self = self else { return }
-            if CLLocationManager.locationServicesEnabled() {
-                switch authorizationStatus {
-                case .notDetermined ,.restricted ,.denied:
-                    DispatchQueue.main.async {
-                        self.presentAlertVC()
-                    }
-                default:
-                    DispatchQueue.main.async {
-                        self.naviBar.showKeyboard()
-                    }
-                }
-            } else {
+            
+            guard CLLocationManager.locationServicesEnabled() else {
+                /// 전체 위치 서비스가 꺼진 경우
                 DispatchQueue.main.async {
                     self.presentServiceAlertVC()
+                }
+                return
+            }
+            
+            switch authorizationStatus {
+            case .notDetermined, .restricted, .denied:
+                /// 러넥트 위치 서비스가 꺼진 경우
+                DispatchQueue.main.async {
+                    self.presentAlertVC()
+                }
+            default:
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.55) {
+                    self.naviBar.showKeyboard()
                 }
             }
         }
     }
     
     private func presentServiceAlertVC() {
-        let requestLocationServiceAlert = UIAlertController(title: "위치 정보 이용", message: "위치 서비스를 사용할 수 없습니다.\n디바이스의 '설정 > 개인정보 보호'에서\n위치 서비스를 먼저 켜주세요.", preferredStyle: .alert)
+        let requestLocationServiceAlert = UIAlertController(title: "위치 정보 이용", message: "'위치 서비스'를 사용할 수 없습니다.\n디바이스의 '설정 > 개인정보 보호'에서\n위치 서비스를 먼저 켜주세요.", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
             self?.navigationController?.popViewController(animated: true)
         }
