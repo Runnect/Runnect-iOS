@@ -377,7 +377,7 @@ extension CourseDiscoveryVC: UIScrollViewDelegate {
     
     private func changeButtonStyleOnScroll() {
         let contentOffsetY = mapCollectionView.contentOffset.y
-        let scrollThreshold = mapCollectionView.bounds.size.height * 0.3 // 30% 스크롤 했으면 UI 변경
+        let scrollThreshold = mapCollectionView.bounds.size.height * 0.1 // 10% 스크롤 했으면 UI 변경
         
         if contentOffsetY > scrollThreshold {
             handleButtonVisibility(uploadButtonChanged: true, hidden: true, miniHidden: false)
@@ -394,15 +394,15 @@ extension CourseDiscoveryVC: UIScrollViewDelegate {
     }
     
     private func toggleUploadButtons(hidden: Bool, miniHidden: Bool) {
-        animateButtonTransition(button: uploadButton, hidden: hidden)
-        animateButtonTransition(button: miniUploadButton, hidden: miniHidden)
+        animateButtonTransition(button: uploadButton, hidden: hidden, delay: 0)
+        animateButtonTransition(button: miniUploadButton, hidden: miniHidden, delay: 0.1) // 예시로 0.25초 딜레이 적용
     }
     
-    private func animateButtonTransition(button: UIButton, hidden: Bool) {
+    private func animateButtonTransition(button: UIButton, hidden: Bool, delay: TimeInterval) {
         let scale: CGFloat = hidden ? 0.1 : 1.0
         let alpha: CGFloat = hidden ? 0.0 : 1.0
         
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 0.5, delay: delay, options: .transitionCurlUp, animations: {
             button.transform = CGAffineTransform(scaleX: scale, y: scale)
             button.alpha = alpha
         }) { _ in
@@ -412,8 +412,6 @@ extension CourseDiscoveryVC: UIScrollViewDelegate {
             button.transform = CGAffineTransform.identity
         }
     }
-
-
 }
 
 // MARK: - CourseListCVCDelegate
