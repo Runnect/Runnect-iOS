@@ -38,4 +38,3 @@ class BaseView: UIView, BaseViewProtocol {
     
     func setLayout() { }
 }
-

@@ -211,12 +211,15 @@ extension SignInSocialLoginVC: ASAuthorizationControllerPresentationContextProvi
                 print("token : \(String(describing: tokeStr))")
                 
                 UserManager.shared.signIn(token: tokeStr, provider: "APPLE") { [weak self] result in
+                    
                     switch result {
                     case .success(let type):
+                        
                         type == "Signup" ? self?.pushToNickNameSetUpVC() : self?.pushToTabBarController()
                     case .failure(let error):
                         print(error)
                         self?.showNetworkFailureToast()
+
                     }
                 }
             default:
