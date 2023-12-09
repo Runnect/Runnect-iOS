@@ -9,14 +9,16 @@ import Foundation
 import Moya
 
 enum PublicCourseRouter {
-    case getCourseData(pageNo: Int)
+    case getCourseData(pageNo: Int, sort: String)
     case getCourseSearchData(keyword: String)
+    case getMarathonCourseData
+    case getTotalPageCount
     case courseUploadingData(param: CourseUploadingRequestDto)
     case getUploadedCourseDetail(publicCourseId: Int)
     case getUploadedCourseInfo
     case updatePublicCourse(publicCourseId: Int, editCourseRequestDto: EditCourseRequestDto)
     case deleteUploadedCourse(publicCourseIdList: [Int])
-}     
+}
 
 extension PublicCourseRouter: TargetType {
     
@@ -31,8 +33,12 @@ extension PublicCourseRouter: TargetType {
         switch self {
         case .getCourseData, .courseUploadingData:
             return "/public-course"
+        case .getMarathonCourseData:
+            return "/public-course/marathon"
         case .getCourseSearchData:
             return "/public-course/search"
+        case .getTotalPageCount:
+            return "public-course/total-page-count"
         case .getUploadedCourseDetail(let publicCourseId):
             return "/public-course/detail/\(publicCourseId)"
         case .getUploadedCourseInfo:
@@ -46,7 +52,7 @@ extension PublicCourseRouter: TargetType {
     
     var method: Moya.Method {
         switch self {
-        case .getCourseData, .getCourseSearchData, .getUploadedCourseDetail, .getUploadedCourseInfo:
+        case .getCourseData, .getCourseSearchData, .getMarathonCourseData, .getUploadedCourseDetail, .getUploadedCourseInfo, .getTotalPageCount:
             return .get
         case .courseUploadingData:
             return .post
@@ -59,8 +65,9 @@ extension PublicCourseRouter: TargetType {
     
     var task: Moya.Task {
         switch self {
-        case .getCourseData(let pageNo):
-            return .requestParameters(parameters: ["pageNo": pageNo], encoding: URLEncoding.default)
+        case .getCourseData(let pageNo, let sort):
+            var parameters: [String: Any] = ["pageNo": pageNo, "sort": sort]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
         case .getCourseSearchData(let keyword):
             return .requestParameters(parameters: ["keyword": keyword], encoding: URLEncoding.default)
         case .courseUploadingData(param: let param):
@@ -75,7 +82,7 @@ extension PublicCourseRouter: TargetType {
                 fatalError("Encoding 실패")}
         case .deleteUploadedCourse(let publicCourseIdList):
             return .requestParameters(parameters: ["publicCourseIdList": publicCourseIdList], encoding: JSONEncoding.default)
-        case .getUploadedCourseDetail, .getUploadedCourseInfo:
+        case .getMarathonCourseData, .getTotalPageCount, .getUploadedCourseDetail, .getUploadedCourseInfo:
             return .requestPlain
         }
     }
