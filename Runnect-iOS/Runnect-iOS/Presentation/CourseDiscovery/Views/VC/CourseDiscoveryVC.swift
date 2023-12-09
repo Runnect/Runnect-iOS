@@ -80,15 +80,12 @@ final class CourseDiscoveryVC: UIViewController {
         setLayout()
         setAddTarget()
         setCombineEvent()
-        //        getTotalPageNum()
         self.getCourseData()
-        self.totalPageNum = 5 // test 코드
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.hideTabBar(wantsToHide: false)
-        // 여기에 기존 데이터 한번에 불러오는 코스 작성 page 순서만 asyc로 작업
     }
 }
 
@@ -109,7 +106,6 @@ extension CourseDiscoveryVC {
     }
     
     private func register() {
-        
         let cellTypes: [UICollectionViewCell.Type] = [AdImageCollectionViewCell.self,
                                                       MarathonTitleCollectionViewCell.self,
                                                       MarathonMapCollectionViewCell.self,
@@ -126,16 +122,6 @@ extension CourseDiscoveryVC {
         self.miniUploadButton.addTarget(self, action: #selector(pushToDiscoveryVC), for: .touchUpInside)
     }
     
-    //    private func setDataLoadIfNeeded() { /// 데이터를 받고 다른 뷰를 갔다가 와도 데이터가 유지되게끔 하기 위한 함수 입니다. (한번만 호출되면 되는 함수!)
-    //        if !isDataLoaded {
-    //            courseList.removeAll()
-    //            pageNo = 1
-    //            mapCollectionView.reloadData()
-    //            getCourseData()
-    //            isDataLoaded = true
-    //        }
-    //    }
-    
     private func setCombineEvent() {
         CourseSelectionPublisher.shared.didSelectCourse
             .sink { [weak self] indexPath in
@@ -148,7 +134,7 @@ extension CourseDiscoveryVC {
         if let index = courseList.firstIndex(where: { $0.id == publicCourseId }) {
             let indexPath = IndexPath(item: index, section: Section.courseList)
             mapCollectionView.reloadItems(at: [indexPath])
-            print("\(indexPath) 교체 되었음")
+            print("\(indexPath) 부분 스크랩 교체 되었음")
         }
     }
 }
@@ -449,7 +435,6 @@ extension CourseDiscoveryVC: CourseListCVCDeleagte {
 extension CourseDiscoveryVC: ScrapStateDelegate {
     func didUpdateScrapState(publicCourseId: Int, isScrapped: Bool) {
         // CourseDetail에서 id와 scrap정보를 받아와 여기서 처리
-        print("😭CourseDiscoveryVC 에 들어오긴함?")
         if let index = courseList.firstIndex(where: { $0.id == publicCourseId }) {
             courseList[index].scrap = isScrapped
             reloadCellForCourse(publicCourseId: publicCourseId)
@@ -466,7 +451,7 @@ extension CourseDiscoveryVC {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [self] in
             publicCourseProvider.request(.getCourseData(pageNo: pageNo, sort: sort)) { response in
                 LoadingIndicator.hideLoading()
-                print("‼️ 이번 sort 는 요?? \(self.sort) ‼️\n")
+                print("‼️ sort=  \(self.sort) ‼️\n")
                 switch response {
                 case .success(let result):
                     let status = result.statusCode
