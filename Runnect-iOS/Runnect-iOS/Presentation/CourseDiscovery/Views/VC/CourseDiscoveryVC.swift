@@ -447,8 +447,8 @@ extension CourseDiscoveryVC: ScrapStateDelegate {
 
 extension CourseDiscoveryVC {
     private func getCourseData() {
-        LoadingIndicator.showLoading() // 항상 0.7초 늦게 로딩이 되어 버림 0.7초를 넣은 이유는 pagination을 구현할때 한번에 다 받아오지 않게 하기 위함
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [self] in
+        LoadingIndicator.showLoading() // 항상 0.5초 늦게 로딩이 되어 버림 0.5초를 넣은 이유는 pagination을 구현할때 한번에 다 받아오지 않게 하기 위함
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [self] in
             publicCourseProvider.request(.getCourseData(pageNo: pageNo, sort: sort)) { response in
                 LoadingIndicator.hideLoading()
                 print("‼️ sort=  \(self.sort) ‼️\n")
