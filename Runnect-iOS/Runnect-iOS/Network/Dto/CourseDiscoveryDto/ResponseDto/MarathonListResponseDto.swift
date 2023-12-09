@@ -20,12 +20,12 @@ struct marathonCourse: Codable {
     let title: String
     let image: String
     let scrap: Bool?
-    let departure: Departure
+    let departure: MarathonDeparture
 }
 
 // MARK: - CourseDiscoveryDeparture
 
-struct Departure: Codable {
+struct MarathonDeparture: Codable {
     let region: String
     let city: String
 }
