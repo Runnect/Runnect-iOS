@@ -64,16 +64,6 @@ final class UserManager {
                 }
             case .failure(let error):
                 print(error.localizedDescription)
-                if let response = error.response {
-                    if let responseData = String(data: response.data, encoding: .utf8) {
-                        print("\n 🔥 SignIn 메세지 \(responseData)\n")   // 이 코드는 2차 업데이트 토큰 부분 디버깅 용으로 사용합니다. (업데이트 이후 제거)
-                    } else {
-                        print(error.localizedDescription)
-                    }
-                } else {
-                    print(error.localizedDescription)
-                }
-                
                 completion(.failure(.networkFail))
             }
         }
@@ -103,17 +93,6 @@ final class UserManager {
                 }
             case .failure(let error):
                 print(error.localizedDescription)
-                // 아래 코드는 2차 업데이트 토큰 부분 디버깅 용으로 사용합니다. (업데이트 이후 제거)
-//                if let response = error.response {
-//                    if let responseData = String(data: response.data, encoding: .utf8) {
-//                        print("\n getNewToken 메세지 ‼️🔥\(responseData)\n")
-//                    } else {
-//                        print(error.localizedDescription)
-//                    }
-//                } else {
-//                    print(error.localizedDescription)
-//                }
-                
                 completion(.failure(.networkFail))
             }
         }

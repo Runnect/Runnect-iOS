@@ -17,19 +17,19 @@ enum SheetType {
 
 final class CustomBottomSheetVC: UIViewController {
     // MARK: - Properties
-    
+    private let backgroundView = UIView().then {
+        $0.backgroundColor = .black.withAlphaComponent(0.65)
+    }
+    private let titleNameMaxLength = 20
+    private var bottomSheetType: SheetType!
     var backgroundTapAction: (() -> Void)?
     var completeButtonTapAction: ((String) -> Void)?
     
-    private let titleNameMaxLength = 20
-    private let bottomHeight: CGFloat = 206
-    private let backgroundView = UIView().then { $0.backgroundColor = .g1.withAlphaComponent(0.6) }
-    
+    // 바텀 시트 높이
+    let bottomHeight: CGFloat = 206
     private var cancelBag = CancelBag()
-    private var bottomSheetType: SheetType!
     
     // MARK: - UI Components
-    
     private let bottomSheetView = UIView().then {
         $0.backgroundColor = .w1
         $0.layer.cornerRadius = 20
@@ -65,7 +65,6 @@ final class CustomBottomSheetVC: UIViewController {
     }
     
     // MARK: - Initialization
-    
     init(type: SheetType) {
         super.init(nibName: nil, bundle: nil)
         self.bottomSheetType = type
@@ -76,22 +75,21 @@ final class CustomBottomSheetVC: UIViewController {
     }
     
     // MARK: - View Life Cycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUI()
         self.setLayout(bottomSheetType)
         self.setDelegate()
+        self.setTapGesture()
+        self.setAddTarget()
         self.setBinding()
-        self.showBottomSheet()
         if bottomSheetType == .textField {
-            self.setGesture()
-            self.setAddTarget()
+            showBottomSheet()
+            setupGestureRecognizer()
         }
     }
     
     // MARK: - Methods
-    
     @discardableResult
     func setContentsText(text: String) -> Self {
         contentsLabel.text = text
@@ -114,6 +112,21 @@ final class CustomBottomSheetVC: UIViewController {
         bottomSheetTextField.delegate = self
     }
     
+    private func dismissBottomSheet() {
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    private func setTapGesture() {
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleBackgroundTap))
+        backgroundView.addGestureRecognizer(tapGesture)
+    }
+    
     private func setAddTarget() {
         NotificationCenter.default.addObserver(
             self,
@@ -131,7 +144,6 @@ final class CustomBottomSheetVC: UIViewController {
 }
 
 // MARK: - UI & Layout
-
 extension CustomBottomSheetVC {
     private func setUI() {
         view.addSubview(backgroundView)
@@ -187,6 +199,7 @@ extension CustomBottomSheetVC {
         bottomSheetView.snp.makeConstraints { make in
             make.leading.bottom.trailing.equalToSuperview()
             make.top.equalTo(view.snp.top).offset(topConst)
+            make.height.equalTo(bottomHeight)
         }
         
         dismissIndicatorView.snp.makeConstraints { make in
@@ -202,6 +215,7 @@ extension CustomBottomSheetVC {
         }
         
         bottomSheetTextField.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
             make.top.equalTo(contentsLabel.snp.bottom).offset(19)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(44)
@@ -231,40 +245,64 @@ extension CustomBottomSheetVC {
         bottomSheetView.snp.remakeConstraints { make in
             make.leading.bottom.trailing.equalToSuperview()
             make.top.equalTo(view.snp.top).offset(topConst)
+            make.height.equalTo(bottomHeight)
         }
         
         UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
+            self.backgroundView.alpha = 0.65
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
     
-    private func setGesture() {
+    private func hideBottomSheetAndGoBack() {
+        let safeAreaHeight = view.safeAreaLayoutGuide.layoutFrame.height
+        let bottomPadding = view.safeAreaInsets.bottom
+        
+        let topConst = (safeAreaHeight + bottomPadding)
+        
+        bottomSheetView.snp.remakeConstraints { make in
+            make.leading.bottom.trailing.equalToSuperview()
+            make.top.equalTo(view.snp.top).offset(topConst)
+            make.height.equalTo(bottomHeight)
+        }
+        
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
+            self.backgroundView.alpha = 0.0
+            self.view.layoutIfNeeded()
+        }) { _ in
+            if self.presentingViewController != nil {
+                self.dismiss(animated: false, completion: nil)
+            }
+        }
+    }
+    
+    private func setupGestureRecognizer() {
         let dimmedTap = UITapGestureRecognizer(target: self, action: #selector(dimmedViewTapped(_:)))
         backgroundView.addGestureRecognizer(dimmedTap)
         backgroundView.isUserInteractionEnabled = true
         
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGesture(_:)))
-        bottomSheetView.addGestureRecognizer(panGesture)
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(panGesture))
+        swipeGesture.direction = .down
+        view.addGestureRecognizer(swipeGesture)
     }
 }
 
 // MARK: - @objc Function
-
 extension CustomBottomSheetVC {
-    @objc private func keyboardWillShow(_ sender: Notification) {         // 키보드의 높이만큼 화면을 올려줍니다.
-        if let keyboardFrame: NSValue = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-            self.view.frame.origin.y -= keyboardHeight
-        }
+    @objc private func keyboardWillShow(_ sender: Notification) {
+        self.view.frame.origin.y = -291
     }
     
-    @objc private func keyboardWillHide(_ sender: Notification) {         // 키보드의 높이만큼 화면을 내려줍니다.
-        if let keyboardFrame: NSValue = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-            self.view.frame.origin.y += keyboardHeight
-        }
+    @objc private func keyboardWillHide(_ sender: Notification) {
+        self.view.frame.origin.y = 0
+    }
+    
+    @objc private func endEditing() {
+        bottomSheetTextField.resignFirstResponder()
+    }
+    
+    @objc private func handleBackgroundTap() {
+        dismissBottomSheet()
     }
     
     @objc private func textFieldTextDidChange() {
@@ -282,70 +320,22 @@ extension CustomBottomSheetVC {
     }
     
     @objc private func dimmedViewTapped(_ tapRecognizer: UITapGestureRecognizer) {
-        let safeAreaHeight = view.safeAreaLayoutGuide.layoutFrame.height
-        let bottomPadding = view.safeAreaInsets.bottom
-        
-        let topConst = (safeAreaHeight + bottomPadding)
-        
-        bottomSheetView.snp.remakeConstraints { make in
-            make.leading.bottom.trailing.equalToSuperview()
-            make.top.equalTo(view.snp.top).offset(topConst)
-        }
-        
-        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
-            self.backgroundView.alpha = 0
-            self.view.layoutIfNeeded()
-        }, completion: { _ in
-            if self.presentingViewController != nil {
-                self.dismiss(animated: true, completion: nil)
-            }
-        }) // 하나 이상의 클로저 인수를 전달할때, 후행 클로저 구문을 사용하면 안된다는 경고로 일부 수정
-        
+        hideBottomSheetAndGoBack()
     }
     
-    @objc private func panGesture(_ recognizer: UIPanGestureRecognizer) {
-        
-        let translation = recognizer.translation(in: bottomSheetView)
-        let velocity = recognizer.velocity(in: bottomSheetView)
-        
-        switch recognizer.state {
-        case .began:
-            backgroundView.alpha = 0 // 시작할때 드래그 시작할때 alpha 값 0
-            recognizer.setTranslation(CGPoint.zero, in: bottomSheetView)
-        case .changed:
-            if velocity.y > 0 && translation.y > 0 {   // 아래로만 Pan 가능한 로직 , 여기서 translation.y > 0 이거 추가 안해주면 재밌게 에니메이션이 움직인다..
-                backgroundView.alpha = 0
-                UIView.animate(withDuration: 0.25, animations: {
-                    self.view.transform = CGAffineTransform(translationX: 0, y: translation.y)
-                })
-            } else if velocity.y < 0 && translation.y > 0 {
-                // 위로도 움직이게는 하지만, 한계설정을 바텀시트의 높이로 설정, 즉 위쪽으로 하나도 못 움직이게 설정 ( translation.y > 0 ) 한계점 설정
-                UIView.animate(withDuration: 0.25, animations: {
-                    self.view.transform = CGAffineTransform(translationX: 0, y: translation.y)
-                })
+    @objc func panGesture(_ recognizer: UISwipeGestureRecognizer) {
+        if recognizer.state == .ended {
+            switch recognizer.direction {
+            case .down:
+                hideBottomSheetAndGoBack()
+            default:
+                break
             }
-        case .ended:
-            // 끝나는 지점의 translation.y 값이 75보다 작으면(작게 이동 시) 뷰의 위치를 다시 원상복구하겠다. = 즉, 다시 y=0인 지점으로 리셋
-            if translation.y < 75 {
-                UIView.animate(withDuration: 0.25, animations: {
-                    self.view.transform = .identity
-                }, completion: { _ in
-                    // 애니메이션이 끝나면 실행될 코드
-                    self.backgroundView.alpha = 0.6
-                })
-                recognizer.setTranslation(CGPoint.zero, in: bottomSheetView)
-            } else { // translation.y 75 이상이면 해당 화면 dismiss 직접 사용해보니 적절한 값이 75라고 판단
-                self.backgroundView.alpha = 0
-                dismiss(animated: true, completion: nil)
-            }
-        default:
-            break
         }
     }
 }
 
 // MARK: - UITextFieldDelegate
-
 extension CustomBottomSheetVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

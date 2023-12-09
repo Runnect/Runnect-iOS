@@ -5,23 +5,19 @@
 //  Created by YEONOO on 2023/01/10.
 //
 
-///  여기 있는 코드는 사용되지 않습니다.
-///  CourseDiscoveryVC에 따로 선언 되어있습니다.
-///  추가 사용안할시 삭제 예정
-
 import UIKit
 import SnapKit
 
 import Then
 
 class MapCollectionViewCell: UICollectionViewCell {
-    
+        
     // MARK: - collectionview
     
     private lazy var mapCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        
+
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -35,11 +31,11 @@ class MapCollectionViewCell: UICollectionViewCell {
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
     final let itemSpacing: CGFloat = 10
     final let lineSpacing: CGFloat = 20
-    
+   
     // MARK: - Life cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setLayout()
+        layout()
         register()
         setDelegate()
     }
@@ -56,26 +52,25 @@ extension MapCollectionViewCell {
     }
     private func register() {
         mapCollectionView.register(CourseListCVC.self,
-                                   forCellWithReuseIdentifier: CourseListCVC.className)
+                                          forCellWithReuseIdentifier: CourseListCVC.className)
     }
 }
+// MARK: - Extensions
 
 extension MapCollectionViewCell {
     
     // MARK: - Layout Helpers
     
-    private func setLayout() {
+    func layout() {
         contentView.backgroundColor = .clear
         contentView.addSubview(mapCollectionView)
         mapCollectionView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalTo(contentView.safeAreaLayoutGuide)
             $0.bottom.equalToSuperview()
-            //            $0.height.equalTo(1000)
+//            $0.height.equalTo(1000)
         }
     }
-    
-    
 }
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
@@ -114,5 +109,5 @@ extension MapCollectionViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return self.lineSpacing
     }
-    
+
 }

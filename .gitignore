@@ -113,12 +113,5 @@ Gemfile.lock
 report.xml
 Runnect-iOS/fastlane/.env.default
 
-### Runniest project - git ignore setting ###
-Runnect-iOS/Runnect-iOS/Info.plist
-Runnect-iOS/Info.plist
-Info.plist
-
-### dynamicLink ###
+## dynamicLink
 Runnect-iOS/Runnect-iOS/GoogleService-Info.plist
-Runnect-iOS/GoogleService-Info.plist
-GoogleService-Info.plist

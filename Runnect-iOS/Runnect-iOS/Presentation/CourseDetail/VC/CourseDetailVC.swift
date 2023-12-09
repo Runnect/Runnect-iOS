@@ -23,8 +23,6 @@ final class CourseDetailVC: UIViewController {
     
     // MARK: - Properties
     
-    weak var delegate: ScrapStateDelegate?
-    
     private let scrapProvider = Providers.scrapProvider
     
     private let PublicCourseProvider = Providers.publicCourseProvider
@@ -39,6 +37,8 @@ final class CourseDetailVC: UIViewController {
     private var publicCourseId: Int?
     private var userId: Int?
     private var isMyCourse: Bool?
+    
+    private var safariViewController: SFSafariViewController?
     
     // MARK: - UI Components
     
@@ -146,47 +146,43 @@ extension CourseDetailVC {
             return
         }
         
-        guard let publicCourseId = publicCourseId else { return }
-        
         scrapCourse(scrapTF: !sender.isSelected)
-        delegate?.didUpdateScrapState(publicCourseId: publicCourseId, isScrapped: !sender.isSelected)
-        print("CourseDetailVC 스크랩 탭🔥publicCourseId=\(publicCourseId), isScrapped은 \(!sender.isSelected)요렇게 변경 ")
     }
     
     @objc func shareButtonTapped() {
         guard let model = self.uploadedCourseDetailModel else {
             return
         }
-        
+
         let publicCourse = model.publicCourse
         let title = publicCourse.title
         let courseId = publicCourse.id // primaryKey
         let description = publicCourse.description
         let courseImage = publicCourse.image
-        
+
         let dynamicLinksDomainURIPrefix = "https://runnect.page.link"
         guard let link = URL(string: "\(dynamicLinksDomainURIPrefix)/?courseId=\(courseId)") else {
             return
         }
-        
+
         guard let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: dynamicLinksDomainURIPrefix) else {
             return
         }
-        
+
         linkBuilder.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.runnect.Runnect-iOS")
         linkBuilder.iOSParameters?.appStoreID = "1663884202"
         linkBuilder.iOSParameters?.minimumAppVersion = "1.0.4"
-        
+
         linkBuilder.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
         linkBuilder.socialMetaTagParameters?.imageURL = URL(string: courseImage)
         linkBuilder.socialMetaTagParameters?.title = title
         linkBuilder.socialMetaTagParameters?.descriptionText = description
-        
+
         guard let longDynamicLink = linkBuilder.url else {
             return
         }
         print("The long URL is: \(longDynamicLink)")
-        
+
         /// 짧은 Dynamic Link로 변환하는 부분 입니다.
         linkBuilder.shorten { [weak self] url, warnings, error in
             guard let shortDynamicLink = url else {
@@ -195,9 +191,9 @@ extension CourseDetailVC {
                 }
                 return
             }
-            
+
             print("🔥The short URL is: \(shortDynamicLink)")
-            
+
             DispatchQueue.main.async {
                 let activityVC = UIActivityViewController(activityItems: [shortDynamicLink.absoluteString], applicationActivities: nil)
                 activityVC.popoverPresentationController?.sourceView = self?.view
@@ -235,7 +231,7 @@ extension CourseDetailVC {
             $0.dataSource = items
             $0.textFont = .b3
         }
-        
+
         menu.customCellConfiguration = { (index: Index, _: String, cell: DropDownCell) -> Void in
             let lastDividerLineRemove = UIView(frame: CGRect(origin: CGPoint(x: 0, y: isMyCourse ? 79 : 39), size: CGSize(width: 170, height: 10)))
             lastDividerLineRemove.backgroundColor = .white
@@ -323,6 +319,7 @@ extension CourseDetailVC {
 // MARK: - Layout Helpers
 
 extension CourseDetailVC {
+
     private func setNavigationBar() {
         view.addSubview(navibar)
         view.addSubview(moreButton)

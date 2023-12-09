@@ -23,7 +23,7 @@ final class AuthInterceptor: RequestInterceptor {
         // 방문자일 경우
         if UserManager.shared.userType == .visitor && urlRequest.url?.absoluteString.hasPrefix(Config.baseURL) == true {
             urlRequest.setValue("visitor", forHTTPHeaderField: "accessToken")
-            urlRequest.setValue("visitor", forHTTPHeaderField: "refreshToken")
+            urlRequest.setValue("null", forHTTPHeaderField: "refreshToken")
             completion(.success(urlRequest))
             return
         }

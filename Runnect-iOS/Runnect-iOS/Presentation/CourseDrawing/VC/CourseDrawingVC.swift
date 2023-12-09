@@ -259,7 +259,7 @@ extension CourseDrawingVC {
             guard handleVisitor() else { return }
             self.courseName = text
             self.mapView.capturePathImage()
-            self.dismiss(animated: false)
+            self.dismiss(animated: true)
         }
         self.present(bottomSheetVC, animated: false)
     }
@@ -342,7 +342,7 @@ extension CourseDrawingVC {
         
         if SelectedInfo.shared.type == .map {
             self.aboutMapNoticeView.addSubview(aboutMapNoticeLabel)
-            self.naviBarContainerStackView.addArrangedSubviews(underlineView, aboutMapNoticeView)
+            self.naviBarContainerStackView.addArrangedSubviews(underlineView,aboutMapNoticeView)
             
             underlineView.snp.makeConstraints {
                 $0.leading.trailing.equalToSuperview()
@@ -392,7 +392,7 @@ extension CourseDrawingVC {
             make.trailing.equalTo(view.safeAreaLayoutGuide)
             make.top.equalTo(view.snp.bottom)
         }
-        
+
         completeButton.snp.makeConstraints { make in
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
             make.height.equalTo(44)
@@ -432,11 +432,11 @@ extension CourseDrawingVC {
         guard let departureLocationModel = self.departureLocationModel else { return nil }
         let path = mapView.getMarkersLatLng().map { $0.toRNLocationModel() }
         let courseDrawingRequestData = CourseDrawingRequestData(path: path,
-                                                                //                                                                title : self.courseName,
+//                                                                title : self.courseName,
                                                                 distance: self.distance,
                                                                 departureAddress: departureLocationModel.departureAddress,
                                                                 departureName: departureLocationModel.departureName)
-        
+
         let courseDrawingRequestDto = CourseDrawingRequestDto(image: imageData, data: courseDrawingRequestData)
         
         return courseDrawingRequestDto
@@ -497,3 +497,4 @@ extension CourseDrawingVC {
             }
     }
 }
+
