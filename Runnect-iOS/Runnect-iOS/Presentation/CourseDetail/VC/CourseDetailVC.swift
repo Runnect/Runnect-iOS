@@ -37,6 +37,7 @@ final class CourseDetailVC: UIViewController {
     
     private var courseId: Int?
     private var publicCourseId: Int?
+    private var userId: Int?
     private var isMyCourse: Bool?
     
     // MARK: - UI Components
@@ -204,6 +205,13 @@ extension CourseDetailVC {
         }
     }
     
+    @objc func pushToUserProfileVC() {
+        guard let userId = self.userId else {return}
+        let userProfile = UserProfileVC()
+        userProfile.setUserId(userId: userId)
+        self.navigationController?.pushViewController(userProfile, animated: true)
+    }
+    
     @objc func startButtonDidTap() {
         guard handleVisitor() else { return }
         guard let courseId = self.courseId else { return }
@@ -277,6 +285,7 @@ extension CourseDetailVC {
     
     func setData(model: UploadedCourseDetailResponseDto) {
         self.uploadedCourseDetailModel = model
+        self.userId = model.user.id
         self.mapImageView.setImage(with: model.publicCourse.image)
         self.profileImageView.image = GoalRewardInfoModel.stampNameImageDictionary[model.user.image]
         // 탈퇴 유저 처리
@@ -298,6 +307,9 @@ extension CourseDetailVC {
         likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
         moreButton.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
         shareButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
+        
+        let profileTouch = UITapGestureRecognizer(target: self, action: #selector(pushToUserProfileVC))
+        profileNameLabel.addGestureRecognizer(profileTouch)
     }
     
     private func setNullUser() {
