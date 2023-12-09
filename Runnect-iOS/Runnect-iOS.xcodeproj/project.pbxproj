@@ -18,6 +18,8 @@
 		713BA40B2B218AF8009091A8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 713BA40A2B218AF8009091A8 /* GoogleService-Info.plist */; };
 		717916DA2B13613B009CEF97 /* MarathonListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717916D92B13613B009CEF97 /* MarathonListResponseDto.swift */; };
 		717916DE2B137DC3009CEF97 /* TotalPageCountDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717916DD2B137DC3009CEF97 /* TotalPageCountDto.swift */; };
+		71BAD06A2B24CECC0061E31D /* UserProfileDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BAD0692B24CECC0061E31D /* UserProfileDto.swift */; };
+		71BAD06C2B24D1F70061E31D /* UserProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BAD06B2B24D1F70061E31D /* UserProfileVC.swift */; };
 		71F7804E2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F7804D2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift */; };
 		71F780502B0893D700B53253 /* MarathonMapCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F7804F2B0893D700B53253 /* MarathonMapCollectionViewCell.swift */; };
 		71F7BF072B0CDFE300B752B3 /* MarathonCourseListCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F7BF062B0CDFE300B752B3 /* MarathonCourseListCVC.swift */; };
@@ -185,6 +187,8 @@
 		713BA40A2B218AF8009091A8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		717916D92B13613B009CEF97 /* MarathonListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonListResponseDto.swift; sourceTree = "<group>"; };
 		717916DD2B137DC3009CEF97 /* TotalPageCountDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalPageCountDto.swift; sourceTree = "<group>"; };
+		71BAD0692B24CECC0061E31D /* UserProfileDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileDto.swift; sourceTree = "<group>"; };
+		71BAD06B2B24D1F70061E31D /* UserProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileVC.swift; sourceTree = "<group>"; };
 		71F7804D2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonTitleCollectionViewCell.swift; sourceTree = "<group>"; };
 		71F7804F2B0893D700B53253 /* MarathonMapCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonMapCollectionViewCell.swift; sourceTree = "<group>"; };
 		71F7BF062B0CDFE300B752B3 /* MarathonCourseListCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonCourseListCVC.swift; sourceTree = "<group>"; };
@@ -388,6 +392,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		71BAD06D2B24D2020061E31D /* UserProfile */ = {
+			isa = PBXGroup;
+			children = (
+				71BAD06B2B24D1F70061E31D /* UserProfileVC.swift */,
+			);
+			path = UserProfile;
+			sourceTree = "<group>";
+		};
 		A3BC2F292962C39F00198261 /* InfoVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -497,6 +509,7 @@
 				A3F67AE9296E4936001598A2 /* ActivityRecordInfoDto.swift */,
 				A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */,
 				CEFA9A2E29FC263700F2D0CF /* UserDeleteResponseDto.swift */,
+				71BAD0692B24CECC0061E31D /* UserProfileDto.swift */,
 			);
 			path = MyPageDto;
 			sourceTree = "<group>";
@@ -898,6 +911,7 @@
 				CE17F03B2961C2F700E1DED0 /* MyPage */,
 				CE17F03E2961C38100E1DED0 /* CourseDetail */,
 				CE14676C296568C000DCEA1B /* Running */,
+				71BAD06D2B24D2020061E31D /* UserProfile */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -1473,6 +1487,7 @@
 				CE6B63D3296725E6003F900F /* CourseListCVC.swift in Sources */,
 				CEF3CD9A296DB305002723A1 /* CourseDetailResponseDto.swift in Sources */,
 				A3E55BA029C815B10000D85D /* SignInSocialLoginVC.swift in Sources */,
+				71BAD06A2B24CECC0061E31D /* UserProfileDto.swift in Sources */,
 				CE29D584296416D800F47542 /* caculateStatusBarHeight.swift in Sources */,
 				CE66560C295D928300C64E12 /* setRootViewController.swift in Sources */,
 				CE6655D9295D871B00C64E12 /* URL+.swift in Sources */,
@@ -1500,6 +1515,7 @@
 				CE40BB2D296808B00030ABCA /* DepartureSearchingRouter.swift in Sources */,
 				CE15F5A4296C932E0023827C /* RunningModel.swift in Sources */,
 				CE17F02D2961BBA100E1DED0 /* ColorLiterals.swift in Sources */,
+				71BAD06C2B24D1F70061E31D /* UserProfileVC.swift in Sources */,
 				CEC2A68E2962AF2C00160BF7 /* RNMarker.swift in Sources */,
 				CE6655D2295D862A00C64E12 /* Publisher+Driver.swift in Sources */,
 				DA0587F22A05D54100B72869 /* EditCourseRequestDto.swift in Sources */,
