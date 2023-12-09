@@ -39,6 +39,8 @@ final class CourseDetailVC: UIViewController {
     
     private var safariViewController: SFSafariViewController?
     
+    weak var delegate: ScrapStateDelegate?
+    
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton)
@@ -144,7 +146,11 @@ extension CourseDetailVC {
             return
         }
         
+        guard let publicCourseId = publicCourseId else { return }
+        
         scrapCourse(scrapTF: !sender.isSelected)
+        delegate?.didUpdateScrapState(publicCourseId: publicCourseId, isScrapped: !sender.isSelected)
+        print("CourseDetailVC 스크랩 탭🔥publicCourseId=\(publicCourseId), isScrapped은 \(!sender.isSelected)요렇게 변경 ")
     }
     
     @objc func shareButtonTapped() {

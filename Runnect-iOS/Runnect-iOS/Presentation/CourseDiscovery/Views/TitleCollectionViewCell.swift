@@ -41,8 +41,12 @@ class TitleCollectionViewCell: UICollectionViewCell {
         $0.textColor = UIColor.g2
     }
     
-    private lazy var dateSortButton = createSortButton(title: "최신순", ordering: "date")
-    private lazy var scrapSortButton = createSortButton(title: "스크랩순", ordering: "scrap")
+    private lazy var dateSortButton: UIButton = createSortButton(title: "최신순", ordering: "date").then {
+        $0.isSelected = true
+        $0.titleLabel?.font = .h5
+    }
+
+    private lazy var scrapSortButton: UIButton = createSortButton(title: "스크랩순", ordering: "scrap")
     
     // MARK: - Life cycle
     
@@ -59,24 +63,37 @@ class TitleCollectionViewCell: UICollectionViewCell {
 // MARK: - Method
 
 extension TitleCollectionViewCell {
-    
     private func createSortButton(title: String, ordering: String) -> UIButton {
         let button = UIButton(type: .custom).then {
             $0.setTitle(title, for: .normal)
             $0.titleLabel?.font = .b3
-            $0.setTitleColor(.m1, for: .normal)
-            $0.setTitleColor(.g2, for: .disabled)
+            $0.setTitleColor(.g2, for: .normal)
         }
+        
+        button.setTitleColor(.m1, for: .selected)
+        
         button.tapPublisher
             .sink { [weak self] in
                 guard let self = self else { return }
-                self.delegate?.didTapSortButton(ordering: ordering)
+                
+                self.dateSortButton.isSelected = (button == self.dateSortButton)
+                self.scrapSortButton.isSelected = (button == self.scrapSortButton)
+                
+                self.dateSortButton.setTitleColor(self.dateSortButton.isSelected ? .m1 : .g2, for: .normal)
+                self.scrapSortButton.setTitleColor(self.scrapSortButton.isSelected ? .m1 : .g2, for: .normal)
+                
+                self.dateSortButton.titleLabel?.font = self.dateSortButton.isSelected ? .h5 : .b3
+                self.scrapSortButton.titleLabel?.font = self.scrapSortButton.isSelected ? .h5 : .b3
+                
+                if button.isSelected {
+                    self.delegate?.didTapSortButton(ordering: ordering)
+                }
             }
             .store(in: &cancellables)
+        
         return button
     }
 }
-
 // MARK: - Layout
 
 extension TitleCollectionViewCell {

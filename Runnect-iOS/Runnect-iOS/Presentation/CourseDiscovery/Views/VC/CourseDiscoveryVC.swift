@@ -11,6 +11,11 @@ import SnapKit
 import Combine
 import Moya
 
+protocol ScrapStateDelegate: AnyObject {
+    func didUpdateScrapState(publicCourseId: Int, isScrapped: Bool)
+    // 코스 상세 에서 스크랩 누르면 코스발견에 해당 부분 스크랩 누르는 이벤트 전달
+}
+
 final class CourseDiscoveryVC: UIViewController {
     
     // MARK: - Properties
@@ -32,6 +37,7 @@ final class CourseDiscoveryVC: UIViewController {
     // MARK: - UIComponents
     
     private lazy var naviBar = CustomNavigationBar(self, type: .title).setTitle("코스 발견")
+    
     private let searchButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icSearch, for: .normal)
         $0.tintColor = .g1
@@ -136,6 +142,14 @@ extension CourseDiscoveryVC {
                 self?.setMarathonCourseSelection(at: indexPath)
             }
             .store(in: cancelBag)
+    }
+    
+    private func reloadCellForCourse(publicCourseId: Int) {
+        if let index = courseList.firstIndex(where: { $0.id == publicCourseId }) {
+            let indexPath = IndexPath(item: index, section: Section.courseList)
+            mapCollectionView.reloadItems(at: [indexPath])
+            print("\(indexPath) 교체 되었음")
+        }
     }
 }
 
@@ -327,6 +341,7 @@ extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == Section.courseList {
             let courseDetailVC = CourseDetailVC()
+            courseDetailVC.delegate = self
             let courseModel = courseList[indexPath.item]
             courseDetailVC.setCourseId(courseId: courseModel.courseId, publicCourseId: courseModel.id)
             courseDetailVC.hidesBottomBarWhenPushed = true
@@ -426,6 +441,20 @@ extension CourseDiscoveryVC: CourseListCVCDeleagte {
         
         let publicCourseId = courseList[index].id
         self.scrapCourse(publicCourseId: publicCourseId, scrapTF: wantsTolike)
+    }
+}
+
+// MARK: - CourseDetailVCDelegate
+
+extension CourseDiscoveryVC: ScrapStateDelegate {
+    func didUpdateScrapState(publicCourseId: Int, isScrapped: Bool) {
+        // CourseDetail에서 id와 scrap정보를 받아와 여기서 처리
+        print("😭CourseDiscoveryVC 에 들어오긴함?")
+        if let index = courseList.firstIndex(where: { $0.id == publicCourseId }) {
+            courseList[index].scrap = isScrapped
+            reloadCellForCourse(publicCourseId: publicCourseId)
+            print("‼️CourseDiscoveryVC 델리게이트 받음 index=\(index)")
+        }
     }
 }
 
