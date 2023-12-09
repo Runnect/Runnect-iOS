@@ -83,6 +83,7 @@ final class CourseDetailVC: UIViewController {
         $0.text = "닉네임"
         $0.textColor = .g1
         $0.font = .h5
+        $0.isUserInteractionEnabled = true
     }
     
     private let runningLevelLabel = UILabel().then {
