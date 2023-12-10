@@ -535,6 +535,7 @@ extension CourseDetailVC {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         self.navigationController?.popViewController(animated: true)
                     }
+                    delegate?.didRemoveCourse(publicCourseId: courseId)
                 }
                 if status >= 400 {
                     print("400 error")
@@ -572,8 +573,8 @@ extension CourseDetailVC {
                 let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
                 deleteAlertVC.modalPresentationStyle = .overFullScreen
                 deleteAlertVC.rightButtonTapAction = {
-                    deleteAlertVC.dismiss(animated: false)
                     self.deleteCourse()
+                    deleteAlertVC.dismiss(animated: false)
                 }
                 self.present(deleteAlertVC, animated: false)
             case "신고하기":

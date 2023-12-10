@@ -13,6 +13,7 @@ import Moya
 
 protocol ScrapStateDelegate: AnyObject {
     func didUpdateScrapState(publicCourseId: Int, isScrapped: Bool)
+    func didRemoveCourse(publicCourseId: Int)
     // 코스 상세 에서 스크랩 누르면 코스발견에 해당 부분 스크랩 누르는 이벤트 전달
 }
 
@@ -80,7 +81,7 @@ final class CourseDiscoveryVC: UIViewController {
         setLayout()
         setAddTarget()
         setCombineEvent()
-        self.getCourseData()
+        self.getCourseData(pageNo: pageNo)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -369,7 +370,7 @@ extension CourseDiscoveryVC: UIScrollViewDelegate {
             if pageNo < totalPageNum {
                 if !isDataLoaded {
                     isDataLoaded = true
-                    getCourseData()
+                    getCourseData(pageNo: pageNo)
                     pageNo += 1
                     isDataLoaded = false
                 }
@@ -441,12 +442,20 @@ extension CourseDiscoveryVC: ScrapStateDelegate {
             print("‼️CourseDiscoveryVC 델리게이트 받음 index=\(index)")
         }
     }
+    
+    func didRemoveCourse(publicCourseId: Int) {
+        if let index = courseList.firstIndex(where: { $0.id == publicCourseId }) {
+            self.courseList.remove(at: index)
+            self.mapCollectionView.reloadData()
+            print("didRemoveCourse= 삭제되었음\n")
+        }
+    }
 }
 
 // MARK: - Network
 
 extension CourseDiscoveryVC {
-    private func getCourseData() {
+    private func getCourseData(pageNo: Int) {
         LoadingIndicator.showLoading() // 항상 0.5초 늦게 로딩이 되어 버림 0.5초를 넣은 이유는 pagination을 구현할때 한번에 다 받아오지 않게 하기 위함
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [self] in
             publicCourseProvider.request(.getCourseData(pageNo: pageNo, sort: sort)) { response in
@@ -462,7 +471,6 @@ extension CourseDiscoveryVC {
                             self.totalPageNum = data.totalPageSize
                             self.isEnd = data.isEnd
                             self.courseList.append(contentsOf: data.publicCourses)
-                            self.mapCollectionView.reloadData()
                             print("isEnd= \(self.isEnd), totalPageNum= \(self.totalPageNum)")
                         } catch {
                             print(error.localizedDescription)
@@ -546,6 +554,6 @@ extension CourseDiscoveryVC: TitleCollectionViewCellDelegate {
         print("‼️\(ordering)‼️ 터치 하셨습니다. 0.7초 후에 ‼️\(ordering)‼️ 으로 정렬이 되는 데이터가 불러 옵니다.")
         sort = ordering
         self.courseList.removeAll()
-        getCourseData()
+        getCourseData(pageNo: pageNo)
     }
 }
