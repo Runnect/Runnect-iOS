@@ -366,12 +366,13 @@ extension CourseDiscoveryVC: UIScrollViewDelegate {
                 // 페이지네이션 중단 코드
                 return
             }
-            print("🫠\(pageNo)")
+
             if pageNo < totalPageNum {
                 if !isDataLoaded {
                     isDataLoaded = true
+                    print("🫠\(pageNo)")
+                    self.pageNo += 1
                     getCourseData(pageNo: pageNo)
-                    pageNo += 1
                     isDataLoaded = false
                 }
             }
@@ -456,8 +457,8 @@ extension CourseDiscoveryVC: ScrapStateDelegate {
 
 extension CourseDiscoveryVC {
     private func getCourseData(pageNo: Int) {
-        LoadingIndicator.showLoading() // 항상 0.5초 늦게 로딩이 되어 버림 0.5초를 넣은 이유는 pagination을 구현할때 한번에 다 받아오지 않게 하기 위함
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [self] in
+        LoadingIndicator.showLoading() // 항상 0.7초 늦게 로딩이 되어 버림 0.5초를 넣은 이유는 pagination을 구현할때 한번에 다 받아오지 않게 하기 위함
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [self] in
             publicCourseProvider.request(.getCourseData(pageNo: pageNo, sort: sort)) { response in
                 LoadingIndicator.hideLoading()
                 print("‼️ sort=  \(self.sort) ‼️\n")
@@ -471,7 +472,8 @@ extension CourseDiscoveryVC {
                             self.totalPageNum = data.totalPageSize
                             self.isEnd = data.isEnd
                             self.courseList.append(contentsOf: data.publicCourses)
-                            print("isEnd= \(self.isEnd), totalPageNum= \(self.totalPageNum)")
+                            self.mapCollectionView.reloadData()
+                            print("pageNo= \(pageNo), isEnd= \(self.isEnd), totalPageNum= \(self.totalPageNum)")
                         } catch {
                             print(error.localizedDescription)
                         }
