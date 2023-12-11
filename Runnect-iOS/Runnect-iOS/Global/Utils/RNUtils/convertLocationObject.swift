@@ -28,7 +28,7 @@ extension NMGLatLng {
     }
     
     func toRNLocationModel() -> RNLocationModel {
-        return RNLocationModel(lat: self.lat, long: self.lng)
+        return RNLocationModel(latitude: self.lat, longitude: self.lng)
     }
 }
 

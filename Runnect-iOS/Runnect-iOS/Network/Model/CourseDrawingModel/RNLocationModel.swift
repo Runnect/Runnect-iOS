@@ -8,6 +8,6 @@
 import Foundation
 
 struct RNLocationModel: Codable {
-    let lat: Double
-    let long: Double
+    let latitude: Double
+    let longitude: Double
 }
