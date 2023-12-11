@@ -398,13 +398,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		71BAD06D2B24D2020061E31D /* UserProfile */ = {
+		71288ED42B26EDF300D6C921 /* CollectionViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				71BAD06B2B24D1F70061E31D /* UserProfileVC.swift */,
 				71288ECE2B26ECDB00D6C921 /* UserInfoCell.swift */,
 				71288ED02B26ECF600D6C921 /* UserProgressCell.swift */,
 				71288ED22B26ED2500D6C921 /* UserUploadedLabelCell.swift */,
+			);
+			path = CollectionViewCell;
+			sourceTree = "<group>";
+		};
+		71BAD06D2B24D2020061E31D /* UserProfile */ = {
+			isa = PBXGroup;
+			children = (
+				71288ED42B26EDF300D6C921 /* CollectionViewCell */,
+				71BAD06B2B24D1F70061E31D /* UserProfileVC.swift */,
 			);
 			path = UserProfile;
 			sourceTree = "<group>";
