@@ -13,6 +13,9 @@
 		23EE06C92AC1DED100CB3FF8 /* GesturePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06C82AC1DED100CB3FF8 /* GesturePublisher.swift */; };
 		23EE06CB2AC2AF3E00CB3FF8 /* KakaoAddressSearchingResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06CA2AC2AF3E00CB3FF8 /* KakaoAddressSearchingResponseDto.swift */; };
 		23EE06D12AC2F44E00CB3FF8 /* TmapAddressSearchingResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06D02AC2F44E00CB3FF8 /* TmapAddressSearchingResponseDto.swift */; };
+		71288ECF2B26ECDB00D6C921 /* UserInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71288ECE2B26ECDB00D6C921 /* UserInfoCell.swift */; };
+		71288ED12B26ECF600D6C921 /* UserProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71288ED02B26ECF600D6C921 /* UserProgressCell.swift */; };
+		71288ED32B26ED2500D6C921 /* UserUploadedLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71288ED22B26ED2500D6C921 /* UserUploadedLabelCell.swift */; };
 		712F661D2A7B7BAB00D9539B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712F661C2A7B7BAB00D9539B /* Config.swift */; };
 		7136BF8A2AF921A900679364 /* CustomBottomSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7136BF892AF921A900679364 /* CustomBottomSheetVC.swift */; };
 		713BA40B2B218AF8009091A8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 713BA40A2B218AF8009091A8 /* GoogleService-Info.plist */; };
@@ -182,6 +185,9 @@
 		23EE06D02AC2F44E00CB3FF8 /* TmapAddressSearchingResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TmapAddressSearchingResponseDto.swift; sourceTree = "<group>"; };
 		3C3033C911343B5C57EB68E7 /* Pods-Runnect-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runnect-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		7110A6032AA337DD009A7E99 /* Runnect-iOSDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Runnect-iOSDebug.entitlements"; sourceTree = "<group>"; };
+		71288ECE2B26ECDB00D6C921 /* UserInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoCell.swift; sourceTree = "<group>"; };
+		71288ED02B26ECF600D6C921 /* UserProgressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProgressCell.swift; sourceTree = "<group>"; };
+		71288ED22B26ED2500D6C921 /* UserUploadedLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUploadedLabelCell.swift; sourceTree = "<group>"; };
 		712F661C2A7B7BAB00D9539B /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		7136BF892AF921A900679364 /* CustomBottomSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheetVC.swift; sourceTree = "<group>"; };
 		713BA40A2B218AF8009091A8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -396,6 +402,9 @@
 			isa = PBXGroup;
 			children = (
 				71BAD06B2B24D1F70061E31D /* UserProfileVC.swift */,
+				71288ECE2B26ECDB00D6C921 /* UserInfoCell.swift */,
+				71288ED02B26ECF600D6C921 /* UserProgressCell.swift */,
+				71288ED22B26ED2500D6C921 /* UserUploadedLabelCell.swift */,
 			);
 			path = UserProfile;
 			sourceTree = "<group>";
@@ -1413,6 +1422,7 @@
 				CE9291292965E01D0010959C /* RNTimeFormatter.swift in Sources */,
 				CE0C23792966D6AF00B45063 /* ViewPager.swift in Sources */,
 				CE6B63D02967230D003F900F /* PrivateCourseListView.swift in Sources */,
+				71288ED32B26ED2500D6C921 /* UserUploadedLabelCell.swift in Sources */,
 				CE6655D7295D86F900C64E12 /* String+.swift in Sources */,
 				CE58759E29601476005D967E /* LoadingIndicator.swift in Sources */,
 				CE5875A2296015A2005D967E /* NetworkLoggerPlugin.swift in Sources */,
@@ -1449,6 +1459,7 @@
 				A3F67AE2296D33AC001598A2 /* MyPageDto.swift in Sources */,
 				CE591EA1296D5EB5000FCBB3 /* PrivateCourseResponseDto.swift in Sources */,
 				A3BC2F3F2964706100198261 /* UploadedCourseInfoCVC.swift in Sources */,
+				71288ED12B26ECF600D6C921 /* UserProgressCell.swift in Sources */,
 				DA0587F42A05DEC000B72869 /* CourseEditVC.swift in Sources */,
 				CE6655FE295D912300C64E12 /* calculateTopInset.swift in Sources */,
 				CEEC6B492961C5E200D00E1E /* SplashVC.swift in Sources */,
@@ -1488,6 +1499,7 @@
 				CEF3CD9A296DB305002723A1 /* CourseDetailResponseDto.swift in Sources */,
 				A3E55BA029C815B10000D85D /* SignInSocialLoginVC.swift in Sources */,
 				71BAD06A2B24CECC0061E31D /* UserProfileDto.swift in Sources */,
+				71288ECF2B26ECDB00D6C921 /* UserInfoCell.swift in Sources */,
 				CE29D584296416D800F47542 /* caculateStatusBarHeight.swift in Sources */,
 				CE66560C295D928300C64E12 /* setRootViewController.swift in Sources */,
 				CE6655D9295D871B00C64E12 /* URL+.swift in Sources */,
