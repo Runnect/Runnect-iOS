@@ -33,5 +33,5 @@ struct UserCourseInfo: Codable {
 struct Departure: Codable {
     let region, city, town: String
     let detail: String?
-    let name: String
+    let name: String?
 }
