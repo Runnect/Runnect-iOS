@@ -16,9 +16,8 @@ final class UserProfileVC: UIViewController {
     // MARK: - Properties
     
     private let userProvider = Providers.userProvider
-    private let uploadedCourseProvider = Providers.publicCourseProvider
     private let scrapProvider = Providers.scrapProvider
-    private let stampNameImageDictionary: [String: UIImage] = GoalRewardInfoModel.stampNameImageDictionary
+    private var userProfileModel: UserProfileDto?
 
     private var uploadedCourseList = [UserCourseInfo]()
     private var userId: Int?
@@ -27,31 +26,15 @@ final class UserProfileVC: UIViewController {
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("프로필")
 
-    private let myProfileView = UIView()
-    private let myProfileImage = UIImageView()
-    private let myProfileNameLabel = UILabel().then {
-        $0.textColor = .m1
-        $0.font = .h4
-    }
-
-    private let myRunningProgressView = UIView()
-    private let myRunningLevelLabel = UILabel().then {
-        $0.textColor = .m1
-        $0.font = .h4
-    }
-    private lazy var myRunningProgressBar = UIProgressView(progressViewStyle: .bar).then {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.setProgress(0, animated: false)
-        $0.progressTintColor = .m1
-        $0.trackTintColor = .m6
-        $0.layer.cornerRadius = 6
-        $0.clipsToBounds = true
-        $0.layer.sublayers![1].cornerRadius = 6
-        $0.subviews[1].clipsToBounds = true
-    }
-    private let myRunnigProgressPercentLabel = UILabel()
-
-    private lazy var uploadedCourseInfoLabel = makeInfoView(title: "업로드한 코스")
+    private lazy var mapCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.isScrollEnabled = true
+        collectionView.showsVerticalScrollIndicator = false
+        return collectionView
+    }()
 
     private lazy var UploadedCourseInfoCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -88,90 +71,80 @@ extension UserProfileVC {
         self.userId = userId
     }
 
-    private func makeInfoView(title: String) -> UIView {
-        let containerView = UIView()
-        let icStar = UIImageView().then {
-            $0.image = ImageLiterals.icStar
-        }
-
-        let label = UILabel().then {
-            $0.text = title
-            $0.textColor = .g1
-            $0.font = .b2
-        }
-
-        containerView.addSubviews(icStar, label)
-
-        icStar.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(22)
-            $0.leading.equalToSuperview().offset(17)
-            $0.width.height.equalTo(14)
-        }
-
-        label.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(21)
-            $0.leading.equalTo(icStar.snp.trailing).offset(8)
-        }
-
-        return containerView
-    }
-
     private func setData(model: UserProfileDto) {
-        myProfileNameLabel.text = model.user.nickname
-        myRunningProgressBar.setProgress(Float(model.user.levelPercent) / 100, animated: false)
-        setMyRunningLevelLabel(model: model)
-        setMyRunningProgressPercentLabel(model: model)
-        setMyProfileImage(model: model)
-        uploadedCourseList = model.courses
+        self.userProfileModel = model
+        self.uploadedCourseList = model.courses
         UploadedCourseInfoCollectionView.reloadData()
     }
 
-    private func setMyRunningLevelLabel(model: UserProfileDto) {
-        let attributedString = NSMutableAttributedString(string: "LV ", attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1])
-        attributedString.append(NSAttributedString(string: String(model.user.level), attributes: [.font: UIFont.h5, .foregroundColor: UIColor.g1]))
-        myRunningLevelLabel.attributedText = attributedString
-    }
-
-    private func setMyRunningProgressPercentLabel(model: UserProfileDto) {
-        let attributedString = NSMutableAttributedString(string: String(model.user.levelPercent), attributes: [.font: UIFont.b5, .foregroundColor: UIColor.g1])
-        attributedString.append(NSAttributedString(string: " /100", attributes: [.font: UIFont.b5, .foregroundColor: UIColor.g2]))
-        myRunnigProgressPercentLabel.attributedText = attributedString
-    }
-
-    private func setMyProfileImage(model: UserProfileDto) {
-        guard let profileImage = stampNameImageDictionary[model.user.latestStamp] else { return }
-        myProfileImage.image = profileImage
-    }
-
     private func setDelegate() {
-        UploadedCourseInfoCollectionView.delegate = self
-        UploadedCourseInfoCollectionView.dataSource = self
+        mapCollectionView.delegate = self
+        mapCollectionView.dataSource = self
     }
-
+    
     private func register() {
-        UploadedCourseInfoCollectionView.register(CourseListCVC.self, forCellWithReuseIdentifier: CourseListCVC.className)
+        let cellTypes: [UICollectionViewCell.Type] = [UserInfoCell.self,
+                                                      UserProgressCell.self,
+                                                      UserUploadedLabelCell.self,
+                                                      CourseListCVC.self]
+        cellTypes.forEach { cellType in
+            mapCollectionView.register(cellType, forCellWithReuseIdentifier: cellType.className)
+        }
     }
-
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension UserProfileVC: UICollectionViewDelegate, UICollectionViewDataSource {
-
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 4
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return uploadedCourseList.count
+        switch section {
+        case 0, 1, 2:
+            return 1
+        case 3:
+            return uploadedCourseList.count
+        default:
+            return 0
+        }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath) as? CourseListCVC else { return UICollectionViewCell() }
-        configureCourseCell(cell, at: indexPath)
-        return cell
+        switch indexPath.section {
+        case 0:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserInfoCell.className, for: indexPath) as? UserInfoCell else { return UICollectionViewCell() }
+            // userProfileModel이 nil이 아닌 경우에만 setInfoData 메서드 호출
+            if let userProfileModel = userProfileModel {
+                cell.setInfoData(model: userProfileModel)
+            }
+            return cell
+        case 1:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserProgressCell.className, for: indexPath) as? UserProgressCell else { return UICollectionViewCell() }
+            // userProfileModel이 nil이 아닌 경우에만 bind 메서드 호출
+            if let userProfileModel = userProfileModel {
+                cell.bind(model: userProfileModel)
+            }
+            return cell
+        case 2:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserUploadedLabelCell.className, for: indexPath) as? UserUploadedLabelCell else { return UICollectionViewCell() }
+            return cell
+        case 3:
+            return courseListCell(collectionView: collectionView, indexPath: indexPath)
+        default:
+            return UICollectionViewCell()
+        }
     }
-
-    private func configureCourseCell(_ cell: CourseListCVC, at indexPath: IndexPath) {
+    
+    private func courseListCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath) as? CourseListCVC else { return UICollectionViewCell() }
         cell.setCellType(type: .all)
-        let model = uploadedCourseList[indexPath.item]
+        cell.delegate = self
+        let model = self.uploadedCourseList[indexPath.item]
         let location = "\(model.departure.region) \(model.departure.city)"
         cell.setData(imageURL: model.image, title: model.title, location: location, didLike: model.scrapTF, indexPath: indexPath.item)
+        return cell
     }
 }
 
@@ -186,25 +159,38 @@ extension UserProfileVC: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenWidth = UIScreen.main.bounds.width
-        let cellWidth = (screenWidth - 2 * Constants.sectionInsets.left - Constants.cellSpacing) / 2
-        let cellHeight = CourseListCVCType.getCellHeight(type: .all, cellWidth: cellWidth)
-        return CGSize(width: cellWidth, height: cellHeight)
+        switch indexPath.section {
+        case 0:
+            return CGSize(width: screenWidth, height: 93)
+        case 1:
+            return CGSize(width: screenWidth, height: 101)
+        case 2:
+            return CGSize(width: screenWidth, height: 62)
+        case 3:
+            let cellWidth = (screenWidth - 2 * Constants.sectionInsets.left - Constants.cellSpacing) / 2
+            let cellHeight = CourseListCVCType.getCellHeight(type: .all, cellWidth: cellWidth)
+            return CGSize(width: cellWidth, height: cellHeight)
+        default:
+            return CGSize(width: 0, height: 0)
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return Constants.cellSpacing
+        return section == 3 ? Constants.cellSpacing : 0
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return Constants.cellPadding
+        return section == 3 ? Constants.cellPadding : 0
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return Constants.sectionInsets
+        return section == 3 ? Constants.sectionInsets : .zero
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        pushToCourseDetail(at: indexPath)
+        if indexPath.section == 3 {
+            pushToCourseDetail(at: indexPath)
+        }
     }
 
     private func pushToCourseDetail(at indexPath: IndexPath) {
@@ -231,83 +217,26 @@ extension UserProfileVC: CourseListCVCDeleagte {
 
 // MARK: - UI & Layout
 extension UserProfileVC {
+    
+    private func setUI() {
+        view.backgroundColor = .w1
+    }
+    
     private func setNavigationBar() {
         view.addSubview(navibar)
 
         navibar.snp.makeConstraints {
             $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(48)
+            $0.height.equalTo(56)
         }
-    }
-
-    private func setUI() {
-        view.backgroundColor = .w1
-        myProfileView.backgroundColor = .w1
-        myRunningProgressView.backgroundColor = .m3
     }
 
     private func setLayout() {
-        view.addSubviews(myProfileView, myRunningProgressView, uploadedCourseInfoLabel, UploadedCourseInfoCollectionView)
-
-        myProfileView.snp.makeConstraints {
-            $0.top.equalTo(navibar.snp.bottom).offset(6)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(84)
-        }
-
-        setMyProfileLayout()
-        setRunningProgressLayout()
-
-        uploadedCourseInfoLabel.snp.makeConstraints {
-            $0.top.equalTo(myRunningProgressView.snp.bottom)
-            $0.leading.trailing.equalToSuperview()
-        }
-
-        UploadedCourseInfoCollectionView.snp.makeConstraints {
-            $0.top.equalTo(uploadedCourseInfoLabel.snp.bottom).offset(62)
-            $0.leading.trailing.height.equalTo(view.safeAreaLayoutGuide)
-        }
-    }
-
-    private func setMyProfileLayout() {
-        myProfileView.addSubviews(myProfileImage, myProfileNameLabel, myRunningProgressView)
-
-        myProfileImage.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(11)
-            $0.leading.equalToSuperview().offset(23)
-            $0.width.height.equalTo(63)
-        }
-
-        myProfileNameLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(32)
-            $0.leading.equalTo(myProfileImage.snp.trailing).offset(10)
-        }
-
-        myRunningProgressView.snp.makeConstraints {
-            $0.top.equalTo(myProfileView.snp.bottom)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(100)
-        }
-    }
-
-    private func setRunningProgressLayout() {
-        myRunningProgressView.addSubviews(myRunningLevelLabel, myRunningProgressBar, myRunnigProgressPercentLabel)
-
-        myRunningLevelLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(20)
-            $0.leading.equalToSuperview().offset(36)
-        }
-
-        myRunningProgressBar.snp.makeConstraints {
-            $0.top.equalTo(myRunningLevelLabel.snp.bottom).offset(6)
-            $0.leading.equalToSuperview().offset(36.53)
-            $0.trailing.equalToSuperview().inset(31.6)
-            $0.height.equalTo(11)
-        }
-
-        myRunnigProgressPercentLabel.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(20)
-            $0.trailing.equalToSuperview().inset(31.6)
+        view.addSubview(mapCollectionView)
+        
+        mapCollectionView.snp.makeConstraints {
+            $0.top.equalTo(navibar.snp.bottom)
+            $0.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
         }
     }
 }
@@ -329,7 +258,7 @@ extension UserProfileVC {
                         let responseDto = try result.map(BaseResponse<UserProfileDto>.self)
                         guard let data = responseDto.data else { return }
                         self.setData(model: data)
-                        self.UploadedCourseInfoCollectionView.reloadData()
+                        self.mapCollectionView.reloadData()
                     } catch {
                         print(error.localizedDescription)
                     }

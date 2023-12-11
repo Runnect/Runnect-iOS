@@ -44,14 +44,13 @@ class UserProgressCell: UICollectionViewCell {
     }
 }
 
-
 // MARK: - Layout Helpers
 
 extension UserProgressCell {
     
     private func setUI() {
         contentView.addSubview(runningProgressInfoView)
-        runningProgressInfoView.backgroundColor = .clear
+        runningProgressInfoView.backgroundColor = .m3
         
         runningProgressInfoView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
@@ -66,7 +65,6 @@ extension UserProgressCell {
             $0.leading.equalToSuperview().offset(36)
         }
         
-
         myRunningProgressBar.snp.makeConstraints {
             $0.top.equalTo(userRunningLevelLabel.snp.bottom).offset(6)
             $0.leading.equalToSuperview().offset(36.53)
