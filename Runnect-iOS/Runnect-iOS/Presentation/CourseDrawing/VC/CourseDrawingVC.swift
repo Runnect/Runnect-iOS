@@ -431,19 +431,30 @@ extension CourseDrawingVC {
         guard let imageData = image.jpegData(compressionQuality: 1.0) else { return nil }
         guard let departureLocationModel = self.departureLocationModel else { return nil }
         let path = mapView.getMarkersLatLng().map { $0.toRNLocationModel() }
-        let courseDrawingRequestData = CourseDrawingRequestData(path: path,
-                                                                //                                                                title : self.courseName,
-                                                                distance: self.distance,
-                                                                departureAddress: departureLocationModel.departureAddress,
-                                                                departureName: departureLocationModel.departureName)
         
-        let courseDrawingRequestDto = CourseDrawingRequestDto(image: imageData, data: courseDrawingRequestData)
+        let courseDrawingRequestDto = CourseDrawingRequestDto(
+            image: imageData,
+            path: path,
+            title: self.courseName,
+            distance: self.distance,
+            departureAddress: departureLocationModel.departureAddress,
+            departureName: departureLocationModel.departureName)
+        
+//        let courseDrawingRequestDto = CourseDrawingRequestDto(
+//            image: imageData,
+//            path: path,
+//            title: self.courseName,
+//            distance: 1.1,
+//            departureAddress: "성현마을 어쩌구",
+//            departureName: "어쩌구 저쩌구")
         
         return courseDrawingRequestDto
     }
     
     private func uploadCourseDrawing() {
         guard let requestDto = makecourseDrawingRequestDto() else { return }
+        print("🚨🚨🚨🚨🚨🚨")
+        print(requestDto)
         LoadingIndicator.showLoading()
         
         courseProvider.request(.uploadCourseDrawing(param: requestDto)) {[weak self] response in
@@ -465,9 +476,18 @@ extension CourseDrawingVC {
                     print("400 error")
                     self.showNetworkFailureToast()
                 }
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//                self.showNetworkFailureToast()
+//            }
             case .failure(let error):
-                print(error.localizedDescription)
-                self.showNetworkFailureToast()
+                if let response = error.response {
+                    if let responseData = String(data: response.data, encoding: .utf8) {
+                        print(responseData)
+                    }
+                } else {
+                    print(error.localizedDescription)
+                }
             }
         }
     }

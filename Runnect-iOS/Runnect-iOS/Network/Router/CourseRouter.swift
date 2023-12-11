@@ -66,17 +66,63 @@ extension CourseRouter: TargetType {
             var content = [String: Any]()
             
             var path = [[String: Any]]()
+            var tempPath = String()
             
             do {
-                for location in param.data.path {
-                    let locationData = try location.asParameter()
-                    path.append(locationData)
+//                for location in param.path {
+//                    let locationData = try location.asParameter()
+//                    path.append(locationData)
+//                }
+                
+//                
+                let jsonTempData = try JSONEncoder().encode(param.path)
+                var jsonArray = [[String: String]]()
+                
+                tempPath = "["
+                if let jsonArrayData = try JSONSerialization.jsonObject(with: jsonTempData, options: []) as? [[String: Any]] {
+                    for locationDict in jsonArrayData {
+                        let lat = locationDict["lat"] as! Double
+                        let long = locationDict["long"] as! Double
+                        
+//                        tempPath += #"{"lat" : "\#(lat)", "long" : "\#(long)"},"#
+                        tempPath += """
+                            {"lat": "\(lat)", "long": "\(long)"},
+                        """
+                    }
+                    tempPath.removeLast()
                 }
-
-                content["path"] = path
-                content["distance"] = param.data.distance
-                content["departureAddress"] = param.data.departureAddress
-                content["departureName"] = param.data.departureName
+                tempPath += "]"
+                
+//                tempPath = #"\#(tempPath)"#
+                
+                content["path"] = tempPath
+                
+//                if var path = content["path"] as? String {
+//                    path = path.replacingOccurrences(of: #"\""#, with: "")
+//                    content["path"] = path
+//                    print(content["path"])
+//                    print(path)
+//                }
+                
+//                tempPath = tempPath.replacingOccurrences(of: "\\\"", with: "\"")
+//                
+                
+//                if let testJsonData = tempPath.data(using: .utf8),
+//                   let jsonPathArray = try? JSONSerialization.jsonObject(with: testJsonData, options: []) as? [Any] {
+//                    content["path"] = jsonPathArray
+//                }
+                
+//                content["path"] = tempPath
+                content["title"] = param.title
+                content["distance"] = param.distance
+                content["departureAddress"] = param.departureAddress
+                content["departureName"] = param.departureName
+                
+                print(tempPath)
+                
+                print("✅✅")
+                print(content)
+//                print(content["path"])
                 
                 let jsonData = try JSONSerialization.data(withJSONObject: content)
                 let formData = MultipartFormData(provider: .data(jsonData), name: "data", mimeType: "application/json")
