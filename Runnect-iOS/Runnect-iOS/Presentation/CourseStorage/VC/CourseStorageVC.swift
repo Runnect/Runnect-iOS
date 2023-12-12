@@ -101,8 +101,9 @@ extension CourseStorageVC {
         
         privateCourseListView.cellDidTapped.sink { [weak self] index in
             guard let self = self else { return }
+            guard let title = self.privateCourseList[index].departure.name else {return}
             let runningWaitingVC = RunningWaitingVC()
-            runningWaitingVC.setData(courseId: self.privateCourseList[index].id, publicCourseId: nil, courseTitle: self.privateCourseList[index].departure.city)
+            runningWaitingVC.setData(courseId: self.privateCourseList[index].id, publicCourseId: nil, courseTitle: title)
             /// 코스 이름을 여기서 가져오는 로직
             
             runningWaitingVC.hidesBottomBarWhenPushed = true
