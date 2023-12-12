@@ -25,7 +25,7 @@ final class RunningWaitingVC: UIViewController {
     private let recordProvider = Providers.recordProvider
     
     // MARK: - UI Components
-
+    
     private lazy var naviBar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle(courseTitle ?? "Test Code")
     
     private let moreButton = UIButton(type: .system).then {
@@ -96,7 +96,7 @@ extension RunningWaitingVC {
         self.distanceLabel.text = String(distance)
     }
     
-    func makePath(locations: [NMGLatLng]) {
+    private func makePath(locations: [NMGLatLng]) {
         self.mapView.makeMarkersWithStartMarker(at: locations, moveCameraToStartMarker: true)
     }
     
@@ -143,9 +143,9 @@ extension RunningWaitingVC {
             $0.dataSource = items
             $0.textFont = .b3
         }
-
+        
         menu.customCellConfiguration = { (index: Index, _: String, cell: DropDownCell) -> Void in
-            let lastDividerLineRemove = UIView(frame: CGRect(origin: CGPoint(x: 0, y: 79), size: CGSize(width: 170, height: 10)))
+            let lastDividerLineRemove = UIView(frame: CGRect(origin: CGPoint(x: 0, y: (items.count * 40) - 1), size: CGSize(width: 170, height: 10)))
             lastDividerLineRemove.backgroundColor = .white
             cell.separatorInset = .zero
             cell.dropDownImage.image = imageArray[index]
@@ -202,7 +202,7 @@ extension RunningWaitingVC {
         distanceStackView.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
-
+        
         startButton.snp.makeConstraints { make in
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
             make.height.equalTo(44)
@@ -254,8 +254,8 @@ extension RunningWaitingVC {
         }
     }
 }
-    // MARK: - Network
-    
+// MARK: - Network
+
 extension RunningWaitingVC {
     private func deleteCourse() {
         guard let courseId = self.courseId else { return }
@@ -316,5 +316,3 @@ extension RunningWaitingVC {
         }
     }
 }
-
-
