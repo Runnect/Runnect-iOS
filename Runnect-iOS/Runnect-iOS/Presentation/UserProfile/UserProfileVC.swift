@@ -61,6 +61,7 @@ extension UserProfileVC {
     
     private func setData(model: UserProfileDto) {
         self.userProfileModel = model
+        self.uploadedCourseList.removeAll() // 유저 프로필 데이터 페이지네이션으로 불러오면 변경해야합니다.
         self.uploadedCourseList = model.courses
         self.userProfileCollectionView.reloadData()
     }

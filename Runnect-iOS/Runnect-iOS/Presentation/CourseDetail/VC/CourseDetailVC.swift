@@ -223,6 +223,7 @@ extension CourseDetailVC {
         guard let courseId = self.courseId else { return }
         getCourseDetailWithPath(courseId: courseId)
     }
+    
     @objc func moreButtonDidTap() {
         guard let isMyCourse = self.isMyCourse, let uploadedCourseDetailModel = self.uploadedCourseDetailModel else { return }
         
