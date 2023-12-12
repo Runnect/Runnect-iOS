@@ -12,21 +12,21 @@ import Then
 import Moya
 
 final class UserProfileVC: UIViewController {
-
+    
     // MARK: - Properties
     
     private let userProvider = Providers.userProvider
     private let scrapProvider = Providers.scrapProvider
+    
     private var userProfileModel: UserProfileDto?
-
     private var uploadedCourseList = [UserCourseInfo]()
     private var userId: Int?
-
+    
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("프로필")
-
-    private lazy var mapCollectionView: UICollectionView = {
+    
+    private lazy var userProfileCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -35,18 +35,7 @@ final class UserProfileVC: UIViewController {
         collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
-
-    private lazy var UploadedCourseInfoCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        collectionView.isScrollEnabled = true
-        collectionView.showsVerticalScrollIndicator = false
-        return collectionView
-    }()
-
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -57,10 +46,9 @@ final class UserProfileVC: UIViewController {
         setDelegate()
         setLayout()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        guard UserManager.shared.userType != .visitor else { return }
         getMyPageInfo()
     }
 }
@@ -70,16 +58,16 @@ extension UserProfileVC {
     func setUserId(userId: Int) {
         self.userId = userId
     }
-
+    
     private func setData(model: UserProfileDto) {
         self.userProfileModel = model
         self.uploadedCourseList = model.courses
-        UploadedCourseInfoCollectionView.reloadData()
+        self.userProfileCollectionView.reloadData()
     }
-
+    
     private func setDelegate() {
-        mapCollectionView.delegate = self
-        mapCollectionView.dataSource = self
+        userProfileCollectionView.delegate = self
+        userProfileCollectionView.dataSource = self
     }
     
     private func register() {
@@ -88,23 +76,39 @@ extension UserProfileVC {
                                                       UserUploadedLabelCell.self,
                                                       CourseListCVC.self]
         cellTypes.forEach { cellType in
-            mapCollectionView.register(cellType, forCellWithReuseIdentifier: cellType.className)
+            userProfileCollectionView.register(cellType, forCellWithReuseIdentifier: cellType.className)
         }
+    }
+}
+
+// MARK: - Constants
+
+extension UserProfileVC {
+    private enum Section {
+        static let userInfo = 0 // 유저 이름
+        static let userProgress = 1 // 유저 레벨 진행 상황
+        static let uploadedCourselabel = 2 // 업로드한 코스 Label
+        static let userCourses = 3 // 유저가 업로드한 코스들
+    }
+    
+    private struct Constants {
+        static let cellSpacing: CGFloat = 20
+        static let cellPadding: CGFloat = 10
+        static let sectionInsets = UIEdgeInsets(top: 0, left: 16, bottom: 20, right: 16)
     }
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension UserProfileVC: UICollectionViewDelegate, UICollectionViewDataSource {
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 4
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-        case 0, 1, 2:
+        case Section.userInfo, Section.userProgress, Section.uploadedCourselabel:
             return 1
-        case 3:
+        case Section.userCourses:
             return uploadedCourseList.count
         default:
             return 0
@@ -113,24 +117,22 @@ extension UserProfileVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
-        case 0:
+        case Section.userInfo:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserInfoCell.className, for: indexPath) as? UserInfoCell else { return UICollectionViewCell() }
-            // userProfileModel이 nil이 아닌 경우에만 setInfoData 메서드 호출
-            if let userProfileModel = userProfileModel {
-                cell.setInfoData(model: userProfileModel)
-            }
-            return cell
-        case 1:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserProgressCell.className, for: indexPath) as? UserProgressCell else { return UICollectionViewCell() }
-            // userProfileModel이 nil이 아닌 경우에만 bind 메서드 호출
             if let userProfileModel = userProfileModel {
                 cell.bind(model: userProfileModel)
             }
             return cell
-        case 2:
+        case Section.userProgress:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserProgressCell.className, for: indexPath) as? UserProgressCell else { return UICollectionViewCell() }
+            if let userProfileModel = userProfileModel {
+                cell.bind(model: userProfileModel)
+            }
+            return cell
+        case Section.uploadedCourselabel:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserUploadedLabelCell.className, for: indexPath) as? UserUploadedLabelCell else { return UICollectionViewCell() }
             return cell
-        case 3:
+        case Section.userCourses:
             return courseListCell(collectionView: collectionView, indexPath: indexPath)
         default:
             return UICollectionViewCell()
@@ -150,23 +152,16 @@ extension UserProfileVC: UICollectionViewDelegate, UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 extension UserProfileVC: UICollectionViewDelegateFlowLayout {
-
-    private struct Constants {
-        static let cellSpacing: CGFloat = 20
-        static let cellPadding: CGFloat = 10
-        static let sectionInsets = UIEdgeInsets(top: 0, left: 16, bottom: 20, right: 16)
-    }
-
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenWidth = UIScreen.main.bounds.width
         switch indexPath.section {
-        case 0:
+        case Section.userInfo:
             return CGSize(width: screenWidth, height: 93)
-        case 1:
+        case Section.userProgress:
             return CGSize(width: screenWidth, height: 101)
-        case 2:
+        case Section.uploadedCourselabel:
             return CGSize(width: screenWidth, height: 62)
-        case 3:
+        case Section.userCourses:
             let cellWidth = (screenWidth - 2 * Constants.sectionInsets.left - Constants.cellSpacing) / 2
             let cellHeight = CourseListCVCType.getCellHeight(type: .all, cellWidth: cellWidth)
             return CGSize(width: cellWidth, height: cellHeight)
@@ -174,25 +169,24 @@ extension UserProfileVC: UICollectionViewDelegateFlowLayout {
             return CGSize(width: 0, height: 0)
         }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return section == 3 ? Constants.cellSpacing : 0
+        return section == Section.userCourses ? Constants.cellSpacing : 0
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return section == 3 ? Constants.cellPadding : 0
+        return section == Section.userCourses ? Constants.cellPadding : 0
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return section == 3 ? Constants.sectionInsets : .zero
+        return section == Section.userCourses ? Constants.sectionInsets : .zero
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 3 {
-            pushToCourseDetail(at: indexPath)
-        }
+        guard indexPath.section == Section.userCourses else { return }
+        pushToCourseDetail(at: indexPath)
     }
-
+    
     private func pushToCourseDetail(at indexPath: IndexPath) {
         let courseDetailVC = CourseDetailVC()
         let courseModel = uploadedCourseList[indexPath.item]
@@ -209,7 +203,7 @@ extension UserProfileVC: CourseListCVCDeleagte {
             showToastOnWindow(text: "러넥트에 가입하면 코스를 스크랩할 수 있어요")
             return
         }
-
+        
         let publicCourseId = uploadedCourseList[index].publicCourseId
         scrapCourse(publicCourseId: publicCourseId, scrapTF: wantsTolike)
     }
@@ -224,17 +218,17 @@ extension UserProfileVC {
     
     private func setNavigationBar() {
         view.addSubview(navibar)
-
+        
         navibar.snp.makeConstraints {
             $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(56)
         }
     }
-
+    
     private func setLayout() {
-        view.addSubview(mapCollectionView)
+        view.addSubview(userProfileCollectionView)
         
-        mapCollectionView.snp.makeConstraints {
+        userProfileCollectionView.snp.makeConstraints {
             $0.top.equalTo(navibar.snp.bottom)
             $0.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
         }
@@ -249,7 +243,7 @@ extension UserProfileVC {
         userProvider.request(.getUserProfileInfo(userId: userId)) { [weak self] response in
             LoadingIndicator.hideLoading()
             guard let self = self else { return }
-
+            
             switch response {
             case .success(let result):
                 let status = result.statusCode
@@ -258,7 +252,7 @@ extension UserProfileVC {
                         let responseDto = try result.map(BaseResponse<UserProfileDto>.self)
                         guard let data = responseDto.data else { return }
                         self.setData(model: data)
-                        self.mapCollectionView.reloadData()
+                        self.userProfileCollectionView.reloadData()
                     } catch {
                         print(error.localizedDescription)
                     }
@@ -276,7 +270,7 @@ extension UserProfileVC {
             }
         }
     }
-
+    
     private func scrapCourse(publicCourseId: Int, scrapTF: Bool) {
         LoadingIndicator.showLoading()
         scrapProvider.request(.createAndDeleteScrap(publicCourseId: publicCourseId, scrapTF: scrapTF)) { [weak self] response in
@@ -312,16 +306,16 @@ extension UserProfileVC {
             $0.layer.cornerRadius = 10
             $0.clipsToBounds = true
         }
-
+        
         view.addSubview(toastLabel)
-
+        
         toastLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-100)
             make.width.equalTo(300)
             make.height.equalTo(35)
         }
-
+        
         UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
             toastLabel.alpha = 1.0
         }, completion: { _ in
