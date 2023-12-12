@@ -207,6 +207,11 @@ extension CourseDetailVC {
     }
     
     @objc func pushToUserProfileVC() {
+        guard UserManager.shared.userType != .visitor else {
+            // 방문자일 경우 토스트 메세지만
+            self.showToast(message: "회원만 조회 가능 합니다.")
+            return
+        }
         guard let userId = self.userId else {return}
         let userProfile = UserProfileVC()
         userProfile.setUserId(userId: userId)
