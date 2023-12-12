@@ -60,7 +60,7 @@ extension UserInfoCell {
             $0.leading.equalTo(myProfileImage.snp.trailing).offset(10)
         }
     }
-    func setInfoData(model: UserProfileDto) {
+    func bind(model: UserProfileDto) {
         guard let profileImage = stampNameImageDictionary[model.user.latestStamp] else { return }
         self.myProfileImage.image = profileImage
         self.myProfileNameLabel.text = model.user.nickname
