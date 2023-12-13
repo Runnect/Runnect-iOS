@@ -69,6 +69,15 @@ final class CourseDetailVC: UIViewController {
         $0.backgroundColor = .w1
     }
     
+    private lazy var userProfileStackView = UIStackView(
+        arrangedSubviews: [profileImageView, profileNameLabel, runningLevelLabel]
+    ).then {
+        $0.axis = .horizontal
+        $0.alignment = .center
+        $0.spacing = 9
+        $0.isUserInteractionEnabled = true
+    }
+    
     private lazy var startButton = CustomButton(title: "시작하기").then {
         $0.addTarget(self, action: #selector(startButtonDidTap), for: .touchUpInside)
     }
@@ -85,7 +94,6 @@ final class CourseDetailVC: UIViewController {
         $0.text = "닉네임"
         $0.textColor = .g1
         $0.font = .h5
-        $0.isUserInteractionEnabled = true
     }
     
     private let runningLevelLabel = UILabel().then {
@@ -317,7 +325,7 @@ extension CourseDetailVC {
         shareButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
         
         let profileTouch = UITapGestureRecognizer(target: self, action: #selector(pushToUserProfileVC))
-        profileNameLabel.addGestureRecognizer(profileTouch)
+        userProfileStackView.addGestureRecognizer(profileTouch)
     }
     
     private func pushToCountDownVC() {
@@ -370,17 +378,20 @@ extension CourseDetailVC {
         view.addSubview(navibar)
         view.addSubview(moreButton)
         view.addSubview(shareButton)
-        navibar.snp.makeConstraints {  make in
-            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
+        
+        navibar.snp.makeConstraints {
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(48)
         }
-        moreButton.snp.makeConstraints { make in
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide)
-            make.centerY.equalTo(navibar)
+        
+        moreButton.snp.makeConstraints {
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide)
+            $0.centerY.equalTo(navibar)
         }
-        shareButton.snp.makeConstraints { make in
-            make.trailing.trailing.equalTo(moreButton).offset(-50)
-            make.centerY.equalTo(navibar)
+        
+        shareButton.snp.makeConstraints {
+            $0.trailing.trailing.equalTo(moreButton).offset(-50)
+            $0.centerY.equalTo(navibar)
         }
     }
     
@@ -397,99 +408,93 @@ extension CourseDetailVC {
     private func setLayout() {
         view.addSubviews(middleScorollView, thirdHorizontalDivideLine, bottomView)
         
-        bottomView.snp.makeConstraints { make in
-            make.bottom.leading.trailing.equalToSuperview()
-            make.height.equalTo(84)
+        bottomView.snp.makeConstraints {
+            $0.bottom.leading.trailing.equalToSuperview()
+            $0.height.equalTo(84)
         }
         
-        thirdHorizontalDivideLine.snp.makeConstraints { make in
-            make.bottom.equalTo(bottomView.snp.top)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(0.5)
+        thirdHorizontalDivideLine.snp.makeConstraints {
+            $0.bottom.equalTo(bottomView.snp.top)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(0.5)
         }
         
         bottomView.addSubviews(likeButton, startButton, scrapCountLabel)
         
-        likeButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(13)
-            make.leading.equalToSuperview().offset(26)
-            make.width.equalTo(24)
-            make.height.equalTo(22)
+        likeButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(13)
+            $0.leading.equalToSuperview().offset(26)
+            $0.width.equalTo(24)
+            $0.height.equalTo(22)
         }
         
-        scrapCountLabel.snp.makeConstraints { make in
-            make.top.equalTo(likeButton.snp.bottom).offset(2)
-            make.leading.equalToSuperview().offset(26)
-            make.width.equalTo(20)
-            make.height.equalTo(13)
+        scrapCountLabel.snp.makeConstraints {
+            $0.top.equalTo(likeButton.snp.bottom).offset(2)
+            $0.leading.equalToSuperview().offset(26)
+            $0.width.equalTo(20)
+            $0.height.equalTo(13)
         }
-        startButton.snp.makeConstraints { make in
-            make.leading.equalTo(likeButton.snp.trailing).offset(20)
-            make.top.equalToSuperview().offset(10)
-            make.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(40)
+        
+        startButton.snp.makeConstraints {
+            $0.leading.equalTo(likeButton.snp.trailing).offset(20)
+            $0.top.equalToSuperview().offset(10)
+            $0.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(40)
         }
         
         setMiddleScrollView()
     }
     
     private func setMiddleScrollView() {
-        middleScorollView.snp.makeConstraints { make in
-            make.top.equalTo(navibar.snp.bottom)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalTo(thirdHorizontalDivideLine.snp.top)
+        middleScorollView.snp.makeConstraints {
+            $0.top.equalTo(navibar.snp.bottom)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(thirdHorizontalDivideLine.snp.top)
         }
         
-        middleScorollView.addSubviews(mapImageView, profileImageView, profileNameLabel, runningLevelLabel, firstHorizontalDivideLine, courseTitleLabel, courseDetailStackView, secondHorizontalDivideLine, courseExplanationTextView)
+        middleScorollView.addSubviews(mapImageView, userProfileStackView, firstHorizontalDivideLine, courseTitleLabel, courseDetailStackView, secondHorizontalDivideLine, courseExplanationTextView)
         
-        mapImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(middleScorollView.snp.width).multipliedBy(0.7)
+        mapImageView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(middleScorollView.snp.width).multipliedBy(0.7)
         }
         
-        profileImageView.snp.makeConstraints { make in
-            make.top.equalTo(mapImageView.snp.bottom).offset(14)
-            make.leading.equalToSuperview().offset(14)
-            make.width.height.equalTo(34)
+        userProfileStackView.snp.makeConstraints {
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(12)
+            $0.top.equalTo(mapImageView.snp.bottom).offset(14)
         }
         
-        profileNameLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(profileImageView.snp.centerY)
-            make.leading.equalTo(profileImageView.snp.trailing).offset(12)
+        profileImageView.snp.makeConstraints {
+            $0.width.height.equalTo(34)
         }
         
-        runningLevelLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(profileNameLabel.snp.bottom)
-            make.leading.equalTo(profileNameLabel.snp.trailing).offset(10)
+        firstHorizontalDivideLine.snp.makeConstraints {
+            $0.top.equalTo(mapImageView.snp.bottom).offset(62)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(14)
+            $0.height.equalTo(0.5)
         }
         
-        firstHorizontalDivideLine.snp.makeConstraints { make in
-            make.top.equalTo(mapImageView.snp.bottom).offset(62)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(14)
-            make.height.equalTo(0.5)
+        courseTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(firstHorizontalDivideLine.snp.bottom).offset(16)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(16)
         }
         
-        courseTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(firstHorizontalDivideLine.snp.bottom).offset(16)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(16)
+        courseDetailStackView.snp.makeConstraints {
+            $0.top.equalTo(courseTitleLabel.snp.bottom).offset(19)
+            $0.leading.trailing.equalToSuperview().inset(16)
         }
         
-        courseDetailStackView.snp.makeConstraints { make in
-            make.top.equalTo(courseTitleLabel.snp.bottom).offset(19)
-            make.leading.trailing.equalToSuperview().inset(16)
+        secondHorizontalDivideLine.snp.makeConstraints {
+            $0.top.equalTo(courseDetailStackView.snp.bottom).offset(27)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(8)
         }
         
-        secondHorizontalDivideLine.snp.makeConstraints { make in
-            make.top.equalTo(courseDetailStackView.snp.bottom).offset(27)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(8)
-        }
-        
-        courseExplanationTextView.snp.makeConstraints { make in
-            make.top.equalTo(secondHorizontalDivideLine.snp.bottom).offset(17)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.bottom.equalToSuperview().inset(20)
+        courseExplanationTextView.snp.makeConstraints {
+            $0.top.equalTo(secondHorizontalDivideLine.snp.bottom).offset(17)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.bottom.equalToSuperview().inset(20)
         }
     }
 }
