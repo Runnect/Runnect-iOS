@@ -300,9 +300,7 @@ extension RunningWaitingVC {
             switch item {
             case "수정하기":
                 // 현재 코스 모델의 이름 변경
-                let bottomSheetVC = CustomBottomSheetVC(type: .textField)
-                bottomSheetVC.modalPresentationStyle = .overFullScreen
-                self.present(bottomSheetVC, animated: false)
+                ModifyCourseTitle()
             case "삭제하기":
                 let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
                 deleteAlertVC.modalPresentationStyle = .overFullScreen
@@ -316,5 +314,18 @@ extension RunningWaitingVC {
                 self.showToast(message: "없는 명령어 입니다.")
             }
         }
+    }
+    
+    private func ModifyCourseTitle() {
+        let bottomSheetVC = CustomBottomSheetVC(type: .textField)
+        bottomSheetVC.modalPresentationStyle = .overFullScreen
+        bottomSheetVC.completeButtonTapAction = { [weak self] text in
+            guard let self = self else { return }
+            guard handleVisitor() else { return }
+            self.courseTitle = text
+            /// 여기에 id 랑 text post 작업 필요 할 듯?
+            self.dismiss(animated: false)
+        }
+        self.present(bottomSheetVC, animated: false)
     }
 }
