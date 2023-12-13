@@ -7,7 +7,7 @@
 
 import UIKit
 
-class UserUploadedLabelCell: UICollectionViewCell {
+final class UserUploadedLabelCell: UICollectionViewCell {
     
     // MARK: - UI Components
     private lazy var uploadedCourseInfoLabelView = makeInfoView(title: "업로드한 코스")
@@ -23,8 +23,7 @@ class UserUploadedLabelCell: UICollectionViewCell {
     }
 }
 
-
-// MARK: - Layout Helpers
+    // MARK: - Layout Helpers
 
 extension UserUploadedLabelCell {
     
@@ -66,4 +65,3 @@ extension UserUploadedLabelCell {
         return containerView
     }
 }
-

@@ -12,7 +12,7 @@ protocol TitleCollectionViewCellDelegate: AnyObject {
     func didTapSortButton(ordering: String)
 }
 
-class TitleCollectionViewCell: UICollectionViewCell {
+final class TitleCollectionViewCell: UICollectionViewCell {
     
     private var cancellables: Set<AnyCancellable> = []
     weak var delegate: TitleCollectionViewCellDelegate?

@@ -16,7 +16,7 @@ class CourseSelectionPublisher {
     let didSelectCourse = PassthroughSubject<IndexPath, Never>()
 }
 
-class MarathonMapCollectionViewCell: UICollectionViewCell {
+final class MarathonMapCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
     
     private let PublicCourseProvider = Providers.publicCourseProvider

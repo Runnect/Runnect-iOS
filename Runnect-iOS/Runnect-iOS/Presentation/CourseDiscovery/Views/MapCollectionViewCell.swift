@@ -14,7 +14,7 @@ import SnapKit
 
 import Then
 
-class MapCollectionViewCell: UICollectionViewCell {
+final class MapCollectionViewCell: UICollectionViewCell {
     
     // MARK: - collectionview
     

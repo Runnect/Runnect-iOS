@@ -7,7 +7,7 @@
 
 import UIKit
 
-class UserProgressCell: UICollectionViewCell {
+final class UserProgressCell: UICollectionViewCell {
     
     // MARK: - properties
     
