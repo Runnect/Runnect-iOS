@@ -381,7 +381,7 @@ extension CourseDiscoveryVC: UIScrollViewDelegate {
         let contentOffsetY = mapCollectionView.contentOffset.y
         let scrollThreshold = mapCollectionView.bounds.size.height * 0.1 // 10% 스크롤 했으면 UI 변경
         
-        UIView.animate(withDuration: 0.2) {
+        UIView.animate(withDuration: 0.25) {
             if contentOffsetY > scrollThreshold {
                 // 10% 이상 스크롤 했을 때
                 self.downScroll()
@@ -392,7 +392,7 @@ extension CourseDiscoveryVC: UIScrollViewDelegate {
     }
     
     private func downScroll() {
-        self.uploadButton.transform = CGAffineTransform(scaleX: 0.45, y: 0.96)
+        self.uploadButton.transform = CGAffineTransform(scaleX: 0.3, y: 0.96)
         self.miniUploadButton.frame.origin.x = 332 // 직접 피그마보고 상수 맞췄습니다.
         self.uploadButton.alpha = 0.0
         self.miniUploadButton.alpha = 1.0
