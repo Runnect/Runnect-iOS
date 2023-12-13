@@ -16,6 +16,11 @@
 		71288ED82B289F5A00D6C921 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 71288ED72B289F5A00D6C921 /* GoogleService-Info.plist */; };
 		712F661D2A7B7BAB00D9539B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712F661C2A7B7BAB00D9539B /* Config.swift */; };
 		7136BF8A2AF921A900679364 /* CustomBottomSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7136BF892AF921A900679364 /* CustomBottomSheetVC.swift */; };
+		717916DA2B13613B009CEF97 /* MarathonListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717916D92B13613B009CEF97 /* MarathonListResponseDto.swift */; };
+		717916DE2B137DC3009CEF97 /* TotalPageCountDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717916DD2B137DC3009CEF97 /* TotalPageCountDto.swift */; };
+		71F7804E2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F7804D2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift */; };
+		71F780502B0893D700B53253 /* MarathonMapCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F7804F2B0893D700B53253 /* MarathonMapCollectionViewCell.swift */; };
+		71F7BF072B0CDFE300B752B3 /* MarathonCourseListCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F7BF062B0CDFE300B752B3 /* MarathonCourseListCVC.swift */; };
 		A3305A97296EF58C000B1A10 /* GoalRewardInfoDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */; };
 		A3BC2F2B2962C3D500198261 /* GoalRewardInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */; };
 		A3BC2F2D2962C3F200198261 /* ActivityRecordInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F2C2962C3F200198261 /* ActivityRecordInfoVC.swift */; };
@@ -178,6 +183,12 @@
 		71288ED72B289F5A00D6C921 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		712F661C2A7B7BAB00D9539B /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		7136BF892AF921A900679364 /* CustomBottomSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheetVC.swift; sourceTree = "<group>"; };
+		717916D92B13613B009CEF97 /* MarathonListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonListResponseDto.swift; sourceTree = "<group>"; };
+		717916DD2B137DC3009CEF97 /* TotalPageCountDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalPageCountDto.swift; sourceTree = "<group>"; };
+		71F7804D2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonTitleCollectionViewCell.swift; sourceTree = "<group>"; };
+		71F7804F2B0893D700B53253 /* MarathonMapCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonMapCollectionViewCell.swift; sourceTree = "<group>"; };
+		71F7BF062B0CDFE300B752B3 /* MarathonCourseListCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonCourseListCVC.swift; sourceTree = "<group>"; };
+
 		A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardInfoDto.swift; sourceTree = "<group>"; };
 		A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardInfoVC.swift; sourceTree = "<group>"; };
 		A3BC2F2C2962C3F200198261 /* ActivityRecordInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRecordInfoVC.swift; sourceTree = "<group>"; };
@@ -723,9 +734,11 @@
 		CE17F0442961C3D900E1DED0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				DAD5A3DB296C6DB800C8166B /* MapCollectionViewCell.swift */,
-				DAD5A3D9296C6DA500C8166B /* TitleCollectionViewCell.swift */,
 				DAD5A3D7296C6D9600C8166B /* AdImageCollectionViewCell.swift */,
+				71F7804D2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift */,
+				71F7804F2B0893D700B53253 /* MarathonMapCollectionViewCell.swift */,
+				DAD5A3D9296C6DA500C8166B /* TitleCollectionViewCell.swift */,
+				DAD5A3DB296C6DB800C8166B /* MapCollectionViewCell.swift */,
 				CE17F0432961C3D600E1DED0 /* VC */,
 			);
 			path = Views;
@@ -822,7 +835,7 @@
 				CE6655A9295D7FAA00C64E12 /* Network */,
 				CE6655A8295D7F7D00C64E12 /* Presentation */,
 				CE4545D6295D7AF5003201E1 /* Info.plist */,
-				71288ED72B289F5A00D6C921 /* GoogleService-Info.plist */,
+				713BA40A2B218AF8009091A8 /* GoogleService-Info.plist */,
 			);
 			path = "Runnect-iOS";
 			sourceTree = "<group>";
@@ -1156,6 +1169,7 @@
 			isa = PBXGroup;
 			children = (
 				CE6B63D2296725E6003F900F /* CourseListCVC.swift */,
+				71F7BF062B0CDFE300B752B3 /* MarathonCourseListCVC.swift */,
 			);
 			path = CVC;
 			sourceTree = "<group>";
@@ -1206,7 +1220,9 @@
 		DAD5A3E0296D4C2A00C8166B /* ResponseDto */ = {
 			isa = PBXGroup;
 			children = (
+				717916D92B13613B009CEF97 /* MarathonListResponseDto.swift */,
 				DAD5A3E1296D4C6500C8166B /* PickedMapListResponseDto.swift */,
+				717916DD2B137DC3009CEF97 /* TotalPageCountDto.swift */,
 			);
 			path = ResponseDto;
 			sourceTree = "<group>";
@@ -1274,7 +1290,7 @@
 			files = (
 				CE665615295D989A00C64E12 /* .swiftlint.yml in Resources */,
 				CE17F0342961BEF800E1DED0 /* Pretendard-Bold.otf in Resources */,
-				71288ED82B289F5A00D6C921 /* GoogleService-Info.plist in Resources */,
+				713BA40B2B218AF8009091A8 /* GoogleService-Info.plist in Resources */,
 				CE17F0352961BEF800E1DED0 /* Pretendard-SemiBold.otf in Resources */,
 				CE17F0332961BEF800E1DED0 /* Pretendard-Medium.otf in Resources */,
 				CE6655BF295D82E200C64E12 /* .gitkeep in Resources */,
@@ -1363,6 +1379,7 @@
 				CE4545CD295D7AF4003201E1 /* TaBarController.swift in Sources */,
 				A3305A97296EF58C000B1A10 /* GoalRewardInfoDto.swift in Sources */,
 				CE21C024299E5FE500F62AF5 /* UserRouter.swift in Sources */,
+				71F780502B0893D700B53253 /* MarathonMapCollectionViewCell.swift in Sources */,
 				CE6655F4295D898400C64E12 /* UIViewController+.swift in Sources */,
 				CE14677829658C7200DCEA1B /* Stopwatch.swift in Sources */,
 				CE21C026299E5FF300F62AF5 /* CourseRouter.swift in Sources */,
@@ -1410,6 +1427,7 @@
 				CEC2A6922962BE2900160BF7 /* DepartureSearchVC.swift in Sources */,
 				CE6655EE295D88E600C64E12 /* UITextField+.swift in Sources */,
 				CE40BB1C2967E4910030ABCA /* RunningWaitingVC.swift in Sources */,
+				71F7804E2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift in Sources */,
 				CE6B63D6296731F9003F900F /* ScrapCourseListView.swift in Sources */,
 				CE6655F8295D90CF00C64E12 /* adjusted+.swift in Sources */,
 				A3C2CAD729E53B2900EC525B /* RNAlertVC.swift in Sources */,
@@ -1443,10 +1461,12 @@
 				A3D1A77E29CF09B600DD54EC /* SignInResponseDto.swift in Sources */,
 				CE21C028299E5FFC00F62AF5 /* PublicCourseRouter.swift in Sources */,
 				CE18E894296C79B900FEB569 /* CourseDrawingRequestDto.swift in Sources */,
+				71F7BF072B0CDFE300B752B3 /* MarathonCourseListCVC.swift in Sources */,
 				DA20D84E2966A9B300F1581F /* CourseSearchVC.swift in Sources */,
 				CE1006572968230800FD31FB /* DepartureLocationModel.swift in Sources */,
 				CECA695C296E61D6002AF05C /* PrivateCourseNotUploadedResponseDto.swift in Sources */,
 				CE6655EC295D88D000C64E12 /* UITableView+.swift in Sources */,
+				717916DE2B137DC3009CEF97 /* TotalPageCountDto.swift in Sources */,
 				CEEC6B3A2961C4F300D00E1E /* CourseDrawingHomeVC.swift in Sources */,
 				CEB0BCBC29D123350048CCD5 /* GuideView.swift in Sources */,
 				CEC2A6902962B06C00160BF7 /* convertLocationObject.swift in Sources */,
@@ -1474,6 +1494,7 @@
 				A3BC2F4129667A0D00198261 /* NicknameEditorVC.swift in Sources */,
 				CE0C23742966D62A00B45063 /* PagedView.swift in Sources */,
 				CE3A53C5296C6017003D518C /* KeychainManager.swift in Sources */,
+				717916DA2B13613B009CEF97 /* MarathonListResponseDto.swift in Sources */,
 				CEEC6B4B2961D89700D00E1E /* CustomNavigationBar.swift in Sources */,
 				CE09037D296E9ED900BEA710 /* ScrapCourseResponseDto.swift in Sources */,
 				CED791B32A2626AF001BFCFB /* ShadowView.swift in Sources */,

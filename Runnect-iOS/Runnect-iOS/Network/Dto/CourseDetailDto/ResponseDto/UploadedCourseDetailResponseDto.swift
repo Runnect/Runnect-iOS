@@ -18,7 +18,7 @@ struct UploadedCourseDetailResponseDto: Codable {
 
 struct UploadUser: Codable {
     let nickname: String
-    let level: String
+    let level: Int
     let image: String
     let isNowUser: Bool?
 }

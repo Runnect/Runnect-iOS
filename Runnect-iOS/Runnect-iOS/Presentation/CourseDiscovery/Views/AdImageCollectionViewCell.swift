@@ -29,7 +29,7 @@ class AdImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
     // MARK: - Constants
     
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
-
+    
     // MARK: - UI Components
     var imgBanners: [UIImage] = [ImageLiterals.imgBanner1, ImageLiterals.imgBanner2]
     var currentPage: Int = 0
@@ -41,7 +41,7 @@ class AdImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        layout()
+        setLayout()
         setDelegate()
         startBannerSlide()
     }
@@ -81,10 +81,10 @@ extension AdImageCollectionViewCell {
         let currentPage = Int(scrollView.contentOffset.x / scrollView.frame.width)
         pageControl.currentPage = currentPage % imgBanners.count
     }
-
+    
     // MARK: - Layout Helpers
     
-    func layout() {
+    private func setLayout() {
         contentView.backgroundColor = .clear
         contentView.addSubview(bannerCollectionView)
         contentView.addSubview(pageControl)
@@ -129,18 +129,18 @@ extension AdImageCollectionViewCell: UICollectionViewDelegate, UICollectionViewD
         cell.contentView.addSubviews(imageView)
         
         if indexPath.item == 0 {
-                    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(firstCellTapped(_:)))
-                    imageView.addGestureRecognizer(tapGesture)
-                }
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(firstCellTapped(_:)))
+            imageView.addGestureRecognizer(tapGesture)
+        }
         return cell
     }
     // 첫 번째 셀 클릭 이벤트 핸들러
-       @objc func firstCellTapped(_ gesture: UITapGestureRecognizer) {
-           // Safari 링크로 연결
-           if let url = URL(string: "https://docs.google.com/forms/d/1cpgZHNNi1kIvi2ZCwCIcMJcI1PkHBz9a5vWJb7FfIbg/edit") {
-               UIApplication.shared.open(url)
-           }
-       }
+    @objc func firstCellTapped(_ gesture: UITapGestureRecognizer) {
+        // Safari 링크로 연결
+        if let url = URL(string: "https://docs.google.com/forms/d/1cpgZHNNi1kIvi2ZCwCIcMJcI1PkHBz9a5vWJb7FfIbg/edit") {
+            UIApplication.shared.open(url)
+        }
+    }
     
 }
 
@@ -150,7 +150,7 @@ extension AdImageCollectionViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return self.frame.size
     }
-  
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
