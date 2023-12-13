@@ -192,18 +192,17 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath)
-                as? CourseListCVC else { return UICollectionViewCell() }
-        cell.setCellType(type: .title)
-        if let selectedCells = collectionView.indexPathsForSelectedItems, selectedCells.contains(indexPath) {
-            cell.selectCell(didSelect: true)
-        } else {
-            cell.selectCell(didSelect: false)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath) as? CourseListCVC else {
+            return UICollectionViewCell()
         }
 
         let model = courseList[indexPath.item]
-        let cellTitle =  "\(model.departure.region) \(model.departure.city)"
+        let cellTitle = model.departure.name ?? " "
+        
+        cell.setCellType(type: .title)
+        cell.selectCell(didSelect: collectionView.indexPathsForSelectedItems?.contains(indexPath) ?? false)
         cell.setData(imageURL: model.image, title: cellTitle, location: nil, didLike: nil, isEditMode: isEditMode)
+
         return cell
     }
     
