@@ -18,6 +18,7 @@
 		71288ED32B26ED2500D6C921 /* UserUploadedLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71288ED22B26ED2500D6C921 /* UserUploadedLabelCell.swift */; };
 		712F661D2A7B7BAB00D9539B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712F661C2A7B7BAB00D9539B /* Config.swift */; };
 		7136BF8A2AF921A900679364 /* CustomBottomSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7136BF892AF921A900679364 /* CustomBottomSheetVC.swift */; };
+		713A98F02B29DD9900189B3C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 713A98EF2B29DD9900189B3C /* GoogleService-Info.plist */; };
 		717916DA2B13613B009CEF97 /* MarathonListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717916D92B13613B009CEF97 /* MarathonListResponseDto.swift */; };
 		717916DE2B137DC3009CEF97 /* TotalPageCountDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717916DD2B137DC3009CEF97 /* TotalPageCountDto.swift */; };
 		71BAD06A2B24CECC0061E31D /* UserProfileDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BAD0692B24CECC0061E31D /* UserProfileDto.swift */; };
@@ -189,6 +190,7 @@
 		71288ED22B26ED2500D6C921 /* UserUploadedLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUploadedLabelCell.swift; sourceTree = "<group>"; };
 		712F661C2A7B7BAB00D9539B /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		7136BF892AF921A900679364 /* CustomBottomSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheetVC.swift; sourceTree = "<group>"; };
+		713A98EF2B29DD9900189B3C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		717916D92B13613B009CEF97 /* MarathonListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonListResponseDto.swift; sourceTree = "<group>"; };
 		717916DD2B137DC3009CEF97 /* TotalPageCountDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalPageCountDto.swift; sourceTree = "<group>"; };
 		71BAD0692B24CECC0061E31D /* UserProfileDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileDto.swift; sourceTree = "<group>"; };
@@ -196,7 +198,6 @@
 		71F7804D2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonTitleCollectionViewCell.swift; sourceTree = "<group>"; };
 		71F7804F2B0893D700B53253 /* MarathonMapCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonMapCollectionViewCell.swift; sourceTree = "<group>"; };
 		71F7BF062B0CDFE300B752B3 /* MarathonCourseListCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonCourseListCVC.swift; sourceTree = "<group>"; };
-
 		A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardInfoDto.swift; sourceTree = "<group>"; };
 		A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardInfoVC.swift; sourceTree = "<group>"; };
 		A3BC2F2C2962C3F200198261 /* ActivityRecordInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRecordInfoVC.swift; sourceTree = "<group>"; };
@@ -863,7 +864,7 @@
 				CE6655A9295D7FAA00C64E12 /* Network */,
 				CE6655A8295D7F7D00C64E12 /* Presentation */,
 				CE4545D6295D7AF5003201E1 /* Info.plist */,
-				713BA40A2B218AF8009091A8 /* GoogleService-Info.plist */,
+				713A98EF2B29DD9900189B3C /* GoogleService-Info.plist */,
 			);
 			path = "Runnect-iOS";
 			sourceTree = "<group>";
@@ -1319,7 +1320,7 @@
 			files = (
 				CE665615295D989A00C64E12 /* .swiftlint.yml in Resources */,
 				CE17F0342961BEF800E1DED0 /* Pretendard-Bold.otf in Resources */,
-				713BA40B2B218AF8009091A8 /* GoogleService-Info.plist in Resources */,
+				713A98F02B29DD9900189B3C /* GoogleService-Info.plist in Resources */,
 				CE17F0352961BEF800E1DED0 /* Pretendard-SemiBold.otf in Resources */,
 				CE17F0332961BEF800E1DED0 /* Pretendard-Medium.otf in Resources */,
 				CE6655BF295D82E200C64E12 /* .gitkeep in Resources */,
