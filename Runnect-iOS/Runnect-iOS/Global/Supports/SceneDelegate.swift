@@ -123,7 +123,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 
 extension CourseDetailVC {
-
     func getUploadedCourseDetail(courseId: Int?) {
         guard let publicCourseId = courseId else { return }
         LoadingIndicator.showLoading()

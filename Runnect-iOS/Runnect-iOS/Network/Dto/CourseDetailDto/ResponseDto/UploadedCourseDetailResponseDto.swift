@@ -17,6 +17,7 @@ struct UploadedCourseDetailResponseDto: Codable {
 // MARK: - UploadUser
 
 struct UploadUser: Codable {
+    let id: Int // userProfile path 추가
     let nickname: String
     let level: Int
     let image: String
