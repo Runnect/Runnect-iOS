@@ -159,7 +159,7 @@ extension CourseDetailVC {
         guard let publicCourseId = publicCourseId else { return }
         
         scrapCourse(scrapTF: !sender.isSelected)
-        delegate?.didUpdateScrapState(publicCourseId: publicCourseId, isScrapped: !sender.isSelected)
+        delegate?.didUpdateScrapState(publicCourseId: publicCourseId, isScrapped: !sender.isSelected)       /// UI Update 부분
         
         /// 누른상태(true)에서 누르면 스크랩 취소(false) 하는 이벤트, 즉 -1
         let toggle = sender.isSelected ? -1 : 1

@@ -336,11 +336,14 @@ extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
     
     // 외부에서 Marathon Cell에서 받아오는 indexPath를 처리 합니다.
     private func setMarathonCourseSelection(at indexPath: IndexPath) {
-        let courseDetailVC = CourseDetailVC()
-        let courseModel = courseList[indexPath.item]
-        courseDetailVC.setCourseId(courseId: courseModel.courseId, publicCourseId: courseModel.id)
-        courseDetailVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(courseDetailVC, animated: true)
+        if let marathonCell = mapCollectionView.cellForItem(at: IndexPath(item: 0, section: Section.recommendedList)) as? MarathonMapCollectionViewCell {
+            let marathonCourseList = marathonCell.marathonCourseList
+            let courseDetailVC = CourseDetailVC()
+            let courseModel = marathonCourseList[indexPath.item]
+            courseDetailVC.setCourseId(courseId: courseModel.courseId, publicCourseId: courseModel.id)
+            courseDetailVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(courseDetailVC, animated: true)
+        }
     }
 }
 

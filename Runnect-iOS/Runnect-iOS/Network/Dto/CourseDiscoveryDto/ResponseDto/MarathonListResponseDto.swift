@@ -19,7 +19,7 @@ struct marathonCourse: Codable {
     let id, courseId: Int
     let title: String
     let image: String
-    let scrap: Bool?
+    var scrap: Bool?
     let departure: MarathonDeparture
 }
 
