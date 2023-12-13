@@ -40,6 +40,8 @@ final class CourseDetailVC: UIViewController {
     private var userId: Int?
     private var isMyCourse: Bool?
     
+    private var scrapCount: Int = 0
+    
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton)
@@ -90,6 +92,13 @@ final class CourseDetailVC: UIViewController {
         $0.text = "Lv. 0"
         $0.textColor = .m1
         $0.font = .b5
+    }
+    
+    private let scrapCountLabel = UILabel().then {
+        $0.text = "0"
+        $0.font = .b9
+        $0.textColor = UIColor(hex: "#9E9E9E", alpha: 1.0)
+        $0.textAlignment = .center
     }
     
     private let courseTitleLabel = UILabel().then {
@@ -150,6 +159,11 @@ extension CourseDetailVC {
         
         scrapCourse(scrapTF: !sender.isSelected)
         delegate?.didUpdateScrapState(publicCourseId: publicCourseId, isScrapped: !sender.isSelected)
+        
+        /// 누른상태(true)에서 누르면 스크랩 취소(false) 하는 이벤트, 즉 -1
+        let toggle = sender.isSelected ? -1 : 1
+        self.scrapCount += toggle
+        self.scrapCountLabel.text = "\(self.scrapCount)"
         print("CourseDetailVC 스크랩 탭🔥publicCourseId=\(publicCourseId), isScrapped은 \(!sender.isSelected)요렇게 변경 ")
     }
     
@@ -302,6 +316,9 @@ extension CourseDetailVC {
         self.isMyCourse = model.user.isNowUser
         guard let scrap = model.publicCourse.scrap else { return }
         self.likeButton.isSelected = scrap
+        guard let scrapCount = model.publicCourse.scrapCount else {return}
+        self.scrapCount = scrapCount
+        self.scrapCountLabel.text = "\(self.scrapCount)"
         
         guard let distance = model.publicCourse.distance else { return }
         self.courseDistanceInfoView.setDescriptionText(description: "\(distance)km")
@@ -373,15 +390,21 @@ extension CourseDetailVC {
             make.height.equalTo(0.5)
         }
         
-        bottomView.addSubviews(likeButton, startButton)
+        bottomView.addSubviews(likeButton, startButton, scrapCountLabel)
         
         likeButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(18)
+            make.top.equalToSuperview().offset(13)
             make.leading.equalToSuperview().offset(26)
             make.width.equalTo(24)
             make.height.equalTo(22)
         }
         
+        scrapCountLabel.snp.makeConstraints { make in
+            make.top.equalTo(likeButton.snp.bottom).offset(2)
+            make.leading.equalToSuperview().offset(26)
+            make.width.equalTo(20)
+            make.height.equalTo(13)
+        }
         startButton.snp.makeConstraints { make in
             make.leading.equalTo(likeButton.snp.trailing).offset(20)
             make.top.equalToSuperview().offset(10)
