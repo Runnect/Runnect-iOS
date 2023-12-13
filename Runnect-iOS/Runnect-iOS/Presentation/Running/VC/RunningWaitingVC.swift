@@ -187,7 +187,9 @@ extension RunningWaitingVC {
         view.bringSubviewToFront(moreButton)
         
         mapView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
+            make.top.equalTo(naviBar.snp.bottom)
+            make.bottom.equalToSuperview()
         }
         
         distanceContainerView.snp.makeConstraints { make in
@@ -206,7 +208,7 @@ extension RunningWaitingVC {
         startButton.snp.makeConstraints { make in
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
             make.height.equalTo(44)
-            make.top.equalTo(view.snp.bottom).offset(34)
+            make.top.equalTo(view.snp.bottom).offset(24)
         }
     }
     
