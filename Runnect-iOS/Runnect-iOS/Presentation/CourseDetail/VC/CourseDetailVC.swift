@@ -137,6 +137,7 @@ final class CourseDetailVC: UIViewController {
         setUI()
         setLayout()
         setAddTarget()
+        setupRefreshControl()
         self.hideTabBar(wantsToHide: true)
     }
     
@@ -167,7 +168,7 @@ extension CourseDetailVC {
         print("CourseDetailVC 스크랩 탭🔥publicCourseId=\(publicCourseId), isScrapped은 \(!sender.isSelected)요렇게 변경 ")
     }
     
-    @objc func shareButtonTapped() {
+    @objc private func shareButtonTapped() {
         guard let model = self.uploadedCourseDetailModel else {
             return
         }
@@ -220,7 +221,7 @@ extension CourseDetailVC {
         }
     }
     
-    @objc func pushToUserProfileVC() {
+    @objc private func pushToUserProfileVC() {
         guard UserManager.shared.userType != .visitor else {
             // 방문자일 경우 토스트 메세지만
             self.showToast(message: "회원만 조회 가능 합니다.")
@@ -232,13 +233,13 @@ extension CourseDetailVC {
         self.navigationController?.pushViewController(userProfile, animated: true)
     }
     
-    @objc func startButtonDidTap() {
+    @objc private func startButtonDidTap() {
         guard handleVisitor() else { return }
         guard let courseId = self.courseId else { return }
         getCourseDetailWithPath(courseId: courseId)
     }
     
-    @objc func moreButtonDidTap() {
+    @objc private func moreButtonDidTap() {
         guard let isMyCourse = self.isMyCourse, let uploadedCourseDetailModel = self.uploadedCourseDetailModel else { return }
         
         let items = isMyCourse ? ["수정하기", "삭제하기"] : ["신고하기"]
@@ -270,25 +271,8 @@ extension CourseDetailVC {
         menu.show()
     }
     
-    private func pushToCountDownVC() {
-        guard let courseModel = self.courseModel,
-              let path = courseModel.path,
-              let distance = courseModel.distance
-        else { return }
-        
-        let countDownVC = CountDownVC()
-        let locations = path.map { NMGLatLng(lat: $0[0], lng: $0[1]) }
-        
-        let runningModel = RunningModel(courseId: self.courseId,
-                                        publicCourseId: self.publicCourseId,
-                                        locations: locations,
-                                        distance: String(distance),
-                                        imageUrl: courseModel.image,
-                                        region: courseModel.departure.region,
-                                        city: courseModel.departure.city)
-        
-        countDownVC.setData(runningModel: runningModel)
-        self.navigationController?.pushViewController(countDownVC, animated: true)
+    @objc private func didBeginRefresh() {
+        refresh()
     }
 }
 
@@ -336,6 +320,27 @@ extension CourseDetailVC {
         profileNameLabel.addGestureRecognizer(profileTouch)
     }
     
+    private func pushToCountDownVC() {
+        guard let courseModel = self.courseModel,
+              let path = courseModel.path,
+              let distance = courseModel.distance
+        else { return }
+        
+        let countDownVC = CountDownVC()
+        let locations = path.map { NMGLatLng(lat: $0[0], lng: $0[1]) }
+        
+        let runningModel = RunningModel(courseId: self.courseId,
+                                        publicCourseId: self.publicCourseId,
+                                        locations: locations,
+                                        distance: String(distance),
+                                        imageUrl: courseModel.image,
+                                        region: courseModel.departure.region,
+                                        city: courseModel.departure.city)
+        
+        countDownVC.setData(runningModel: runningModel)
+        self.navigationController?.pushViewController(countDownVC, animated: true)
+    }
+    
     private func setNullUser() {
         self.profileImageView.image = ImageLiterals.imgPerson
         self.profileNameLabel.textColor = .g2
@@ -343,6 +348,19 @@ extension CourseDetailVC {
         self.runningLevelLabel.isHidden = true
     }
     
+    private func setupRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(
+            self,
+            action: #selector(didBeginRefresh),
+            for: .valueChanged
+        )
+        middleScorollView.refreshControl = refreshControl
+    }
+    
+    private func refresh() {
+        self.getUploadedCourseDetail()
+    }
 }
 
 // MARK: - Layout Helpers
@@ -505,6 +523,7 @@ extension CourseDetailVC {
                 print(error.localizedDescription)
                 self.showNetworkFailureToast()
             }
+            self.middleScorollView.refreshControl?.endRefreshing()
         }
     }
     
