@@ -481,34 +481,6 @@ extension CourseDiscoveryVC {
         }
     }
     
-    private func getTotalPageNum() {
-        LoadingIndicator.showLoading()
-        publicCourseProvider.request(.getTotalPageCount) { response in
-            LoadingIndicator.hideLoading()
-            switch response {
-            case .success(let result):
-                let status = result.statusCode
-                if 200..<300 ~= status {
-                    do {
-                        let responseDto = try result.map(BaseResponse<TotalPageCountDto>.self)
-                        guard let data = responseDto.data else { return }
-                        self.totalPageNum = data.totalPageCount
-                        print("추천 코스의 코스의 수는 \(self.totalPageNum) 입니다. 🏃‍♀️\n")
-                    } catch {
-                        print(error.localizedDescription)
-                    }
-                }
-                if status >= 400 {
-                    print("400 error")
-                    self.showNetworkFailureToast()
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-                self.showNetworkFailureToast()
-            }
-        }
-    }
-    
     private func scrapCourse(publicCourseId: Int, scrapTF: Bool) {
         LoadingIndicator.showLoading()
         scrapProvider.request(.createAndDeleteScrap(publicCourseId: publicCourseId, scrapTF: scrapTF)) { [weak self] response in
