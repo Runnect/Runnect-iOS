@@ -69,7 +69,7 @@ extension UIFont {
     }
     
     @nonobjc class var b9: UIFont {
-        return UIFont.font(.pretendardSemiBold, ofSize: 10)
+        return UIFont.font(.pretendardSemiBold, ofSize: 11)
     }
 }
 

@@ -22,6 +22,7 @@ struct PublicCourse: Codable {
     let title: String
     let image: String
     var scrap: Bool?
+    var scrapCount: Int?
     let description: String?
     let distance: Float?
     let departure: CourseDiscoveryDeparture
