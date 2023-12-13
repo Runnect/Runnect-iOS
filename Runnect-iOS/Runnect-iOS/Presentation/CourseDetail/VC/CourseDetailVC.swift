@@ -165,7 +165,7 @@ extension CourseDetailVC {
         let toggle = sender.isSelected ? -1 : 1
         self.scrapCount += toggle
         self.scrapCountLabel.text = "\(self.scrapCount)"
-        print("CourseDetailVC 스크랩 탭🔥publicCourseId=\(publicCourseId), isScrapped은 \(!sender.isSelected)요렇게 변경 ")
+        /// print("CourseDetailVC 스크랩 탭🔥publicCourseId=\(publicCourseId), isScrapped은 \(!sender.isSelected) 요렇게 변경 ")
     }
     
     @objc private func shareButtonTapped() {
