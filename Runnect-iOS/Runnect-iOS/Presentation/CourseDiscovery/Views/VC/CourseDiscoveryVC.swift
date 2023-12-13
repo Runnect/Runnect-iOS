@@ -29,11 +29,10 @@ final class CourseDiscoveryVC: UIViewController {
     private var cancelBag = CancelBag()
     private var specialList = [String]()
     private var totalPageNum = 0
-    private var isEnd = false
-    private var pageNo = 1
+    private var isEnd: Bool = false
+    private var pageNo: Int = 1
     private var sort = "date"
     private var isDataLoaded = false
-    private var uploadButtonChanged = false
     
     // MARK: - UIComponents
     
@@ -166,8 +165,7 @@ extension CourseDiscoveryVC {
         view.backgroundColor = .w1
         mapCollectionView.backgroundColor = .w1
         self.emptyView.isHidden = true
-        self.miniUploadButton.isHidden = true
-        self.uploadButton.isHidden = false
+        self.miniUploadButton.alpha = 0.0 /// 이거 없으면 처음에 UIView.animate 효과 보임
     }
     
     private func setNavigationBar() {
@@ -203,7 +201,7 @@ extension CourseDiscoveryVC {
         }
         
         miniUploadButton.snp.makeConstraints { make in
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(38)
+            make.leading.equalTo(self.view.safeAreaLayoutGuide).inset(276)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(20)
             make.width.height.equalTo(41)
         }
@@ -359,14 +357,14 @@ extension CourseDiscoveryVC: UIScrollViewDelegate {
         let collectionViewHeight = mapCollectionView.contentSize.height // 전체 사이즈
         let paginationY = mapCollectionView.bounds.size.height // 유저 화면의 가장 아래 y축 이라고 생각
         
+        /// 페이지네이션 중단 코드
         if contentOffsetY > collectionViewHeight - paginationY {
             if courseList.count < pageNo * serverResponseNumber {
                 // 페이지 끝에 도달하면 현재 페이지에 더 이상 데이터가 없음을 의미
                 // 새로온 데이터의 갯수가 원래 서버에서 응답에서 온 갯수보다 작으면 페이지네이션 금지
-                // 페이지네이션 중단 코드
                 return
             }
-
+            
             if pageNo < totalPageNum {
                 if !isDataLoaded {
                     isDataLoaded = true
@@ -383,37 +381,19 @@ extension CourseDiscoveryVC: UIScrollViewDelegate {
         let contentOffsetY = mapCollectionView.contentOffset.y
         let scrollThreshold = mapCollectionView.bounds.size.height * 0.1 // 10% 스크롤 했으면 UI 변경
         
-        if contentOffsetY > scrollThreshold {
-            handleButtonVisibility(uploadButtonChanged: true, hidden: true, miniHidden: false)
-        } else {
-            handleButtonVisibility(uploadButtonChanged: false, hidden: false, miniHidden: true)
-        }
-    }
-    
-    private func handleButtonVisibility(uploadButtonChanged: Bool, hidden: Bool, miniHidden: Bool) {
-        guard self.uploadButtonChanged != uploadButtonChanged else { return }
-        
-        toggleUploadButtons(hidden: hidden, miniHidden: miniHidden)
-        self.uploadButtonChanged = uploadButtonChanged
-    }
-    
-    private func toggleUploadButtons(hidden: Bool, miniHidden: Bool) {
-        animateButtonTransition(button: uploadButton, hidden: hidden, delay: 0)
-        animateButtonTransition(button: miniUploadButton, hidden: miniHidden, delay: 0.1) // 예시로 0.25초 딜레이 적용
-    }
-    
-    private func animateButtonTransition(button: UIButton, hidden: Bool, delay: TimeInterval) {
-        let scale: CGFloat = hidden ? 0.1 : 1.0
-        let alpha: CGFloat = hidden ? 0.0 : 1.0
-        
-        UIView.animate(withDuration: 0.5, delay: delay, options: .transitionCurlUp, animations: {
-            button.transform = CGAffineTransform(scaleX: scale, y: scale)
-            button.alpha = alpha
-        }) { _ in
-            button.isHidden = hidden
-            
-            // Reset transform after animation completes
-            button.transform = CGAffineTransform.identity
+        UIView.animate(withDuration: 0.15) {
+            if contentOffsetY > scrollThreshold {
+                // 10% 이상 스크롤 했을 때
+                self.uploadButton.transform = CGAffineTransform(scaleX: 0.5, y: 0.96)
+                self.miniUploadButton.frame.origin.x = 332 // 직접 피그마보고 상수 맞췄습니다.
+                self.uploadButton.alpha = 0.0
+                self.miniUploadButton.alpha = 1.0
+            } else {
+                self.uploadButton.transform = .identity
+                self.miniUploadButton.alpha = 0.0
+                self.uploadButton.alpha = 1.0
+                self.miniUploadButton.frame.origin.x = 276
+            }
         }
     }
 }
