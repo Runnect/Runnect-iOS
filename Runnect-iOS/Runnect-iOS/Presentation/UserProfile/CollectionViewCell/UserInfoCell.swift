@@ -9,7 +9,6 @@ import UIKit
 
 class UserInfoCell: UICollectionViewCell {
     
-    
     // MARK: - properties
     
     private let stampNameImageDictionary: [String: UIImage] = GoalRewardInfoModel.stampNameImageDictionary
@@ -25,7 +24,6 @@ class UserInfoCell: UICollectionViewCell {
         $0.text = "ㅎㅇ"
     }
     
-    
     // MARK: - Life cycle
     
     override init(frame: CGRect) {
@@ -38,7 +36,7 @@ class UserInfoCell: UICollectionViewCell {
     }
 }
 
-    // MARK: - Layout Helpers
+// MARK: - Layout Helpers
 
 extension UserInfoCell {
     
@@ -54,13 +52,13 @@ extension UserInfoCell {
             $0.leading.equalToSuperview().offset(23)
             $0.width.height.equalTo(63)
         }
-
+        
         myProfileNameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(32)
             $0.leading.equalTo(myProfileImage.snp.trailing).offset(10)
         }
     }
-    func bind(model: UserProfileDto) {
+    func setData(model: UserProfileDto) {
         guard let profileImage = stampNameImageDictionary[model.user.latestStamp] else { return }
         self.myProfileImage.image = profileImage
         self.myProfileNameLabel.text = model.user.nickname

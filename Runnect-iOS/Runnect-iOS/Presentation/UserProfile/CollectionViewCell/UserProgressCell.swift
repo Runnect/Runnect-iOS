@@ -9,10 +9,7 @@ import UIKit
 
 class UserProgressCell: UICollectionViewCell {
     
-    
     // MARK: - properties
-    
-    
     
     // MARK: - UI Components
     private let runningProgressInfoView = UIView()
@@ -71,14 +68,14 @@ extension UserProgressCell {
             $0.trailing.equalToSuperview().inset(31.6)
             $0.height.equalTo(11)
         }
-
+        
         myRunnigProgressPercentLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(20)
             $0.trailing.equalToSuperview().inset(31.6)
         }
     }
     
-    func bind(model: UserProfileDto) {
+    func setData(model: UserProfileDto) {
         setMyRunningLevelLabel(model: model)
         myRunningProgressBar.setProgress(Float(model.user.levelPercent) / 100, animated: false)
         setMyRunningProgressPercentLabel(model: model)

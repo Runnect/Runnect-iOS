@@ -121,13 +121,13 @@ extension UserProfileVC: UICollectionViewDelegate, UICollectionViewDataSource {
         case Section.userInfo:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserInfoCell.className, for: indexPath) as? UserInfoCell else { return UICollectionViewCell() }
             if let userProfileModel = userProfileModel {
-                cell.bind(model: userProfileModel)
+                cell.setData(model: userProfileModel)
             }
             return cell
         case Section.userProgress:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserProgressCell.className, for: indexPath) as? UserProgressCell else { return UICollectionViewCell() }
             if let userProfileModel = userProfileModel {
-                cell.bind(model: userProfileModel)
+                cell.setData(model: userProfileModel)
             }
             return cell
         case Section.uploadedCourselabel:
