@@ -74,7 +74,7 @@ final class CourseDetailVC: UIViewController {
     ).then {
         $0.axis = .horizontal
         $0.alignment = .center
-        $0.spacing = 9
+        $0.spacing = 10
         $0.isUserInteractionEnabled = true
     }
     
@@ -145,7 +145,7 @@ final class CourseDetailVC: UIViewController {
         setUI()
         setLayout()
         setAddTarget()
-        setupRefreshControl()
+        setRefreshControl()
         self.hideTabBar(wantsToHide: true)
     }
     
@@ -310,7 +310,7 @@ extension CourseDetailVC {
         self.likeButton.isSelected = scrap
         guard let scrapCount = model.publicCourse.scrapCount else {return}
         self.scrapCount = scrapCount
-        self.scrapCountLabel.text = "\(self.scrapCount)"
+        self.scrapCountLabel.text = (self.scrapCount > 0) ? "\(self.scrapCount)" : ""
         
         guard let distance = model.publicCourse.distance else { return }
         self.courseDistanceInfoView.setDescriptionText(description: "\(distance)km")
@@ -356,7 +356,7 @@ extension CourseDetailVC {
         self.runningLevelLabel.isHidden = true
     }
     
-    private func setupRefreshControl() {
+    private func setRefreshControl() {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(
             self,
@@ -466,7 +466,11 @@ extension CourseDetailVC {
         }
         
         profileImageView.snp.makeConstraints {
-            $0.width.height.equalTo(34)
+            $0.width.height.equalTo(37)
+        }
+        
+        profileNameLabel.snp.makeConstraints {
+            $0.leading.equalTo(profileImageView.snp.trailing).offset(12)
         }
         
         firstHorizontalDivideLine.snp.makeConstraints {
