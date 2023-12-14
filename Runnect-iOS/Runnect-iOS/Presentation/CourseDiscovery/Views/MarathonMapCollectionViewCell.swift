@@ -17,9 +17,11 @@ class CourseSelectionPublisher {
 }
 
 final class MarathonMapCollectionViewCell: UICollectionViewCell {
+    
     // MARK: - Properties
     
     private let PublicCourseProvider = Providers.publicCourseProvider
+    private let scrapProvider = Providers.scrapProvider
     var marathonCourseList = [marathonCourse]() // Cell 사용하는 곳에서 사용 중이라 private ❌
     
     // MARK: - UIComponents
@@ -99,6 +101,7 @@ extension MarathonMapCollectionViewCell: UICollectionViewDelegate, UICollectionV
                                                             for: indexPath)
                 as? CourseListCVC else { return UICollectionViewCell() }
         cell.setCellType(type: .all)
+        cell.delegate = self
         let model = self.marathonCourseList[indexPath.item]
         let location = "\(model.departure.region) \(model.departure.city)"
         cell.setData(imageURL: model.image, title: model.title, location: location, didLike: model.scrap, indexPath: indexPath.item)
@@ -131,7 +134,20 @@ extension MarathonMapCollectionViewCell: UICollectionViewDelegateFlowLayout {
         CourseSelectionPublisher.shared.didSelectCourse.send(indexPath)
         // 코스 발견에 이벤트 전달
     }
-    
+}
+
+// MARK: - CourseListCVCDelegate
+
+extension MarathonMapCollectionViewCell: CourseListCVCDeleagte {
+    func likeButtonTapped(wantsTolike: Bool, index: Int) {
+        guard UserManager.shared.userType != .visitor else {
+            return
+        }
+        
+        let publicCourseId = self.marathonCourseList[index].id
+        self.scrapCourse(publicCourseId: publicCourseId, scrapTF: wantsTolike)
+        print("마라톤에 들어온 index = \(index)")
+    }
 }
 
 // MARK: - NetWork
@@ -152,6 +168,26 @@ extension MarathonMapCollectionViewCell {
                     } catch {
                         print(error.localizedDescription)
                     }
+                }
+                if status >= 400 {
+                    print("400 error")
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    private func scrapCourse(publicCourseId: Int, scrapTF: Bool) {
+        LoadingIndicator.showLoading()
+        scrapProvider.request(.createAndDeleteScrap(publicCourseId: publicCourseId, scrapTF: scrapTF)) { [weak self] response in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    print("스크랩 성공")
                 }
                 if status >= 400 {
                     print("400 error")
