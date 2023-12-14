@@ -14,6 +14,7 @@ enum CourseRouter {
     case getAllPrivateCourse
     case getPrivateCourseNotUploaded
     case getCourseDetail(courseId: Int)
+    case updateCourseTitle(courseId: Int, title: String)
     case deleteCourse(courseIdList: [Int])
 }
 
@@ -34,6 +35,8 @@ extension CourseRouter: TargetType {
             return "/course/user"
         case .getPrivateCourseNotUploaded:
             return "/course/private/user"
+        case .updateCourseTitle(let courseId, _):
+            return "/course/\(courseId)"
         case .getCourseDetail(let courseId):
             return "/course/detail/\(courseId)"
         case .deleteCourse:
@@ -43,10 +46,12 @@ extension CourseRouter: TargetType {
     
     var method: Moya.Method {
         switch self {
-        case .uploadCourseDrawing:
-            return .post
         case .getAllPrivateCourse, .getPrivateCourseNotUploaded, .getCourseDetail:
             return .get
+        case .uploadCourseDrawing:
+            return .post
+        case .updateCourseTitle:
+            return .patch
         case .deleteCourse:
             return .put
         }
@@ -86,6 +91,9 @@ extension CourseRouter: TargetType {
             }
             
             return .uploadMultipart(multipartFormData)
+        case .updateCourseTitle(_, let title):
+            return .requestParameters(parameters: ["title": title], encoding: JSONEncoding.default)
+            
         case .deleteCourse(let courseIdList):
             return .requestParameters(parameters: ["courseIdList": courseIdList], encoding: JSONEncoding.default)
         case .getAllPrivateCourse, .getPrivateCourseNotUploaded, .getCourseDetail:
