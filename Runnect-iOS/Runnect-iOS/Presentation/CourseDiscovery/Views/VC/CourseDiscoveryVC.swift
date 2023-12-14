@@ -223,7 +223,7 @@ extension CourseDiscoveryVC {
     private enum Section {
         static let adImage = 0 // 광고 이미지
         static let marathonTitle = 1 // 마라톤 코스 설명
-        static let recommendedList = 2 // 마라톤 코스
+        static let marathonCourseList = 2 // 마라톤 코스
         static let title = 3 // 추천 코스 설명
         static let courseList = 4 // 추천 코스
     }
@@ -244,7 +244,7 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-        case Section.adImage, Section.marathonTitle, Section.recommendedList, Section.title:
+        case Section.adImage, Section.marathonTitle, Section.marathonCourseList, Section.title:
             return 1
         case Section.courseList:
             return self.courseList.count
@@ -261,7 +261,7 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
         case Section.marathonTitle:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MarathonTitleCollectionViewCell.className, for: indexPath) as? MarathonTitleCollectionViewCell else { return UICollectionViewCell() }
             return cell
-        case Section.recommendedList:
+        case Section.marathonCourseList:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MarathonMapCollectionViewCell.className, for: indexPath) as? MarathonMapCollectionViewCell else { return UICollectionViewCell() }
             return cell
         case Section.title:
@@ -297,7 +297,7 @@ extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
             return CGSize(width: screenWidth, height: screenWidth * (174/390))
         case Section.marathonTitle:
             return CGSize(width: screenWidth, height: 98)
-        case Section.recommendedList:
+        case Section.marathonCourseList:
             return CGSize(width: screenWidth, height: 194)
         case Section.title:
             return CGSize(width: screenWidth, height: 106)
@@ -336,7 +336,7 @@ extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
     
     // 외부에서 Marathon Cell에서 받아오는 indexPath를 처리 합니다.
     private func setMarathonCourseSelection(at indexPath: IndexPath) {
-        if let marathonCell = mapCollectionView.cellForItem(at: IndexPath(item: 0, section: Section.recommendedList)) as? MarathonMapCollectionViewCell {
+        if let marathonCell = mapCollectionView.cellForItem(at: IndexPath(item: 0, section: Section.marathonCourseList)) as? MarathonMapCollectionViewCell {
             let marathonCourseList = marathonCell.marathonCourseList
             let courseDetailVC = CourseDetailVC()
             let courseModel = marathonCourseList[indexPath.item]
