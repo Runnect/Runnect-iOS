@@ -14,9 +14,18 @@
 		23EE06C92AC1DED100CB3FF8 /* GesturePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06C82AC1DED100CB3FF8 /* GesturePublisher.swift */; };
 		23EE06CB2AC2AF3E00CB3FF8 /* KakaoAddressSearchingResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06CA2AC2AF3E00CB3FF8 /* KakaoAddressSearchingResponseDto.swift */; };
 		23EE06D12AC2F44E00CB3FF8 /* TmapAddressSearchingResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06D02AC2F44E00CB3FF8 /* TmapAddressSearchingResponseDto.swift */; };
+		71288ECF2B26ECDB00D6C921 /* UserInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71288ECE2B26ECDB00D6C921 /* UserInfoCell.swift */; };
+		71288ED12B26ECF600D6C921 /* UserProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71288ED02B26ECF600D6C921 /* UserProgressCell.swift */; };
+		71288ED32B26ED2500D6C921 /* UserUploadedLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71288ED22B26ED2500D6C921 /* UserUploadedLabelCell.swift */; };
 		712F661D2A7B7BAB00D9539B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712F661C2A7B7BAB00D9539B /* Config.swift */; };
 		7136BF8A2AF921A900679364 /* CustomBottomSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7136BF892AF921A900679364 /* CustomBottomSheetVC.swift */; };
-		71717B072B063E14004EA8DA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 71DBF23D2ABB255A0013415B /* GoogleService-Info.plist */; };
+		717916DA2B13613B009CEF97 /* MarathonListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717916D92B13613B009CEF97 /* MarathonListResponseDto.swift */; };
+		717916DE2B137DC3009CEF97 /* TotalPageCountDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717916DD2B137DC3009CEF97 /* TotalPageCountDto.swift */; };
+		71BAD06A2B24CECC0061E31D /* UserProfileDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BAD0692B24CECC0061E31D /* UserProfileDto.swift */; };
+		71BAD06C2B24D1F70061E31D /* UserProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BAD06B2B24D1F70061E31D /* UserProfileVC.swift */; };
+		71F7804E2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F7804D2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift */; };
+		71F780502B0893D700B53253 /* MarathonMapCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F7804F2B0893D700B53253 /* MarathonMapCollectionViewCell.swift */; };
+		71F7BF072B0CDFE300B752B3 /* MarathonCourseListCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F7BF062B0CDFE300B752B3 /* MarathonCourseListCVC.swift */; };
 		A3305A97296EF58C000B1A10 /* GoalRewardInfoDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */; };
 		A3BC2F2B2962C3D500198261 /* GoalRewardInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */; };
 		A3BC2F2D2962C3F200198261 /* ActivityRecordInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F2C2962C3F200198261 /* ActivityRecordInfoVC.swift */; };
@@ -177,9 +186,19 @@
 		23EE06D02AC2F44E00CB3FF8 /* TmapAddressSearchingResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TmapAddressSearchingResponseDto.swift; sourceTree = "<group>"; };
 		3C3033C911343B5C57EB68E7 /* Pods-Runnect-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runnect-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		7110A6032AA337DD009A7E99 /* Runnect-iOSDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Runnect-iOSDebug.entitlements"; sourceTree = "<group>"; };
+		71288ECE2B26ECDB00D6C921 /* UserInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoCell.swift; sourceTree = "<group>"; };
+		71288ED02B26ECF600D6C921 /* UserProgressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProgressCell.swift; sourceTree = "<group>"; };
+		71288ED22B26ED2500D6C921 /* UserUploadedLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUploadedLabelCell.swift; sourceTree = "<group>"; };
 		712F661C2A7B7BAB00D9539B /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		7136BF892AF921A900679364 /* CustomBottomSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheetVC.swift; sourceTree = "<group>"; };
-		71DBF23D2ABB255A0013415B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Runnect-iOS/Runnect-iOS/Runnect-iOS/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		717916D92B13613B009CEF97 /* MarathonListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonListResponseDto.swift; sourceTree = "<group>"; };
+		717916DD2B137DC3009CEF97 /* TotalPageCountDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalPageCountDto.swift; sourceTree = "<group>"; };
+		71BAD0692B24CECC0061E31D /* UserProfileDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileDto.swift; sourceTree = "<group>"; };
+		71BAD06B2B24D1F70061E31D /* UserProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileVC.swift; sourceTree = "<group>"; };
+		71F7804D2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonTitleCollectionViewCell.swift; sourceTree = "<group>"; };
+		71F7804F2B0893D700B53253 /* MarathonMapCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonMapCollectionViewCell.swift; sourceTree = "<group>"; };
+		71F7BF062B0CDFE300B752B3 /* MarathonCourseListCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonCourseListCVC.swift; sourceTree = "<group>"; };
+
 		A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardInfoDto.swift; sourceTree = "<group>"; };
 		A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardInfoVC.swift; sourceTree = "<group>"; };
 		A3BC2F2C2962C3F200198261 /* ActivityRecordInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRecordInfoVC.swift; sourceTree = "<group>"; };
@@ -380,6 +399,25 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		71288ED42B26EDF300D6C921 /* CollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				71288ECE2B26ECDB00D6C921 /* UserInfoCell.swift */,
+				71288ED02B26ECF600D6C921 /* UserProgressCell.swift */,
+				71288ED22B26ED2500D6C921 /* UserUploadedLabelCell.swift */,
+			);
+			path = CollectionViewCell;
+			sourceTree = "<group>";
+		};
+		71BAD06D2B24D2020061E31D /* UserProfile */ = {
+			isa = PBXGroup;
+			children = (
+				71288ED42B26EDF300D6C921 /* CollectionViewCell */,
+				71BAD06B2B24D1F70061E31D /* UserProfileVC.swift */,
+			);
+			path = UserProfile;
+			sourceTree = "<group>";
+		};
 		A3BC2F292962C39F00198261 /* InfoVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -489,6 +527,7 @@
 				A3F67AE9296E4936001598A2 /* ActivityRecordInfoDto.swift */,
 				A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */,
 				CEFA9A2E29FC263700F2D0CF /* UserDeleteResponseDto.swift */,
+				71BAD0692B24CECC0061E31D /* UserProfileDto.swift */,
 			);
 			path = MyPageDto;
 			sourceTree = "<group>";
@@ -725,9 +764,11 @@
 		CE17F0442961C3D900E1DED0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				DAD5A3DB296C6DB800C8166B /* MapCollectionViewCell.swift */,
-				DAD5A3D9296C6DA500C8166B /* TitleCollectionViewCell.swift */,
 				DAD5A3D7296C6D9600C8166B /* AdImageCollectionViewCell.swift */,
+				71F7804D2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift */,
+				71F7804F2B0893D700B53253 /* MarathonMapCollectionViewCell.swift */,
+				DAD5A3D9296C6DA500C8166B /* TitleCollectionViewCell.swift */,
+				DAD5A3DB296C6DB800C8166B /* MapCollectionViewCell.swift */,
 				CE17F0432961C3D600E1DED0 /* VC */,
 			);
 			path = Views;
@@ -824,7 +865,7 @@
 				CE6655A9295D7FAA00C64E12 /* Network */,
 				CE6655A8295D7F7D00C64E12 /* Presentation */,
 				CE4545D6295D7AF5003201E1 /* Info.plist */,
-				71DBF23D2ABB255A0013415B /* GoogleService-Info.plist */,
+				713BA40A2B218AF8009091A8 /* GoogleService-Info.plist */,
 			);
 			path = "Runnect-iOS";
 			sourceTree = "<group>";
@@ -888,6 +929,7 @@
 				CE17F03B2961C2F700E1DED0 /* MyPage */,
 				CE17F03E2961C38100E1DED0 /* CourseDetail */,
 				CE14676C296568C000DCEA1B /* Running */,
+				71BAD06D2B24D2020061E31D /* UserProfile */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -1159,6 +1201,7 @@
 			isa = PBXGroup;
 			children = (
 				CE6B63D2296725E6003F900F /* CourseListCVC.swift */,
+				71F7BF062B0CDFE300B752B3 /* MarathonCourseListCVC.swift */,
 			);
 			path = CVC;
 			sourceTree = "<group>";
@@ -1209,7 +1252,9 @@
 		DAD5A3E0296D4C2A00C8166B /* ResponseDto */ = {
 			isa = PBXGroup;
 			children = (
+				717916D92B13613B009CEF97 /* MarathonListResponseDto.swift */,
 				DAD5A3E1296D4C6500C8166B /* PickedMapListResponseDto.swift */,
+				717916DD2B137DC3009CEF97 /* TotalPageCountDto.swift */,
 			);
 			path = ResponseDto;
 			sourceTree = "<group>";
@@ -1277,7 +1322,7 @@
 			files = (
 				CE665615295D989A00C64E12 /* .swiftlint.yml in Resources */,
 				CE17F0342961BEF800E1DED0 /* Pretendard-Bold.otf in Resources */,
-				71717B072B063E14004EA8DA /* GoogleService-Info.plist in Resources */,
+				713BA40B2B218AF8009091A8 /* GoogleService-Info.plist in Resources */,
 				CE17F0352961BEF800E1DED0 /* Pretendard-SemiBold.otf in Resources */,
 				CE17F0332961BEF800E1DED0 /* Pretendard-Medium.otf in Resources */,
 				CE6655BF295D82E200C64E12 /* .gitkeep in Resources */,
@@ -1366,6 +1411,7 @@
 				CE4545CD295D7AF4003201E1 /* TaBarController.swift in Sources */,
 				A3305A97296EF58C000B1A10 /* GoalRewardInfoDto.swift in Sources */,
 				CE21C024299E5FE500F62AF5 /* UserRouter.swift in Sources */,
+				71F780502B0893D700B53253 /* MarathonMapCollectionViewCell.swift in Sources */,
 				CE6655F4295D898400C64E12 /* UIViewController+.swift in Sources */,
 				CE14677829658C7200DCEA1B /* Stopwatch.swift in Sources */,
 				CE21C026299E5FF300F62AF5 /* CourseRouter.swift in Sources */,
@@ -1386,6 +1432,7 @@
 				CE9291292965E01D0010959C /* RNTimeFormatter.swift in Sources */,
 				CE0C23792966D6AF00B45063 /* ViewPager.swift in Sources */,
 				CE6B63D02967230D003F900F /* PrivateCourseListView.swift in Sources */,
+				71288ED32B26ED2500D6C921 /* UserUploadedLabelCell.swift in Sources */,
 				CE6655D7295D86F900C64E12 /* String+.swift in Sources */,
 				CE58759E29601476005D967E /* LoadingIndicator.swift in Sources */,
 				CE5875A2296015A2005D967E /* NetworkLoggerPlugin.swift in Sources */,
@@ -1413,6 +1460,7 @@
 				CEC2A6922962BE2900160BF7 /* DepartureSearchVC.swift in Sources */,
 				CE6655EE295D88E600C64E12 /* UITextField+.swift in Sources */,
 				CE40BB1C2967E4910030ABCA /* RunningWaitingVC.swift in Sources */,
+				71F7804E2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift in Sources */,
 				CE6B63D6296731F9003F900F /* ScrapCourseListView.swift in Sources */,
 				CE6655F8295D90CF00C64E12 /* adjusted+.swift in Sources */,
 				A3C2CAD729E53B2900EC525B /* RNAlertVC.swift in Sources */,
@@ -1421,6 +1469,7 @@
 				A3F67AE2296D33AC001598A2 /* MyPageDto.swift in Sources */,
 				CE591EA1296D5EB5000FCBB3 /* PrivateCourseResponseDto.swift in Sources */,
 				A3BC2F3F2964706100198261 /* UploadedCourseInfoCVC.swift in Sources */,
+				71288ED12B26ECF600D6C921 /* UserProgressCell.swift in Sources */,
 				DA0587F42A05DEC000B72869 /* CourseEditVC.swift in Sources */,
 				CE6655FE295D912300C64E12 /* calculateTopInset.swift in Sources */,
 				CEEC6B492961C5E200D00E1E /* SplashVC.swift in Sources */,
@@ -1446,10 +1495,12 @@
 				A3D1A77E29CF09B600DD54EC /* SignInResponseDto.swift in Sources */,
 				CE21C028299E5FFC00F62AF5 /* PublicCourseRouter.swift in Sources */,
 				CE18E894296C79B900FEB569 /* CourseDrawingRequestDto.swift in Sources */,
+				71F7BF072B0CDFE300B752B3 /* MarathonCourseListCVC.swift in Sources */,
 				DA20D84E2966A9B300F1581F /* CourseSearchVC.swift in Sources */,
 				CE1006572968230800FD31FB /* DepartureLocationModel.swift in Sources */,
 				CECA695C296E61D6002AF05C /* PrivateCourseNotUploadedResponseDto.swift in Sources */,
 				CE6655EC295D88D000C64E12 /* UITableView+.swift in Sources */,
+				717916DE2B137DC3009CEF97 /* TotalPageCountDto.swift in Sources */,
 				CEEC6B3A2961C4F300D00E1E /* CourseDrawingHomeVC.swift in Sources */,
 				CEB0BCBC29D123350048CCD5 /* GuideView.swift in Sources */,
 				CEC2A6902962B06C00160BF7 /* convertLocationObject.swift in Sources */,
@@ -1457,6 +1508,8 @@
 				CE6B63D3296725E6003F900F /* CourseListCVC.swift in Sources */,
 				CEF3CD9A296DB305002723A1 /* CourseDetailResponseDto.swift in Sources */,
 				A3E55BA029C815B10000D85D /* SignInSocialLoginVC.swift in Sources */,
+				71BAD06A2B24CECC0061E31D /* UserProfileDto.swift in Sources */,
+				71288ECF2B26ECDB00D6C921 /* UserInfoCell.swift in Sources */,
 				CE29D584296416D800F47542 /* caculateStatusBarHeight.swift in Sources */,
 				CE66560C295D928300C64E12 /* setRootViewController.swift in Sources */,
 				CE6655D9295D871B00C64E12 /* URL+.swift in Sources */,
@@ -1477,6 +1530,7 @@
 				A3BC2F4129667A0D00198261 /* NicknameEditorVC.swift in Sources */,
 				CE0C23742966D62A00B45063 /* PagedView.swift in Sources */,
 				CE3A53C5296C6017003D518C /* KeychainManager.swift in Sources */,
+				717916DA2B13613B009CEF97 /* MarathonListResponseDto.swift in Sources */,
 				CEEC6B4B2961D89700D00E1E /* CustomNavigationBar.swift in Sources */,
 				CE09037D296E9ED900BEA710 /* ScrapCourseResponseDto.swift in Sources */,
 				CED791B32A2626AF001BFCFB /* ShadowView.swift in Sources */,
@@ -1484,6 +1538,7 @@
 				CE15F5A4296C932E0023827C /* RunningModel.swift in Sources */,
 				CE17F02D2961BBA100E1DED0 /* ColorLiterals.swift in Sources */,
 				232686362B03AF4400675A17 /* NetworkProvider.swift in Sources */,
+				71BAD06C2B24D1F70061E31D /* UserProfileVC.swift in Sources */,
 				CEC2A68E2962AF2C00160BF7 /* RNMarker.swift in Sources */,
 				CE6655D2295D862A00C64E12 /* Publisher+Driver.swift in Sources */,
 				DA0587F22A05D54100B72869 /* EditCourseRequestDto.swift in Sources */,

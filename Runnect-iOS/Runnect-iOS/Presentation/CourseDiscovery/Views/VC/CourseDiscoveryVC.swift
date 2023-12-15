@@ -2,33 +2,42 @@
 //  CourseDiscoveryVC.swift
 //  Runnect-iOS
 //
-//  Created by sejin on 2023/01/01.
+//  Created by 이명진 on 2023/11/21.
 //
 
 import UIKit
-
 import Then
 import SnapKit
 import Combine
 import Moya
 
+protocol ScrapStateDelegate: AnyObject {
+    func didUpdateScrapState(publicCourseId: Int, isScrapped: Bool)
+    // 코스 상세 에서 스크랩 누르면 코스발견에 해당 부분 스크랩 누르는 이벤트 전달
+}
+
 final class CourseDiscoveryVC: UIViewController {
+    
     // MARK: - Properties
     
-    private let PublicCourseProvider = Providers.publicCourseProvider
-    
+    private let publicCourseProvider = Providers.publicCourseProvider
     private let scrapProvider = Providers.scrapProvider
+    private let serverResponseNumber = 10
     
     private var courseList = [PublicCourse]()
-    
-    // pagination 에 꼭 필요한 위한 변수들 입니다.
+    private var cancelBag = CancelBag()
+    private var specialList = [String]()
+    private var totalPageNum = 0
+    private var isEnd = false
     private var pageNo = 1
-    
+    private var sort = "date"
     private var isDataLoaded = false
+    private var uploadButtonChanged = false
     
     // MARK: - UIComponents
     
     private lazy var naviBar = CustomNavigationBar(self, type: .title).setTitle("코스 발견")
+    
     private let searchButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icSearch, for: .normal)
         $0.tintColor = .g1
@@ -41,6 +50,10 @@ final class CourseDiscoveryVC: UIViewController {
         $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
     }
     
+    private let miniUploadButton = UIButton(type: .system).then {
+        $0.setImage(ImageLiterals.icPlusButton, for: .normal)
+    }
+    
     private let emptyView = ListEmptyView(description: "공유할 수 있는 코스가 없어요!\n코스를 그려주세요",
                                           buttonTitle: "코스 그리기")
     
@@ -49,7 +62,6 @@ final class CourseDiscoveryVC: UIViewController {
     private lazy var mapCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.isScrollEnabled = true
@@ -65,14 +77,15 @@ final class CourseDiscoveryVC: UIViewController {
         register()
         setNavigationBar()
         setDelegate()
-        layout()
+        setLayout()
         setAddTarget()
+        setCombineEvent()
+        self.getCourseData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.hideTabBar(wantsToHide: false)
-        setDataLoadIfNeeded()
     }
 }
 
@@ -93,29 +106,35 @@ extension CourseDiscoveryVC {
     }
     
     private func register() {
-        self.mapCollectionView.register(AdImageCollectionViewCell.self, forCellWithReuseIdentifier: AdImageCollectionViewCell.className)
-        self.mapCollectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: TitleCollectionViewCell.className)
-        self.mapCollectionView.register(CourseListCVC.self, forCellWithReuseIdentifier: CourseListCVC.className)
+        let cellTypes: [UICollectionViewCell.Type] = [AdImageCollectionViewCell.self,
+                                                      MarathonTitleCollectionViewCell.self,
+                                                      MarathonMapCollectionViewCell.self,
+                                                      TitleCollectionViewCell.self,
+                                                      CourseListCVC.self]
+        cellTypes.forEach { cellType in
+            mapCollectionView.register(cellType, forCellWithReuseIdentifier: cellType.className)
+        }
     }
     
     private func setAddTarget() {
         self.searchButton.addTarget(self, action: #selector(pushToSearchVC), for: .touchUpInside)
         self.uploadButton.addTarget(self, action: #selector(pushToDiscoveryVC), for: .touchUpInside)
+        self.miniUploadButton.addTarget(self, action: #selector(pushToDiscoveryVC), for: .touchUpInside)
     }
     
-    private func setDataLoadIfNeeded() { /// 데이터를 받고 다른 뷰를 갔다가 와도 데이터가 유지되게끔 하기 위한 함수 입니다. (한번만 호출되면 되는 함수!)
-        if !isDataLoaded {
-            // 앱이 실행 될때 처음에만 데이터 초기화
-            courseList.removeAll()
-            pageNo = 1
-
-            // 컬렉션 뷰를 리로드하여 초기화된 데이터를 화면에 표시
-            mapCollectionView.reloadData()
-            self.getCourseData()
-            
-            isDataLoaded = true // 데이터가 로드되었음을 표시
-        } else {
-            return
+    private func setCombineEvent() {
+        CourseSelectionPublisher.shared.didSelectCourse
+            .sink { [weak self] indexPath in
+                self?.setMarathonCourseSelection(at: indexPath)
+            }
+            .store(in: cancelBag)
+    }
+    
+    private func reloadCellForCourse(publicCourseId: Int) {
+        if let index = courseList.firstIndex(where: { $0.id == publicCourseId }) {
+            let indexPath = IndexPath(item: index, section: Section.courseList)
+            mapCollectionView.reloadItems(at: [indexPath])
+            print("\(indexPath) 부분 스크랩 교체 되었음")
         }
     }
 }
@@ -146,6 +165,8 @@ extension CourseDiscoveryVC {
         view.backgroundColor = .w1
         mapCollectionView.backgroundColor = .w1
         self.emptyView.isHidden = true
+        self.miniUploadButton.isHidden = true
+        self.uploadButton.isHidden = false
     }
     
     private func setNavigationBar() {
@@ -162,9 +183,10 @@ extension CourseDiscoveryVC {
         }
     }
     
-    private func layout() {
-        view.addSubviews(uploadButton, mapCollectionView)
+    private func setLayout() {
+        view.addSubviews(mapCollectionView, uploadButton, miniUploadButton)
         view.bringSubviewToFront(uploadButton)
+        view.bringSubviewToFront(miniUploadButton)
         mapCollectionView.addSubview(emptyView)
         
         mapCollectionView.snp.makeConstraints {
@@ -179,22 +201,38 @@ extension CourseDiscoveryVC {
             make.width.equalTo(92)
         }
         
+        miniUploadButton.snp.makeConstraints { make in
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(38)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(20)
+            make.width.height.equalTo(41)
+        }
+        
         emptyView.snp.makeConstraints { make in
             make.top.equalTo(naviBar.snp.bottom).offset(300)
             make.centerX.equalTo(naviBar)
         }
         
-        let shadowView = ShadowView()
-        self.view.addSubview(shadowView)
-
-        shadowView.snp.makeConstraints { make in
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(16)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(20)
-            make.height.equalTo(40)
-            make.width.equalTo(92)
-        }
-        
         self.view.bringSubviewToFront(uploadButton)
+        self.view.bringSubviewToFront(miniUploadButton)
+        
+    }
+}
+
+// MARK: - Constants
+
+extension CourseDiscoveryVC {
+    private enum Section {
+        static let adImage = 0 // 광고 이미지
+        static let marathonTitle = 1 // 마라톤 코스 설명
+        static let recommendedList = 2 // 마라톤 코스
+        static let title = 3 // 추천 코스 설명
+        static let courseList = 4 // 추천 코스
+    }
+    
+    private enum Layout {
+        static let cellSpacing: CGFloat = 20
+        static let interitemSpacing: CGFloat = 10
+        static let sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 20, right: 16)
     }
 }
 
@@ -202,14 +240,14 @@ extension CourseDiscoveryVC {
 
 extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-        case 0, 1:
+        case Section.adImage, Section.marathonTitle, Section.recommendedList, Section.title:
             return 1
-        case 2:
+        case Section.courseList:
             return self.courseList.count
         default:
             return 0
@@ -217,61 +255,54 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.section == 0 {
+        switch indexPath.section {
+        case Section.adImage:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdImageCollectionViewCell.className, for: indexPath) as? AdImageCollectionViewCell else { return UICollectionViewCell() }
             return cell
-        } else if indexPath.section == 1 {
+        case Section.marathonTitle:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MarathonTitleCollectionViewCell.className, for: indexPath) as? MarathonTitleCollectionViewCell else { return UICollectionViewCell() }
+            return cell
+        case Section.recommendedList:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MarathonMapCollectionViewCell.className, for: indexPath) as? MarathonMapCollectionViewCell else { return UICollectionViewCell() }
+            return cell
+        case Section.title:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TitleCollectionViewCell.className, for: indexPath) as? TitleCollectionViewCell else { return UICollectionViewCell() }
-            return cell
-        } else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath) as? CourseListCVC else { return UICollectionViewCell() }
-            cell.setCellType(type: .all)
             cell.delegate = self
-            let model = self.courseList[indexPath.item]
-            let location = "\(model.departure.region) \(model.departure.city)"
-            cell.setData(imageURL: model.image, title: model.title, location: location, didLike: model.scrap, indexPath: indexPath.item)
             return cell
+        case Section.courseList:
+            return courseListCell(collectionView: collectionView, indexPath: indexPath)
+        default:
+            return UICollectionViewCell()
         }
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let contentOffsetY = scrollView.contentOffset.y
-        let collectionViewHeight = mapCollectionView.contentSize.height
-        let paginationY = collectionViewHeight * 0.2
-        
-        // 스크롤이 80% (0.2)  까지 도달하면 다음 페이지 데이터를 불러옵니다.
-        if contentOffsetY >= collectionViewHeight - paginationY {
-            if courseList.count < pageNo * 24 { // 페이지 끝에 도달하면 현재 페이지에 더 이상 데이터가 없음을 의미합니다.
-                // 페이지네이션 중단 코드
-                return
-            }
-            
-            // 다음 페이지 번호를 증가시킵니다.
-            pageNo += 1
-            print("🔥다음 페이지 로드: \(pageNo)🔥")
-            
-            // 여기에서 다음 페이지 데이터를 불러오는 함수를 호출하세요.
-            getCourseData()
-        }
+    private func courseListCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath) as? CourseListCVC else { return UICollectionViewCell() }
+        cell.setCellType(type: .all)
+        cell.delegate = self
+        let model = self.courseList[indexPath.item]
+        let location = "\(model.departure.region) \(model.departure.city)"
+        cell.setData(imageURL: model.image, title: model.title, location: location, didLike: model.scrap, indexPath: indexPath.item)
+        return cell
     }
-
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        _ = UICollectionViewCell()
-        
         let screenWidth = UIScreen.main.bounds.width
         
         switch indexPath.section {
-        case 0:
-            return CGSize(width: screenWidth, height: screenWidth * (183/390))
-        case 1:
-            return CGSize(width: screenWidth, height: 80)
-        case 2:
+        case Section.adImage:
+            return CGSize(width: screenWidth, height: screenWidth * (174/390))
+        case Section.marathonTitle:
+            return CGSize(width: screenWidth, height: 98)
+        case Section.recommendedList:
+            return CGSize(width: screenWidth, height: 194)
+        case Section.title:
+            return CGSize(width: screenWidth, height: 106)
+        case Section.courseList:
             let cellWidth = (screenWidth - 42) / 2
             let cellHeight = CourseListCVCType.getCellHeight(type: .all, cellWidth: cellWidth)
             return CGSize(width: cellWidth, height: cellHeight)
@@ -280,39 +311,112 @@ extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
         }
     }
     
+    /// section 이 4일때만 정해진 레이아웃 리턴
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        if section == 2 {
-            return 20
-        }
-        return 0
+        return section == Section.courseList ? Layout.cellSpacing : 0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        if section == 2 {
-            return 10
-        }
-        return 0
+        return section == Section.courseList ? Layout.interitemSpacing : 0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        if section == 2 {
-            return UIEdgeInsets(top: 0, left: 16, bottom: 20, right: 16)
-        }
-        return .zero
+        return section == Section.courseList ? Layout.sectionInset : .zero
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 2 {
+        if indexPath.section == Section.courseList {
             let courseDetailVC = CourseDetailVC()
+            courseDetailVC.delegate = self
             let courseModel = courseList[indexPath.item]
             courseDetailVC.setCourseId(courseId: courseModel.courseId, publicCourseId: courseModel.id)
             courseDetailVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(courseDetailVC, animated: true)
+            navigationController?.pushViewController(courseDetailVC, animated: true)
+        }
+    }
+    
+    // 외부에서 Marathon Cell에서 받아오는 indexPath를 처리 합니다.
+    private func setMarathonCourseSelection(at indexPath: IndexPath) {
+        let courseDetailVC = CourseDetailVC()
+        let courseModel = courseList[indexPath.item]
+        courseDetailVC.setCourseId(courseId: courseModel.courseId, publicCourseId: courseModel.id)
+        courseDetailVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(courseDetailVC, animated: true)
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension CourseDiscoveryVC: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        performPagination()
+        changeButtonStyleOnScroll()
+    }
+    
+    private func performPagination() {
+        let contentOffsetY = mapCollectionView.contentOffset.y // 우리가 보는 화면
+        let collectionViewHeight = mapCollectionView.contentSize.height // 전체 사이즈
+        let paginationY = mapCollectionView.bounds.size.height // 유저 화면의 가장 아래 y축 이라고 생각
+        
+        if contentOffsetY > collectionViewHeight - paginationY {
+            if courseList.count < pageNo * serverResponseNumber {
+                // 페이지 끝에 도달하면 현재 페이지에 더 이상 데이터가 없음을 의미
+                // 새로온 데이터의 갯수가 원래 서버에서 응답에서 온 갯수보다 작으면 페이지네이션 금지
+                // 페이지네이션 중단 코드
+                return
+            }
+            print("🫠\(pageNo)")
+            if pageNo < totalPageNum {
+                if !isDataLoaded {
+                    isDataLoaded = true
+                    getCourseData()
+                    pageNo += 1
+                    isDataLoaded = false
+                }
+            }
+        }
+    }
+    
+    private func changeButtonStyleOnScroll() {
+        let contentOffsetY = mapCollectionView.contentOffset.y
+        let scrollThreshold = mapCollectionView.bounds.size.height * 0.1 // 10% 스크롤 했으면 UI 변경
+        
+        if contentOffsetY > scrollThreshold {
+            handleButtonVisibility(uploadButtonChanged: true, hidden: true, miniHidden: false)
+        } else {
+            handleButtonVisibility(uploadButtonChanged: false, hidden: false, miniHidden: true)
+        }
+    }
+    
+    private func handleButtonVisibility(uploadButtonChanged: Bool, hidden: Bool, miniHidden: Bool) {
+        guard self.uploadButtonChanged != uploadButtonChanged else { return }
+        
+        toggleUploadButtons(hidden: hidden, miniHidden: miniHidden)
+        self.uploadButtonChanged = uploadButtonChanged
+    }
+    
+    private func toggleUploadButtons(hidden: Bool, miniHidden: Bool) {
+        animateButtonTransition(button: uploadButton, hidden: hidden, delay: 0)
+        animateButtonTransition(button: miniUploadButton, hidden: miniHidden, delay: 0.1) // 예시로 0.25초 딜레이 적용
+    }
+    
+    private func animateButtonTransition(button: UIButton, hidden: Bool, delay: TimeInterval) {
+        let scale: CGFloat = hidden ? 0.1 : 1.0
+        let alpha: CGFloat = hidden ? 0.0 : 1.0
+        
+        UIView.animate(withDuration: 0.5, delay: delay, options: .transitionCurlUp, animations: {
+            button.transform = CGAffineTransform(scaleX: scale, y: scale)
+            button.alpha = alpha
+        }) { _ in
+            button.isHidden = hidden
+            
+            // Reset transform after animation completes
+            button.transform = CGAffineTransform.identity
         }
     }
 }
 
-// MARK: - CourseListCVCDeleagte
+// MARK: - CourseListCVCDelegate
 
 extension CourseDiscoveryVC: CourseListCVCDeleagte {
     func likeButtonTapped(wantsTolike: Bool, index: Int) {
@@ -322,7 +426,20 @@ extension CourseDiscoveryVC: CourseListCVCDeleagte {
         }
         
         let publicCourseId = courseList[index].id
-        scrapCourse(publicCourseId: publicCourseId, scrapTF: wantsTolike)
+        self.scrapCourse(publicCourseId: publicCourseId, scrapTF: wantsTolike)
+    }
+}
+
+// MARK: - CourseDetailVCDelegate
+
+extension CourseDiscoveryVC: ScrapStateDelegate {
+    func didUpdateScrapState(publicCourseId: Int, isScrapped: Bool) {
+        // CourseDetail에서 id와 scrap정보를 받아와 여기서 처리
+        if let index = courseList.firstIndex(where: { $0.id == publicCourseId }) {
+            courseList[index].scrap = isScrapped
+            reloadCellForCourse(publicCourseId: publicCourseId)
+            print("‼️CourseDiscoveryVC 델리게이트 받음 index=\(index)")
+        }
     }
 }
 
@@ -330,23 +447,52 @@ extension CourseDiscoveryVC: CourseListCVCDeleagte {
 
 extension CourseDiscoveryVC {
     private func getCourseData() {
+        LoadingIndicator.showLoading() // 항상 0.5초 늦게 로딩이 되어 버림 0.5초를 넣은 이유는 pagination을 구현할때 한번에 다 받아오지 않게 하기 위함
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [self] in
+            publicCourseProvider.request(.getCourseData(pageNo: pageNo, sort: sort)) { response in
+                LoadingIndicator.hideLoading()
+                print("‼️ sort=  \(self.sort) ‼️\n")
+                switch response {
+                case .success(let result):
+                    let status = result.statusCode
+                    if 200..<300 ~= status {
+                        do {
+                            let responseDto = try result.map(BaseResponse<PickedMapListResponseDto>.self)
+                            guard let data = responseDto.data else { return }
+                            self.totalPageNum = data.totalPageSize
+                            self.isEnd = data.isEnd
+                            self.courseList.append(contentsOf: data.publicCourses)
+                            self.mapCollectionView.reloadData()
+                            print("isEnd= \(self.isEnd), totalPageNum= \(self.totalPageNum)")
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    }
+                    if status >= 400 {
+                        print("400 error")
+                        self.showNetworkFailureToast()
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self.showNetworkFailureToast()
+                }
+            }
+        }
+    }
+    
+    private func getTotalPageNum() {
         LoadingIndicator.showLoading()
-        PublicCourseProvider.request(.getCourseData(pageNo: pageNo)) { response in
+        publicCourseProvider.request(.getTotalPageCount) { response in
             LoadingIndicator.hideLoading()
             switch response {
             case .success(let result):
                 let status = result.statusCode
                 if 200..<300 ~= status {
                     do {
-                        let responseDto = try result.map(BaseResponse<PickedMapListResponseDto>.self)
+                        let responseDto = try result.map(BaseResponse<TotalPageCountDto>.self)
                         guard let data = responseDto.data else { return }
-                        
-                        // 새로 받은 데이터를 기존 리스트에 추가 (쌓기 위함)
-                        self.courseList.append(contentsOf: data.publicCourses)
-                        
-                        // UI를 업데이트하여 추가된 데이터를 반영합니다.
-                        self.mapCollectionView.reloadData()
-                        
+                        self.totalPageNum = data.totalPageCount
+                        print("추천 코스의 코스의 수는 \(self.totalPageNum) 입니다. 🏃‍♀️\n")
                     } catch {
                         print(error.localizedDescription)
                     }
@@ -361,7 +507,7 @@ extension CourseDiscoveryVC {
             }
         }
     }
-
+    
     private func scrapCourse(publicCourseId: Int, scrapTF: Bool) {
         LoadingIndicator.showLoading()
         scrapProvider.request(.createAndDeleteScrap(publicCourseId: publicCourseId, scrapTF: scrapTF)) { [weak self] response in
@@ -390,5 +536,16 @@ extension CourseDiscoveryVC {
 extension CourseDiscoveryVC: ListEmptyViewDelegate {
     func emptyViewButtonTapped() {
         self.tabBarController?.selectedIndex = 0
+    }
+}
+
+extension CourseDiscoveryVC: TitleCollectionViewCellDelegate {
+    func didTapSortButton(ordering: String) {
+        // 기존의 getCourseData 함수 호출을 getSortedCourseData로 변경
+        pageNo = 1
+        print("‼️\(ordering)‼️ 터치 하셨습니다. 0.7초 후에 ‼️\(ordering)‼️ 으로 정렬이 되는 데이터가 불러 옵니다.")
+        sort = ordering
+        self.courseList.removeAll()
+        getCourseData()
     }
 }

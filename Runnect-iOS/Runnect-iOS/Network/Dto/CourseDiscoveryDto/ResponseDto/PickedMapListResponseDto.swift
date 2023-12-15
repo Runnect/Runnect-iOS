@@ -10,6 +10,8 @@ import Foundation
 // MARK: - PickedMapListResponseDto
 
 struct PickedMapListResponseDto: Codable {
+    let totalPageSize: Int
+    let isEnd: Bool
     let publicCourses: [PublicCourse]
 }
 
@@ -19,7 +21,8 @@ struct PublicCourse: Codable {
     let id, courseId: Int
     let title: String
     let image: String
-    let scrap: Bool?
+    var scrap: Bool?
+    var scrapCount: Int?
     let description: String?
     let distance: Float?
     let departure: CourseDiscoveryDeparture

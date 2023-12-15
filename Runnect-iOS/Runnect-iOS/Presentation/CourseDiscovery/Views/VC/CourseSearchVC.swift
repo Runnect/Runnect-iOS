@@ -209,8 +209,8 @@ extension CourseSearchVC: CourseListCVCDeleagte {
             return
         }
         
-        let pubilcCourseId = courseList[index].id
-        scrapCourse(publicCourseId: pubilcCourseId, scrapTF: wantsTolike)
+        let publicCourseId = courseList[index].id
+        scrapCourse(publicCourseId: publicCourseId, scrapTF: wantsTolike)
     }
 }
 
