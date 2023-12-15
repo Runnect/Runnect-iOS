@@ -20,6 +20,7 @@
 		712F661D2A7B7BAB00D9539B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712F661C2A7B7BAB00D9539B /* Config.swift */; };
 		7136BF8A2AF921A900679364 /* CustomBottomSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7136BF892AF921A900679364 /* CustomBottomSheetVC.swift */; };
 		713A98F02B29DD9900189B3C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 713A98EF2B29DD9900189B3C /* GoogleService-Info.plist */; };
+		715D36E82B2CC64000CAA9D6 /* MyUploadedCourseResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715D36E72B2CC64000CAA9D6 /* MyUploadedCourseResponseDto.swift */; };
 		717916DA2B13613B009CEF97 /* MarathonListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717916D92B13613B009CEF97 /* MarathonListResponseDto.swift */; };
 		71BAD06A2B24CECC0061E31D /* UserProfileDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BAD0692B24CECC0061E31D /* UserProfileDto.swift */; };
 		71BAD06C2B24D1F70061E31D /* UserProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BAD06B2B24D1F70061E31D /* UserProfileVC.swift */; };
@@ -190,6 +191,7 @@
 		712F661C2A7B7BAB00D9539B /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		7136BF892AF921A900679364 /* CustomBottomSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheetVC.swift; sourceTree = "<group>"; };
 		713A98EF2B29DD9900189B3C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		715D36E72B2CC64000CAA9D6 /* MyUploadedCourseResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyUploadedCourseResponseDto.swift; sourceTree = "<group>"; };
 		717916D92B13613B009CEF97 /* MarathonListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonListResponseDto.swift; sourceTree = "<group>"; };
 		71BAD0692B24CECC0061E31D /* UserProfileDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileDto.swift; sourceTree = "<group>"; };
 		71BAD06B2B24D1F70061E31D /* UserProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileVC.swift; sourceTree = "<group>"; };
@@ -523,6 +525,7 @@
 				A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */,
 				CEFA9A2E29FC263700F2D0CF /* UserDeleteResponseDto.swift */,
 				71BAD0692B24CECC0061E31D /* UserProfileDto.swift */,
+				715D36E72B2CC64000CAA9D6 /* MyUploadedCourseResponseDto.swift */,
 			);
 			path = MyPageDto;
 			sourceTree = "<group>";
@@ -1392,6 +1395,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE40BB20296805F70030ABCA /* NetworkResult.swift in Sources */,
+				715D36E82B2CC64000CAA9D6 /* MyUploadedCourseResponseDto.swift in Sources */,
 				CE55BC11296D4EA600E8CD69 /* RunningRecordRequestDto.swift in Sources */,
 				CE665604295D91B100C64E12 /* makeAlert.swift in Sources */,
 				A3BC2F2F2962C40A00198261 /* UploadedCourseInfoVC.swift in Sources */,
