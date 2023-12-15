@@ -7,19 +7,15 @@
 
 import Moya
 
-enum ResponseResult<T> {
-    case success(T)
-}
-
 class NetworkProvider<Provider : TargetType> : MoyaProvider<Provider> {
-    func request<Model : Codable>(target : Provider, instance : Model.Type , vc: UIViewController, completion : @escaping(ResponseResult<Model>) -> ()){
+    func request<Model : Codable>(target : Provider, instance : Model.Type , vc: UIViewController, completion : @escaping(Model) -> ()){
         self.request(target) { result in
             switch result {
             /// 서버 통신 성공
             case .success(let response):
                 if (200..<300).contains(response.statusCode) {
                     if let decodeData = try? JSONDecoder().decode(instance, from: response.data) {
-                        completion(.success(decodeData))
+                        completion(decodeData)
                     } else{
                         /// decoding error
                         vc.showNetworkFailureToast()

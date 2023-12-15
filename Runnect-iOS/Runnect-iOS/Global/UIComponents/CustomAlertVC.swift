@@ -37,7 +37,7 @@ final class CustomAlertVC: UIViewController {
     }
     private let contentsLabel: UILabel = UILabel().then {
         $0.text = "코스를 만들었어요!\n지정한 코스는 보관함에서 볼 수 있어요."
-        $0.font = .h5
+        $0.font = .b4
         $0.textColor = .g2
         $0.textAlignment = .center
         $0.numberOfLines = 2
@@ -55,7 +55,6 @@ final class CustomAlertVC: UIViewController {
         }
     
     // MARK: - View Life Cycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUI()
@@ -119,6 +118,7 @@ extension CustomAlertVC {
     
     private func setLayout() {
         view.addSubviews(alertView)
+        
         alertView.addSubviews(alertImageView, contentsLabel, buttonStackView)
         
         alertView.snp.makeConstraints { make in
@@ -138,7 +138,6 @@ extension CustomAlertVC {
             make.leading.trailing.equalToSuperview().inset(10)
             make.centerX.equalToSuperview()
         }
-        
         buttonStackView.snp.makeConstraints { make in
             make.top.equalTo(contentsLabel.snp.bottom).offset(26)
             make.leading.trailing.equalToSuperview().inset(14)

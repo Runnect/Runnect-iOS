@@ -29,7 +29,7 @@ extension CourseRouter: TargetType {
     var path: String {
         switch self {
         case .uploadCourseDrawing:
-            return "/course"
+            return "/course/v2"
         case .getAllPrivateCourse:
             return "/course/user"
         case .getPrivateCourseNotUploaded:
@@ -66,20 +66,22 @@ extension CourseRouter: TargetType {
             var content = [String: Any]()
             
             var path = [[String: Any]]()
+            var tempPath = String()
             
             do {
-                for location in param.data.path {
+                for location in param.path {
                     let locationData = try location.asParameter()
                     path.append(locationData)
                 }
-
+                
                 content["path"] = path
-                content["distance"] = param.data.distance
-                content["departureAddress"] = param.data.departureAddress
-                content["departureName"] = param.data.departureName
+                content["title"] = param.title
+                content["distance"] = param.distance
+                content["departureAddress"] = param.departureAddress
+                content["departureName"] = param.departureName
                 
                 let jsonData = try JSONSerialization.data(withJSONObject: content)
-                let formData = MultipartFormData(provider: .data(jsonData), name: "data", mimeType: "application/json")
+                let formData = MultipartFormData(provider: .data(jsonData), name: "courseCreateRequestDto", mimeType: "application/json")
                 multipartFormData.append(formData)
             } catch {
                 print(error.localizedDescription)

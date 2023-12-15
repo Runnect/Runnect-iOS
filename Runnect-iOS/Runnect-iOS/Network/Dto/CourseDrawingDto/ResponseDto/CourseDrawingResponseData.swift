@@ -10,12 +10,6 @@ import Foundation
 // MARK: - DataClass
 
 struct CourseDrawingResponseData: Codable {
-    let course: CourseDrawingResponse
-}
-
-// MARK: - Course
-
-struct CourseDrawingResponse: Codable {
     let id: Int
     let createdAt: String
 }
