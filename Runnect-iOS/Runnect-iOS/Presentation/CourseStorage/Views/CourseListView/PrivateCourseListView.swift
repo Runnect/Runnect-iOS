@@ -197,7 +197,7 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
         }
 
         let model = courseList[indexPath.item]
-        let cellTitle = model.departure.name ?? " "
+        let cellTitle = model.title
         
         cell.setCellType(type: .title)
         cell.selectCell(didSelect: collectionView.indexPathsForSelectedItems?.contains(indexPath) ?? false)

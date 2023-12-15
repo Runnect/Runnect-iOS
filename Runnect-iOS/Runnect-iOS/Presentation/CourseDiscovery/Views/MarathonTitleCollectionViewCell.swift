@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MarathonTitleCollectionViewCell: UICollectionViewCell {
+final class MarathonTitleCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Components
     

@@ -19,13 +19,12 @@
 		71288ED32B26ED2500D6C921 /* UserUploadedLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71288ED22B26ED2500D6C921 /* UserUploadedLabelCell.swift */; };
 		712F661D2A7B7BAB00D9539B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712F661C2A7B7BAB00D9539B /* Config.swift */; };
 		7136BF8A2AF921A900679364 /* CustomBottomSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7136BF892AF921A900679364 /* CustomBottomSheetVC.swift */; };
+		713A98F02B29DD9900189B3C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 713A98EF2B29DD9900189B3C /* GoogleService-Info.plist */; };
 		717916DA2B13613B009CEF97 /* MarathonListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717916D92B13613B009CEF97 /* MarathonListResponseDto.swift */; };
-		717916DE2B137DC3009CEF97 /* TotalPageCountDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717916DD2B137DC3009CEF97 /* TotalPageCountDto.swift */; };
 		71BAD06A2B24CECC0061E31D /* UserProfileDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BAD0692B24CECC0061E31D /* UserProfileDto.swift */; };
 		71BAD06C2B24D1F70061E31D /* UserProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BAD06B2B24D1F70061E31D /* UserProfileVC.swift */; };
 		71F7804E2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F7804D2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift */; };
 		71F780502B0893D700B53253 /* MarathonMapCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F7804F2B0893D700B53253 /* MarathonMapCollectionViewCell.swift */; };
-		71F7BF072B0CDFE300B752B3 /* MarathonCourseListCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F7BF062B0CDFE300B752B3 /* MarathonCourseListCVC.swift */; };
 		A3305A97296EF58C000B1A10 /* GoalRewardInfoDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */; };
 		A3BC2F2B2962C3D500198261 /* GoalRewardInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */; };
 		A3BC2F2D2962C3F200198261 /* ActivityRecordInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BC2F2C2962C3F200198261 /* ActivityRecordInfoVC.swift */; };
@@ -172,7 +171,6 @@
 		DA97A033296E65D80086760E /* CourseUploadingRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA97A032296E65D80086760E /* CourseUploadingRequestDto.swift */; };
 		DAD5A3D8296C6D9600C8166B /* AdImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A3D7296C6D9600C8166B /* AdImageCollectionViewCell.swift */; };
 		DAD5A3DA296C6DA500C8166B /* TitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A3D9296C6DA500C8166B /* TitleCollectionViewCell.swift */; };
-		DAD5A3DC296C6DB800C8166B /* MapCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A3DB296C6DB800C8166B /* MapCollectionViewCell.swift */; };
 		DAD5A3E2296D4C6500C8166B /* PickedMapListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A3E1296D4C6500C8166B /* PickedMapListResponseDto.swift */; };
 /* End PBXBuildFile section */
 
@@ -191,14 +189,12 @@
 		71288ED22B26ED2500D6C921 /* UserUploadedLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUploadedLabelCell.swift; sourceTree = "<group>"; };
 		712F661C2A7B7BAB00D9539B /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		7136BF892AF921A900679364 /* CustomBottomSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheetVC.swift; sourceTree = "<group>"; };
+		713A98EF2B29DD9900189B3C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		717916D92B13613B009CEF97 /* MarathonListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonListResponseDto.swift; sourceTree = "<group>"; };
-		717916DD2B137DC3009CEF97 /* TotalPageCountDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalPageCountDto.swift; sourceTree = "<group>"; };
 		71BAD0692B24CECC0061E31D /* UserProfileDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileDto.swift; sourceTree = "<group>"; };
 		71BAD06B2B24D1F70061E31D /* UserProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileVC.swift; sourceTree = "<group>"; };
 		71F7804D2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonTitleCollectionViewCell.swift; sourceTree = "<group>"; };
 		71F7804F2B0893D700B53253 /* MarathonMapCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonMapCollectionViewCell.swift; sourceTree = "<group>"; };
-		71F7BF062B0CDFE300B752B3 /* MarathonCourseListCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonCourseListCVC.swift; sourceTree = "<group>"; };
-
 		A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardInfoDto.swift; sourceTree = "<group>"; };
 		A3BC2F2A2962C3D500198261 /* GoalRewardInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardInfoVC.swift; sourceTree = "<group>"; };
 		A3BC2F2C2962C3F200198261 /* ActivityRecordInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRecordInfoVC.swift; sourceTree = "<group>"; };
@@ -357,7 +353,6 @@
 		DA97A032296E65D80086760E /* CourseUploadingRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseUploadingRequestDto.swift; sourceTree = "<group>"; };
 		DAD5A3D7296C6D9600C8166B /* AdImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		DAD5A3D9296C6DA500C8166B /* TitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCell.swift; sourceTree = "<group>"; };
-		DAD5A3DB296C6DB800C8166B /* MapCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCollectionViewCell.swift; sourceTree = "<group>"; };
 		DAD5A3E1296D4C6500C8166B /* PickedMapListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickedMapListResponseDto.swift; sourceTree = "<group>"; };
 		E837271A78E1C0A0C30789BF /* Pods-Runnect-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runnect-iOS.release.xcconfig"; path = "Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -768,7 +763,6 @@
 				71F7804D2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift */,
 				71F7804F2B0893D700B53253 /* MarathonMapCollectionViewCell.swift */,
 				DAD5A3D9296C6DA500C8166B /* TitleCollectionViewCell.swift */,
-				DAD5A3DB296C6DB800C8166B /* MapCollectionViewCell.swift */,
 				CE17F0432961C3D600E1DED0 /* VC */,
 			);
 			path = Views;
@@ -865,7 +859,7 @@
 				CE6655A9295D7FAA00C64E12 /* Network */,
 				CE6655A8295D7F7D00C64E12 /* Presentation */,
 				CE4545D6295D7AF5003201E1 /* Info.plist */,
-				713BA40A2B218AF8009091A8 /* GoogleService-Info.plist */,
+				713A98EF2B29DD9900189B3C /* GoogleService-Info.plist */,
 			);
 			path = "Runnect-iOS";
 			sourceTree = "<group>";
@@ -1201,7 +1195,6 @@
 			isa = PBXGroup;
 			children = (
 				CE6B63D2296725E6003F900F /* CourseListCVC.swift */,
-				71F7BF062B0CDFE300B752B3 /* MarathonCourseListCVC.swift */,
 			);
 			path = CVC;
 			sourceTree = "<group>";
@@ -1254,7 +1247,6 @@
 			children = (
 				717916D92B13613B009CEF97 /* MarathonListResponseDto.swift */,
 				DAD5A3E1296D4C6500C8166B /* PickedMapListResponseDto.swift */,
-				717916DD2B137DC3009CEF97 /* TotalPageCountDto.swift */,
 			);
 			path = ResponseDto;
 			sourceTree = "<group>";
@@ -1322,7 +1314,7 @@
 			files = (
 				CE665615295D989A00C64E12 /* .swiftlint.yml in Resources */,
 				CE17F0342961BEF800E1DED0 /* Pretendard-Bold.otf in Resources */,
-				713BA40B2B218AF8009091A8 /* GoogleService-Info.plist in Resources */,
+				713A98F02B29DD9900189B3C /* GoogleService-Info.plist in Resources */,
 				CE17F0352961BEF800E1DED0 /* Pretendard-SemiBold.otf in Resources */,
 				CE17F0332961BEF800E1DED0 /* Pretendard-Medium.otf in Resources */,
 				CE6655BF295D82E200C64E12 /* .gitkeep in Resources */,
@@ -1495,12 +1487,10 @@
 				A3D1A77E29CF09B600DD54EC /* SignInResponseDto.swift in Sources */,
 				CE21C028299E5FFC00F62AF5 /* PublicCourseRouter.swift in Sources */,
 				CE18E894296C79B900FEB569 /* CourseDrawingRequestDto.swift in Sources */,
-				71F7BF072B0CDFE300B752B3 /* MarathonCourseListCVC.swift in Sources */,
 				DA20D84E2966A9B300F1581F /* CourseSearchVC.swift in Sources */,
 				CE1006572968230800FD31FB /* DepartureLocationModel.swift in Sources */,
 				CECA695C296E61D6002AF05C /* PrivateCourseNotUploadedResponseDto.swift in Sources */,
 				CE6655EC295D88D000C64E12 /* UITableView+.swift in Sources */,
-				717916DE2B137DC3009CEF97 /* TotalPageCountDto.swift in Sources */,
 				CEEC6B3A2961C4F300D00E1E /* CourseDrawingHomeVC.swift in Sources */,
 				CEB0BCBC29D123350048CCD5 /* GuideView.swift in Sources */,
 				CEC2A6902962B06C00160BF7 /* convertLocationObject.swift in Sources */,
@@ -1518,7 +1508,6 @@
 				CE665608295D921500C64E12 /* setImage.swift in Sources */,
 				CE146770296568DC00DCEA1B /* RunTrackingVC.swift in Sources */,
 				DA20D849296697B400F1581F /* CourseUploadVC.swift in Sources */,
-				DAD5A3DC296C6DB800C8166B /* MapCollectionViewCell.swift in Sources */,
 				CE665612295D92E400C64E12 /* UserDefaultWrapper.swift in Sources */,
 				A3BC2F3A2963D0ED00198261 /* ActivityRecordInfoTVC.swift in Sources */,
 				CE665610295D92C200C64E12 /* setTextLineHeight.swift in Sources */,

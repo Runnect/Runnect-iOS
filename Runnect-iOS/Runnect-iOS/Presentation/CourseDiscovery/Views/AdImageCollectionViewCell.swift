@@ -10,7 +10,7 @@ import SnapKit
 
 import Then
 
-class AdImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
+final class AdImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
     
     // MARK: - collectionview
     

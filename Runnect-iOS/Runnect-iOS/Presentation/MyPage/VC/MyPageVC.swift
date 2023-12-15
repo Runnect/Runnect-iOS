@@ -49,8 +49,8 @@ final class MyPageVC: UIViewController {
         $0.setImage(ImageLiterals.icEdit, for: .normal)
         $0.setTitle("수정하기", for: .normal)
         $0.titleLabel?.font = .b7
-        $0.setTitleColor(.m2, for: .normal)
-        $0.tintColor = .m2
+        $0.setTitleColor(.m1, for: .normal)
+        $0.tintColor = .m1
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.m2.cgColor
         $0.layer.cornerRadius = 14
@@ -65,7 +65,7 @@ final class MyPageVC: UIViewController {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setProgress(0, animated: false)
         $0.progressTintColor = .m1
-        $0.trackTintColor = .m3
+        $0.trackTintColor = .m6
         $0.layer.cornerRadius = 6
         $0.clipsToBounds = true
         $0.layer.sublayers![1].cornerRadius = 6
@@ -278,7 +278,7 @@ extension MyPageVC {
     
     private func setUI() {
         view.backgroundColor = .w1
-        myProfileView.backgroundColor = .m3
+        myRunningProgressView.backgroundColor = .m3
         firstDivideView.backgroundColor = .g5
         secondDivideView.backgroundColor = .g4
         thirdDivideView.backgroundColor = .g4
@@ -295,8 +295,8 @@ extension MyPageVC {
         }
         
         view.addSubviews(myProfileView, myRunningProgressView, firstDivideView,
-            activityRecordInfoView, secondDivideView, goalRewardInfoView,
-            thirdDivideView, uploadedCourseInfoView, fourthDivideView, settingView, fifthDivideView, kakaoChannelAsk)
+                         activityRecordInfoView, secondDivideView, goalRewardInfoView,
+                         thirdDivideView, uploadedCourseInfoView, fourthDivideView, settingView, fifthDivideView, kakaoChannelAsk)
         
         myProfileView.snp.makeConstraints { make in
             make.top.equalTo(navibar.snp.bottom).offset(6)
@@ -307,12 +307,6 @@ extension MyPageVC {
         setMyProfileLayout()
         setRunningProgressLayout()
         
-        firstDivideView.snp.makeConstraints { make in
-            make.top.equalTo(myRunningProgressView.snp.bottom).offset(34)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(10)
-        }
-        
         setInfoButtonLayout()
         setVersionInfoLayout()
     }
@@ -320,29 +314,29 @@ extension MyPageVC {
     private func setMyProfileLayout() {
         myProfileView.addSubviews(myProfileImage, myProfileNameLabel, myProfileEditButton)
         
-        myProfileImage.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(11)
-            make.leading.equalToSuperview().offset(23)
-            make.width.equalTo(63)
-            make.height.equalTo(63)
+        myProfileImage.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(11)
+            $0.leading.equalToSuperview().offset(23)
+            $0.width.equalTo(63)
+            $0.height.equalTo(63)
         }
         
-        myProfileNameLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(32)
-            make.leading.equalTo(myProfileImage.snp.trailing).offset(10)
+        myProfileNameLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(32)
+            $0.leading.equalTo(myProfileImage.snp.trailing).offset(10)
         }
         
-        myProfileEditButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(29)
-            make.trailing.equalToSuperview().inset(16)
-            make.width.equalTo(78)
-            make.height.equalTo(28)
+        myProfileEditButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(29)
+            $0.trailing.equalToSuperview().inset(16)
+            $0.width.equalTo(78)
+            $0.height.equalTo(28)
         }
         
-        myRunningProgressView.snp.makeConstraints { make in
-            make.top.equalTo(myProfileView.snp.bottom).offset(31)
-            make.leading.trailing.equalToSuperview().inset(32)
-            make.height.equalTo(61)
+        myRunningProgressView.snp.makeConstraints {
+            $0.top.equalTo(myProfileView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(101)
         }
     }
     
@@ -350,111 +344,111 @@ extension MyPageVC {
         myRunningProgressView.addSubviews(myRunningLevelLabel, myRunningProgressBar,
                                           myRunnigProgressPercentLabel)
         
-        myRunningLevelLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview().offset(3)
+        myRunningLevelLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(20)
+            $0.leading.equalToSuperview().offset(36.53)
         }
         
-        myRunningProgressBar.snp.makeConstraints { make in
-            make.top.equalTo(myRunningLevelLabel.snp.bottom).offset(6)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(11)
+        myRunningProgressBar.snp.makeConstraints {
+            $0.top.equalTo(myRunningLevelLabel.snp.bottom).offset(6)
+            $0.leading.equalToSuperview().offset(36.53)
+            $0.trailing.equalToSuperview().inset(31.6)
+            $0.height.equalTo(11)
         }
         
-        myRunnigProgressPercentLabel.snp.makeConstraints { make in
-            make.bottom.equalToSuperview()
-            make.trailing.equalToSuperview()
+        myRunnigProgressPercentLabel.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(31.6)
         }
     }
     
     private func setInfoButtonLayout() {
-        activityRecordInfoView.snp.makeConstraints { make in
-            make.top.equalTo(firstDivideView.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(60)
+        activityRecordInfoView.snp.makeConstraints {
+            $0.top.equalTo(myRunningProgressView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(60)
         }
         
-        secondDivideView.snp.makeConstraints { make in
-            make.top.equalTo(activityRecordInfoView.snp.bottom).offset(1)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(0.5)
+        secondDivideView.snp.makeConstraints {
+            $0.top.equalTo(activityRecordInfoView.snp.bottom).offset(1)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(0.5)
         }
         
-        goalRewardInfoView.snp.makeConstraints { make in
-            make.top.equalTo(secondDivideView.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(60)
+        goalRewardInfoView.snp.makeConstraints {
+            $0.top.equalTo(secondDivideView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(60)
         }
         
-        thirdDivideView.snp.makeConstraints { make in
-            make.top.equalTo(goalRewardInfoView.snp.bottom).offset(1)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(0.5)
+        thirdDivideView.snp.makeConstraints {
+            $0.top.equalTo(goalRewardInfoView.snp.bottom).offset(1)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(0.5)
         }
         
-        uploadedCourseInfoView.snp.makeConstraints { make in
-            make.top.equalTo(thirdDivideView.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(60)
+        uploadedCourseInfoView.snp.makeConstraints {
+            $0.top.equalTo(thirdDivideView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(60)
         }
         
-        fourthDivideView.snp.makeConstraints { make in
-            make.top.equalTo(uploadedCourseInfoView.snp.bottom).offset(1)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(0.5)
+        fourthDivideView.snp.makeConstraints {
+            $0.top.equalTo(uploadedCourseInfoView.snp.bottom).offset(1)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(0.5)
         }
         
-        settingView.snp.makeConstraints { make in
-            make.top.equalTo(fourthDivideView.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(60)
+        settingView.snp.makeConstraints {
+            $0.top.equalTo(fourthDivideView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(60)
         }
         
-        fifthDivideView.snp.makeConstraints { make in
-            make.top.equalTo(settingView.snp.bottom).offset(1)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(0.5)
+        fifthDivideView.snp.makeConstraints {
+            $0.top.equalTo(settingView.snp.bottom).offset(1)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(0.5)
         }
         
-        kakaoChannelAsk.snp.makeConstraints { make in
-            make.top.equalTo(fifthDivideView.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(62)
+        kakaoChannelAsk.snp.makeConstraints {
+            $0.top.equalTo(fifthDivideView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(62)
         }
-
     }
     
     private func setVersionInfoLayout() {
         view.addSubviews(topVersionDivideView, versionInfoView, bottomVersionDivideView)
         
-        topVersionDivideView.snp.makeConstraints { make in
-            make.top.equalTo(kakaoChannelAsk.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(4)
+        topVersionDivideView.snp.makeConstraints {
+            $0.top.equalTo(kakaoChannelAsk.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(4)
         }
         
-        versionInfoView.snp.makeConstraints { make in
-            make.top.equalTo(kakaoChannelAsk.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(62)
+        versionInfoView.snp.makeConstraints {
+            $0.top.equalTo(kakaoChannelAsk.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(62)
         }
         
-        bottomVersionDivideView.snp.makeConstraints { make in
-            make.top.equalTo(versionInfoView.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(4)
+        bottomVersionDivideView.snp.makeConstraints {
+            $0.top.equalTo(versionInfoView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(4)
         }
         
         versionInfoView.addSubviews(versionInfoLabel, versionInfoValueLabel)
         
-        versionInfoLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().offset(18)
+        versionInfoLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().offset(18)
         }
         
-        versionInfoValueLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().inset(18)
+        versionInfoValueLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(18)
         }
     }
 }

@@ -16,9 +16,15 @@ class CourseSelectionPublisher {
     let didSelectCourse = PassthroughSubject<IndexPath, Never>()
 }
 
-class MarathonMapCollectionViewCell: UICollectionViewCell {
+final class MarathonMapCollectionViewCell: UICollectionViewCell {
+    
+    // MARK: - Properties
+    
     private let PublicCourseProvider = Providers.publicCourseProvider
-    private var marathonCourseList = [marathonCourse]()
+    private let scrapProvider = Providers.scrapProvider
+    var marathonCourseList = [marathonCourse]() // Cell 사용하는 곳에서 사용 중이라 private ❌
+    
+    // MARK: - UIComponents
     
     private lazy var marathonCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -50,25 +56,23 @@ class MarathonMapCollectionViewCell: UICollectionViewCell {
     }
 }
 
-    
-    // MARK: - Method
+// MARK: - Method
 
 extension MarathonMapCollectionViewCell {
-    
     private func setDelegate() {
         marathonCollectionView.delegate = self
         marathonCollectionView.dataSource = self
     }
+    
     private func register() {
         marathonCollectionView.register(CourseListCVC.self,
                                         forCellWithReuseIdentifier: CourseListCVC.className)
     }
 }
 
+// MARK: - Layout Helpers
+
 extension MarathonMapCollectionViewCell {
-    
-    // MARK: - Layout Helpers
-    
     private func setLayout() {
         contentView.backgroundColor = .clear
         contentView.addSubview(marathonCollectionView)
@@ -84,9 +88,8 @@ extension MarathonMapCollectionViewCell {
         self.marathonCourseList = marathonCourseList
         marathonCollectionView.reloadData()
     }
-    
 }
-    // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
 extension MarathonMapCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -98,6 +101,7 @@ extension MarathonMapCollectionViewCell: UICollectionViewDelegate, UICollectionV
                                                             for: indexPath)
                 as? CourseListCVC else { return UICollectionViewCell() }
         cell.setCellType(type: .all)
+        cell.delegate = self
         let model = self.marathonCourseList[indexPath.item]
         let location = "\(model.departure.region) \(model.departure.city)"
         cell.setData(imageURL: model.image, title: model.title, location: location, didLike: model.scrap, indexPath: indexPath.item)
@@ -105,7 +109,7 @@ extension MarathonMapCollectionViewCell: UICollectionViewDelegate, UICollectionV
     }
 }
 
-    // MARK: - UICollectionViewDelegateFlowLayout
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension MarathonMapCollectionViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -130,11 +134,23 @@ extension MarathonMapCollectionViewCell: UICollectionViewDelegateFlowLayout {
         CourseSelectionPublisher.shared.didSelectCourse.send(indexPath)
         // 코스 발견에 이벤트 전달
     }
-    
 }
 
+// MARK: - CourseListCVCDelegate
 
-    // MARK: - NetWork
+extension MarathonMapCollectionViewCell: CourseListCVCDeleagte {
+    func likeButtonTapped(wantsTolike: Bool, index: Int) {
+        guard UserManager.shared.userType != .visitor else {
+            return
+        }
+        
+        let publicCourseId = self.marathonCourseList[index].id
+        self.scrapCourse(publicCourseId: publicCourseId, scrapTF: wantsTolike)
+        print("마라톤에 들어온 index = \(index)")
+    }
+}
+
+// MARK: - NetWork
 
 extension MarathonMapCollectionViewCell {
     private func getMarathonCourseData() {
@@ -152,6 +168,26 @@ extension MarathonMapCollectionViewCell {
                     } catch {
                         print(error.localizedDescription)
                     }
+                }
+                if status >= 400 {
+                    print("400 error")
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    private func scrapCourse(publicCourseId: Int, scrapTF: Bool) {
+        LoadingIndicator.showLoading()
+        scrapProvider.request(.createAndDeleteScrap(publicCourseId: publicCourseId, scrapTF: scrapTF)) { [weak self] response in
+            LoadingIndicator.hideLoading()
+            guard let self = self else { return }
+            switch response {
+            case .success(let result):
+                let status = result.statusCode
+                if 200..<300 ~= status {
+                    print("스크랩 성공")
                 }
                 if status >= 400 {
                     print("400 error")
