@@ -23,6 +23,8 @@ final class CourseDetailVC: UIViewController {
     
     // MARK: - Properties
     
+    weak var delegate: ScrapStateDelegate?
+    
     private let scrapProvider = Providers.scrapProvider
     
     private let PublicCourseProvider = Providers.publicCourseProvider
@@ -35,9 +37,10 @@ final class CourseDetailVC: UIViewController {
     
     private var courseId: Int?
     private var publicCourseId: Int?
+    private var userId: Int?
     private var isMyCourse: Bool?
     
-    private var safariViewController: SFSafariViewController?
+    private var scrapCount: Int = 0
     
     // MARK: - UI Components
     
@@ -82,12 +85,20 @@ final class CourseDetailVC: UIViewController {
         $0.text = "닉네임"
         $0.textColor = .g1
         $0.font = .h5
+        $0.isUserInteractionEnabled = true
     }
     
     private let runningLevelLabel = UILabel().then {
         $0.text = "Lv. 0"
         $0.textColor = .m1
         $0.font = .b5
+    }
+    
+    private let scrapCountLabel = UILabel().then {
+        $0.text = "0"
+        $0.font = .b9
+        $0.textColor = UIColor(hex: "#9E9E9E", alpha: 1.0)
+        $0.textAlignment = .center
     }
     
     private let courseTitleLabel = UILabel().then {
@@ -126,6 +137,7 @@ final class CourseDetailVC: UIViewController {
         setUI()
         setLayout()
         setAddTarget()
+        setupRefreshControl()
         self.hideTabBar(wantsToHide: true)
     }
     
@@ -144,43 +156,52 @@ extension CourseDetailVC {
             return
         }
         
+        guard let publicCourseId = publicCourseId else { return }
+        
         scrapCourse(scrapTF: !sender.isSelected)
+        delegate?.didUpdateScrapState(publicCourseId: publicCourseId, isScrapped: !sender.isSelected)
+        
+        /// 누른상태(true)에서 누르면 스크랩 취소(false) 하는 이벤트, 즉 -1
+        let toggle = sender.isSelected ? -1 : 1
+        self.scrapCount += toggle
+        self.scrapCountLabel.text = "\(self.scrapCount)"
+        /// print("CourseDetailVC 스크랩 탭🔥publicCourseId=\(publicCourseId), isScrapped은 \(!sender.isSelected) 요렇게 변경 ")
     }
     
-    @objc func shareButtonTapped() {
+    @objc private func shareButtonTapped() {
         guard let model = self.uploadedCourseDetailModel else {
             return
         }
-
+        
         let publicCourse = model.publicCourse
         let title = publicCourse.title
         let courseId = publicCourse.id // primaryKey
         let description = publicCourse.description
         let courseImage = publicCourse.image
-
+        
         let dynamicLinksDomainURIPrefix = "https://runnect.page.link"
         guard let link = URL(string: "\(dynamicLinksDomainURIPrefix)/?courseId=\(courseId)") else {
             return
         }
-
+        
         guard let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: dynamicLinksDomainURIPrefix) else {
             return
         }
-
+        
         linkBuilder.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.runnect.Runnect-iOS")
         linkBuilder.iOSParameters?.appStoreID = "1663884202"
         linkBuilder.iOSParameters?.minimumAppVersion = "1.0.4"
-
+        
         linkBuilder.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
         linkBuilder.socialMetaTagParameters?.imageURL = URL(string: courseImage)
         linkBuilder.socialMetaTagParameters?.title = title
         linkBuilder.socialMetaTagParameters?.descriptionText = description
-
+        
         guard let longDynamicLink = linkBuilder.url else {
             return
         }
         print("The long URL is: \(longDynamicLink)")
-
+        
         /// 짧은 Dynamic Link로 변환하는 부분 입니다.
         linkBuilder.shorten { [weak self] url, warnings, error in
             guard let shortDynamicLink = url else {
@@ -189,9 +210,9 @@ extension CourseDetailVC {
                 }
                 return
             }
-
+            
             print("🔥The short URL is: \(shortDynamicLink)")
-
+            
             DispatchQueue.main.async {
                 let activityVC = UIActivityViewController(activityItems: [shortDynamicLink.absoluteString], applicationActivities: nil)
                 activityVC.popoverPresentationController?.sourceView = self?.view
@@ -199,13 +220,26 @@ extension CourseDetailVC {
             }
         }
     }
-
-    @objc func startButtonDidTap() {
+    
+    @objc private func pushToUserProfileVC() {
+        guard UserManager.shared.userType != .visitor else {
+            // 방문자일 경우 토스트 메세지만
+            self.showToast(message: "회원만 조회 가능 합니다.")
+            return
+        }
+        guard let userId = self.userId else {return}
+        let userProfile = UserProfileVC()
+        userProfile.setUserId(userId: userId)
+        self.navigationController?.pushViewController(userProfile, animated: true)
+    }
+    
+    @objc private func startButtonDidTap() {
         guard handleVisitor() else { return }
         guard let courseId = self.courseId else { return }
         getCourseDetailWithPath(courseId: courseId)
     }
-    @objc func moreButtonDidTap() {
+    
+    @objc private func moreButtonDidTap() {
         guard let isMyCourse = self.isMyCourse, let uploadedCourseDetailModel = self.uploadedCourseDetailModel else { return }
         
         let items = isMyCourse ? ["수정하기", "삭제하기"] : ["신고하기"]
@@ -223,7 +257,7 @@ extension CourseDetailVC {
             $0.dataSource = items
             $0.textFont = .b3
         }
-
+        
         menu.customCellConfiguration = { (index: Index, _: String, cell: DropDownCell) -> Void in
             let lastDividerLineRemove = UIView(frame: CGRect(origin: CGPoint(x: 0, y: isMyCourse ? 79 : 39), size: CGSize(width: 170, height: 10)))
             lastDividerLineRemove.backgroundColor = .white
@@ -235,6 +269,55 @@ extension CourseDetailVC {
         dropDownTouchAction(menu: menu, uploadedCourseDetailModel: uploadedCourseDetailModel, isMyCourse: isMyCourse)
         
         menu.show()
+    }
+    
+    @objc private func didBeginRefresh() {
+        refresh()
+    }
+}
+
+// MARK: - Method
+
+extension CourseDetailVC {
+    func setCourseId(courseId: Int?, publicCourseId: Int?) {
+        self.courseId = courseId
+        self.publicCourseId = publicCourseId
+    }
+    
+    func setPublicCourseId(publicCourseId: Int?) { // 추가한 것
+        self.publicCourseId = publicCourseId
+    }
+    
+    func setData(model: UploadedCourseDetailResponseDto) {
+        self.uploadedCourseDetailModel = model
+        self.userId = model.user.id
+        self.mapImageView.setImage(with: model.publicCourse.image)
+        self.profileImageView.image = GoalRewardInfoModel.stampNameImageDictionary[model.user.image]
+        // 탈퇴 유저 처리
+        model.user.nickname == "알 수 없음" ? setNullUser() : (self.profileNameLabel.text = model.user.nickname)
+        self.runningLevelLabel.text = "Lv. \(model.user.level)"
+        self.courseTitleLabel.text = model.publicCourse.title
+        self.isMyCourse = model.user.isNowUser
+        guard let scrap = model.publicCourse.scrap else { return }
+        self.likeButton.isSelected = scrap
+        guard let scrapCount = model.publicCourse.scrapCount else {return}
+        self.scrapCount = scrapCount
+        self.scrapCountLabel.text = "\(self.scrapCount)"
+        
+        guard let distance = model.publicCourse.distance else { return }
+        self.courseDistanceInfoView.setDescriptionText(description: "\(distance)km")
+        let location = "\(model.publicCourse.departure.region) \(model.publicCourse.departure.city)"
+        self.courseDepartureInfoView.setDescriptionText(description: location)
+        self.courseExplanationTextView.text = model.publicCourse.description
+    }
+    
+    private func setAddTarget() {
+        likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
+        moreButton.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
+        shareButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
+        
+        let profileTouch = UITapGestureRecognizer(target: self, action: #selector(pushToUserProfileVC))
+        profileNameLabel.addGestureRecognizer(profileTouch)
     }
     
     private func pushToCountDownVC() {
@@ -257,44 +340,6 @@ extension CourseDetailVC {
         countDownVC.setData(runningModel: runningModel)
         self.navigationController?.pushViewController(countDownVC, animated: true)
     }
-}
-
-// MARK: - Method
-
-extension CourseDetailVC {
-    func setCourseId(courseId: Int?, publicCourseId: Int?) {
-        self.courseId = courseId
-        self.publicCourseId = publicCourseId
-    }
-    
-    func setPublicCourseId(publicCourseId: Int?) { // 추가한 것
-        self.publicCourseId = publicCourseId
-    }
-    
-    func setData(model: UploadedCourseDetailResponseDto) {
-        self.uploadedCourseDetailModel = model
-        self.mapImageView.setImage(with: model.publicCourse.image)
-        self.profileImageView.image = GoalRewardInfoModel.stampNameImageDictionary[model.user.image]
-        // 탈퇴 유저 처리
-        model.user.nickname == "알 수 없음" ? setNullUser() : (self.profileNameLabel.text = model.user.nickname)
-        self.runningLevelLabel.text = "Lv. \(model.user.level)"
-        self.courseTitleLabel.text = model.publicCourse.title
-        self.isMyCourse = model.user.isNowUser
-        guard let scrap = model.publicCourse.scrap else { return }
-        self.likeButton.isSelected = scrap
-        
-        guard let distance = model.publicCourse.distance else { return }
-        self.courseDistanceInfoView.setDescriptionText(description: "\(distance)km")
-        let location = "\(model.publicCourse.departure.region) \(model.publicCourse.departure.city)"
-        self.courseDepartureInfoView.setDescriptionText(description: location)
-        self.courseExplanationTextView.text = model.publicCourse.description
-    }
-    
-    private func setAddTarget() {
-        likeButton.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
-        moreButton.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
-        shareButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
-    }
     
     private func setNullUser() {
         self.profileImageView.image = ImageLiterals.imgPerson
@@ -303,12 +348,24 @@ extension CourseDetailVC {
         self.runningLevelLabel.isHidden = true
     }
     
+    private func setupRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(
+            self,
+            action: #selector(didBeginRefresh),
+            for: .valueChanged
+        )
+        middleScorollView.refreshControl = refreshControl
+    }
+    
+    private func refresh() {
+        self.getUploadedCourseDetail()
+    }
 }
 
 // MARK: - Layout Helpers
 
 extension CourseDetailVC {
-
     private func setNavigationBar() {
         view.addSubview(navibar)
         view.addSubview(moreButton)
@@ -351,15 +408,21 @@ extension CourseDetailVC {
             make.height.equalTo(0.5)
         }
         
-        bottomView.addSubviews(likeButton, startButton)
+        bottomView.addSubviews(likeButton, startButton, scrapCountLabel)
         
         likeButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(18)
+            make.top.equalToSuperview().offset(13)
             make.leading.equalToSuperview().offset(26)
             make.width.equalTo(24)
             make.height.equalTo(22)
         }
         
+        scrapCountLabel.snp.makeConstraints { make in
+            make.top.equalTo(likeButton.snp.bottom).offset(2)
+            make.leading.equalToSuperview().offset(26)
+            make.width.equalTo(20)
+            make.height.equalTo(13)
+        }
         startButton.snp.makeConstraints { make in
             make.leading.equalTo(likeButton.snp.trailing).offset(20)
             make.top.equalToSuperview().offset(10)
@@ -460,6 +523,7 @@ extension CourseDetailVC {
                 print(error.localizedDescription)
                 self.showNetworkFailureToast()
             }
+            self.middleScorollView.refreshControl?.endRefreshing()
         }
     }
     

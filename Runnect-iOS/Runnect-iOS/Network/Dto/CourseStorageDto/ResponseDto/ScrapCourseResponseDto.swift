@@ -11,10 +11,6 @@ import Foundation
 
 struct ScrapCourseResponseDto: Codable {
     let scraps: [ScrapCourse]
-
-    enum CodingKeys: String, CodingKey {
-        case scraps = "Scraps"
-    }
 }
 
 // MARK: - ScrapCourse
