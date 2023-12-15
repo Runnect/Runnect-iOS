@@ -13,11 +13,8 @@ import Moya
 final class CourseDrawingVC: UIViewController {
     
     // MARK: - Properties
-    
-    private let courseProvider = Providers.courseProvider
-    private let departureSearchingProvider = Providers.departureSearchingProvider
-    
-    private let networkProvider = NetworkProvider<DepartureSearchingRouter>(withAuth: false)
+    private let departureSearchingProvider = NetworkProvider<DepartureSearchingRouter>(withAuth: false)
+    private let courseProvider = NetworkProvider<CourseRouter>(withAuth: true)
     
     private var departureLocationModel: DepartureLocationModel?
     
@@ -196,8 +193,8 @@ extension CourseDrawingVC {
         
         mapView.eventSubject.sink { [weak self] arr in
             guard let self = self else { return }
-//            self.searchLocationTmapAddress(latitude: arr[0], longitude: arr[1])
-            self.searchTest(latitude: arr[0], longitude: arr[1])
+            self.searchLocationTmapAddress(latitude: arr[0], longitude: arr[1])
+//            self.searchTest(latitude: arr[0], longitude: arr[1])
         }.store(in: cancelBag)
     }
     
@@ -450,68 +447,16 @@ extension CourseDrawingVC {
         guard let requestDto = makecourseDrawingRequestDto() else { return }
         LoadingIndicator.showLoading()
         
-        courseProvider.request(.uploadCourseDrawing(param: requestDto)) {[weak self] response in
-            guard let self = self else { return }
+        courseProvider.request(target: .uploadCourseDrawing(param: requestDto), instance: BaseResponse<CourseDrawingResponseData>.self, vc: self) { response in
             LoadingIndicator.hideLoading()
-            switch response {
-            case .success(let result):
-                let status = result.statusCode
-                if 200..<300 ~= status {
-                    do {
-                        let responseDto = try result.map(BaseResponse<CourseDrawingResponseData>.self)
-                        guard let data = responseDto.data else { return }
-                        self.presentAlertVC(courseId: data.id)
-                    } catch {
-                        print(error.localizedDescription)
-                    }
-                }
-                if status >= 400 {
-                    print("400 error")
-                    self.showNetworkFailureToast()
-                }
-            case .failure(let error):
-                if let response = error.response {
-                    if let responseData = String(data: response.data, encoding: .utf8) {
-                        print(responseData)
-                    }
-                } else {
-                    print(error.localizedDescription)
-                }
-            }
+            guard let data = response.data else { return }
+            self.presentAlertVC(courseId: data.id)
         }
     }
     
     private func searchLocationTmapAddress(latitude: Double, longitude: Double) {
-        departureSearchingProvider
-            .request(.getLocationTmapAddress(latitude: latitude, longitude: longitude)) { [weak self] response in
-                guard let self = self else { return }
-                switch response {
-                case .success(let result):
-                    let status = result.statusCode
-                    if 200..<300 ~= status {
-                        do {
-                            let responseDto = try result.map(TmapAddressSearchingResponseDto.self)
-                            self.updateData(model: responseDto.toDepartureLocationModel(latitude: latitude, longitude: longitude))
-                        } catch {
-                            print(error.localizedDescription)
-                        }
-                    }
-                    if status >= 400 {
-                        print("400 error")
-                    }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    self.showToast(message: "네트워크 통신 실패")
-                }
-            }
-    }
-    
-    private func searchTest(latitude: Double, longitude: Double) {
-        networkProvider.request(target: .getLocationTmapAddress(latitude: latitude, longitude: longitude), instance: TmapAddressSearchingResponseDto.self, vc: self) { result in
-            switch result {
-            case .success(let data):
+        departureSearchingProvider.request(target: .getLocationTmapAddress(latitude: latitude, longitude: longitude), instance: TmapAddressSearchingResponseDto.self, vc: self) { data in
                 self.updateData(model: data.toDepartureLocationModel(latitude: latitude, longitude: longitude))
-            }
         }
     }
 }
