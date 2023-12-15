@@ -8,5 +8,5 @@
 import Foundation
 
 struct PrivateCourseNotUploadedResponseDto: Codable {
-    let privateCourses: [Course]
+    let courses: [Course]
 }

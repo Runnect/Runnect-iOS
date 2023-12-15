@@ -269,7 +269,7 @@ extension MyCourseSelectVC {
                     do {
                         let responseDto = try result.map(BaseResponse<PrivateCourseNotUploadedResponseDto>.self)
                         guard let data = responseDto.data else { return }
-                        self.setData(courseList: data.privateCourses)
+                        self.setData(courseList: data.courses)
                     } catch {
                         print(error.localizedDescription)
                     }
