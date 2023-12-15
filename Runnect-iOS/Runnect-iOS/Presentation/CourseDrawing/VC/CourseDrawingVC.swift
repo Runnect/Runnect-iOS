@@ -440,21 +440,11 @@ extension CourseDrawingVC {
             departureAddress: departureLocationModel.departureAddress,
             departureName: departureLocationModel.departureName)
         
-//        let courseDrawingRequestDto = CourseDrawingRequestDto(
-//            image: imageData,
-//            path: path,
-//            title: self.courseName,
-//            distance: 1.1,
-//            departureAddress: "성현마을 어쩌구",
-//            departureName: "어쩌구 저쩌구")
-        
         return courseDrawingRequestDto
     }
     
     private func uploadCourseDrawing() {
         guard let requestDto = makecourseDrawingRequestDto() else { return }
-        print("🚨🚨🚨🚨🚨🚨")
-        print(requestDto)
         LoadingIndicator.showLoading()
         
         courseProvider.request(.uploadCourseDrawing(param: requestDto)) {[weak self] response in
@@ -467,7 +457,7 @@ extension CourseDrawingVC {
                     do {
                         let responseDto = try result.map(BaseResponse<CourseDrawingResponseData>.self)
                         guard let data = responseDto.data else { return }
-                        self.presentAlertVC(courseId: data.course.id)
+                        self.presentAlertVC(courseId: data.id)
                     } catch {
                         print(error.localizedDescription)
                     }
@@ -476,10 +466,6 @@ extension CourseDrawingVC {
                     print("400 error")
                     self.showNetworkFailureToast()
                 }
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//                self.showNetworkFailureToast()
-//            }
             case .failure(let error):
                 if let response = error.response {
                     if let responseData = String(data: response.data, encoding: .utf8) {
