@@ -17,6 +17,11 @@ protocol ScrapStateDelegate: AnyObject {
     // 코스 상세 에서 스크랩 누르면 코스발견에 해당 부분 스크랩 누르는 이벤트 전달
 }
 
+protocol UploadSuccessDelegate: AnyObject {
+    // 코스 업로드시, 코스 발견 피드 새로 고침
+    func didUploadSuccess()
+}
+
 final class CourseDiscoveryVC: UIViewController {
     
     // MARK: - Properties
@@ -118,8 +123,8 @@ extension CourseDiscoveryVC {
     
     private func setAddTarget() {
         self.searchButton.addTarget(self, action: #selector(pushToSearchVC), for: .touchUpInside)
-        self.uploadButton.addTarget(self, action: #selector(pushToDiscoveryVC), for: .touchUpInside)
-        self.miniUploadButton.addTarget(self, action: #selector(pushToDiscoveryVC), for: .touchUpInside)
+        self.uploadButton.addTarget(self, action: #selector(pushToCourseSelectVC), for: .touchUpInside)
+        self.miniUploadButton.addTarget(self, action: #selector(pushToCourseSelectVC), for: .touchUpInside)
     }
     
     private func setCombineEvent() {
@@ -154,13 +159,14 @@ extension CourseDiscoveryVC {
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
     
-    @objc private func pushToDiscoveryVC() {
+    @objc private func pushToCourseSelectVC() {
         guard UserManager.shared.userType != .visitor else {
             self.showToastOnWindow(text: "러넥트에 가입하면 코스를 업로드할 수 있어요.")
             return
         }
         
         let nextVC = MyCourseSelectVC()
+        nextVC.delegate = self
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }
@@ -455,6 +461,14 @@ extension CourseDiscoveryVC: ScrapStateDelegate {
         self.refresh()
     }
 }
+
+// MARK: - didUploadCourse
+
+extension CourseDiscoveryVC: UploadSuccessDelegate {
+    func didUploadSuccess() {
+        print("여기서 한번 더 didUploadSuccess 함수 호출")
+        self.refresh()
+        print("코스 발견 피드 새로고침 완료 되었음")
     }
 }
 

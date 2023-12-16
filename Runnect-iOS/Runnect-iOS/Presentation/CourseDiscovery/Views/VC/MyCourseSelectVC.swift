@@ -10,6 +10,10 @@ import UIKit
 import Then
 import Moya
 
+protocol UploadStateDelegate: AnyObject {
+    func didUploadCourse()
+}
+
 class MyCourseSelectVC: UIViewController {
     
     // MARK: - Properties
@@ -25,6 +29,8 @@ class MyCourseSelectVC: UIViewController {
             }
         }
     }
+    
+    weak var delegate: UploadSuccessDelegate?
     
     // MARK: - UI Components
     
@@ -116,8 +122,16 @@ extension MyCourseSelectVC {
     @objc private func pushToUploadVC() {
         guard let selectedIndex = self.selectedIndex else { return }
         let courseUploadVC = CourseUploadVC()
+        courseUploadVC.delegate = self // 이 부분이 중요합니다.
         courseUploadVC.setData(courseModel: courseList[selectedIndex])
         self.navigationController?.pushViewController(courseUploadVC, animated: true)
+    }
+}
+
+extension MyCourseSelectVC: UploadStateDelegate {
+    func didUploadCourse() {
+        print("여기 한번 거치고")
+        delegate?.didUploadSuccess()
     }
 }
 
