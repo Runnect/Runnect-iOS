@@ -137,6 +137,13 @@ extension CourseDiscoveryVC {
             print("\(indexPath) 부분 스크랩 교체 되었음")
         }
     }
+    
+    func refresh() {
+        print("✅ refresh ✅")
+        pageNo = 1
+        self.courseList = []
+        self.getCourseData(pageNo: pageNo)
+    }
 }
 
 // MARK: - @objc Function
