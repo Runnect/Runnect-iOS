@@ -436,11 +436,18 @@ extension CourseDiscoveryVC: ScrapStateDelegate {
     }
     
     func didRemoveCourse(publicCourseId: Int) {
-        if let index = courseList.firstIndex(where: { $0.id == publicCourseId }) {
-            self.courseList.remove(at: index)
-            self.mapCollectionView.reloadData()
-            print("didRemoveCourse= 삭제되었음\n")
-        }
+//        if let index = courseList.firstIndex(where: { $0.id == publicCourseId }) {
+//            courseList.remove(at: index)
+//            self.mapCollectionView.reloadData()
+//        }
+        // ⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️
+        // 원래 해당하는 데이터(index) 만 가지고, 그 데이터 삭제 후 courseList를 받아야하는데, 삭제가 이미되어버려서 if let index 부분이 안들어옴
+        // 왜??? 이미 데이터는 삭제가 되어서 $0.id 랑 publicCourseId 가 같은게 매치가 될 수 없어!!!
+        // 네트워크 성공하기 전에 didRemoveCourse(publicCourseId:) 를 호출 해야 해당 부분 확인하고 지운다음, 서버측에서 지워야 1페이지부터 시작 안하고 지울 수 있음
+        // ⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️
+        self.refresh()
+    }
+}
     }
 }
 
