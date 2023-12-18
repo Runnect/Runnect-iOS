@@ -181,9 +181,7 @@ extension CourseUploadVC {
     }
     
     @objc func uploadButtonDidTap() {
-        print("🔥delegate 호출 전 !!")
         self.uploadCourse()
-        print("🔥delegate 호출 후 !!")
     }
 }
 

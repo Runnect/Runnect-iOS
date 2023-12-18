@@ -130,7 +130,7 @@ extension MyCourseSelectVC {
 
 extension MyCourseSelectVC: UploadStateDelegate {
     func didUploadCourse() {
-        print("여기 한번 거치고")
+        print("여기 한번 거치고\n CourseUploadVC -> MyCourseSelectVC 이벤트 전달\n")
         delegate?.didUploadSuccess()
     }
 }

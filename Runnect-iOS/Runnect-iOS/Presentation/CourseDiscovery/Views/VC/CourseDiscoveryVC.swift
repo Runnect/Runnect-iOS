@@ -288,6 +288,7 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
         }
     }
     
+    // 최신순, 스크랩순 막 연달아 누르면 앱 터짐..
     private func courseListCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath) as? CourseListCVC else { return UICollectionViewCell() }
         cell.setCellType(type: .all)
@@ -466,7 +467,7 @@ extension CourseDiscoveryVC: ScrapStateDelegate {
 
 extension CourseDiscoveryVC: UploadSuccessDelegate {
     func didUploadSuccess() {
-        print("여기서 한번 더 didUploadSuccess 함수 호출")
+        print("여기서 didUploadSuccess 함수 호출\n MyCourseSelectVC -> CourseDiscoveryVC 이벤트 전달")
         self.refresh()
         print("코스 발견 피드 새로고침 완료 되었음")
     }
