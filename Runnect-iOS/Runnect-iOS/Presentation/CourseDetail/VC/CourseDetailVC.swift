@@ -173,6 +173,7 @@ extension CourseDetailVC {
         let toggle = sender.isSelected ? -1 : 1
         self.scrapCount += toggle
         self.scrapCountLabel.text = "\(self.scrapCount)"
+        
         /// print("CourseDetailVC 스크랩 탭🔥publicCourseId=\(publicCourseId), isScrapped은 \(!sender.isSelected) 요렇게 변경 ")
     }
     
@@ -575,7 +576,14 @@ extension CourseDetailVC {
             case .success(let result):
                 let status = result.statusCode
                 if 200..<300 ~= status {
-                    self.likeButton.isSelected.toggle()
+                    do {
+                        let responseDto = try result.map(BaseResponse<CourseDetailScrapCountDto>.self)
+                        guard let data = responseDto.data else { return }
+                        self.likeButton.isSelected.toggle()
+                        self.scrapCount = data.scrapCount
+                    } catch {
+                        print(error.localizedDescription)
+                    }
                 }
                 if status >= 400 {
                     print("400 error")
@@ -659,3 +667,4 @@ extension CourseDetailVC {
         }
     }
 }
+
