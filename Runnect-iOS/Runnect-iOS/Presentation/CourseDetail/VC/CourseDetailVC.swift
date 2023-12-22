@@ -170,8 +170,8 @@ extension CourseDetailVC {
         delegate?.didUpdateScrapState(publicCourseId: publicCourseId, isScrapped: !sender.isSelected)       /// UI Update 부분
         
         /// 누른상태(true)에서 누르면 스크랩 취소(false) 하는 이벤트, 즉 -1
-        let toggle = sender.isSelected ? -1 : 1
-        self.scrapCount += toggle
+//        let toggle = sender.isSelected ? -1 : 1
+//        self.scrapCount += toggle
         self.scrapCountLabel.text = "\(self.scrapCount)"
         
         /// print("CourseDetailVC 스크랩 탭🔥publicCourseId=\(publicCourseId), isScrapped은 \(!sender.isSelected) 요렇게 변경 ")
