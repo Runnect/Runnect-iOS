@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0AEBD608F3973389E8E1C6D6 /* Pods_Runnect_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */; };
 		232686362B03AF4400675A17 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232686352B03AF4400675A17 /* NetworkProvider.swift */; };
 		23EE06C12AC1AD5200CB3FF8 /* LocationSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06C02AC1AD5200CB3FF8 /* LocationSelectView.swift */; };
 		23EE06C52AC1AE1900CB3FF8 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06C42AC1AE1900CB3FF8 /* BaseView.swift */; };
 		23EE06C92AC1DED100CB3FF8 /* GesturePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06C82AC1DED100CB3FF8 /* GesturePublisher.swift */; };
 		23EE06CB2AC2AF3E00CB3FF8 /* KakaoAddressSearchingResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06CA2AC2AF3E00CB3FF8 /* KakaoAddressSearchingResponseDto.swift */; };
 		23EE06D12AC2F44E00CB3FF8 /* TmapAddressSearchingResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06D02AC2F44E00CB3FF8 /* TmapAddressSearchingResponseDto.swift */; };
+		3C62B428BF25A30FFC4986FD /* Pods_Runnect_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2A56E6A578CF1D4B9CC0A92 /* Pods_Runnect_iOS.framework */; };
+		711E18212B38516D00C651CD /* GAManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711E18202B38516D00C651CD /* GAManager.swift */; };
 		71288ECF2B26ECDB00D6C921 /* UserInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71288ECE2B26ECDB00D6C921 /* UserInfoCell.swift */; };
 		71288ED12B26ECF600D6C921 /* UserProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71288ED02B26ECF600D6C921 /* UserProgressCell.swift */; };
 		71288ED32B26ED2500D6C921 /* UserUploadedLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71288ED22B26ED2500D6C921 /* UserUploadedLabelCell.swift */; };
@@ -175,15 +176,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runnect_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		232686352B03AF4400675A17 /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
 		23EE06C02AC1AD5200CB3FF8 /* LocationSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectView.swift; sourceTree = "<group>"; };
 		23EE06C42AC1AE1900CB3FF8 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		23EE06C82AC1DED100CB3FF8 /* GesturePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GesturePublisher.swift; sourceTree = "<group>"; };
 		23EE06CA2AC2AF3E00CB3FF8 /* KakaoAddressSearchingResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoAddressSearchingResponseDto.swift; sourceTree = "<group>"; };
 		23EE06D02AC2F44E00CB3FF8 /* TmapAddressSearchingResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TmapAddressSearchingResponseDto.swift; sourceTree = "<group>"; };
-		3C3033C911343B5C57EB68E7 /* Pods-Runnect-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runnect-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		6DE30BB0DA64D0E80DF7EBA4 /* Pods-Runnect-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runnect-iOS.release.xcconfig"; path = "Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		7110A6032AA337DD009A7E99 /* Runnect-iOSDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Runnect-iOSDebug.entitlements"; sourceTree = "<group>"; };
+		711E18202B38516D00C651CD /* GAManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GAManager.swift; sourceTree = "<group>"; };
 		71288ECE2B26ECDB00D6C921 /* UserInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoCell.swift; sourceTree = "<group>"; };
 		71288ED02B26ECF600D6C921 /* UserProgressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProgressCell.swift; sourceTree = "<group>"; };
 		71288ED22B26ED2500D6C921 /* UserUploadedLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUploadedLabelCell.swift; sourceTree = "<group>"; };
@@ -218,6 +219,7 @@
 		A3E624FF2A15262B008370FF /* GoalRewardTitleCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRewardTitleCVC.swift; sourceTree = "<group>"; };
 		A3F67AE1296D33AC001598A2 /* MyPageDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageDto.swift; sourceTree = "<group>"; };
 		A3F67AE9296E4936001598A2 /* ActivityRecordInfoDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRecordInfoDto.swift; sourceTree = "<group>"; };
+		B53163DB8E122B5017E13CB5 /* Pods-Runnect-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runnect-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		CE09037C296E9ED900BEA710 /* ScrapCourseResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapCourseResponseDto.swift; sourceTree = "<group>"; };
 		CE0C23732966D62A00B45063 /* PagedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedView.swift; sourceTree = "<group>"; };
 		CE0C23762966D64D00B45063 /* PageCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageCVC.swift; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 		CEEC6B4A2961D89700D00E1E /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		CEF3CD99296DB305002723A1 /* CourseDetailResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailResponseDto.swift; sourceTree = "<group>"; };
 		CEFA9A2E29FC263700F2D0CF /* UserDeleteResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDeleteResponseDto.swift; sourceTree = "<group>"; };
+		D2A56E6A578CF1D4B9CC0A92 /* Pods_Runnect_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runnect_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA0587F12A05D54100B72869 /* EditCourseRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCourseRequestDto.swift; sourceTree = "<group>"; };
 		DA0587F32A05DEC000B72869 /* CourseEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseEditVC.swift; sourceTree = "<group>"; };
 		DA20D846296697A600F1581F /* MyCourseSelectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCourseSelectVC.swift; sourceTree = "<group>"; };
@@ -354,7 +357,6 @@
 		DAD5A3D7296C6D9600C8166B /* AdImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		DAD5A3D9296C6DA500C8166B /* TitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCell.swift; sourceTree = "<group>"; };
 		DAD5A3E1296D4C6500C8166B /* PickedMapListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickedMapListResponseDto.swift; sourceTree = "<group>"; };
-		E837271A78E1C0A0C30789BF /* Pods-Runnect-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runnect-iOS.release.xcconfig"; path = "Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -362,7 +364,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0AEBD608F3973389E8E1C6D6 /* Pods_Runnect_iOS.framework in Frameworks */,
+				3C62B428BF25A30FFC4986FD /* Pods_Runnect_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,18 +382,18 @@
 		3F7098551CF7A77F3FE7EB2B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3C3033C911343B5C57EB68E7 /* Pods-Runnect-iOS.debug.xcconfig */,
-				E837271A78E1C0A0C30789BF /* Pods-Runnect-iOS.release.xcconfig */,
+				B53163DB8E122B5017E13CB5 /* Pods-Runnect-iOS.debug.xcconfig */,
+				6DE30BB0DA64D0E80DF7EBA4 /* Pods-Runnect-iOS.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		4BAB0487E0060209ADC1C28C /* Frameworks */ = {
+		711E181F2B38515B00C651CD /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				015778D02D5CDE0838284CD7 /* Pods_Runnect_iOS.framework */,
+				711E18202B38516D00C651CD /* GAManager.swift */,
 			);
-			name = Frameworks;
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		71288ED42B26EDF300D6C921 /* CollectionViewCell */ = {
@@ -838,7 +840,7 @@
 				CE4545C7295D7AF4003201E1 /* Runnect-iOS */,
 				CE4545C6295D7AF4003201E1 /* Products */,
 				3F7098551CF7A77F3FE7EB2B /* Pods */,
-				4BAB0487E0060209ADC1C28C /* Frameworks */,
+				F05BC4258FDC2EFA777FBF06 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -943,6 +945,7 @@
 		CE6655AA295D7FAE00C64E12 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				711E181F2B38515B00C651CD /* Manager */,
 				23EE06C32AC1AE0600CB3FF8 /* Base */,
 				CE6655B6295D803C00C64E12 /* UIComponents */,
 				CE6655B5295D803800C64E12 /* Literal */,
@@ -1251,6 +1254,14 @@
 			path = ResponseDto;
 			sourceTree = "<group>";
 		};
+		F05BC4258FDC2EFA777FBF06 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D2A56E6A578CF1D4B9CC0A92 /* Pods_Runnect_iOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1258,12 +1269,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CE4545D9295D7AF5003201E1 /* Build configuration list for PBXNativeTarget "Runnect-iOS" */;
 			buildPhases = (
-				5E54A0A4C236151ED373DD47 /* [CP] Check Pods Manifest.lock */,
+				D3529E1DC35A6AFFFA6448E4 /* [CP] Check Pods Manifest.lock */,
 				CE665613295D980700C64E12 /* ShellScript */,
 				CE4545C1295D7AF4003201E1 /* Sources */,
 				CE4545C2295D7AF4003201E1 /* Frameworks */,
 				CE4545C3295D7AF4003201E1 /* Resources */,
-				CF0A7C4CF1329EF14A755C46 /* [CP] Embed Pods Frameworks */,
+				942CED198E027B2DE5375553 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1327,7 +1338,42 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5E54A0A4C236151ED373DD47 /* [CP] Check Pods Manifest.lock */ = {
+		942CED198E027B2DE5375553 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CE665613295D980700C64E12 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		D3529E1DC35A6AFFFA6448E4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1349,41 +1395,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CE665613295D980700C64E12 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 12;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-		CF0A7C4CF1329EF14A755C46 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Runnect-iOS/Pods-Runnect-iOS-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1400,6 +1411,7 @@
 				CEC2A68729629B9B00160BF7 /* NickNameSetUpVC.swift in Sources */,
 				CE665602295D918000C64E12 /* JsonCoder.swift in Sources */,
 				DA97A033296E65D80086760E /* CourseUploadingRequestDto.swift in Sources */,
+				711E18212B38516D00C651CD /* GAManager.swift in Sources */,
 				CE4545CD295D7AF4003201E1 /* TaBarController.swift in Sources */,
 				A3305A97296EF58C000B1A10 /* GoalRewardInfoDto.swift in Sources */,
 				CE21C024299E5FE500F62AF5 /* UserRouter.swift in Sources */,
@@ -1679,7 +1691,7 @@
 		};
 		CE4545DA295D7AF5003201E1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C3033C911343B5C57EB68E7 /* Pods-Runnect-iOS.debug.xcconfig */;
+			baseConfigurationReference = B53163DB8E122B5017E13CB5 /* Pods-Runnect-iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1721,7 +1733,7 @@
 		};
 		CE4545DB295D7AF5003201E1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E837271A78E1C0A0C30789BF /* Pods-Runnect-iOS.release.xcconfig */;
+			baseConfigurationReference = 6DE30BB0DA64D0E80DF7EBA4 /* Pods-Runnect-iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

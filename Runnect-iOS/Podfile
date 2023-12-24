@@ -19,6 +19,11 @@ target 'Runnect-iOS' do
 	pod 'KakaoSDKTalk'
 	pod 'DropDown', :git => 'https://github.com/thingineeer/DropDown.git', :commit => '95ee36f7bd925d466033c2c169979f1c574bf3b9'
 	pod 'CombineCocoa'
+	pod 'FirebaseAnalytics'
+	pod 'FirebaseAuth'
+	pod 'FirebaseFirestore'
+	
+
 	
 end
   # Pods for Runnect-iOS
