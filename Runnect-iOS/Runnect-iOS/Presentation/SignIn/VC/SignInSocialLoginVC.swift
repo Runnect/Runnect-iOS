@@ -55,6 +55,7 @@ final class SignInSocialLoginVC: UIViewController {
         setNavigationBar()
         setLayout()
         setAddTarget()
+        analyze()
     }
 }
 
@@ -230,5 +231,11 @@ extension SignInSocialLoginVC: ASAuthorizationControllerPresentationContextProvi
     /// Apple ID 연동 실패 시
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         print("Apple Login error")
+    }
+}
+
+extension SignInSocialLoginVC {
+    private func analyze() {
+        GAManager.shared.logEvent(eventType: .screen(screenName: "소셜 로그인 화면"))
     }
 }
