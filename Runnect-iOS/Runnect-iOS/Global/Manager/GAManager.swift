@@ -34,6 +34,7 @@ final class GAManager {
     
     func logEvent(eventType: EventType) {
         Analytics.logEvent(eventType.eventName, parameters: eventType.parameters)
+        print("언제 찍히는거지?")
     }
     
 }

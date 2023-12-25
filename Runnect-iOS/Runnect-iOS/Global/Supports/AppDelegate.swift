@@ -11,6 +11,8 @@ import NMapsMap
 import KakaoSDKAuth
 import KakaoSDKCommon
 import FirebaseCore
+import FirebaseFirestore
+import FirebaseAuth
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
