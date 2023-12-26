@@ -23,14 +23,14 @@ final class CourseDetailVC: UIViewController {
     
     // MARK: - Properties
     
-    weak var delegate: ScrapStateDelegate?
+    weak var delegate: ScrapStateDelegate? // 코스 발견 스크랩 이벤트
+    weak var marathonDelegate: MarathonCourseDelegate? // 마라톤 스크랩 이벤트
     
     private let scrapProvider = Providers.scrapProvider
     private let publicCourseProvider = Providers.publicCourseProvider
     private let courseProvider = Providers.courseProvider
     
     private var courseModel: Course?
-    
     private var uploadedCourseDetailModel: UploadedCourseDetailResponseDto?
     
     private var courseId: Int?
