@@ -167,12 +167,8 @@ extension CourseDetailVC {
         guard let publicCourseId = publicCourseId else { return }
         
         scrapCourse(scrapTF: !sender.isSelected)
-        delegate?.didUpdateScrapState(publicCourseId: publicCourseId, isScrapped: !sender.isSelected)       /// UI Update 부분
-        
-        /// 누른상태(true)에서 누르면 스크랩 취소(false) 하는 이벤트, 즉 -1
-//        let toggle = sender.isSelected ? -1 : 1
-//        self.scrapCount += toggle
-        self.scrapCountLabel.text = "\(self.scrapCount)"
+        delegate?.didUpdateScrapState(publicCourseId: publicCourseId, isScrapped: !sender.isSelected)       /// 코스 발견 UI Update 부분
+        marathonDelegate?.didMarathonUpdateScrapState(publicCourseId: publicCourseId, isScrapped: !sender.isSelected) // 마라톤 코스 UI Update 부분
         
         /// print("CourseDetailVC 스크랩 탭🔥publicCourseId=\(publicCourseId), isScrapped은 \(!sender.isSelected) 요렇게 변경 ")
     }
@@ -581,6 +577,7 @@ extension CourseDetailVC {
                         guard let data = responseDto.data else { return }
                         self.likeButton.isSelected.toggle()
                         self.scrapCount = data.scrapCount
+                        self.scrapCountLabel.text = "\(self.scrapCount)"
                     } catch {
                         print(error.localizedDescription)
                     }
