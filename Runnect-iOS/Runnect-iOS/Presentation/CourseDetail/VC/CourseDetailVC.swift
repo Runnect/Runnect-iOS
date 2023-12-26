@@ -26,9 +26,7 @@ final class CourseDetailVC: UIViewController {
     weak var delegate: ScrapStateDelegate?
     
     private let scrapProvider = Providers.scrapProvider
-    
-    private let PublicCourseProvider = Providers.publicCourseProvider
-    
+    private let publicCourseProvider = Providers.publicCourseProvider
     private let courseProvider = Providers.courseProvider
     
     private var courseModel: Course?
@@ -506,7 +504,7 @@ extension CourseDetailVC {
     private func getUploadedCourseDetail() {
         guard let publicCourseId = self.publicCourseId else { return }
         LoadingIndicator.showLoading()
-        PublicCourseProvider.request(.getUploadedCourseDetail(publicCourseId: publicCourseId)) { [weak self] response in
+        publicCourseProvider.request(.getUploadedCourseDetail(publicCourseId: publicCourseId)) { [weak self] response in
             guard let self = self else { return }
             LoadingIndicator.hideLoading()
             switch response {
@@ -664,4 +662,3 @@ extension CourseDetailVC {
         }
     }
 }
-
