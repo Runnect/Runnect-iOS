@@ -24,7 +24,7 @@ final class CourseDetailVC: UIViewController {
     // MARK: - Properties
     
     weak var delegate: ScrapStateDelegate? // 코스 발견 스크랩 이벤트
-    weak var marathonDelegate: MarathonCourseDelegate? // 마라톤 스크랩 이벤트
+    weak var marathonDelegate: MarathonScrapStateDelegate? // 마라톤 스크랩 이벤트
     
     private let scrapProvider = Providers.scrapProvider
     private let publicCourseProvider = Providers.publicCourseProvider
@@ -166,7 +166,7 @@ extension CourseDetailVC {
         
         scrapCourse(scrapTF: !sender.isSelected)
         delegate?.didUpdateScrapState(publicCourseId: publicCourseId, isScrapped: !sender.isSelected)       /// 코스 발견 UI Update 부분
-        marathonDelegate?.didMarathonUpdateScrapState(publicCourseId: publicCourseId, isScrapped: !sender.isSelected) // 마라톤 코스 UI Update 부분
+        marathonDelegate?.didUpdateMarathonScrapState(publicCourseId: publicCourseId, isScrapped: !sender.isSelected) // 마라톤 코스 UI Update 부분
         
         /// print("CourseDetailVC 스크랩 탭🔥publicCourseId=\(publicCourseId), isScrapped은 \(!sender.isSelected) 요렇게 변경 ")
     }

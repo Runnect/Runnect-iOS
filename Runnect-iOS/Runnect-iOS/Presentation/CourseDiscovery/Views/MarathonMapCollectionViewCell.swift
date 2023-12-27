@@ -8,8 +8,8 @@
 import UIKit
 import Combine
 
-protocol MarathonCourseDelegate: AnyObject {
-    func didMarathonUpdateScrapState(publicCourseId: Int, isScrapped: Bool)
+protocol MarathonScrapStateDelegate: AnyObject {
+    func didUpdateMarathonScrapState(publicCourseId: Int, isScrapped: Bool)
 }
 
 class CourseSelectionPublisher {
@@ -164,8 +164,8 @@ extension MarathonMapCollectionViewCell: CourseListCVCDeleagte {
     }
 }
 
-extension MarathonMapCollectionViewCell: MarathonCourseDelegate {
-    func didMarathonUpdateScrapState(publicCourseId: Int, isScrapped: Bool) {
+extension MarathonMapCollectionViewCell: MarathonScrapStateDelegate {
+    func didUpdateMarathonScrapState(publicCourseId: Int, isScrapped: Bool) {
         print("✅ 1. 마라톤 델리게이트 들어오는가 🫶🏻")
         if let index = marathonCourseList.firstIndex(where: { $0.id == publicCourseId }) {
             marathonCourseList[index].scrap = isScrapped
