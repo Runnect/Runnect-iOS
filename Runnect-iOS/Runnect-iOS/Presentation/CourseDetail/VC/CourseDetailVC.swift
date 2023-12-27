@@ -23,16 +23,14 @@ final class CourseDetailVC: UIViewController {
     
     // MARK: - Properties
     
-    weak var delegate: ScrapStateDelegate?
+    weak var delegate: ScrapStateDelegate? // 코스 발견 스크랩 이벤트
+    weak var marathonDelegate: MarathonScrapStateDelegate? // 마라톤 스크랩 이벤트
     
     private let scrapProvider = Providers.scrapProvider
-    
-    private let PublicCourseProvider = Providers.publicCourseProvider
-    
+    private let publicCourseProvider = Providers.publicCourseProvider
     private let courseProvider = Providers.courseProvider
     
     private var courseModel: Course?
-    
     private var uploadedCourseDetailModel: UploadedCourseDetailResponseDto?
     
     private var courseId: Int?
@@ -167,12 +165,9 @@ extension CourseDetailVC {
         guard let publicCourseId = publicCourseId else { return }
         
         scrapCourse(scrapTF: !sender.isSelected)
-        delegate?.didUpdateScrapState(publicCourseId: publicCourseId, isScrapped: !sender.isSelected)       /// UI Update 부분
+        delegate?.didUpdateScrapState(publicCourseId: publicCourseId, isScrapped: !sender.isSelected)       /// 코스 발견 UI Update 부분
+        marathonDelegate?.didUpdateMarathonScrapState(publicCourseId: publicCourseId, isScrapped: !sender.isSelected) // 마라톤 코스 UI Update 부분
         
-        /// 누른상태(true)에서 누르면 스크랩 취소(false) 하는 이벤트, 즉 -1
-        let toggle = sender.isSelected ? -1 : 1
-        self.scrapCount += toggle
-        self.scrapCountLabel.text = "\(self.scrapCount)"
         /// print("CourseDetailVC 스크랩 탭🔥publicCourseId=\(publicCourseId), isScrapped은 \(!sender.isSelected) 요렇게 변경 ")
     }
     
@@ -509,7 +504,7 @@ extension CourseDetailVC {
     private func getUploadedCourseDetail() {
         guard let publicCourseId = self.publicCourseId else { return }
         LoadingIndicator.showLoading()
-        PublicCourseProvider.request(.getUploadedCourseDetail(publicCourseId: publicCourseId)) { [weak self] response in
+        publicCourseProvider.request(.getUploadedCourseDetail(publicCourseId: publicCourseId)) { [weak self] response in
             guard let self = self else { return }
             LoadingIndicator.hideLoading()
             switch response {
@@ -575,7 +570,15 @@ extension CourseDetailVC {
             case .success(let result):
                 let status = result.statusCode
                 if 200..<300 ~= status {
-                    self.likeButton.isSelected.toggle()
+                    do {
+                        let responseDto = try result.map(BaseResponse<CourseDetailScrapCountDto>.self)
+                        guard let data = responseDto.data else { return }
+                        self.likeButton.isSelected.toggle()
+                        self.scrapCount = data.scrapCount
+                        self.scrapCountLabel.text = "\(self.scrapCount)"
+                    } catch {
+                        print(error.localizedDescription)
+                    }
                 }
                 if status >= 400 {
                     print("400 error")

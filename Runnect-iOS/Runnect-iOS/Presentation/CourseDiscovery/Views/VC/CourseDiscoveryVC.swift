@@ -339,6 +339,7 @@ extension CourseDiscoveryVC: UICollectionViewDelegateFlowLayout {
         if let marathonCell = mapCollectionView.cellForItem(at: IndexPath(item: 0, section: Section.marathonCourseList)) as? MarathonMapCollectionViewCell {
             let marathonCourseList = marathonCell.marathonCourseList
             let courseDetailVC = CourseDetailVC()
+            courseDetailVC.marathonDelegate = marathonCell
             let courseModel = marathonCourseList[indexPath.item]
             courseDetailVC.setCourseId(courseId: courseModel.courseId, publicCourseId: courseModel.id)
             courseDetailVC.hidesBottomBarWhenPushed = true

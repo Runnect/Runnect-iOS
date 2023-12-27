@@ -8,6 +8,10 @@
 import UIKit
 import Combine
 
+protocol MarathonScrapStateDelegate: AnyObject {
+    func didUpdateMarathonScrapState(publicCourseId: Int, isScrapped: Bool)
+}
+
 class CourseSelectionPublisher {
     static let shared = CourseSelectionPublisher()
     
@@ -67,6 +71,15 @@ extension MarathonMapCollectionViewCell {
     private func register() {
         marathonCollectionView.register(CourseListCVC.self,
                                         forCellWithReuseIdentifier: CourseListCVC.className)
+    }
+    
+    private func marathonReloadCellForCourse(publicCourseId: Int) {
+        print("✅ 2. \(publicCourseId)번 부분이 교체가 되는가")
+        if let index = marathonCourseList.firstIndex(where: { $0.id == publicCourseId }) {
+            let indexPath = IndexPath(item: index, section: 0)
+            marathonCollectionView.reloadItems(at: [indexPath])
+            print("✅ 3. \(indexPath) 마라톤 부분 스크랩 교체 되었음 \n reloadItems까지는 작동은 했음 여기서 안되면 코드가 잘 못 된것.")
+        }
     }
 }
 
@@ -146,7 +159,19 @@ extension MarathonMapCollectionViewCell: CourseListCVCDeleagte {
         
         let publicCourseId = self.marathonCourseList[index].id
         self.scrapCourse(publicCourseId: publicCourseId, scrapTF: wantsTolike)
+        
         print("마라톤에 들어온 index = \(index)")
+    }
+}
+
+extension MarathonMapCollectionViewCell: MarathonScrapStateDelegate {
+    func didUpdateMarathonScrapState(publicCourseId: Int, isScrapped: Bool) {
+        print("✅ 1. 마라톤 델리게이트 들어오는가 🫶🏻")
+        if let index = marathonCourseList.firstIndex(where: { $0.id == publicCourseId }) {
+            marathonCourseList[index].scrap = isScrapped
+            marathonReloadCellForCourse(publicCourseId: publicCourseId)
+            print("✅ 4. ‼️MarathonMapCollectionViewCell에서 작업 완료")
+        }
     }
 }
 
