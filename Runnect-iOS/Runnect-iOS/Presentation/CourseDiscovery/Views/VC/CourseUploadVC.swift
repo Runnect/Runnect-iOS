@@ -19,6 +19,8 @@ class CourseUploadVC: UIViewController {
     private var courseModel: Course?
     private let courseTitleMaxLength = 20
     
+    weak var delegate: UploadStateDelegate?
+    
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("코스 업로드")
@@ -332,7 +334,11 @@ extension CourseUploadVC {
             case .success(let result):
                 let status = result.statusCode
                 if 200..<300 ~= status {
-                    self.navigationController?.popToRootViewController(animated: true)
+                    delegate?.didUploadCourse()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        self.navigationController?.popToRootViewController(animated: true)
+                    }
+                    // uploadCourse 업로드 성공하면, 코스발견 CVC 맨 위에 데이터 추가
                 }
                 if status >= 400 {
                     print("400 error")

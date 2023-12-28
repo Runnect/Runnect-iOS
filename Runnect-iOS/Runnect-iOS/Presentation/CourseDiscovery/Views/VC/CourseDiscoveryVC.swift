@@ -17,6 +17,11 @@ protocol ScrapStateDelegate: AnyObject {
     // 코스 상세 에서 스크랩 누르면 코스발견에 해당 부분 스크랩 누르는 이벤트 전달
 }
 
+protocol UploadSuccessDelegate: AnyObject {
+    // 코스 업로드시, 코스 발견 피드 새로 고침
+    func didUploadSuccess()
+}
+
 final class CourseDiscoveryVC: UIViewController {
     
     // MARK: - Properties
@@ -118,8 +123,8 @@ extension CourseDiscoveryVC {
     
     private func setAddTarget() {
         self.searchButton.addTarget(self, action: #selector(pushToSearchVC), for: .touchUpInside)
-        self.uploadButton.addTarget(self, action: #selector(pushToDiscoveryVC), for: .touchUpInside)
-        self.miniUploadButton.addTarget(self, action: #selector(pushToDiscoveryVC), for: .touchUpInside)
+        self.uploadButton.addTarget(self, action: #selector(pushToCourseSelectVC), for: .touchUpInside)
+        self.miniUploadButton.addTarget(self, action: #selector(pushToCourseSelectVC), for: .touchUpInside)
     }
     
     private func setCombineEvent() {
@@ -137,6 +142,13 @@ extension CourseDiscoveryVC {
             print("\(indexPath) 부분 스크랩 교체 되었음")
         }
     }
+    
+    func refresh() {
+        print("✅ refresh ✅")
+        pageNo = 1
+        self.courseList = []
+        self.getCourseData(pageNo: pageNo)
+    }
 }
 
 // MARK: - @objc Function
@@ -147,13 +159,14 @@ extension CourseDiscoveryVC {
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
     
-    @objc private func pushToDiscoveryVC() {
+    @objc private func pushToCourseSelectVC() {
         guard UserManager.shared.userType != .visitor else {
             self.showToastOnWindow(text: "러넥트에 가입하면 코스를 업로드할 수 있어요.")
             return
         }
         
         let nextVC = MyCourseSelectVC()
+        nextVC.delegate = self
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }
@@ -275,6 +288,7 @@ extension CourseDiscoveryVC: UICollectionViewDelegate, UICollectionViewDataSourc
         }
     }
     
+    // 최신순, 스크랩순 막 연달아 누르면 앱 터짐..
     private func courseListCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath) as? CourseListCVC else { return UICollectionViewCell() }
         cell.setCellType(type: .all)
@@ -437,11 +451,26 @@ extension CourseDiscoveryVC: ScrapStateDelegate {
     }
     
     func didRemoveCourse(publicCourseId: Int) {
-        if let index = courseList.firstIndex(where: { $0.id == publicCourseId }) {
-            self.courseList.remove(at: index)
-            self.mapCollectionView.reloadData()
-            print("didRemoveCourse= 삭제되었음\n")
-        }
+//        if let index = courseList.firstIndex(where: { $0.id == publicCourseId }) {
+//            courseList.remove(at: index)
+//            self.mapCollectionView.reloadData()
+//        }
+        // ⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️
+        // 원래 해당하는 데이터(index) 만 가지고, 그 데이터 삭제 후 courseList를 받아야하는데, 삭제가 이미되어버려서 if let index 부분이 안들어옴
+        // 왜??? 이미 데이터는 삭제가 되어서 $0.id 랑 publicCourseId 가 같은게 매치가 될 수 없어!!!
+        // 네트워크 성공하기 전에 didRemoveCourse(publicCourseId:) 를 호출 해야 해당 부분 확인하고 지운다음, 서버측에서 지워야 1페이지부터 시작 안하고 지울 수 있음
+        // ⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️
+        self.refresh()
+    }
+}
+
+// MARK: - didUploadCourse
+
+extension CourseDiscoveryVC: UploadSuccessDelegate {
+    func didUploadSuccess() {
+        print("여기서 didUploadSuccess 함수 호출\n MyCourseSelectVC -> CourseDiscoveryVC 이벤트 전달")
+        self.refresh()
+        print("코스 발견 피드 새로고침 완료 되었음")
     }
 }
 
