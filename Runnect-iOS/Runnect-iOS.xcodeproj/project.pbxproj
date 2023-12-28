@@ -21,7 +21,9 @@
 		712F661D2A7B7BAB00D9539B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712F661C2A7B7BAB00D9539B /* Config.swift */; };
 		7136BF8A2AF921A900679364 /* CustomBottomSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7136BF892AF921A900679364 /* CustomBottomSheetVC.swift */; };
 		713A98F02B29DD9900189B3C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 713A98EF2B29DD9900189B3C /* GoogleService-Info.plist */; };
+		715D36E82B2CC64000CAA9D6 /* MyUploadedCourseResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715D36E72B2CC64000CAA9D6 /* MyUploadedCourseResponseDto.swift */; };
 		717916DA2B13613B009CEF97 /* MarathonListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717916D92B13613B009CEF97 /* MarathonListResponseDto.swift */; };
+		71802C5C2B3364C2008DBCEE /* CourseDetailScrapCountDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71802C5B2B3364C2008DBCEE /* CourseDetailScrapCountDto.swift */; };
 		71BAD06A2B24CECC0061E31D /* UserProfileDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BAD0692B24CECC0061E31D /* UserProfileDto.swift */; };
 		71BAD06C2B24D1F70061E31D /* UserProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BAD06B2B24D1F70061E31D /* UserProfileVC.swift */; };
 		71F7804E2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F7804D2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift */; };
@@ -191,7 +193,9 @@
 		712F661C2A7B7BAB00D9539B /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		7136BF892AF921A900679364 /* CustomBottomSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheetVC.swift; sourceTree = "<group>"; };
 		713A98EF2B29DD9900189B3C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		715D36E72B2CC64000CAA9D6 /* MyUploadedCourseResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyUploadedCourseResponseDto.swift; sourceTree = "<group>"; };
 		717916D92B13613B009CEF97 /* MarathonListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonListResponseDto.swift; sourceTree = "<group>"; };
+		71802C5B2B3364C2008DBCEE /* CourseDetailScrapCountDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailScrapCountDto.swift; sourceTree = "<group>"; };
 		71BAD0692B24CECC0061E31D /* UserProfileDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileDto.swift; sourceTree = "<group>"; };
 		71BAD06B2B24D1F70061E31D /* UserProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileVC.swift; sourceTree = "<group>"; };
 		71F7804D2B0893B600B53253 /* MarathonTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarathonTitleCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -525,6 +529,7 @@
 				A3305A96296EF58C000B1A10 /* GoalRewardInfoDto.swift */,
 				CEFA9A2E29FC263700F2D0CF /* UserDeleteResponseDto.swift */,
 				71BAD0692B24CECC0061E31D /* UserProfileDto.swift */,
+				715D36E72B2CC64000CAA9D6 /* MyUploadedCourseResponseDto.swift */,
 			);
 			path = MyPageDto;
 			sourceTree = "<group>";
@@ -870,6 +875,7 @@
 			isa = PBXGroup;
 			children = (
 				CE4942AC296FCD2300736701 /* UploadedCourseDetailResponseDto.swift */,
+				71802C5B2B3364C2008DBCEE /* CourseDetailScrapCountDto.swift */,
 			);
 			path = ResponseDto;
 			sourceTree = "<group>";
@@ -1403,6 +1409,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE40BB20296805F70030ABCA /* NetworkResult.swift in Sources */,
+				715D36E82B2CC64000CAA9D6 /* MyUploadedCourseResponseDto.swift in Sources */,
 				CE55BC11296D4EA600E8CD69 /* RunningRecordRequestDto.swift in Sources */,
 				CE665604295D91B100C64E12 /* makeAlert.swift in Sources */,
 				A3BC2F2F2962C40A00198261 /* UploadedCourseInfoVC.swift in Sources */,
@@ -1550,6 +1557,7 @@
 				CEB8416E2962C45300BF8080 /* LocationSearchResultTVC.swift in Sources */,
 				CE102C4829DB1D6B00E23E69 /* GetNewTokenResponseDto.swift in Sources */,
 				CE6655CA295D84DD00C64E12 /* UserDefaultKeyList.swift in Sources */,
+				71802C5C2B3364C2008DBCEE /* CourseDetailScrapCountDto.swift in Sources */,
 				712F661D2A7B7BAB00D9539B /* Config.swift in Sources */,
 				23EE06CB2AC2AF3E00CB3FF8 /* KakaoAddressSearchingResponseDto.swift in Sources */,
 				CE6655F2295D894D00C64E12 /* UIView+.swift in Sources */,
@@ -1696,10 +1704,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Runnect-iOS/Runnect-iOSDebug.entitlements";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9K86FQHDLU;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.0.6;
+				DEVELOPMENT_TEAM = 8Q4H7X3Q58;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Runnect-iOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Runnect;
@@ -1716,11 +1724,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = "";
+				MARKETING_VERSION = 1.0.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.runnect.Runnect-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.runnect.Runnect-iOS";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1738,10 +1745,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Runnect-iOS/Runnect-iOS.entitlements";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9K86FQHDLU;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.0.6;
+				DEVELOPMENT_TEAM = 8Q4H7X3Q58;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Runnect-iOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Runnect;
@@ -1758,11 +1765,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = "";
+				MARKETING_VERSION = 1.0.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.runnect.Runnect-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.runnect.Runnect-iOS";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

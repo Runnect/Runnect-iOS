@@ -340,7 +340,7 @@ extension UploadedCourseInfoVC {
                 let status = result.statusCode
                 if 200..<300 ~= status {
                     do {
-                        let responseDto = try result.map(BaseResponse<PickedMapListResponseDto>.self)
+                        let responseDto = try result.map(BaseResponse<MyUploadedCourseResponseDto>.self)
                         guard let data = responseDto.data else { return }
                         self.setData(courseList: data.publicCourses)
                         UploadedCourseInfoCollectionView.reloadData()
