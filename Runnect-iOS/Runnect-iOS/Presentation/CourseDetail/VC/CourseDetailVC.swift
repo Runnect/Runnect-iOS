@@ -144,6 +144,7 @@ final class CourseDetailVC: UIViewController {
         setLayout()
         setAddTarget()
         setRefreshControl()
+        analyze()
         self.hideTabBar(wantsToHide: true)
     }
     
@@ -660,5 +661,11 @@ extension CourseDetailVC {
                 self.showToast(message: "없는 명령어 입니다.")
             }
         }
+    }
+}
+
+extension CourseDetailVC {
+    private func analyze() {
+        GAManager.shared.logEvent(eventType: .screen(screenName: "코스 상세 페이지"))
     }
 }

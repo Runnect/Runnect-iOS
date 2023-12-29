@@ -16,11 +16,14 @@ final class GAManager {
     
     enum EventType {
         case screen(screenName: String)
+        case button(buttonName: String)
         
         var eventName: String {
             switch self {
             case .screen:
                 return "screen"
+            case .button:
+                return "button"
             }
         }
         
@@ -28,6 +31,8 @@ final class GAManager {
             switch self {
             case .screen(let screenName):
                 ["screen": screenName]
+            case .button(let buttonName):
+                ["button": buttonName]
             }
         }
     }
