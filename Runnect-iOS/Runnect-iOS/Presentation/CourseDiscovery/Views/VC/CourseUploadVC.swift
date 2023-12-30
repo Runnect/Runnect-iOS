@@ -88,7 +88,17 @@ extension CourseUploadVC {
         
         guard let distance = courseModel.distance else { return }
         self.distanceInfoView.setDescriptionText(description: "\(String(distance))km")
-        self.departureInfoView.setDescriptionText(description: "\(courseModel.departure.region) \(courseModel.departure.city)")
+        
+        let departureString = [
+            courseModel.departure.region,
+            courseModel.departure.city,
+            courseModel.departure.town,
+            courseModel.departure.name
+        ]
+        .compactMap { $0 } // 옵셔널 언래핑
+        .joined(separator: " ")
+        
+        self.departureInfoView.setDescriptionText(description: departureString)
     }
     
     private func setAddTarget() {
