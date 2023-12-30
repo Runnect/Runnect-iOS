@@ -309,8 +309,17 @@ extension CourseDetailVC {
         
         guard let distance = model.publicCourse.distance else { return }
         self.courseDistanceInfoView.setDescriptionText(description: "\(distance)km")
-        let location = "\(model.publicCourse.departure.region) \(model.publicCourse.departure.city)"
-        self.courseDepartureInfoView.setDescriptionText(description: location)
+        
+        let locate = [
+            model.publicCourse.departure.region,
+            model.publicCourse.departure.city,
+            model.publicCourse.departure.town,
+            model.publicCourse.departure.name
+        ]
+        .compactMap { $0 } // 옵셔널 언래핑
+        .joined(separator: " ")
+        
+        self.courseDepartureInfoView.setDescriptionText(description: locate)
         self.courseExplanationTextView.text = model.publicCourse.description
     }
     
