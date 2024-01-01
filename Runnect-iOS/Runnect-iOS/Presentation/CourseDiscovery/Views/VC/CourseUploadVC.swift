@@ -95,7 +95,7 @@ extension CourseUploadVC {
             courseModel.departure.town,
             courseModel.departure.name
         ]
-        .compactMap { $0 } // 옵셔널 언래핑
+        .compactMap { $0 }
         .joined(separator: " ")
         
         self.departureInfoView.setDescriptionText(description: departureString)

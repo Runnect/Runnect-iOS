@@ -316,7 +316,7 @@ extension CourseDetailVC {
             model.publicCourse.departure.town,
             model.publicCourse.departure.name
         ]
-        .compactMap { $0 } // 옵셔널 언래핑
+        .compactMap { $0 }
         .joined(separator: " ")
         
         self.courseDepartureInfoView.setDescriptionText(description: locate)
