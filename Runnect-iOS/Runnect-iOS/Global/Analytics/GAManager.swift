@@ -30,16 +30,14 @@ final class GAManager {
         var parameters: [String: Any]? {
             switch self {
             case .screen(let screenName):
-                ["screen": screenName]
+                return ["screen": screenName]
             case .button(let buttonName):
-                ["button": buttonName]
+                return ["button": buttonName]
             }
         }
     }
     
     func logEvent(eventType: EventType) {
         Analytics.logEvent(eventType.eventName, parameters: eventType.parameters)
-        print("언제 찍히는거지?")
     }
-    
 }
