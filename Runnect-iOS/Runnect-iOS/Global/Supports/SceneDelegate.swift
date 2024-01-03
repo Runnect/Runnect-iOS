@@ -33,6 +33,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = window
         window.makeKeyAndVisible()
         
+        analyze()
+        
     }
     
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
@@ -119,6 +121,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
         }
         return nil
+    }
+}
+
+extension SceneDelegate {
+    private func analyze() {
+        GAManager.shared.logEvent(eventType: .screen(screenName: Event.View.viewHome))
     }
 }
 

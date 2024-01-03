@@ -123,6 +123,8 @@ extension SignInSocialLoginVC {
     @objc private func visitorButtonDidTap() {
         UserManager.shared.userType = .visitor
         pushToTabBarController()
+        
+        analyzeVisitorMode()
     }
 }
 
@@ -144,6 +146,10 @@ extension SignInSocialLoginVC {
         let tabBarController = TabBarController()
         guard let window = self.view.window else { return }
         ViewControllerUtils.setRootViewController(window: window, viewController: tabBarController, withAnimation: true)
+    }
+    
+    private func analyzeVisitorMode() {
+        GAManager.shared.logEvent(eventType: .button(buttonName: Event.Button.clickVisitor))
     }
 }
 

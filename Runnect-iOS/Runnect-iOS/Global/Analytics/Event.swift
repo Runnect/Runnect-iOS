@@ -17,6 +17,7 @@ struct Event {
         // 로그인
         static let clickAppleLogin = "click_apple_login"
         static let clickKaKaoLogin = "click_kakao_login"
+        static let clickVisitor = "click_visitor"
         
         // 탭바
         static let clickCourseDrawingTabBar = "click_course_drawing_tab_bar"
