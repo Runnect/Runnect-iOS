@@ -86,6 +86,7 @@ extension SignInSocialLoginVC {
                     print(error)
                 } else {
                     print("카카오 톡으로 로그인 성공")
+                    self.kakaoLoginSuccessAnalyze()
                     guard let oauthToken = oauthToken else { return }
                     UserManager.shared.signIn(token: oauthToken.accessToken, provider: "KAKAO") { [weak self] result in
                         switch result {
@@ -221,7 +222,7 @@ extension SignInSocialLoginVC: ASAuthorizationControllerPresentationContextProvi
                     
                     switch result {
                     case .success(let type):
-                        
+                        self?.appleLoginSuccessAnalyze()
                         type == "Signup" ? self?.pushToNickNameSetUpVC() : self?.pushToTabBarController()
                     case .failure(let error):
                         print(error)
@@ -243,5 +244,13 @@ extension SignInSocialLoginVC: ASAuthorizationControllerPresentationContextProvi
 extension SignInSocialLoginVC {
     private func analyze() {
         GAManager.shared.logEvent(eventType: .screen(screenName: "소셜 로그인 화면"))
+    }
+    
+    private func kakaoLoginSuccessAnalyze() {
+        GAManager.shared.logEvent(eventType: .button(buttonName: Event.Button.clickKaKaoLogin))
+    }
+    
+    private func appleLoginSuccessAnalyze() {
+        GAManager.shared.logEvent(eventType: .button(buttonName: Event.Button.clickAppleLogin))
     }
 }
