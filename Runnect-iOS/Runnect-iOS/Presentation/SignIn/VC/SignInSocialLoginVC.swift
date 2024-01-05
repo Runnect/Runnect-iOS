@@ -243,7 +243,7 @@ extension SignInSocialLoginVC: ASAuthorizationControllerPresentationContextProvi
 
 extension SignInSocialLoginVC {
     private func analyze() {
-        GAManager.shared.logEvent(eventType: .screen(screenName: Event.View.viewHome))
+        GAManager.shared.logEvent(eventType: .screen(screenName: Event.View.viewSocialLogin))
     }
     
     private func kakaoLoginSuccessAnalyze() {

@@ -10,6 +10,7 @@ import Foundation
 struct Event {
     struct View {
         static let viewHome = "view_home" // 앱 실행
+        static let viewSocialLogin = "view_social_login"
     }
     
     struct Button {
