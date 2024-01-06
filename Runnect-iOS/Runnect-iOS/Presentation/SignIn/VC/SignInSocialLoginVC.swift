@@ -86,7 +86,7 @@ extension SignInSocialLoginVC {
                     print(error)
                 } else {
                     print("카카오 톡으로 로그인 성공")
-                    analyze(buttonName: GAEvent.Button.clickKaKaoLogin)
+                    self.analyze(buttonName: GAEvent.Button.clickKaKaoLogin)
                     guard let oauthToken = oauthToken else { return }
                     UserManager.shared.signIn(token: oauthToken.accessToken, provider: "KAKAO") { [weak self] result in
                         switch result {
