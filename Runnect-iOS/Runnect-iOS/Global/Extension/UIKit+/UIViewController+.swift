@@ -85,3 +85,13 @@ extension UIViewController {
         Toast.show(message: text, view: window, safeAreaBottomInset: self.safeAreaBottomInset())
     }
 }
+
+extension UIViewController {
+    func analyze(screenName: String) {
+        GAManager.shared.logEvent(eventType: .screen(screenName: screenName))
+    }
+    
+    func analyze(buttonName: String) {
+        GAManager.shared.logEvent(eventType: .button(buttonName: buttonName))
+    }
+}

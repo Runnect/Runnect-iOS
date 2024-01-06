@@ -32,6 +32,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = nav
         self.window = window
         window.makeKeyAndVisible()
+        analyze(screenName: GAEvent.View.viewHome)
         
     }
     
@@ -48,7 +49,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                             let window = UIWindow(windowScene: windowScene)
                             
                             let courseDetailVC = CourseDetailVC()
-//                            courseDetailVC.setPublicCourseId(publicCourseId: Int(courseId))
                             courseDetailVC.getUploadedCourseDetail(courseId: Int(courseId))
                             
                             let tabBarController = TabBarController()
@@ -61,7 +61,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                             window.rootViewController = navigationController
                             window.makeKeyAndVisible()
                             self.window = window
-                          
+                            
                         }
                     }
                 }
@@ -105,7 +105,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
+    
     func handleDynamicLink(_ dynamicLink: DynamicLink?) -> String? {
         if let dynamicLink = dynamicLink, let url = dynamicLink.url,
            let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
@@ -113,12 +113,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             for item in queryItems {
                 if item.name == "courseId", let courseId = item.value {
                     // 동적링크 핸들링 하여 courseId 추출
-
+                    
                     return courseId
                 }
             }
         }
         return nil
+    }
+}
+
+extension SceneDelegate {
+    private func analyze(screenName: String) {
+        GAManager.shared.logEvent(eventType: .screen(screenName: screenName))
     }
 }
 

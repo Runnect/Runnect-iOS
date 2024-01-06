@@ -144,6 +144,7 @@ final class CourseDetailVC: UIViewController {
         setLayout()
         setAddTarget()
         setRefreshControl()
+        analyze(screenName: "코스 상세 페이지")
         self.hideTabBar(wantsToHide: true)
     }
     
@@ -284,10 +285,6 @@ extension CourseDetailVC {
 extension CourseDetailVC {
     func setCourseId(courseId: Int?, publicCourseId: Int?) {
         self.courseId = courseId
-        self.publicCourseId = publicCourseId
-    }
-    
-    func setPublicCourseId(publicCourseId: Int?) { // 추가한 것
         self.publicCourseId = publicCourseId
     }
     
