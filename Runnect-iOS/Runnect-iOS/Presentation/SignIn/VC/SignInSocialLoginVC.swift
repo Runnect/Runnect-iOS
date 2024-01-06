@@ -55,6 +55,7 @@ final class SignInSocialLoginVC: UIViewController {
         setNavigationBar()
         setLayout()
         setAddTarget()
+        analyze(screenName: GAEvent.View.viewSocialLogin)
     }
 }
 
@@ -236,6 +237,10 @@ extension SignInSocialLoginVC: ASAuthorizationControllerPresentationContextProvi
 }
 
 extension SignInSocialLoginVC {
+    private func analyze(screenName: String) {
+        GAManager.shared.logEvent(eventType: .screen(screenName: screenName))
+    }
+    
     private func analyze(buttonName: String) {
         GAManager.shared.logEvent(eventType: .button(buttonName: buttonName))
     }
