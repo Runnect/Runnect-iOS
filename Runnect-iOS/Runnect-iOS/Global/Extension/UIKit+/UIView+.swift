@@ -38,10 +38,9 @@ extension UIView {
     }
     
     /// view에 tap gesture를 연결해주는 함수
-    func gesture(_ gestureType: GestureType = .tap()) ->
-        GesturePublisher {
-            .init(view: self, gestureType: gestureType)
-        }
+    func gesture(_ gestureType: GestureType = .tap()) -> GesturePublisher {
+        .init(view: self, gestureType: gestureType)
+    }
 }
 
 class XibView: UIView {
@@ -53,5 +52,15 @@ class XibView: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         addSubviewFromNib(view: self)
+    }
+}
+
+extension UIView {
+    func analyze(screenName: String) {
+        GAManager.shared.logEvent(eventType: .screen(screenName: screenName))
+    }
+    
+    func analyze(buttonName: String) {
+        GAManager.shared.logEvent(eventType: .button(buttonName: buttonName))
     }
 }

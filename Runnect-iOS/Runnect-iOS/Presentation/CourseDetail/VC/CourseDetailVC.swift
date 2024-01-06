@@ -144,7 +144,7 @@ final class CourseDetailVC: UIViewController {
         setLayout()
         setAddTarget()
         setRefreshControl()
-        analyze()
+        analyze(screenName: "코스 상세 페이지")
         self.hideTabBar(wantsToHide: true)
     }
     
@@ -285,10 +285,6 @@ extension CourseDetailVC {
 extension CourseDetailVC {
     func setCourseId(courseId: Int?, publicCourseId: Int?) {
         self.courseId = courseId
-        self.publicCourseId = publicCourseId
-    }
-    
-    func setPublicCourseId(publicCourseId: Int?) { // 추가한 것
         self.publicCourseId = publicCourseId
     }
     
@@ -661,11 +657,5 @@ extension CourseDetailVC {
                 self.showToast(message: "없는 명령어 입니다.")
             }
         }
-    }
-}
-
-extension CourseDetailVC {
-    private func analyze() {
-        GAManager.shared.logEvent(eventType: .screen(screenName: "코스 상세 페이지"))
     }
 }
