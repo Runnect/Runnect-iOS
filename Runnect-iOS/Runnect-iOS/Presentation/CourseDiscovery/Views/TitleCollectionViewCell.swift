@@ -115,12 +115,12 @@ extension TitleCollectionViewCell {
         
         dateSortButton.snp.makeConstraints {
             $0.top.equalTo(divideView.snp.bottom).offset(54)
-            $0.leading.equalTo(titleStackView.snp.trailing).offset(57)
+            $0.trailing.equalTo(scrapSortButton.snp.leading).offset(-16)
         }
         
         scrapSortButton.snp.makeConstraints {
             $0.top.equalTo(divideView.snp.bottom).offset(54)
-            $0.leading.equalTo(dateSortButton.snp.trailing).offset(8)
+            $0.trailing.equalToSuperview().offset(-16)
         }
     }
 }

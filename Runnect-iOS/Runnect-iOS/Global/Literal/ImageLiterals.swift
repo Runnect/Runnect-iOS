@@ -84,7 +84,6 @@ enum ImageLiterals {
     static var imgBanner1: UIImage { .load(named: "img_banner1") }
     static var imgBanner2: UIImage { .load(named: "img_banner2") }
     static var imgBanner3: UIImage { .load(named: "img_banner3") }
-    static var imgBanner4: UIImage { .load(named: "img_banner4") }
     static var imgAppleLogin: UIImage { .load(named: "img_apple_login")}
     static var imgKakaoLogin: UIImage { .load(named: "img_kakao_login")}
 }

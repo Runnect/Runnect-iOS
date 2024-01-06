@@ -31,7 +31,7 @@ final class AdImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegat
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
     
     // MARK: - UI Components
-    var imgBanners: [UIImage] = [ImageLiterals.imgBanner1, ImageLiterals.imgBanner2]
+    var imgBanners: [UIImage] = [ImageLiterals.imgBanner3, ImageLiterals.imgBanner1, ImageLiterals.imgBanner2]
     var currentPage: Int = 0
     private var timer: Timer?
     

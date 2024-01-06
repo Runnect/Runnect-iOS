@@ -425,7 +425,7 @@ extension CourseDetailVC {
         
         scrapCountLabel.snp.makeConstraints {
             $0.top.equalTo(likeButton.snp.bottom).offset(2)
-            $0.leading.equalToSuperview().offset(26)
+            $0.leading.equalToSuperview().offset(28)
             $0.width.equalTo(20)
             $0.height.equalTo(13)
         }
