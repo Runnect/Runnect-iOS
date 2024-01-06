@@ -10,8 +10,8 @@ import Foundation
 // MARK: - PickedMapListResponseDto
 
 struct PickedMapListResponseDto: Codable {
-    let totalPageSize: Int
-    let isEnd: Bool
+    let totalPageSize: Int?
+    let isEnd: Bool?
     let publicCourses: [PublicCourse]
 }
 

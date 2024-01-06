@@ -490,8 +490,11 @@ extension CourseDiscoveryVC {
                         do {
                             let responseDto = try result.map(BaseResponse<PickedMapListResponseDto>.self)
                             guard let data = responseDto.data else { return }
-                            self.totalPageNum = data.totalPageSize
-                            self.isEnd = data.isEnd
+                            
+                            guard let totalPageNum = data.totalPageSize, let isEnd = data.isEnd else { return }
+                            self.totalPageNum = totalPageNum
+                            self.isEnd = isEnd
+                            
                             self.courseList.append(contentsOf: data.publicCourses)
                             self.mapCollectionView.reloadData()
                             print("pageNo= \(pageNo), isEnd= \(self.isEnd), totalPageNum= \(self.totalPageNum)")
