@@ -18,9 +18,9 @@ import KakaoSDKCommon
 final class SignInSocialLoginVC: UIViewController {
     
     // MARK: - Properties
-
+    
     let screenWidth = UIScreen.main.bounds.width
-
+    
     // MARK: - UI Components
     
     private let backgroundImageView = UIImageView().then {
@@ -55,7 +55,6 @@ final class SignInSocialLoginVC: UIViewController {
         setNavigationBar()
         setLayout()
         setAddTarget()
-        analyze()
     }
 }
 
@@ -70,7 +69,7 @@ extension SignInSocialLoginVC {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
         request.requestedScopes = [.fullName, .email]
-                
+        
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
@@ -86,7 +85,7 @@ extension SignInSocialLoginVC {
                     print(error)
                 } else {
                     print("카카오 톡으로 로그인 성공")
-                    self.kakaoLoginSuccessAnalyze()
+                    self.analyze(buttonName: GAEvent.Button.clickKaKaoLogin)
                     guard let oauthToken = oauthToken else { return }
                     UserManager.shared.signIn(token: oauthToken.accessToken, provider: "KAKAO") { [weak self] result in
                         switch result {
@@ -124,8 +123,7 @@ extension SignInSocialLoginVC {
     @objc private func visitorButtonDidTap() {
         UserManager.shared.userType = .visitor
         pushToTabBarController()
-        
-        analyzeVisitorMode()
+        analyze(buttonName: GAEvent.Button.clickVisitor)
     }
 }
 
@@ -147,10 +145,6 @@ extension SignInSocialLoginVC {
         let tabBarController = TabBarController()
         guard let window = self.view.window else { return }
         ViewControllerUtils.setRootViewController(window: window, viewController: tabBarController, withAnimation: true)
-    }
-    
-    private func analyzeVisitorMode() {
-        GAManager.shared.logEvent(eventType: .button(buttonName: Event.Button.clickVisitor))
     }
 }
 
@@ -206,32 +200,32 @@ extension SignInSocialLoginVC: ASAuthorizationControllerPresentationContextProvi
     
     /// Apple ID 연동 성공 시
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-            switch authorization.credential {
-                /// Apple ID
-            case let appleIDCredential as ASAuthorizationAppleIDCredential:
+        switch authorization.credential {
+            /// Apple ID
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            
+            /// 계정 정보 가져오기
+            let userIdentifier = appleIDCredential.user
+            let idToken = appleIDCredential.identityToken!
+            guard let tokeStr = String(data: idToken, encoding: .utf8) else { return }
+            
+            print("User ID : \(userIdentifier)")
+            print("token : \(String(describing: tokeStr))")
+            
+            UserManager.shared.signIn(token: tokeStr, provider: "APPLE") { [weak self] result in
                 
-                /// 계정 정보 가져오기
-                let userIdentifier = appleIDCredential.user
-                let idToken = appleIDCredential.identityToken!
-                guard let tokeStr = String(data: idToken, encoding: .utf8) else { return }
-             
-                print("User ID : \(userIdentifier)")
-                print("token : \(String(describing: tokeStr))")
-                
-                UserManager.shared.signIn(token: tokeStr, provider: "APPLE") { [weak self] result in
+                switch result {
+                case .success(let type):
+                    self?.analyze(buttonName: GAEvent.Button.clickAppleLogin)
+                    type == "Signup" ? self?.pushToNickNameSetUpVC() : self?.pushToTabBarController()
+                case .failure(let error):
+                    print(error)
+                    self?.showNetworkFailureToast()
                     
-                    switch result {
-                    case .success(let type):
-                        self?.appleLoginSuccessAnalyze()
-                        type == "Signup" ? self?.pushToNickNameSetUpVC() : self?.pushToTabBarController()
-                    case .failure(let error):
-                        print(error)
-                        self?.showNetworkFailureToast()
-
-                    }
                 }
-            default:
-                break
+            }
+        default:
+            break
         }
     }
     
@@ -242,15 +236,7 @@ extension SignInSocialLoginVC: ASAuthorizationControllerPresentationContextProvi
 }
 
 extension SignInSocialLoginVC {
-    private func analyze() {
-        GAManager.shared.logEvent(eventType: .screen(screenName: Event.View.viewSocialLogin))
-    }
-    
-    private func kakaoLoginSuccessAnalyze() {
-        GAManager.shared.logEvent(eventType: .button(buttonName: Event.Button.clickKaKaoLogin))
-    }
-    
-    private func appleLoginSuccessAnalyze() {
-        GAManager.shared.logEvent(eventType: .button(buttonName: Event.Button.clickAppleLogin))
+    private func analyze(buttonName: String) {
+        GAManager.shared.logEvent(eventType: .button(buttonName: buttonName))
     }
 }

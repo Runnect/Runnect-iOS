@@ -14,7 +14,7 @@ final class GAManager {
     
     private init() {}
     
-    enum EventType {
+    enum GAEventType {
         case screen(screenName: String)
         case button(buttonName: String)
         
@@ -37,7 +37,7 @@ final class GAManager {
         }
     }
     
-    func logEvent(eventType: EventType) {
+    func logEvent(eventType: GAEventType) {
         Analytics.logEvent(eventType.eventName, parameters: eventType.parameters)
     }
 }

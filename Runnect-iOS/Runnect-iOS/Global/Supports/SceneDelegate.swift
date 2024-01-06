@@ -126,7 +126,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 extension SceneDelegate {
     private func analyze() {
-        GAManager.shared.logEvent(eventType: .screen(screenName: Event.View.viewHome))
+        GAManager.shared.logEvent(eventType: .screen(screenName: GAEvent.View.viewHome))
     }
 }
 

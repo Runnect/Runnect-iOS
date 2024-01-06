@@ -1,5 +1,5 @@
 //
-//  Event.swift
+//  GAEvent.swift
 //  Runnect-iOS
 //
 //  Created by 이명진 on 1/2/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Event {
+struct GAEvent {
     struct View {
         static let viewHome = "view_home" // 앱 실행
         static let viewSocialLogin = "view_social_login"
@@ -49,7 +49,7 @@ struct Event {
         static let clickUserProfile = "click_user_profile"
         static let clickScrapPageStartCourse = "click_scrap_page_start_course"
         static let clickUploadCourse = "click_upload_course"
-
+        
         /// 보관함
         static let clickMyStorageCourseStart = "click_my_storage_course_start"
         static let clickMyStorageTryModify = "click_my_storage_try_modify"
