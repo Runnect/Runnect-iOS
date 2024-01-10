@@ -150,6 +150,8 @@ extension CourseListCVC {
 extension CourseListCVC {
     private func setUI() {
         self.contentView.backgroundColor = .w1
+        self.courseImageView.layer.borderColor = UIColor(hex: "EAEAEA").cgColor /// 모든 코스 테두리 1px 요구사항
+        self.courseImageView.layer.borderWidth = 1.0
     }
     
     private func setLayout() {

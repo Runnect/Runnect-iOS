@@ -207,16 +207,15 @@ extension CourseDiscoveryVC {
         }
         
         uploadButton.snp.makeConstraints { make in
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(22)
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(21)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(20)
             make.height.equalTo(40)
             make.width.equalTo(92)
         }
         
         miniUploadButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(22)
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(22)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(20)
-            make.width.height.equalTo(41)
         }
         
         emptyView.snp.makeConstraints { make in
