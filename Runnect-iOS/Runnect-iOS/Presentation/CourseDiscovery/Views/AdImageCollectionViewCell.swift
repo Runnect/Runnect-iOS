@@ -31,7 +31,7 @@ final class AdImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegat
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
     
     // MARK: - UI Components
-    var imgBanners: [UIImage] = [ImageLiterals.imgBanner3, ImageLiterals.imgBanner1, ImageLiterals.imgBanner2]
+    var imgBanners: [UIImage] = [ImageLiterals.imgBanner1, ImageLiterals.imgBanner2, ImageLiterals.imgBanner3]
     var currentPage: Int = 0
     private var timer: Timer?
     
@@ -128,19 +128,20 @@ extension AdImageCollectionViewCell: UICollectionViewDelegate, UICollectionViewD
         imageView.isUserInteractionEnabled = true
         cell.contentView.addSubviews(imageView)
         
-        if indexPath.item == 0 {
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(firstCellTapped(_:)))
-            imageView.addGestureRecognizer(tapGesture)
-        }
+        // 터치 이벤트 임시 제거
+        //        if indexPath.item == 0 {
+        //            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(firstCellTapped(_:)))
+        //            imageView.addGestureRecognizer(tapGesture)
+        //        }
         return cell
     }
     // 첫 번째 셀 클릭 이벤트 핸들러
-    @objc func firstCellTapped(_ gesture: UITapGestureRecognizer) {
-        // Safari 링크로 연결
-        if let url = URL(string: "https://docs.google.com/forms/d/1cpgZHNNi1kIvi2ZCwCIcMJcI1PkHBz9a5vWJb7FfIbg/edit") {
-            UIApplication.shared.open(url)
-        }
-    }
+    //    @objc func firstCellTapped(_ gesture: UITapGestureRecognizer) {
+    //        // Safari 링크로 연결
+    //        if let url = URL(string: "https://docs.google.com/forms/d/1cpgZHNNi1kIvi2ZCwCIcMJcI1PkHBz9a5vWJb7FfIbg/edit") {
+    //            UIApplication.shared.open(url)
+    //        }
+    //    }
     
 }
 

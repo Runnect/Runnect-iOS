@@ -207,7 +207,7 @@ extension CourseDiscoveryVC {
         }
         
         uploadButton.snp.makeConstraints { make in
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(22)
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(21)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(20)
             make.height.equalTo(40)
             make.width.equalTo(92)
@@ -216,7 +216,6 @@ extension CourseDiscoveryVC {
         miniUploadButton.snp.makeConstraints { make in
             make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(22)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(20)
-            make.width.height.equalTo(41)
         }
         
         emptyView.snp.makeConstraints { make in
@@ -490,8 +489,11 @@ extension CourseDiscoveryVC {
                         do {
                             let responseDto = try result.map(BaseResponse<PickedMapListResponseDto>.self)
                             guard let data = responseDto.data else { return }
-                            self.totalPageNum = data.totalPageSize
-                            self.isEnd = data.isEnd
+                            
+                            guard let totalPageNum = data.totalPageSize, let isEnd = data.isEnd else { return }
+                            self.totalPageNum = totalPageNum
+                            self.isEnd = isEnd
+                            
                             self.courseList.append(contentsOf: data.publicCourses)
                             self.mapCollectionView.reloadData()
                             print("pageNo= \(pageNo), isEnd= \(self.isEnd), totalPageNum= \(self.totalPageNum)")
