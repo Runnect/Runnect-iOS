@@ -29,7 +29,7 @@ enum GestureType {
             return pinchGesture
         case let .edge(edgePanGesture):
             return edgePanGesture
-       }
+        }
     }
 }
 
@@ -43,9 +43,10 @@ extension UIGestureRecognizer {
             self.view = view
             self.gestureType = gestureType
         }
-        func receive<S>(subscriber: S) where S : Subscriber,
-        GesturePublisher.Failure == S.Failure, GesturePublisher.Output
-        == S.Input {
+        
+        func receive<S>(subscriber: S) where S: Subscriber,
+                                             GesturePublisher.Failure == S.Failure,
+                                             GesturePublisher.Output == S.Input {
             let subscription = GestureSubscription(
                 subscriber: subscriber,
                 view: view,

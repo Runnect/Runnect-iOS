@@ -207,7 +207,7 @@ extension CourseDetailVC {
         print("The long URL is: \(longDynamicLink)")
         
         /// 짧은 Dynamic Link로 변환하는 부분 입니다.
-        linkBuilder.shorten { [weak self] url, warnings, error in
+        linkBuilder.shorten { [weak self] url, _, error in // warning 파라미터 와일드 카드
             guard let shortDynamicLink = url else {
                 if let error = error {
                     print("❌Error shortening dynamic link: \(error)")

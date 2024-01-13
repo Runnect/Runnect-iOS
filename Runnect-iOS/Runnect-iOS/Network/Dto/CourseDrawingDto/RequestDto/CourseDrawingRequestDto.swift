@@ -17,7 +17,7 @@ struct CourseDrawingRequestDto: Codable {
     let departureAddress, departureName: String
 }
 
-//"image" : 이미지 파일,
+//        "image" : 이미지 파일,
 //        "path" :  [{lat : 실수(double), long : 실수},{lat : 실수(double), long : 실수},{lat : 실수(double), long : 실수} ],
 //        "title" : "한강 공원 한 바퀴",
 //        "distance" : 4.4,

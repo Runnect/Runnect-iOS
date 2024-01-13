@@ -256,7 +256,6 @@ extension MyPageVC {
     
     @objc
     private func touchUpkakaoChannelAsk() {
-        
         if let url = TalkApi.shared.makeUrlForChannelChat(channelPublicId: "_hXduG") {
             UIApplication.shared.open(url)
         }

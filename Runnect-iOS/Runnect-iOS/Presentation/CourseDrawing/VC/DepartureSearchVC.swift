@@ -70,7 +70,7 @@ final class DepartureSearchVC: UIViewController, CLLocationManagerDelegate {
     }
     
     // MARK: - View Life Cycle
- 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUI()
@@ -132,8 +132,7 @@ extension DepartureSearchVC {
                 guard let latitude = locationManager.location?.coordinate.latitude,
                       let longitude = locationManager.location?.coordinate.longitude else { return }
                 searchLocationTmapAddress(latitude: latitude, longitude: longitude)
-            }
-            else {
+            } else {
                 locationManager.startUpdatingLocation()
             }
         }
@@ -143,7 +142,7 @@ extension DepartureSearchVC {
         let authorizationStatus: CLAuthorizationStatus
         if #available(iOS 14.0, *) {
             authorizationStatus = locationManager.authorizationStatus
-        }else {
+        } else {
             authorizationStatus = CLLocationManager.authorizationStatus()
         }
         
@@ -198,7 +197,7 @@ extension DepartureSearchVC {
             }
             self.navigationController?.popViewController(animated: true)
         }
-
+        
         self.present(alertVC, animated: false)
     }
 }
@@ -310,28 +309,28 @@ extension DepartureSearchVC {
         LoadingIndicator.showLoading()
         departureSearchingProvider
             .request(.getAddress(keyword: keyword)) { [weak self] response in
-            guard let self = self else { return }
-            LoadingIndicator.hideLoading()
-            switch response {
-            case .success(let result):
-                let status = result.statusCode
-                if 200..<300 ~= status {
-                    do {
-                        let responseDto = try result.map(DepartureSearchingResponseDto.self)
-                        self.setData(data: responseDto.documents)
-                    } catch {
-                        print(error.localizedDescription)
+                guard let self = self else { return }
+                LoadingIndicator.hideLoading()
+                switch response {
+                case .success(let result):
+                    let status = result.statusCode
+                    if 200..<300 ~= status {
+                        do {
+                            let responseDto = try result.map(DepartureSearchingResponseDto.self)
+                            self.setData(data: responseDto.documents)
+                        } catch {
+                            print(error.localizedDescription)
+                        }
                     }
+                    if status >= 400 {
+                        print("400 error")
+                        self.setData(data: [])
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self.showToast(message: "네트워크 통신 실패")
                 }
-                if status >= 400 {
-                    print("400 error")
-                    self.setData(data: [])
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-                self.showToast(message: "네트워크 통신 실패")
             }
-        }
     }
     
     private func searchLocationTmapAddress(latitude: Double, longitude: Double) {

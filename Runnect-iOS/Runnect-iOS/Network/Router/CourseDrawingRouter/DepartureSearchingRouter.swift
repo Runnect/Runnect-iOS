@@ -72,7 +72,7 @@ extension DepartureSearchingRouter: TargetType {
         case .getLocationAddress(let latitude, let longitude):
             return .requestParameters(parameters: ["x": longitude, "y": latitude], encoding: URLEncoding.default)
         case .getLocationTmapAddress(let latitude, let longitude):
-            return .requestParameters(parameters: ["lat": latitude, "lon":longitude, "addressType": "A04","appKey": Config.tmapAPIKey], encoding: URLEncoding.default)
+            return .requestParameters(parameters: ["lat": latitude, "lon": longitude, "addressType": "A04", "appKey": Config.tmapAPIKey], encoding: URLEncoding.default)
         }
     }
     

@@ -18,10 +18,10 @@ enum AlertType {
 final class RNAlertVC: UIViewController {
     
     // MARK: - Properties
-    var leftButtonTapAction: (()-> Void)?
+    var leftButtonTapAction: (() -> Void)?
     var rightButtonTapAction: (() -> Void)?
     var alertType: AlertType = .defaultType
-                
+    
     // MARK: - UI Components
     
     private let containerView = UIView().then {
@@ -99,8 +99,7 @@ extension RNAlertVC {
 
 extension RNAlertVC {
     @objc private func touchUpNoButton() {
-        alertType == .defaultType
-            ? dismiss(animated: false) : self.leftButtonTapAction? ()
+        alertType == .defaultType ? dismiss(animated: false) : self.leftButtonTapAction?()
     }
     
     @objc private func touchYesButton() {
@@ -123,7 +122,7 @@ extension RNAlertVC {
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(30)
-//            make.height.equalTo(126)
+            //            make.height.equalTo(126)
         }
         
         containerView.addSubviews(descriptionLabel, yesButton, noButton)
