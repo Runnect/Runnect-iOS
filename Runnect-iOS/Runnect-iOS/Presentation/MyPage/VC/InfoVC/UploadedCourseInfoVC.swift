@@ -63,12 +63,13 @@ final class UploadedCourseInfoVC: UIViewController {
     }
     
     private let editButton = UIButton(type: .custom).then {
-        $0.setTitle("편집", for: .normal)
+        $0.setTitle("선택", for: .normal)
         $0.setTitleColor(.m1, for: .normal)
-        $0.titleLabel?.font = .b7
-        $0.layer.borderColor = UIColor.m1.cgColor
-        $0.layer.borderWidth = 1
+        $0.titleLabel?.font = .b5
+        $0.layer.backgroundColor = UIColor.m3.cgColor
         $0.layer.cornerRadius = 11
+//        $0.layer.borderColor = UIColor.m1.cgColor
+//        $0.layer.borderWidth = 1
     }
     
     private lazy var deleteCourseButton = CustomButton(title: "삭제하기").then {
@@ -140,7 +141,7 @@ extension UploadedCourseInfoVC {
     
     private func finishEditMode() {
         self.totalNumOfRecordlabel.text = "총 코스 \(self.uploadedCourseList.count)개"
-        self.editButton.setTitle("편집", for: .normal)
+        self.editButton.setTitle("선택", for: .normal)
         self.deleteCourseButton.isEnabled = false
         self.deleteCourseButton.setTitle(title: "삭제하기")
         self.deleteCourseButton.isHidden = true
