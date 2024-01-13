@@ -7,10 +7,8 @@
 
 import Foundation
 
-
 struct CourseDetailScrapCountDto: Codable {
     let scrapCount: Int
-    
     let publicCourse: Int?
     let scarpTF: Bool?
     /*

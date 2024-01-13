@@ -45,7 +45,7 @@ final class CourseDiscoveryVC: UIViewController {
     
     private let searchButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icSearch, for: .normal)
-        $0.tintColor = .g1
+        $0.tintColor = .g3
     }
     private let uploadButton = CustomButton(title: "업로드").then {
         $0.clipsToBounds = true
@@ -187,7 +187,7 @@ extension CourseDiscoveryVC {
         
         naviBar.snp.makeConstraints { make in
             make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
+            make.height.equalTo(56)
         }
         searchButton.snp.makeConstraints { make in
             make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(16)

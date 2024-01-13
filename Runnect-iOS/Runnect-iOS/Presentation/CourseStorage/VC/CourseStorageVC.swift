@@ -207,7 +207,7 @@ extension CourseStorageVC {
 
         naviBar.snp.makeConstraints { make in
             make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
+            make.height.equalTo(56)
         }
 
         guard UserManager.shared.userType != .visitor else {

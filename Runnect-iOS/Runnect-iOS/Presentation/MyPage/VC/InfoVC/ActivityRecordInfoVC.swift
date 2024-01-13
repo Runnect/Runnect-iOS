@@ -45,12 +45,13 @@ final class ActivityRecordInfoVC: UIViewController {
     }
     
     private let editButton = UIButton(type: .custom).then {
-        $0.setTitle("편집", for: .normal)
+        $0.setTitle("선택", for: .normal)
         $0.setTitleColor(.m1, for: .normal)
-        $0.titleLabel?.font = .b7
-        $0.layer.borderColor = UIColor.m1.cgColor
-        $0.layer.borderWidth = 1
+        $0.titleLabel?.font = .b5
+        $0.layer.backgroundColor = UIColor.m3.cgColor
         $0.layer.cornerRadius = 11
+//        $0.layer.borderColor = UIColor.m1.cgColor
+//        $0.layer.borderWidth = 1
     }
     
     private lazy var deleteRecordButton = CustomButton(title: "삭제하기").then {
@@ -99,7 +100,7 @@ extension ActivityRecordInfoVC {
     }
     
     func reloadActivityRecordInfoVC() {
-        self.editButton.setTitle("편집", for: .normal)
+        self.editButton.setTitle("선택", for: .normal)
         self.deleteRecordButton.isHidden = true
         self.totalNumOfRecordlabel.text = "총 기록 \(self.activityRecordList.count)개"
         deselectedActivityRecordTableRows()
@@ -137,7 +138,7 @@ extension ActivityRecordInfoVC {
         print(isEditMode)
         if isEditMode {
             self.totalNumOfRecordlabel.text = "총 기록 \(self.activityRecordList.count)개"
-            self.editButton.setTitle("편집", for: .normal)
+            self.editButton.setTitle("선택", for: .normal)
             self.deleteRecordButton.isHidden = true
             deselectedActivityRecordTableRows()
             self.deleteRecordButton.isEnabled = false

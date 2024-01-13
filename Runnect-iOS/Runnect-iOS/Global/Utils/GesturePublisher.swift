@@ -29,7 +29,7 @@ enum GestureType {
             return pinchGesture
         case let .edge(edgePanGesture):
             return edgePanGesture
-       }
+        }
     }
 }
 
@@ -42,8 +42,8 @@ struct GesturePublisher: Publisher {
         self.view = view
         self.gestureType = gestureType
     }
-    func receive<S>(subscriber: S) where S : Subscriber,
-    GesturePublisher.Failure == S.Failure, GesturePublisher.Output
+    func receive<S>(subscriber: S) where S: Subscriber,
+                                         GesturePublisher.Failure == S.Failure, GesturePublisher.Output
     == S.Input {
         let subscription = GestureSubscription(
             subscriber: subscriber,

@@ -69,9 +69,7 @@ extension CourseRouter: TargetType {
             multipartFormData.append(imageData)
             
             var content = [String: Any]()
-            
             var path = [[String: Any]]()
-            var tempPath = String()
             
             do {
                 for location in param.path {

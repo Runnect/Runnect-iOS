@@ -293,7 +293,7 @@ extension CourseDrawingVC {
         }
         
         naviBar.snp.makeConstraints { make in
-            make.height.equalTo(48)
+            make.height.equalTo(56)
         }
         
         naviBarContainerStackView.snp.makeConstraints { make in
