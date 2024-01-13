@@ -187,7 +187,7 @@ extension CourseDiscoveryVC {
         
         naviBar.snp.makeConstraints { make in
             make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
+            make.height.equalTo(56)
         }
         searchButton.snp.makeConstraints { make in
             make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(16)
