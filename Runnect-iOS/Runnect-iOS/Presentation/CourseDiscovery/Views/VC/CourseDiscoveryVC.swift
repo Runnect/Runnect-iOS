@@ -45,7 +45,7 @@ final class CourseDiscoveryVC: UIViewController {
     
     private let searchButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icSearch, for: .normal)
-        $0.tintColor = .g1
+        $0.tintColor = .g3
     }
     private let uploadButton = CustomButton(title: "업로드").then {
         $0.clipsToBounds = true
