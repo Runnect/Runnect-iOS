@@ -1,5 +1,8 @@
 # Runnect
 
+# 한줄 소개
+러닝과 일상을 Connect하다! 데일리 러닝앱 서비스 Runnect 🏃
+
 ### 앱스토어 링크: [Appstore](https://apps.apple.com/kr/app/runnect-%EC%BD%94%EC%8A%A4%EB%A5%BC-%EA%B7%B8%EB%A6%AC%EA%B3%A0-%EA%B3%B5%EC%9C%A0%ED%95%98%EB%8A%94-%EB%8D%B0%EC%9D%BC%EB%A6%AC-%EB%9F%AC%EB%8B%9D%EC%95%B1/id1663884202)
 
 ### 배포 전 테스트 서버: [TestFlight](https://testflight.apple.com/join/hbkXfMrK)
