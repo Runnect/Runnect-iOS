@@ -9,8 +9,15 @@ import Foundation
 
 struct GAEvent {
     struct View {
+        
+        // 진입 화면
         static let viewHome = "view_home" // 앱 실행
         static let viewSocialLogin = "view_social_login"
+        
+        // 코스발견
+        static let viewCourseSearch = "view_course_search"
+        static let viewCourseDetail = "view_course_detail"
+        static let viewUserProfile = "view_user_profile"
     }
     
     struct Button {
@@ -43,8 +50,7 @@ struct GAEvent {
         static let clickUploadButton = "click_upload_button"
         static let clickTrySearchCourse = "click_try_search_course"
         static let clickTryBanner = "click_try_banner"
-        static let clickSearchCourse = "click_search_course"
-        static let clickCourseDetail = "click_course_detail"
+       
         static let clickShare = "click_share"
         static let clickUserProfile = "click_user_profile"
         static let clickScrapPageStartCourse = "click_scrap_page_start_course"
