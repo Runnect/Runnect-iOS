@@ -165,6 +165,8 @@ extension CourseDiscoveryVC {
             return
         }
         
+        analyze(buttonName: GAEvent.Button.clickUploadButton)
+        
         let nextVC = MyCourseSelectVC()
         nextVC.delegate = self
         self.navigationController?.pushViewController(nextVC, animated: true)
@@ -552,5 +554,14 @@ extension CourseDiscoveryVC: TitleCollectionViewCellDelegate {
         sort = ordering
         self.courseList.removeAll()
         getCourseData(pageNo: pageNo)
+        
+        switch ordering {
+        case "date":
+            analyze(buttonName: GAEvent.Button.clickDate)
+        case "scrap":
+            analyze(buttonName: GAEvent.Button.clickScrap)
+        default:
+            break
+        }
     }
 }
