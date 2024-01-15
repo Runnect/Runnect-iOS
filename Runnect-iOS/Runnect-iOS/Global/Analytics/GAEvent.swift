@@ -18,6 +18,7 @@ struct GAEvent {
         static let viewCourseSearch = "view_course_search"
         static let viewCourseDetail = "view_course_detail"
         static let viewUserProfile = "view_user_profile"
+        static let viewCourseUpload = "view_course_upload"
     }
     
     struct Button {
@@ -50,11 +51,10 @@ struct GAEvent {
         static let clickUploadButton = "click_upload_button"
         static let clickTrySearchCourse = "click_try_search_course"
         static let clickTryBanner = "click_try_banner"
-       
         static let clickShare = "click_share"
         static let clickUserProfile = "click_user_profile"
         static let clickScrapPageStartCourse = "click_scrap_page_start_course"
-        static let clickUploadCourse = "click_upload_course"
+        static let clickCourseUpload = "click_course_upload"
         
         /// 보관함
         static let clickMyStorageCourseStart = "click_my_storage_course_start"
