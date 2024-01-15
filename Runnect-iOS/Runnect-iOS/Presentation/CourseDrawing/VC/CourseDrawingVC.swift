@@ -194,7 +194,7 @@ extension CourseDrawingVC {
         mapView.eventSubject.sink { [weak self] arr in
             guard let self = self else { return }
             self.searchLocationTmapAddress(latitude: arr[0], longitude: arr[1])
-//            self.searchTest(latitude: arr[0], longitude: arr[1])
+            //            self.searchTest(latitude: arr[0], longitude: arr[1])
         }.store(in: cancelBag)
     }
     
@@ -206,15 +206,21 @@ extension CourseDrawingVC {
         let alertVC = CustomAlertVC()
         alertVC.modalPresentationStyle = .overFullScreen
         
+        // 보관함 가기
         alertVC.leftButtonTapped.sink { [weak self] _ in
             guard let self = self else { return }
+            analyze(buttonName: GAEvent.Button.clickStoredAfterCourseComplete)
+            
             self.tabBarController?.selectedIndex = 1
             self.navigationController?.popToRootViewController(animated: true)
             alertVC.dismiss(animated: true)
         }.store(in: cancelBag)
         
+        // 바로 달리기
         alertVC.rightButtonTapped.sink { [weak self] _ in
             guard let self = self else { return }
+            analyze(buttonName: GAEvent.Button.clickRunAfterCourseComplete)
+            
             let countDownVC = CountDownVC()
             let runningModel = RunningModel(courseId: courseId,
                                             locations: self.mapView.getMarkersLatLng(),
@@ -456,7 +462,7 @@ extension CourseDrawingVC {
     
     private func searchLocationTmapAddress(latitude: Double, longitude: Double) {
         departureSearchingProvider.request(target: .getLocationTmapAddress(latitude: latitude, longitude: longitude), instance: TmapAddressSearchingResponseDto.self, vc: self) { data in
-                self.updateData(model: data.toDepartureLocationModel(latitude: latitude, longitude: longitude))
+            self.updateData(model: data.toDepartureLocationModel(latitude: latitude, longitude: longitude))
         }
     }
 }
