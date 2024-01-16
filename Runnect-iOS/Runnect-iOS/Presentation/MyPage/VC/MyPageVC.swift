@@ -259,7 +259,7 @@ extension MyPageVC {
     
     @objc
     private func touchUpkakaoChannelAsk() {
-        if let url = TalkApi.shared.makeUrlForChannelChat(channelPublicId: "_hXduG") {
+        if let url = TalkApi.shared.makeUrlForChatChannel(channelPublicId: "_hXduG") {
             UIApplication.shared.open(url)
         }
     }
