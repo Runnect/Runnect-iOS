@@ -91,6 +91,8 @@ extension CourseStorageVC {
         
         privateCourseListView.courseDrawButtonTapped.sink { [weak self] in
             guard let self = self else { return }
+            
+            analyze(buttonName: GAEvent.Button.clickMyStorageCourseDrawingStart) // 내가 그린 코스 코스 그리기 진입
             self.tabBarController?.selectedIndex = 0
         }.store(in: cancelBag)
         
@@ -101,7 +103,7 @@ extension CourseStorageVC {
         
         privateCourseListView.cellDidTapped.sink { [weak self] index in
             guard let self = self else { return }
-            analyze(buttonName: GAEvent.Button.clickScrapPageStartCourse) // 코스 발견_스크랩코스 상세페이지 시작하기 Evnet
+            analyze(buttonName: GAEvent.Button.clickScrapPageStartCourse) // 코스 발견_스크랩코스 상세페이지 시작하기 Event
             
             let title = self.privateCourseList[index].title
             let runningWaitingVC = RunningWaitingVC()

@@ -57,7 +57,7 @@ struct GAEvent {
         static let clickCourseUpload = "click_course_upload"
         
         /// 보관함
-        static let clickMyStorageCourseStart = "click_my_storage_course_start"
+        static let clickMyStorageCourseDrawingStart = "click_my_storage_course_drawing_start"
         static let clickMyStorageTryModify = "click_my_storage_try_modify"
         static let clickMyStorageTryRemove = "click_my_storage_try_remove"
         static let clickScrapCourse = "click_scrap_course"
