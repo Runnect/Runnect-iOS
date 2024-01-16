@@ -15,6 +15,7 @@ enum GestureType {
     case pan(UIPanGestureRecognizer = .init())
     case pinch(UIPinchGestureRecognizer = .init())
     case edge(UIScreenEdgePanGestureRecognizer = .init())
+    
     func get() -> UIGestureRecognizer {
         switch self {
         case let .tap(tapGesture):
@@ -33,51 +34,55 @@ enum GestureType {
     }
 }
 
-extension UIGestureRecognizer {
-    struct GesturePublisher: Publisher {
-        typealias Output = GestureType
-        typealias Failure = Never
-        private let view: UIView
-        private let gestureType: GestureType
-        init(view: UIView, gestureType: GestureType) {
-            self.view = view
-            self.gestureType = gestureType
-        }
-        
-        func receive<S>(subscriber: S) where S: Subscriber,
-                                             GesturePublisher.Failure == S.Failure,
-                                             GesturePublisher.Output == S.Input {
-            let subscription = GestureSubscription(
-                subscriber: subscriber,
-                view: view,
-                gestureType: gestureType
-            )
-            subscriber.receive(subscription: subscription)
-        }
+struct GesturePublisher: Publisher {
+    typealias Output = GestureType
+    typealias Failure = Never
+    
+    private let view: UIView
+    private let gestureType: GestureType
+    
+    init(view: UIView, gestureType: GestureType) {
+        self.view = view
+        self.gestureType = gestureType
     }
     
-    class GestureSubscription<S: Subscriber>: Subscription where S.Input == GestureType, S.Failure == Never {
-        private var subscriber: S?
-        private var gestureType: GestureType
-        private var view: UIView
-        init(subscriber: S, view: UIView, gestureType: GestureType) {
-            self.subscriber = subscriber
-            self.view = view
-            self.gestureType = gestureType
-            configureGesture(gestureType)
-        }
-        private func configureGesture(_ gestureType: GestureType) {
-            let gesture = gestureType.get()
-            gesture.addTarget(self, action: #selector(handler))
-            view.addGestureRecognizer(gesture)
-        }
-        func request(_ demand: Subscribers.Demand) { }
-        func cancel() {
-            subscriber = nil
-        }
-        @objc
-        private func handler() {
-            _ = subscriber?.receive(gestureType)
-        }
+    func receive<S>(subscriber: S) where S: Subscriber,
+                                         Failure == S.Failure,
+                                         Output == S.Input {
+                                             let subscription = GestureSubscription(
+                                                subscriber: subscriber,
+                                                view: view,
+                                                gestureType: gestureType
+                                             )
+                                             subscriber.receive(subscription: subscription)
+                                         }
+}
+
+class GestureSubscription<S: Subscriber>: Subscription where S.Input == GestureType, S.Failure == Never {
+    private var subscriber: S?
+    private var gestureType: GestureType
+    private var view: UIView
+    
+    init(subscriber: S, view: UIView, gestureType: GestureType) {
+        self.subscriber = subscriber
+        self.view = view
+        self.gestureType = gestureType
+        configureGesture(gestureType)
+    }
+    
+    func request(_ demand: Subscribers.Demand) { }
+    
+    func cancel() {
+        subscriber = nil
+    }
+    
+    private func configureGesture(_ gestureType: GestureType) {
+        let gesture = gestureType.get()
+        gesture.addTarget(self, action: #selector(handler))
+        view.addGestureRecognizer(gesture)
+    }
+    
+    @objc private func handler() {
+        _ = subscriber?.receive(gestureType)
     }
 }
