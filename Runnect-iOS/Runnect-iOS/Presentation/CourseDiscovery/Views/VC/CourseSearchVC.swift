@@ -73,6 +73,7 @@ final class CourseSearchVC: UIViewController {
         setDelegate()
         layout()
         setTabBar()
+        analyze(screenName: GAEvent.View.viewCourseSearch)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -228,6 +229,7 @@ extension CourseSearchVC {
                     do {
                         let responseDto = try result.map(BaseResponse<PickedMapListResponseDto>.self)
                         guard let data = responseDto.data else { return }
+                        self.analyze(buttonName: GAEvent.Button.clickTrySearchCourse)
                         self.setData(data: data.publicCourses)
                     } catch {
                         self.setData(data: [])

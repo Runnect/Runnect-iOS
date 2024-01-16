@@ -66,6 +66,7 @@ class CourseUploadVC: UIViewController {
         setKeyboardNotification()
         setTapGesture()
         addKeyboardObserver()
+        analyze(screenName: GAEvent.View.viewCourseUpload)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -95,8 +96,8 @@ extension CourseUploadVC {
             courseModel.departure.town,
             courseModel.departure.name
         ]
-        .compactMap { $0 }
-        .joined(separator: " ")
+            .compactMap { $0 }
+            .joined(separator: " ")
         
         self.departureInfoView.setDescriptionText(description: departureString)
     }
@@ -192,6 +193,8 @@ extension CourseUploadVC {
     
     @objc func uploadButtonDidTap() {
         self.uploadCourse()
+        
+        analyze(buttonName: GAEvent.Button.clickCourseUpload)
     }
 }
 
@@ -264,7 +267,7 @@ extension CourseUploadVC {
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
             make.height.equalTo(35)
         }
-                
+        
         dividerView.snp.makeConstraints { make in
             make.top.equalTo(courseTitleTextField.snp.bottom).offset(0)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)

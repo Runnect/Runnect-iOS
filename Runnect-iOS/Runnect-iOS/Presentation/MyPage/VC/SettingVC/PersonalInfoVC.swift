@@ -12,13 +12,13 @@ import SnapKit
 import Then
 
 final class PersonalInfoVC: UIViewController {
-
+    
     // MARK: - Properties
     
     private let userProvider = Providers.userProvider
     
     var email = String()
-        
+    
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("계정 정보")
@@ -63,11 +63,15 @@ final class PersonalInfoVC: UIViewController {
 extension PersonalInfoVC {
     @objc
     func touchUpLogoutView() {
+        analyze(buttonName: GAEvent.Button.clickTryLogout)
+        
         pushToLogoutVC()
     }
     
     @objc
     func touchUpDeleteAccountView() {
+        analyze(buttonName: GAEvent.Button.clickTryWithdraw)
+        
         pushToDeleteAccountVC()
     }
 }
@@ -130,17 +134,21 @@ extension PersonalInfoVC {
     
     private func logout() {
         UserManager.shared.logout()
+        analyze(screenName: GAEvent.View.viewSuccessLogout)
+        
         self.showSplashVC()
     }
     
     private func deleteUserDidComplete() {
+        analyze(screenName: GAEvent.View.viewSuccessWithdraw)
+        
         self.logout()
     }
     
     private func requestAppleToken() {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
-                
+        
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
@@ -287,21 +295,21 @@ extension PersonalInfoVC: ASAuthorizationControllerPresentationContextProviding,
     
     /// Apple ID 연동 성공 시
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-            switch authorization.credential {
-                /// Apple ID
-            case let appleIDCredential as ASAuthorizationAppleIDCredential:
-                
-                /// 계정 정보 가져오기
-                let userIdentifier = appleIDCredential.user
-                let idToken = appleIDCredential.identityToken!
-                guard let tokenStr = String(data: idToken, encoding: .utf8) else { return }
-             
-                print("User ID : \(userIdentifier)")
-                print("token : \(String(describing: tokenStr))")
-                
-                self.deleteUser(appleToken: tokenStr)
-            default:
-                break
+        switch authorization.credential {
+            /// Apple ID
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            
+            /// 계정 정보 가져오기
+            let userIdentifier = appleIDCredential.user
+            let idToken = appleIDCredential.identityToken!
+            guard let tokenStr = String(data: idToken, encoding: .utf8) else { return }
+            
+            print("User ID : \(userIdentifier)")
+            print("token : \(String(describing: tokenStr))")
+            
+            self.deleteUser(appleToken: tokenStr)
+        default:
+            break
         }
     }
     

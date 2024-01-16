@@ -218,7 +218,11 @@ extension SignInSocialLoginVC: ASAuthorizationControllerPresentationContextProvi
                 switch result {
                 case .success(let type):
                     self?.analyze(buttonName: GAEvent.Button.clickAppleLogin)
-                    type == "Signup" ? self?.pushToNickNameSetUpVC() : self?.pushToTabBarController()
+                    if type == "Signup" {
+                        self?.pushToNickNameSetUpVC()
+                    } else {
+                        self?.pushToTabBarController()
+                    }
                 case .failure(let error):
                     print(error)
                     self?.showNetworkFailureToast()

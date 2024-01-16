@@ -45,6 +45,7 @@ final class UserProfileVC: UIViewController {
         setNavigationBar()
         setDelegate()
         setLayout()
+        analyze(screenName: GAEvent.View.viewUserProfile)
     }
     
     override func viewWillAppear(_ animated: Bool) {

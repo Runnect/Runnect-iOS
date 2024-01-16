@@ -14,16 +14,16 @@ import KakaoSDKTalk
 import KakaoSDKUser
 
 final class MyPageVC: UIViewController {
-
+    
     // MARK: - Properties
     
     private var userProvider = Providers.userProvider
     
     let stampNameImageDictionary: [String: UIImage] = GoalRewardInfoModel.stampNameImageDictionary
-        
+    
     var sendEmail = String()
     var sendNickname = String()
-        
+    
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .title).setTitle("마이페이지")
@@ -88,7 +88,7 @@ final class MyPageVC: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpUploadedCourseRecordInfoView))
         $0.addGestureRecognizer(tap)
     }
-
+    
     private lazy var settingView = makeInfoView(title: "설정").then {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpSettingView))
         $0.addGestureRecognizer(tap)
@@ -231,16 +231,19 @@ extension MyPageVC {
 extension MyPageVC {
     @objc
     private func touchUpActivityRecordInfoView() {
+        analyze(buttonName: GAEvent.Button.clickRunningRecord)
         pushToActivityRecordInfoVC()
     }
     
     @objc
     private func touchUpGoalRewardInfoView() {
+        analyze(buttonName: GAEvent.Button.clickGoalReward)
         pushToGoalRewardInfoVC()
     }
     
     @objc
     private func touchUpUploadedCourseRecordInfoView() {
+        analyze(buttonName: GAEvent.Button.clickUploadedCourse)
         pushToUploadedCourseInfoVC()
     }
     
@@ -256,7 +259,7 @@ extension MyPageVC {
     
     @objc
     private func touchUpkakaoChannelAsk() {
-        if let url = TalkApi.shared.makeUrlForChannelChat(channelPublicId: "_hXduG") {
+        if let url = TalkApi.shared.makeUrlForChatChannel(channelPublicId: "_hXduG") {
             UIApplication.shared.open(url)
         }
     }

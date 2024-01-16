@@ -293,6 +293,8 @@ extension ActivityRecordInfoVC: UITableViewDataSource {
 
 extension ActivityRecordInfoVC: ListEmptyViewDelegate {
     func emptyViewButtonTapped() {
+        analyze(buttonName: GAEvent.Button.clickCourseDrawingInRunningRecord)
+        
         self.tabBarController?.selectedIndex = 0
     }
 }

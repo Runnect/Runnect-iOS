@@ -50,6 +50,9 @@ extension CourseDrawingHomeVC {
 // MARK: - @objc Function
 extension CourseDrawingHomeVC {
     @objc private func pushToDepartureSearchVC() {
+        
+        analyze(buttonName: GAEvent.Button.clickCourseDrawing)
+        
         let departureSearchVC = DepartureSearchVC()
         departureSearchVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(departureSearchVC, animated: true)

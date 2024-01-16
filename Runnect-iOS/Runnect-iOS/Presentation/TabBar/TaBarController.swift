@@ -13,6 +13,7 @@ final class TabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        delegate = self
         setUI()
         setTabBarControllers()
     }
@@ -32,21 +33,21 @@ extension TabBarController {
     
     private func setTabBarControllers() {
         let courseDrawingNVC = templateNavigationController(title: "코스 그리기",
-                                                           unselectedImage: ImageLiterals.icCourseDraw,
-                                                           selectedImage: ImageLiterals.icCourseDrawFill,
-                                                           rootViewController: CourseDrawingHomeVC())
+                                                            unselectedImage: ImageLiterals.icCourseDraw,
+                                                            selectedImage: ImageLiterals.icCourseDrawFill,
+                                                            rootViewController: CourseDrawingHomeVC())
         let courseStorageNVC = templateNavigationController(title: "보관함",
-                                                         unselectedImage: ImageLiterals.icStorage,
-                                                         selectedImage: ImageLiterals.icStorageFill,
-                                                         rootViewController: CourseStorageVC())
+                                                            unselectedImage: ImageLiterals.icStorage,
+                                                            selectedImage: ImageLiterals.icStorageFill,
+                                                            rootViewController: CourseStorageVC())
         let courseDiscoveryNVC = templateNavigationController(title: "코스 발견",
-                                                         unselectedImage: ImageLiterals.icCourseDiscover,
-                                                         selectedImage: ImageLiterals.icCourseDiscoverFill,
-                                                         rootViewController: CourseDiscoveryVC())
+                                                              unselectedImage: ImageLiterals.icCourseDiscover,
+                                                              selectedImage: ImageLiterals.icCourseDiscoverFill,
+                                                              rootViewController: CourseDiscoveryVC())
         let myPageNVC = templateNavigationController(title: "마이페이지",
-                                                         unselectedImage: ImageLiterals.icMypage,
-                                                         selectedImage: ImageLiterals.icMypageFill,
-                                                         rootViewController: MyPageVC())
+                                                     unselectedImage: ImageLiterals.icMypage,
+                                                     selectedImage: ImageLiterals.icMypageFill,
+                                                     rootViewController: MyPageVC())
         
         viewControllers = [courseDrawingNVC, courseStorageNVC, courseDiscoveryNVC, myPageNVC]
     }
@@ -59,5 +60,23 @@ extension TabBarController {
         nav.navigationBar.isHidden = true
         return nav
     }
-    
+}
+
+extension TabBarController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        guard let title = viewController.title else { return }
+        
+        switch title {
+        case "코스 그리기":
+            analyze(buttonName: GAEvent.Button.clickCourseDrawingTabBar)
+        case "보관함":
+            analyze(buttonName: GAEvent.Button.clickStorageTabBar)
+        case "코스 발견":
+            analyze(buttonName: GAEvent.Button.clickCourseDiscoveryTabBar)
+        case "마이페이지":
+            analyze(buttonName: GAEvent.Button.clickMyPageTabBar)
+        default:
+            break
+        }
+    }
 }

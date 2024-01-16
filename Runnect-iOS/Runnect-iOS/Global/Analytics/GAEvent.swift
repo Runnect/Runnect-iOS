@@ -9,8 +9,20 @@ import Foundation
 
 struct GAEvent {
     struct View {
+        
+        // 진입 화면
         static let viewHome = "view_home" // 앱 실행
         static let viewSocialLogin = "view_social_login"
+        
+        // 코스발견
+        static let viewCourseSearch = "view_course_search"
+        static let viewCourseDetail = "view_course_detail"
+        static let viewUserProfile = "view_user_profile"
+        static let viewCourseUpload = "view_course_upload"
+        
+        // 마이페이지
+        static let viewSuccessLogout = "view_success_logout"
+        static let viewSuccessWithdraw = "view_success_withdraw"
     }
     
     struct Button {
@@ -43,15 +55,13 @@ struct GAEvent {
         static let clickUploadButton = "click_upload_button"
         static let clickTrySearchCourse = "click_try_search_course"
         static let clickTryBanner = "click_try_banner"
-        static let clickSearchCourse = "click_search_course"
-        static let clickCourseDetail = "click_course_detail"
         static let clickShare = "click_share"
         static let clickUserProfile = "click_user_profile"
         static let clickScrapPageStartCourse = "click_scrap_page_start_course"
-        static let clickUploadCourse = "click_upload_course"
+        static let clickCourseUpload = "click_course_upload"
         
         /// 보관함
-        static let clickMyStorageCourseStart = "click_my_storage_course_start"
+        static let clickMyStorageCourseDrawingStart = "click_my_storage_course_drawing_start"
         static let clickMyStorageTryModify = "click_my_storage_try_modify"
         static let clickMyStorageTryRemove = "click_my_storage_try_remove"
         static let clickScrapCourse = "click_scrap_course"
@@ -64,8 +74,6 @@ struct GAEvent {
         static let clickCourseUploadInUploadedCourse = "click_course_upload_in_uploaded_course"
         static let clickTryLogout = "click_try_logout"
         static let clickTryWithdraw = "click_try_withdraw"
-        static let clickSuccessLogout = "click_success_logout"
-        static let clickSuccessWithdraw = "click_success_withdraw"
         
         /// 방문자 모드
         static let clickJoinInCourseDrawing = "click_join_in_course_drawing"

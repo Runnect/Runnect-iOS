@@ -323,8 +323,10 @@ extension RunningWaitingVC {
             
             switch item {
             case "수정하기":
+                analyze(buttonName: GAEvent.Button.clickMyStorageTryModify)
                 ModifyCourseTitle()
             case "삭제하기":
+                analyze(buttonName: GAEvent.Button.clickMyStorageTryRemove)
                 let deleteAlertVC = RNAlertVC(description: "러닝 기록을 정말로 삭제하시겠어요?").setButtonTitle("취소", "삭제하기")
                 deleteAlertVC.modalPresentationStyle = .overFullScreen
                 deleteAlertVC.rightButtonTapAction = {

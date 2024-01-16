@@ -91,6 +91,8 @@ extension CourseStorageVC {
         
         privateCourseListView.courseDrawButtonTapped.sink { [weak self] in
             guard let self = self else { return }
+            
+            analyze(buttonName: GAEvent.Button.clickMyStorageCourseDrawingStart) // 내가 그린 코스 코스 그리기 진입
             self.tabBarController?.selectedIndex = 0
         }.store(in: cancelBag)
         
@@ -101,11 +103,13 @@ extension CourseStorageVC {
         
         privateCourseListView.cellDidTapped.sink { [weak self] index in
             guard let self = self else { return }
+            analyze(buttonName: GAEvent.Button.clickScrapPageStartCourse) // 코스 발견_스크랩코스 상세페이지 시작하기 Event
+            
             let title = self.privateCourseList[index].title
             let runningWaitingVC = RunningWaitingVC()
             runningWaitingVC.setData(courseId: self.privateCourseList[index].id, publicCourseId: nil, courseTitle: title)
-            /// 코스 이름을 여기서 가져오는 로직
             
+            /// 코스 이름을 여기서 가져오는 로직
             runningWaitingVC.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(runningWaitingVC, animated: true)
         }.store(in: cancelBag)
@@ -204,12 +208,12 @@ extension CourseStorageVC {
     
     private func setLayout() {
         view.addSubviews(naviBar)
-
+        
         naviBar.snp.makeConstraints { make in
             make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(56)
         }
-
+        
         guard UserManager.shared.userType != .visitor else {
             self.showSignInRequestEmptyView()
             return

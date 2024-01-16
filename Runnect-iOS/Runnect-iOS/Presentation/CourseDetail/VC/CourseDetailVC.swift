@@ -144,7 +144,7 @@ final class CourseDetailVC: UIViewController {
         setLayout()
         setAddTarget()
         setRefreshControl()
-        analyze(screenName: "코스 상세 페이지")
+        analyze(screenName: GAEvent.View.viewCourseDetail)
         self.hideTabBar(wantsToHide: true)
     }
     
@@ -176,6 +176,8 @@ extension CourseDetailVC {
         guard let model = self.uploadedCourseDetailModel else {
             return
         }
+        
+        analyze(buttonName: GAEvent.Button.clickShare)
         
         let publicCourse = model.publicCourse
         let title = publicCourse.title
@@ -231,6 +233,9 @@ extension CourseDetailVC {
             self.showToast(message: "회원만 조회 가능 합니다.")
             return
         }
+        
+        analyze(screenName: GAEvent.Button.clickUserProfile)
+        
         guard let userId = self.userId else {return}
         let userProfile = UserProfileVC()
         userProfile.setUserId(userId: userId)

@@ -19,7 +19,7 @@ final class RNMapView: UIView {
     @Published var pathDistance: Double = 0
     @Published var markerCount = 0
     
-    var eventSubject = PassthroughSubject<Array<Double>, Never>()
+    var eventSubject = PassthroughSubject<[Double], Never>()
     
     private let screenWidth = UIScreen.main.bounds.width
     private let screenHeight = UIScreen.main.bounds.height
