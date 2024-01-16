@@ -63,11 +63,13 @@ final class PersonalInfoVC: UIViewController {
 extension PersonalInfoVC {
     @objc
     func touchUpLogoutView() {
+        analyze(buttonName: GAEvent.Button.clickTryLogout)
         pushToLogoutVC()
     }
     
     @objc
     func touchUpDeleteAccountView() {
+        analyze(buttonName: GAEvent.Button.clickTryWithdraw)
         pushToDeleteAccountVC()
     }
 }
@@ -130,10 +132,12 @@ extension PersonalInfoVC {
     
     private func logout() {
         UserManager.shared.logout()
+        analyze(screenName: GAEvent.View.viewSuccessLogout)
         self.showSplashVC()
     }
     
     private func deleteUserDidComplete() {
+        analyze(screenName: GAEvent.View.viewSuccessWithdraw)
         self.logout()
     }
     

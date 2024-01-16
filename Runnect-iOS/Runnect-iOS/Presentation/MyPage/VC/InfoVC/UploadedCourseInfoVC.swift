@@ -68,8 +68,8 @@ final class UploadedCourseInfoVC: UIViewController {
         $0.titleLabel?.font = .b5
         $0.layer.backgroundColor = UIColor.m3.cgColor
         $0.layer.cornerRadius = 11
-//        $0.layer.borderColor = UIColor.m1.cgColor
-//        $0.layer.borderWidth = 1
+        //        $0.layer.borderColor = UIColor.m1.cgColor
+        //        $0.layer.borderWidth = 1
     }
     
     private lazy var deleteCourseButton = CustomButton(title: "삭제하기").then {
@@ -283,7 +283,7 @@ extension UploadedCourseInfoVC: UICollectionViewDelegate, UICollectionViewDataSo
         } else {
             cell.selectCell(didSelect: false)
         }
-
+        
         let model = uploadedCourseList[indexPath.item]
         let cellTitle =  "\(model.departure.region) \(model.departure.city)"
         cell.setData(imageURL: model.image, title: cellTitle, location: nil, didLike: nil, isEditMode: isEditMode)
@@ -389,6 +389,8 @@ extension UploadedCourseInfoVC {
 
 extension UploadedCourseInfoVC: ListEmptyViewDelegate {
     func emptyViewButtonTapped() {
+        analyze(buttonName: GAEvent.Button.clickCourseUploadInUploadedCourse)
+        
         let myCourseSelectVC = MyCourseSelectVC()
         self.navigationController?.pushViewController(myCourseSelectVC, animated: true)
         

@@ -231,16 +231,19 @@ extension MyPageVC {
 extension MyPageVC {
     @objc
     private func touchUpActivityRecordInfoView() {
+        analyze(buttonName: GAEvent.Button.clickRunningRecord)
         pushToActivityRecordInfoVC()
     }
     
     @objc
     private func touchUpGoalRewardInfoView() {
+        analyze(buttonName: GAEvent.Button.clickGoalReward)
         pushToGoalRewardInfoVC()
     }
     
     @objc
     private func touchUpUploadedCourseRecordInfoView() {
+        analyze(buttonName: GAEvent.Button.clickUploadedCourse)
         pushToUploadedCourseInfoVC()
     }
     

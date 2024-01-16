@@ -19,6 +19,10 @@ struct GAEvent {
         static let viewCourseDetail = "view_course_detail"
         static let viewUserProfile = "view_user_profile"
         static let viewCourseUpload = "view_course_upload"
+        
+        // 마이페이지
+        static let viewSuccessLogout = "view_success_logout"
+        static let viewSuccessWithdraw = "view_success_withdraw"
     }
     
     struct Button {
@@ -70,8 +74,6 @@ struct GAEvent {
         static let clickCourseUploadInUploadedCourse = "click_course_upload_in_uploaded_course"
         static let clickTryLogout = "click_try_logout"
         static let clickTryWithdraw = "click_try_withdraw"
-        static let clickSuccessLogout = "click_success_logout"
-        static let clickSuccessWithdraw = "click_success_withdraw"
         
         /// 방문자 모드
         static let clickJoinInCourseDrawing = "click_join_in_course_drawing"
