@@ -14,16 +14,16 @@ import KakaoSDKTalk
 import KakaoSDKUser
 
 final class MyPageVC: UIViewController {
-
+    
     // MARK: - Properties
     
     private var userProvider = Providers.userProvider
     
     let stampNameImageDictionary: [String: UIImage] = GoalRewardInfoModel.stampNameImageDictionary
-        
+    
     var sendEmail = String()
     var sendNickname = String()
-        
+    
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .title).setTitle("마이페이지")
@@ -88,7 +88,7 @@ final class MyPageVC: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpUploadedCourseRecordInfoView))
         $0.addGestureRecognizer(tap)
     }
-
+    
     private lazy var settingView = makeInfoView(title: "설정").then {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpSettingView))
         $0.addGestureRecognizer(tap)

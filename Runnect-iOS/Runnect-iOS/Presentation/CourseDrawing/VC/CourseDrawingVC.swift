@@ -289,81 +289,12 @@ extension CourseDrawingVC {
         self.departureInfoContainerView.addSubviews(departureLocationLabel, departureDetailLocationLabel, decideDepartureButton)
         view.bringSubviewToFront(naviBarContainerStackView)
         
-        notchCoverView.snp.makeConstraints { make in
-            var notchHeight = calculateTopInset()
-            if notchHeight == -44 {
-                let statusBarHeight = UIApplication.shared.statusBarHeight
-                notchHeight = -statusBarHeight
-            }
-            make.height.equalTo(-notchHeight)
-        }
-        
-        naviBar.snp.makeConstraints { make in
-            make.height.equalTo(56)
-        }
-        
-        naviBarContainerStackView.snp.makeConstraints { make in
-            make.leading.top.trailing.equalToSuperview()
-        }
-        
-        mapView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
-        startLabelUIImage.snp.makeConstraints { make in
-            make.height.equalTo(34)
-            make.width.equalTo(58)
-        }
-        startMarkUIImage.snp.makeConstraints { make in
-            make.height.width.equalTo(65)
-        }
-        
-        startMarkStackView.snp.makeConstraints { make in
-            make.height.equalTo(100)
-            make.width.equalTo(65)
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(-17)
-        }
-        
-        departureInfoContainerView.snp.makeConstraints { make in
-            make.leading.bottom.trailing.equalToSuperview()
-            make.height.equalTo(172)
-        }
-        
-        departureLocationLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(28)
-            make.leading.trailing.equalToSuperview().inset(16)
-        }
-        
-        departureDetailLocationLabel.snp.makeConstraints { make in
-            make.top.equalTo(departureLocationLabel.snp.bottom).offset(6)
-            make.leading.trailing.equalToSuperview().inset(16)
-        }
-        
-        decideDepartureButton.snp.makeConstraints { make in
-            make.top.equalTo(departureDetailLocationLabel.snp.bottom).offset(24)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(44)
-        }
-        
-        if SelectedInfo.shared.type == .map {
-            self.aboutMapNoticeView.addSubview(aboutMapNoticeLabel)
-            self.naviBarContainerStackView.addArrangedSubviews(underlineView, aboutMapNoticeView)
-            
-            underlineView.snp.makeConstraints {
-                $0.leading.trailing.equalToSuperview()
-                $0.height.equalTo(1)
-            }
-            
-            aboutMapNoticeView.snp.makeConstraints {
-                $0.leading.trailing.equalToSuperview()
-                $0.height.equalTo(32)
-            }
-            
-            aboutMapNoticeLabel.snp.makeConstraints {
-                $0.centerX.centerY.equalToSuperview()
-            }
-        }
+        setNotchCoverViewLayout()
+        setNaviBarLayout()
+        setMapViewLayout()
+        setStartMarkStackViewLayout()
+        setDepartureInfoContainerViewLayout()
+        setAboutMapNoticeViewLayout()
     }
     
     private func setHiddenViewsLayout() {
@@ -425,6 +356,95 @@ extension CourseDrawingVC {
             self.distanceContainerView.transform = CGAffineTransform(translationX: 0, y: -151)
             self.completeButton.transform = CGAffineTransform(translationX: 0, y: -112)
             self.undoButton.transform = CGAffineTransform(translationX: 0, y: -(self.undoButton.frame.height+95))
+        }
+    }
+    
+    private func setNotchCoverViewLayout() {
+        notchCoverView.snp.makeConstraints { make in
+            var notchHeight = calculateTopInset()
+            if notchHeight == -44 {
+                let statusBarHeight = UIApplication.shared.statusBarHeight
+                notchHeight = -statusBarHeight
+            }
+            make.height.equalTo(-notchHeight)
+        }
+    }
+    
+    private func setNaviBarLayout() {
+        naviBar.snp.makeConstraints { make in
+            make.height.equalTo(56)
+        }
+        
+        naviBarContainerStackView.snp.makeConstraints { make in
+            make.leading.top.trailing.equalToSuperview()
+        }
+    }
+    
+    private func setMapViewLayout() {
+        mapView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
+    private func setStartMarkStackViewLayout() {
+        startLabelUIImage.snp.makeConstraints { make in
+            make.height.equalTo(34)
+            make.width.equalTo(58)
+        }
+        
+        startMarkUIImage.snp.makeConstraints { make in
+            make.height.width.equalTo(65)
+        }
+        
+        startMarkStackView.snp.makeConstraints { make in
+            make.height.equalTo(100)
+            make.width.equalTo(65)
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(-17)
+        }
+    }
+    
+    private func setDepartureInfoContainerViewLayout() {
+        departureInfoContainerView.snp.makeConstraints { make in
+            make.leading.bottom.trailing.equalToSuperview()
+            make.height.equalTo(172)
+        }
+        
+        departureLocationLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(28)
+            make.leading.trailing.equalToSuperview().inset(16)
+        }
+        
+        departureDetailLocationLabel.snp.makeConstraints { make in
+            make.top.equalTo(departureLocationLabel.snp.bottom).offset(6)
+            make.leading.trailing.equalToSuperview().inset(16)
+        }
+        
+        decideDepartureButton.snp.makeConstraints { make in
+            make.top.equalTo(departureDetailLocationLabel.snp.bottom).offset(24)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(44)
+        }
+    }
+    
+    private func setAboutMapNoticeViewLayout() {
+        if SelectedInfo.shared.type == .map {
+            aboutMapNoticeView.addSubview(aboutMapNoticeLabel)
+            naviBarContainerStackView.addArrangedSubviews(underlineView, aboutMapNoticeView)
+            
+            underlineView.snp.makeConstraints {
+                $0.leading.trailing.equalToSuperview()
+                $0.height.equalTo(1)
+            }
+            
+            aboutMapNoticeView.snp.makeConstraints {
+                $0.leading.trailing.equalToSuperview()
+                $0.height.equalTo(32)
+            }
+            
+            aboutMapNoticeLabel.snp.makeConstraints {
+                $0.centerX.centerY.equalToSuperview()
+            }
         }
     }
 }
