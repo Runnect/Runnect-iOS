@@ -107,12 +107,16 @@ extension DepartureSearchVC {
         selectDirectionView.gesture().sink { [weak self] _ in
             guard let self = self else { return }
             SelectedInfo.shared.type = .other
+            
+            analyze(buttonName: GAEvent.Button.clickCurrentLocate)
             self.setLocation()
         }.store(in: cancelBag)
         
         selectMapView.gesture().sink { [weak self] _ in
             guard let self = self else { return }
             SelectedInfo.shared.type = .map
+            
+            analyze(buttonName: GAEvent.Button.clickMapLocate)
             self.setLocation()
         }.store(in: cancelBag)
     }
