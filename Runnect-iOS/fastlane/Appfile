@@ -1,8 +1,0 @@
-app_identifier("com.runnect.Runnect-iOS") # The bundle identifier of your app
-apple_id(ENV["APPLE_ID"]) # Your Apple Developer Portal username
-
-itc_team_id("125287287") # App Store Connect Team ID
-team_id("8Q4H7X3Q58") # Developer Portal Team ID
-
-# For more information about the Appfile, see:
-#     https://docs.fastlane.tools/advanced/#appfile
