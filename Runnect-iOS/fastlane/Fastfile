@@ -62,6 +62,23 @@ platform :ios do
     build_app(workspace: "Runnect-iOS.xcworkspace", scheme: "Runnect-iOS")
 
     upload_to_testflight(skip_waiting_for_build_processing: true)
+
+    # ✅ Slack 설정.
+    slack(
+      username: "이명진",
+      message: "TestFlight 배포 성공.",
+      icon_url: "https://is1-ssl.mzstatic.com/image/thumb/Purple116/v4/a6/68/d0/a668d049-8c1a-0e7b-19c3-287093c0a501/AppIcon-1x_U007emarketing-0-7-0-85-220.png/1024x1024bb.png",
+      slack_url: ENV["RUNNECT_SLACK"],
+      payload: { "Version": version }
+    )
+    # ✅ 에러 처리.
+    error do |lane, exception, options|
+      slack(
+        message: "에러 발생 : #{exception}",
+        success: false,
+        slack_url: "https://hooks.slack.com/…"
+      )
+    end
   end
 
 
