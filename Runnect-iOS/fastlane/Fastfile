@@ -18,7 +18,7 @@ default_platform(:ios)
 platform :ios do
 
 
-  ############# Release #############
+  ############# version #############
 
 
   desc "Set Marketing and Build version"
