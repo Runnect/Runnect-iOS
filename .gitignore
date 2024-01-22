@@ -82,10 +82,14 @@ Dependencies/
 # For more information about the recommended setup visit:
 # https://docs.fastlane.tools/best-practices/source-control/#source-control
 
-fastlane/report.xml
-fastlane/Preview.html
-fastlane/screenshots/**/*.png
-fastlane/test_output
+**/fastlane/report.xml
+**/fastlane/Preview.html
+**/fastlane/screenshots/**/*.png
+**/fastlane/BuildOutputs
+
+**/fastlane/.env.default
+
+**Gemfile.lock
 
 # Code Injection
 # After new code Injection tools there's a generated folder /iOSInjectionProject
@@ -111,10 +115,9 @@ iOSInjectionProject/
 Config.swift
 Gemfile.lock
 report.xml
-Runnect-iOS/fastlane/.env.default
 
 ### Runniest project - git ignore setting ###
-Runnect-iOS/Runnect-iOS/Info.plist
+/Runnect-iOS/Runnect-iOS/Info.plist
 Runnect-iOS/Info.plist
 Info.plist
 
