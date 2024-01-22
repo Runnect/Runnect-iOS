@@ -59,10 +59,7 @@ platform :ios do
       )
     end
 
-    build_app(
-      output_directory:"./BuildOutputs",
-      scheme: "Runnect-iOS"
-    )
+    build_app(workspace: "Runnect-iOS.xcworkspace", scheme: "Runnect-iOS")
 
     upload_to_testflight(skip_waiting_for_build_processing: true)
   end

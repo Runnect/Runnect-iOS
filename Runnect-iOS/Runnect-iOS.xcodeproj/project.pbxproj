@@ -1709,9 +1709,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Runnect-iOS/Runnect-iOSDebug.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2024.0122.0337;
-				DEVELOPMENT_TEAM = 8Q4H7X3Q58;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2024.0122.1629;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8Q4H7X3Q58;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Runnect-iOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Runnect;
@@ -1732,6 +1734,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.runnect.Runnect-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.runnect.Runnect-iOS";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1750,9 +1753,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Runnect-iOS/Runnect-iOS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2024.0122.0337;
-				DEVELOPMENT_TEAM = 8Q4H7X3Q58;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2024.0122.1629;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8Q4H7X3Q58;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Runnect-iOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Runnect;
@@ -1773,6 +1778,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.runnect.Runnect-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.runnect.Runnect-iOS";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
