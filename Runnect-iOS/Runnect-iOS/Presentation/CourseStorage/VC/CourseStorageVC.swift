@@ -216,6 +216,7 @@ extension CourseStorageVC {
         
         guard UserManager.shared.userType != .visitor else {
             self.showSignInRequestEmptyView()
+            analyze(buttonName: GAEvent.Button.clickJoinInStorage)
             return
         }
         
