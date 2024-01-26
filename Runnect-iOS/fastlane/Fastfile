@@ -16,6 +16,11 @@
 default_platform(:ios)
 
 platform :ios do
+
+
+  ############# version #############
+
+
   desc "Set Marketing and Build version"
   lane :set_version do |version|
     increment_version_number(
@@ -29,8 +34,12 @@ platform :ios do
     )
   end
 
-  desc "Testflight Upload"
-  lane :upload_testflight do |version|
+  
+  ############# beta #############
+
+
+  desc "Push a new beta build to TestFlight"
+  lane :beta do |version|
     version = version[:version]
 
     match(
@@ -50,13 +59,44 @@ platform :ios do
       )
     end
 
-    build_app(
-      output_directory:"./BuildOutputs",
-      scheme: "Runnect-iOS"
-    )
+    build_app(workspace: "Runnect-iOS.xcworkspace", scheme: "Runnect-iOS")
 
     upload_to_testflight(skip_waiting_for_build_processing: true)
+
+    # ✅ Slack 설정.
+    slack(
+      username: "이명진",
+      message: "TestFlight 배포 성공.",
+      icon_url: "https://is1-ssl.mzstatic.com/image/thumb/Purple116/v4/a6/68/d0/a668d049-8c1a-0e7b-19c3-287093c0a501/AppIcon-1x_U007emarketing-0-7-0-85-220.png/1024x1024bb.png",
+      slack_url: ENV["RUNNECT_SLACK"],
+      payload: { "Version": version }
+    )
+    # ✅ 에러 처리.
+    error do |lane, exception, options|
+      slack(
+        message: "에러 발생 : #{exception}",
+        success: false,
+        slack_url: "https://hooks.slack.com/…"
+      )
+    end
   end
+
+
+
+  ############# Device Management #############
+
+  desc "Register Devices"
+  lane :register_new_device do  |options|
+    device_name = prompt(text: "Enter the device name: ")
+    device_udid = prompt(text: "Enter the device UDID: ")
+    device_hash = {}
+    device_hash[device_name] = device_udid
+    register_devices(devices: device_hash)
+    match(type: "development", force_for_new_devices: true)
+  end
+
+  ############# match #############
+
 
   desc "Match all code signing"
   lane :match_read_only do

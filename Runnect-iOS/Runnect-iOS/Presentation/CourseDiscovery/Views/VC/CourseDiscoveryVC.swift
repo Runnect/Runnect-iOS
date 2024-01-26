@@ -162,6 +162,8 @@ extension CourseDiscoveryVC {
     @objc private func pushToCourseSelectVC() {
         guard UserManager.shared.userType != .visitor else {
             self.showToastOnWindow(text: "러넥트에 가입하면 코스를 업로드할 수 있어요.")
+            
+            analyze(buttonName: GAEvent.Button.clickJoinInCourseDiscovery)
             return
         }
         
@@ -452,10 +454,10 @@ extension CourseDiscoveryVC: ScrapStateDelegate {
     }
     
     func didRemoveCourse(publicCourseId: Int) {
-//        if let index = courseList.firstIndex(where: { $0.id == publicCourseId }) {
-//            courseList.remove(at: index)
-//            self.mapCollectionView.reloadData()
-//        }
+        //        if let index = courseList.firstIndex(where: { $0.id == publicCourseId }) {
+        //            courseList.remove(at: index)
+        //            self.mapCollectionView.reloadData()
+        //        }
         // ⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️
         // 원래 해당하는 데이터(index) 만 가지고, 그 데이터 삭제 후 courseList를 받아야하는데, 삭제가 이미되어버려서 if let index 부분이 안들어옴
         // 왜??? 이미 데이터는 삭제가 되어서 $0.id 랑 publicCourseId 가 같은게 매치가 될 수 없어!!!

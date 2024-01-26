@@ -293,6 +293,7 @@ extension MyPageVC {
     private func setLayout() {
         guard UserManager.shared.userType != .visitor else {
             self.showSignInRequestEmptyView()
+            analyze(buttonName: GAEvent.Button.clickJoinInMyPage)
             return
         }
         

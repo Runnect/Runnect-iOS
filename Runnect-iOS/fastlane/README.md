@@ -23,13 +23,21 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Set Marketing and Build version
 
-### ios upload_testflight
+### ios beta
 
 ```sh
-[bundle exec] fastlane ios upload_testflight
+[bundle exec] fastlane ios beta
 ```
 
-Testflight Upload
+Push a new beta build to TestFlight
+
+### ios register_new_device
+
+```sh
+[bundle exec] fastlane ios register_new_device
+```
+
+Register Devices
 
 ### ios match_read_only
 

@@ -392,6 +392,9 @@ extension RNMapView: NMFMapViewCameraDelegate, NMFMapViewTouchDelegate {
         self.makeMarker(at: latlng)
     }
     
+    func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
+    }
+    
     // 지도 이동 멈췄을 때 호출되는 메서드
     func mapViewCameraIdle(_ mapView: NMFMapView) {
         let latitude = mapView.cameraPosition.target.lat

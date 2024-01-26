@@ -156,6 +156,8 @@ extension ScrapCourseListView: UICollectionViewDelegateFlowLayout {
 
 extension ScrapCourseListView: ListEmptyViewDelegate {
     func emptyViewButtonTapped() {
+        analyze(buttonName: GAEvent.Button.clickScrapCourse)
+        
         self.scrapButtonTapped.send()
     }
 }

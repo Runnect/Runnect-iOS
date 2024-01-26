@@ -262,7 +262,7 @@ extension CourseDrawingVC {
         bottomSheetVC.modalPresentationStyle = .overFullScreen
         bottomSheetVC.completeButtonTapAction = { [weak self] text in
             guard let self = self else { return }
-            guard handleVisitor() else { return }
+            guard bottomSheetVC.handleVisitor() else { return } // 사실상 여기까지 못 들어오는게 맞음 (코스 그리기에서 막았다.)
             self.courseName = text
             self.mapView.capturePathImage()
             self.dismiss(animated: false)
