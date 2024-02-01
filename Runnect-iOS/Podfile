@@ -22,7 +22,7 @@ target 'Runnect-iOS' do
 	pod 'FirebaseAnalytics'
 	pod 'FirebaseAuth'
 	pod 'FirebaseFirestore'
-	
+	pod 'Firebase/RemoteConfig'	
 
 	
 end
