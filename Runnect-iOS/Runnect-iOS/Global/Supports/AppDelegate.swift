@@ -67,7 +67,8 @@ extension AppDelegate {
         let remoteConfig = RemoteConfig.remoteConfig()
         let settings = RemoteConfigSettings()
         
-        settings.minimumFetchInterval = 0
+        /// 개발 중에는 0으로 설정
+        settings.minimumFetchInterval = 86400 // 24hour
         remoteConfig.configSettings = settings
         
         remoteConfig.fetch() { (status, error) -> Void in
