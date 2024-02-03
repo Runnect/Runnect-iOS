@@ -8,14 +8,19 @@
 import Foundation
 
 // MARK: - DepartureAddressSearchingResponseDto
-struct KakaoAddressSearchingResponseDto: Codable {
+struct KakaoAddressSearchingResponseDto: Codable { /// 사용 안함
     let meta: Meta
     let documents: [Document]
     
     func toDepartureLocationModel(latitude: Double, longitude: Double) -> DepartureLocationModel {
-        let roadName = self.documents[0].roadAddress.buildingName ?? "내가 설정한 출발지"
+        let roadName = self.documents[0].roadAddress.buildingName
         
-        return DepartureLocationModel(departureName: roadName, departureAddress: self.documents[0].address.addressName, latitude: String(latitude), longitude: String(longitude))
+        return DepartureLocationModel(
+            departureName: roadName,
+            departureAddress: self.documents[0].address.addressName,
+            latitude: String(latitude),
+            longitude: String(longitude)
+        )
     }
 }
 
