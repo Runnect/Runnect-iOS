@@ -185,10 +185,12 @@ extension CourseDetailVC {
         let description = publicCourse.description
         let courseImage = publicCourse.image
         
-        let dynamicLinksDomainURIPrefix = "https://runnect.page.link"
+        let dynamicLinksDomainURIPrefix = "https://rnnt.page.link"
         guard let link = URL(string: "\(dynamicLinksDomainURIPrefix)/?courseId=\(courseId)") else {
             return
         }
+        
+        print("‼️link= \(link)")
         
         guard let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: dynamicLinksDomainURIPrefix) else {
             return
@@ -197,6 +199,8 @@ extension CourseDetailVC {
         linkBuilder.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.runnect.Runnect-iOS")
         linkBuilder.iOSParameters?.appStoreID = "1663884202"
         linkBuilder.iOSParameters?.minimumAppVersion = "1.0.4"
+        
+        linkBuilder.androidParameters = DynamicLinkAndroidParameters(packageName: "com.runnect.runnect")
         
         linkBuilder.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
         linkBuilder.socialMetaTagParameters?.imageURL = URL(string: courseImage)
@@ -210,7 +214,7 @@ extension CourseDetailVC {
         
         /// 짧은 Dynamic Link로 변환하는 부분 입니다.
         linkBuilder.shorten { [weak self] url, _, error in // warning 파라미터 와일드 카드
-            guard let shortDynamicLink = url else {
+            guard let shortDynamicLink = url?.absoluteString else {
                 if let error = error {
                     print("❌Error shortening dynamic link: \(error)")
                 }
@@ -220,7 +224,7 @@ extension CourseDetailVC {
             print("🔥The short URL is: \(shortDynamicLink)")
             
             DispatchQueue.main.async {
-                let activityVC = UIActivityViewController(activityItems: [shortDynamicLink.absoluteString], applicationActivities: nil)
+                let activityVC = UIActivityViewController(activityItems: [shortDynamicLink], applicationActivities: nil)
                 activityVC.popoverPresentationController?.sourceView = self?.view
                 self?.present(activityVC, animated: true, completion: nil)
             }
@@ -318,8 +322,8 @@ extension CourseDetailVC {
             model.publicCourse.departure.town,
             model.publicCourse.departure.name
         ]
-        .compactMap { $0 }
-        .joined(separator: " ")
+            .compactMap { $0 }
+            .joined(separator: " ")
         
         self.courseDepartureInfoView.setDescriptionText(description: locate)
         self.courseExplanationTextView.text = model.publicCourse.description

@@ -211,7 +211,7 @@ extension MarathonMapCollectionViewCell {
                 LoadingIndicator.hideLoading()
             }
             
-            guard let self = self else { return }
+            guard self != nil else { return }
             
             switch response {
             case .success(let result):
