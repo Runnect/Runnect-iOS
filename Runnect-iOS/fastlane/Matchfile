@@ -1,10 +1,10 @@
-git_url("https://github.com/thingineeer/fastlane-match")
-git_branch("Runnect") # 'Runnect' 앱을 위한 인증서 관리를 할 브랜치
+git_url("https://github.com/thingineeer/fastlane-match-runnect")
+# git_branch("Runnect") 수정 금지
 storage_mode("git")
 
 type("development") # The default type, can be: appstore, adhoc, enterprise or development
 
-# app_identifier(["tools.fastlane.app", "tools.fastlane.app2"])
+# app_identifier("com.runnect.Runnect-iOS")
 # username("user@fastlane.tools") # Your Apple Developer Portal username
 
 # For all available options run `fastlane match --help`
