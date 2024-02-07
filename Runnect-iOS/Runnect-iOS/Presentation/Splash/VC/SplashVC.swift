@@ -109,7 +109,7 @@ extension SplashVC {
         let remoteConfig = RemoteConfig.remoteConfig()
         let settings = RemoteConfigSettings()
         
-        settings.minimumFetchInterval = 0 // 개발 중에는 0으로 설정, 실제 앱에서는 적절한 값을 설정
+        settings.minimumFetchInterval = 86400 // 개발 중에는 0으로 설정, 실제 앱에서는 적절한 값을 설정
         remoteConfig.configSettings = settings
         
         remoteConfig.fetch { (status, error) -> Void in
