@@ -637,6 +637,13 @@ PODS:
   - BoringSSL-GRPC/Interface (0.0.24)
   - CombineCocoa (0.4.1)
   - DropDown (2.3.13)
+  - Firebase/CoreOnly (10.19.0):
+    - FirebaseCore (= 10.19.0)
+  - Firebase/RemoteConfig (10.19.0):
+    - Firebase/CoreOnly
+    - FirebaseRemoteConfig (~> 10.19.0)
+  - FirebaseABTesting (10.20.0):
+    - FirebaseCore (~> 10.0)
   - FirebaseAnalytics (10.19.0):
     - FirebaseAnalytics/AdIdSupport (= 10.19.0)
     - FirebaseCore (~> 10.0)
@@ -697,6 +704,13 @@ PODS:
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - PromisesObjC (~> 2.1)
+  - FirebaseRemoteConfig (10.19.0):
+    - FirebaseABTesting (~> 10.0)
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - FirebaseSharedSwift (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - "GoogleUtilities/NSData+zlib (~> 7.8)"
   - FirebaseSharedSwift (10.19.0)
   - GoogleAppMeasurement (10.19.0):
     - GoogleAppMeasurement/AdIdSupport (= 10.19.0)
@@ -840,6 +854,7 @@ PODS:
 DEPENDENCIES:
   - CombineCocoa
   - DropDown (from `https://github.com/thingineeer/DropDown.git`, commit `95ee36f7bd925d466033c2c169979f1c574bf3b9`)
+  - Firebase/RemoteConfig
   - FirebaseAnalytics
   - FirebaseAuth
   - FirebaseDynamicLinks
@@ -862,6 +877,8 @@ SPEC REPOS:
     - Alamofire
     - BoringSSL-GRPC
     - CombineCocoa
+    - Firebase
+    - FirebaseABTesting
     - FirebaseAnalytics
     - FirebaseAppCheckInterop
     - FirebaseAuth
@@ -872,6 +889,7 @@ SPEC REPOS:
     - FirebaseFirestore
     - FirebaseFirestoreInternal
     - FirebaseInstallations
+    - FirebaseRemoteConfig
     - FirebaseSharedSwift
     - GoogleAppMeasurement
     - GoogleUtilities
@@ -911,6 +929,8 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   CombineCocoa: e5210dbfb480ff251078929459ac17e750e7af1d
   DropDown: bf260fd688978138019ad7d94f63a2362dad85ba
+  Firebase: 63ce8ece0d43743dc28eacac0c6867a2d7fd5a9d
+  FirebaseABTesting: 1d5d49804bcfc5fa782bc2491a8c1364e2cf7241
   FirebaseAnalytics: 87513010b13b7c8610164d3602ea10571f76afc1
   FirebaseAppCheckInterop: 37884781f3e16a1ba47e7ec80a1e805f987788e3
   FirebaseAuth: 2492acdcd1245d841fabdf58a050d6aa07dfce3f
@@ -921,6 +941,7 @@ SPEC CHECKSUMS:
   FirebaseFirestore: 9b9b21120c1a0cb4f2789ffb7fbb9138f94c47eb
   FirebaseFirestoreInternal: a15405fb607dfd14edd568bba77028f4c7a69688
   FirebaseInstallations: 033d199474164db20c8350736842a94fe717b960
+  FirebaseRemoteConfig: a7fcc7a5941faa7e09248e91c8797340aa4c85f6
   FirebaseSharedSwift: f34eeb7d3ea87a34497629b6ca41657beadef76a
   GoogleAppMeasurement: 68afe759316673c6554dac35a0c7ae8f5d6cb4ed
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
@@ -944,6 +965,6 @@ SPEC CHECKSUMS:
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
-PODFILE CHECKSUM: 74de7f641476f143613e7b2bfe2c3275248503e4
+PODFILE CHECKSUM: f0cd212e642c1e168379427f2687ba88d51ce3cf
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.0

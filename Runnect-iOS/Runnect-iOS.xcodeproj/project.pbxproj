@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		232686362B03AF4400675A17 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232686352B03AF4400675A17 /* NetworkProvider.swift */; };
-		23628DDE2B6BCB9C00894B18 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 23628DDD2B6BCB9C00894B18 /* GoogleService-Info.plist */; };
 		23EE06C12AC1AD5200CB3FF8 /* LocationSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06C02AC1AD5200CB3FF8 /* LocationSelectView.swift */; };
 		23EE06C52AC1AE1900CB3FF8 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06C42AC1AE1900CB3FF8 /* BaseView.swift */; };
 		23EE06C92AC1DED100CB3FF8 /* GesturePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE06C82AC1DED100CB3FF8 /* GesturePublisher.swift */; };
@@ -85,8 +84,6 @@
 		CE3A53C5296C6017003D518C /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A53C4296C6017003D518C /* KeychainManager.swift */; };
 		CE40BB1C2967E4910030ABCA /* RunningWaitingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40BB1B2967E4910030ABCA /* RunningWaitingVC.swift */; };
 		CE40BB1E2968054F0030ABCA /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40BB1D2968054F0030ABCA /* BaseResponse.swift */; };
-		CE40BB20296805F70030ABCA /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40BB1F296805F70030ABCA /* NetworkResult.swift */; };
-		CE40BB22296806140030ABCA /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40BB21296806140030ABCA /* NetworkHelper.swift */; };
 		CE40BB2D296808B00030ABCA /* DepartureSearchingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40BB2C296808B00030ABCA /* DepartureSearchingRouter.swift */; };
 		CE4545C9295D7AF4003201E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545C8295D7AF4003201E1 /* AppDelegate.swift */; };
 		CE4545CB295D7AF4003201E1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CA295D7AF4003201E1 /* SceneDelegate.swift */; };
@@ -181,7 +178,6 @@
 
 /* Begin PBXFileReference section */
 		232686352B03AF4400675A17 /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
-		23628DDD2B6BCB9C00894B18 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		23EE06C02AC1AD5200CB3FF8 /* LocationSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectView.swift; sourceTree = "<group>"; };
 		23EE06C42AC1AE1900CB3FF8 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		23EE06C82AC1DED100CB3FF8 /* GesturePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GesturePublisher.swift; sourceTree = "<group>"; };
@@ -266,8 +262,6 @@
 		CE3A53C4296C6017003D518C /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		CE40BB1B2967E4910030ABCA /* RunningWaitingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningWaitingVC.swift; sourceTree = "<group>"; };
 		CE40BB1D2968054F0030ABCA /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
-		CE40BB1F296805F70030ABCA /* NetworkResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult.swift; sourceTree = "<group>"; };
-		CE40BB21296806140030ABCA /* NetworkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHelper.swift; sourceTree = "<group>"; };
 		CE40BB2C296808B00030ABCA /* DepartureSearchingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureSearchingRouter.swift; sourceTree = "<group>"; };
 		CE4545C5295D7AF4003201E1 /* Runnect-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Runnect-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4545C8295D7AF4003201E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -1023,8 +1017,6 @@
 			children = (
 				CE40BB1D2968054F0030ABCA /* BaseResponse.swift */,
 				CE5875A1296015A2005D967E /* NetworkLoggerPlugin.swift */,
-				CE40BB1F296805F70030ABCA /* NetworkResult.swift */,
-				CE40BB21296806140030ABCA /* NetworkHelper.swift */,
 				712F661C2A7B7BAB00D9539B /* Config.swift */,
 			);
 			path = Foundation;
@@ -1413,7 +1405,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE40BB20296805F70030ABCA /* NetworkResult.swift in Sources */,
 				715D36E82B2CC64000CAA9D6 /* MyUploadedCourseResponseDto.swift in Sources */,
 				CE55BC11296D4EA600E8CD69 /* RunningRecordRequestDto.swift in Sources */,
 				CE665604295D91B100C64E12 /* makeAlert.swift in Sources */,
@@ -1432,7 +1423,6 @@
 				CE14677829658C7200DCEA1B /* Stopwatch.swift in Sources */,
 				CE21C026299E5FF300F62AF5 /* CourseRouter.swift in Sources */,
 				23EE06C52AC1AE1900CB3FF8 /* BaseView.swift in Sources */,
-				CE40BB22296806140030ABCA /* NetworkHelper.swift in Sources */,
 				CE5645162961B72E000A2856 /* ImageLiterals.swift in Sources */,
 				CE4942AD296FCD2300736701 /* UploadedCourseDetailResponseDto.swift in Sources */,
 				CE6655CD295D856300C64E12 /* KeyPathFindable.swift in Sources */,
@@ -1711,9 +1701,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Runnect-iOS/Runnect-iOSDebug.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2024.0122.2217;
-				DEVELOPMENT_TEAM = 8Q4H7X3Q58;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8Q4H7X3Q58;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Runnect-iOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Runnect;
@@ -1734,6 +1726,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.runnect.Runnect-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.runnect.Runnect-iOS";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1752,9 +1745,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Runnect-iOS/Runnect-iOS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2024.0122.2217;
-				DEVELOPMENT_TEAM = 8Q4H7X3Q58;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8Q4H7X3Q58;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Runnect-iOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Runnect;
@@ -1775,6 +1770,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.runnect.Runnect-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.runnect.Runnect-iOS";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
