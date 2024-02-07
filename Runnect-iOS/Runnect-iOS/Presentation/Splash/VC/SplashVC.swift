@@ -15,6 +15,7 @@ import FirebaseRemoteConfig
 final class SplashVC: UIViewController {
     
     // MARK: - Property
+    
     private var cancelBag = CancelBag()
     
     // MARK: - UI Components
@@ -99,10 +100,44 @@ extension SplashVC {
     }
 }
 
-
 // MARK: - Remote Config
 
 extension SplashVC {
+    /// ** RemoteConfig  **
+    /// 심사버전 > 스토어 버전이면 강제 업데이트 Alert을 진행 합니다.
+    private func setRemoteConfig() {
+        let remoteConfig = RemoteConfig.remoteConfig()
+        let settings = RemoteConfigSettings()
+        
+        settings.minimumFetchInterval = 0 // 개발 중에는 0으로 설정, 실제 앱에서는 적절한 값을 설정
+        remoteConfig.configSettings = settings
+        
+        remoteConfig.fetch { (status, error) -> Void in
+            if status == .success {
+                remoteConfig.activate { (_, _) in
+                    // 현재 앱 버전 가져오기
+                    guard let info = Bundle.main.infoDictionary,
+                          let currentVersion = info["CFBundleShortVersionString"] as? String,
+                          let storeVersion = remoteConfig["iOS_current_market_version"].stringValue
+                    else { return }
+                    
+                    let splitCurrentVersion = currentVersion.split(separator: ".").map { $0 }
+                    let splitStoreVersion = storeVersion.split(separator: ".").map { $0 }
+                    
+                    if splitCurrentVersion[0] < splitStoreVersion[0] {
+                        // 스토어 버전이 더 높으면 업데이트 필요
+                        self.showUpdateAlert()
+                    } else {
+                        // 업데이트가 필요하지 않으면 기본 로직 수행
+                        self.checkDidSignIn()
+                    }
+                }
+            } else {
+                print("Error fetching remote config: \(error?.localizedDescription ?? "No error available.")")
+                self.checkDidSignIn()
+            }
+        }
+    }
     private func showUpdateAlert() {
         DispatchQueue.main.async {
             let alert = UIAlertController(
@@ -112,7 +147,7 @@ extension SplashVC {
             )
             
             let updateAction = UIAlertAction(title: "업데이트 링크", style: .default) { [self] _ in
-                openAppstore()
+                self.openAppstore()
             }
             
             alert.addAction(updateAction)
@@ -130,40 +165,6 @@ extension SplashVC {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             } else {
                 UIApplication.shared.openURL(url)
-            }
-        }
-    }
-    
-    /// ** RemoteConfig  **
-    /// 심사버전 > 스토어 버전이면 강제 업데이트 Alert을 진행 합니다.
-    private func setRemoteConfig() {
-        let remoteConfig = RemoteConfig.remoteConfig()
-        let settings = RemoteConfigSettings()
-        
-        settings.minimumFetchInterval = 0 // 개발 중에는 0으로 설정, 실제 앱에서는 적절한 값을 설정
-        remoteConfig.configSettings = settings
-        
-        remoteConfig.fetch { (status, error) -> Void in
-            if status == .success {
-                remoteConfig.activate { (changed, error) in
-                    // 현재 앱 버전 가져오기
-                    guard let info = Bundle.main.infoDictionary,
-                          let currentVersion = info["CFBundleShortVersionString"] as? String,
-                          let storeVersion = remoteConfig["iOS_current_market_version"].stringValue
-                    else { return }
-                    
-                    // 스토어 버전과 현재 버전 비교
-                    if currentVersion.compare(storeVersion, options: .numeric) == .orderedAscending {
-                        // 스토어 버전이 더 높으면 업데이트 필요
-                        self.showUpdateAlert()
-                    } else {
-                        // 업데이트가 필요하지 않으면 기본 로직 수행
-                        self.checkDidSignIn()
-                    }
-                }
-            } else {
-                print("Error fetching remote config: \(error?.localizedDescription ?? "No error available.")")
-                self.checkDidSignIn()
             }
         }
     }
