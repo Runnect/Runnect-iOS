@@ -36,14 +36,8 @@ final class SplashVC: UIViewController {
         self.setUI()
         self.setNavigationBar()
         self.setLayout()
-        
         self.setRemoteConfig()
-        
-        NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)
-            .sink { [weak self] _ in
-                self?.setRemoteConfig()
-            }
-            .store(in: cancelBag)
+        self.setObserver()
     }
 }
 
@@ -105,8 +99,11 @@ extension SplashVC {
     }
 }
 
+
+// MARK: - Remote Config
+
 extension SplashVC {
-    func showUpdateAlert() {
+    private func showUpdateAlert() {
         DispatchQueue.main.async {
             let alert = UIAlertController(
                 title: "업데이트 알림",
@@ -152,11 +149,9 @@ extension SplashVC {
                     // 현재 앱 버전 가져오기
                     guard let info = Bundle.main.infoDictionary,
                           let currentVersion = info["CFBundleShortVersionString"] as? String,
-                          let _ = info["CFBundleIdentifier"] as? String,
                           let storeVersion = remoteConfig["iOS_current_market_version"].stringValue
                     else { return }
                     
-                    print("‼️‼️‼️‼️\(currentVersion), ‼️‼️‼️‼️ \(storeVersion)")
                     // 스토어 버전과 현재 버전 비교
                     if currentVersion.compare(storeVersion, options: .numeric) == .orderedAscending {
                         // 스토어 버전이 더 높으면 업데이트 필요
@@ -171,5 +166,13 @@ extension SplashVC {
                 self.checkDidSignIn()
             }
         }
+    }
+    
+    private func setObserver() {
+        NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)
+            .sink { [weak self] _ in
+                self?.setRemoteConfig()
+            }
+            .store(in: cancelBag)
     }
 }
