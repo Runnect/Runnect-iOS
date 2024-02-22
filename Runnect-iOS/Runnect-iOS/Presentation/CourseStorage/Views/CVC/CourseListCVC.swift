@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol CourseListCVCDeleagte: AnyObject {
+protocol CourseListCVCDelegate: AnyObject {
     func likeButtonTapped(wantsTolike: Bool, index: Int)
 }
 
@@ -29,10 +29,10 @@ enum CourseListCVCType {
 }
 
 final class CourseListCVC: UICollectionViewCell {
-
+    
     // MARK: - Properties
     
-    weak var delegate: CourseListCVCDeleagte?
+    weak var delegate: CourseListCVCDelegate?
     
     private var indexPath: Int?
     
@@ -156,7 +156,7 @@ extension CourseListCVC {
     
     private func setLayout() {
         self.contentView.addSubviews(courseImageView, imageCoverView, labelStackView, likeButton, selectIndicatorButton)
-    
+        
         courseImageView.snp.makeConstraints { make in
             make.leading.top.trailing.equalToSuperview()
             let imageHeight = contentView.frame.width * (124/174)

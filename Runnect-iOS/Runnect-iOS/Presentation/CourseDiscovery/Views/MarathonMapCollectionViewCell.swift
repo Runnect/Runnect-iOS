@@ -151,7 +151,7 @@ extension MarathonMapCollectionViewCell: UICollectionViewDelegateFlowLayout {
 
 // MARK: - CourseListCVCDelegate
 
-extension MarathonMapCollectionViewCell: CourseListCVCDeleagte {
+extension MarathonMapCollectionViewCell: CourseListCVCDelegate {
     func likeButtonTapped(wantsTolike: Bool, index: Int) {
         guard UserManager.shared.userType != .visitor else {
             return

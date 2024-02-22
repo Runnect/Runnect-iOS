@@ -162,7 +162,7 @@ extension ScrapCourseListView: ListEmptyViewDelegate {
     }
 }
 
-extension ScrapCourseListView: CourseListCVCDeleagte {
+extension ScrapCourseListView: CourseListCVCDelegate {
     func likeButtonTapped(wantsTolike: Bool, index: Int) {
         let publicCourseId = courseList[index].publicCourseId
         delegate?.likeButtonTapped(wantsTolike: wantsTolike, publicCourseId: publicCourseId)

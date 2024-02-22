@@ -198,8 +198,9 @@ extension UserProfileVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
-// MARK: - CourseListCVCDeleagte
-extension UserProfileVC: CourseListCVCDeleagte {
+// MARK: - CourseListCVCDelegate
+
+extension UserProfileVC: CourseListCVCDelegate {
     func likeButtonTapped(wantsTolike: Bool, index: Int) {
         guard UserManager.shared.userType != .visitor else {
             showToastOnWindow(text: "러넥트에 가입하면 코스를 스크랩할 수 있어요")
