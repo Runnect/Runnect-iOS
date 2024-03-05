@@ -7,10 +7,12 @@
 
 import UIKit
 
+import SnapKit
+
 final class CourseDrawingHomeVC: UIViewController {
     
     // MARK: - Properties
-
+    
     private lazy var tabBarHeight = self.tabBarController?.tabBar.frame.size.height ?? 49
     
     // MARK: - UI Components
@@ -75,20 +77,20 @@ extension CourseDrawingHomeVC {
     private func setLayout() {
         view.addSubviews(mapView, drawCourseButton, guideView)
         
-        mapView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+        mapView.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview()
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
         
-        drawCourseButton.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(75)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(24)
-            make.height.equalTo(44)
+        drawCourseButton.snp.makeConstraints {
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(75)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(24)
+            $0.height.equalTo(44)
         }
         
-        guideView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(7)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(23)
+        guideView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(7)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(23)
         }
     }
 }

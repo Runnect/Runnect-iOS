@@ -8,9 +8,9 @@
 import UIKit
 import Combine
 
+import FirebaseRemoteConfig
 import SnapKit
 import Then
-import FirebaseRemoteConfig
 
 final class SplashVC: UIViewController {
     

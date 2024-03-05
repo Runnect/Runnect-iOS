@@ -2,12 +2,12 @@
 //  AdImageCollectionViewCell.swift
 //  Runnect-iOS
 //
-//  Created by YEONOO on 2023/01/10.
+//  Created by 이명진 on 2023/11/18.
 //
 
 import UIKit
-import SnapKit
 
+import SnapKit
 import Then
 
 final class AdImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
@@ -128,20 +128,8 @@ extension AdImageCollectionViewCell: UICollectionViewDelegate, UICollectionViewD
         imageView.isUserInteractionEnabled = true
         cell.contentView.addSubviews(imageView)
         
-        // 터치 이벤트 임시 제거
-        //        if indexPath.item == 0 {
-        //            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(firstCellTapped(_:)))
-        //            imageView.addGestureRecognizer(tapGesture)
-        //        }
         return cell
     }
-    // 첫 번째 셀 클릭 이벤트 핸들러
-    //    @objc func firstCellTapped(_ gesture: UITapGestureRecognizer) {
-    //        // Safari 링크로 연결
-    //        if let url = URL(string: "https://docs.google.com/forms/d/1cpgZHNNi1kIvi2ZCwCIcMJcI1PkHBz9a5vWJb7FfIbg/edit") {
-    //            UIApplication.shared.open(url)
-    //        }
-    //    }
     
 }
 

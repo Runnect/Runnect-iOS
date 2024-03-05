@@ -7,6 +7,9 @@
 
 import UIKit
 
+import SnapKit
+import Then
+
 final class UserProgressCell: UICollectionViewCell {
     
     // MARK: - properties
@@ -50,8 +53,7 @@ extension UserProgressCell {
         runningProgressInfoView.backgroundColor = .m3
         
         runningProgressInfoView.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(100)
+            $0.edges.equalToSuperview()
         }
     }
     private func setLayout() {

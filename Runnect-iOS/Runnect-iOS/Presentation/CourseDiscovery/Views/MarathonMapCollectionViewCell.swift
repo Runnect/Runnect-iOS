@@ -8,6 +8,8 @@
 import UIKit
 import Combine
 
+import SnapKit
+
 protocol MarathonScrapStateDelegate: AnyObject {
     func didUpdateMarathonScrapState(publicCourseId: Int, isScrapped: Bool)
 }

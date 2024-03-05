@@ -8,6 +8,9 @@
 import UIKit
 import Combine
 
+import SnapKit
+import Then
+
 final class CustomAlertVC: UIViewController {
     
     // MARK: - Properties
@@ -121,28 +124,29 @@ extension CustomAlertVC {
         
         alertView.addSubviews(alertImageView, contentsLabel, buttonStackView)
         
-        alertView.snp.makeConstraints { make in
-            make.center.equalTo(view.safeAreaLayoutGuide)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(31)
+        alertView.snp.makeConstraints {
+            $0.center.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(31)
         }
         
-        alertImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(38)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(189)
-            make.height.equalTo(169)
+        alertImageView.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(38)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(189)
+            $0.height.equalTo(169)
         }
         
-        contentsLabel.snp.makeConstraints { make in
-            make.top.equalTo(alertImageView.snp.bottom).offset(24)
-            make.leading.trailing.equalToSuperview().inset(10)
-            make.centerX.equalToSuperview()
+        contentsLabel.snp.makeConstraints {
+            $0.top.equalTo(alertImageView.snp.bottom).offset(24)
+            $0.leading.trailing.equalToSuperview().inset(10)
+            $0.centerX.equalToSuperview()
         }
-        buttonStackView.snp.makeConstraints { make in
-            make.top.equalTo(contentsLabel.snp.bottom).offset(26)
-            make.leading.trailing.equalToSuperview().inset(14)
-            make.height.equalTo(44)
-            make.bottom.equalToSuperview().inset(25)
+        
+        buttonStackView.snp.makeConstraints {
+            $0.top.equalTo(contentsLabel.snp.bottom).offset(26)
+            $0.leading.trailing.equalToSuperview().inset(14)
+            $0.height.equalTo(44)
+            $0.bottom.equalToSuperview().inset(25)
         }
     }
 }

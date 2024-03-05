@@ -7,10 +7,13 @@
 
 import UIKit
 
+import SnapKit
+import Then
+
 final class LocationSearchResultTVC: UITableViewCell {
     
     // MARK: - UI Components
-
+    
     private let locationPointImageView = UIImageView().then {
         $0.image = ImageLiterals.icLocationPoint
         $0.tintColor = .g3

@@ -7,6 +7,9 @@
 
 import UIKit
 
+import SnapKit
+import Then
+
 protocol CourseListCVCDelegate: AnyObject {
     func likeButtonTapped(wantsTolike: Bool, index: Int)
 }
@@ -64,7 +67,10 @@ final class CourseListCVC: UICollectionViewCell {
     }
     
     private lazy var labelStackView = UIStackView(
-        arrangedSubviews: [titleLabel, locationLabel]
+        arrangedSubviews: [
+            titleLabel,
+            locationLabel
+        ]
     ).then {
         $0.axis = .vertical
         $0.alignment = .leading

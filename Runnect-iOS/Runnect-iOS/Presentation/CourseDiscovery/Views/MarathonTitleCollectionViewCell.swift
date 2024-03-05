@@ -7,11 +7,19 @@
 
 import UIKit
 
+import SnapKit
+import Then
+
 final class MarathonTitleCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Components
     
-    private lazy var titleStackView = UIStackView(arrangedSubviews: [mainLabel, subLabel]).then {
+    private lazy var titleStackView = UIStackView(
+        arrangedSubviews: [
+            mainLabel,
+            subLabel
+        ]
+    ).then {
         $0.axis = .vertical
         $0.spacing = 6
         $0.alignment = .leading

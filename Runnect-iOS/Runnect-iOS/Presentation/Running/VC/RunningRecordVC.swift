@@ -8,6 +8,8 @@
 import UIKit
 
 import Moya
+import SnapKit
+import Then
 
 final class RunningRecordVC: UIViewController {
     
@@ -16,7 +18,7 @@ final class RunningRecordVC: UIViewController {
     private var runningModel: RunningModel?
     
     private let recordProvider = Providers.recordProvider
-
+    
     private let courseTitleMaxLength = 20
     
     // MARK: - UI Components
@@ -70,7 +72,7 @@ final class RunningRecordVC: UIViewController {
     ).then {
         $0.spacing = 25
     }
-
+    
     private let saveButton = CustomButton(title: "저장하기")
         .setEnabled(false)
     
@@ -158,10 +160,10 @@ extension RunningRecordVC {
     
     @objc private func keyboardWillShow(_ notification: Notification) {
         guard let userInfo = notification.userInfo,
-            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
-                return
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+            return
         }
-
+        
         let contentInset = UIEdgeInsets(
             top: 0.0,
             left: 0.0,
@@ -211,7 +213,7 @@ extension RunningRecordVC {
         }
         
         setContentViewLayout()
-    
+        
         saveButton.snp.makeConstraints { make in
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
             make.bottom.equalToSuperview().inset(34)

@@ -6,8 +6,9 @@
 //
 
 import UIKit
-import Then
+
 import SnapKit
+import Then
 
 enum locationType {
     case current
@@ -41,7 +42,8 @@ enum locationType {
     }
 }
 
-class LocationSelectView: BaseView {
+final class LocationSelectView: BaseView {
+    
     let type: locationType
     
     private lazy var view = UIView()

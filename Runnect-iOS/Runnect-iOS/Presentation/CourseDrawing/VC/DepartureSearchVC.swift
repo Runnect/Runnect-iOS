@@ -8,8 +8,10 @@
 import UIKit
 
 import Combine
-import Moya
 import CoreLocation
+import Moya
+import SnapKit
+import Then
 
 final class DepartureSearchVC: UIViewController, CLLocationManagerDelegate {
     

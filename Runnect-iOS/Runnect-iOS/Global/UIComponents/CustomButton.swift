@@ -10,7 +10,7 @@ import UIKit
 public class CustomButton: UIButton {
     
     // MARK: - Initialize
-
+    
     public init(title: String) {
         super.init(frame: .zero)
         self.setUI(title)

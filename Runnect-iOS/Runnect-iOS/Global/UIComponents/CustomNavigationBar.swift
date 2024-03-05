@@ -8,7 +8,6 @@
 import UIKit
 
 import SnapKit
-import Then
 
 protocol CustomNavigationBarDelegate: AnyObject {
     func searchButtonDidTap(text: String)
@@ -177,7 +176,6 @@ extension CustomNavigationBar {
         self.vc?.navigationController?.popViewController(animated: true)
         if vc.presentingViewController != nil {
             self.vc?.dismiss(animated: true)
-
         }
     }
     
@@ -256,61 +254,62 @@ extension CustomNavigationBar {
     private func setTitleLayout() {
         self.addSubviews(leftTitleLabel)
         
-        leftTitleLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().inset(16)
+        leftTitleLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().inset(16)
         }
     }
     
     private func setTitleWithLeftButtonLayout() {
         self.addSubviews(leftButton, centerTitleLabel)
         
-        leftButton.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.width.height.equalTo(48)
+        leftButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.width.height.equalTo(48)
         }
         
-        centerTitleLabel.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+        centerTitleLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
     }
     
     private func setSearchLayout() {
         self.addSubviews(leftButton, textField, rightButton)
         
-        leftButton.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.width.height.equalTo(48)
+        leftButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.width.height.equalTo(48)
         }
         
-        rightButton.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.width.height.equalTo(48)
+        rightButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.width.height.equalTo(48)
         }
         
-        textField.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalTo(leftButton.snp.trailing)
-            make.trailing.equalTo(rightButton.snp.leading)
+        textField.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(leftButton.snp.trailing)
+            $0.trailing.equalTo(rightButton.snp.leading)
         }
     }
     
     private func setReportButtonLayout() {
         self.addSubviews(leftButton, reportButton)
-        leftButton.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.width.height.equalTo(48)
-        }
-        reportButton.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.width.height.equalTo(48)
+        
+        leftButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.width.height.equalTo(48)
         }
         
+        reportButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.width.height.equalTo(48)
+        }
     }
 }
 

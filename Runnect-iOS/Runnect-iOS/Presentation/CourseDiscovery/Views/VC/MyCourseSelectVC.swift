@@ -7,8 +7,9 @@
 
 import UIKit
 
-import Then
 import Moya
+import SnapKit
+import Then
 
 protocol UploadStateDelegate: AnyObject {
     func didUploadCourse()

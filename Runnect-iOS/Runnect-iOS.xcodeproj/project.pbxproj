@@ -87,7 +87,7 @@
 		CE40BB2D296808B00030ABCA /* DepartureSearchingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40BB2C296808B00030ABCA /* DepartureSearchingRouter.swift */; };
 		CE4545C9295D7AF4003201E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545C8295D7AF4003201E1 /* AppDelegate.swift */; };
 		CE4545CB295D7AF4003201E1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CA295D7AF4003201E1 /* SceneDelegate.swift */; };
-		CE4545CD295D7AF4003201E1 /* TaBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CC295D7AF4003201E1 /* TaBarController.swift */; };
+		CE4545CD295D7AF4003201E1 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4545CC295D7AF4003201E1 /* TabBarController.swift */; };
 		CE4545D2295D7AF5003201E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE4545D1295D7AF5003201E1 /* Assets.xcassets */; };
 		CE4545D5295D7AF5003201E1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE4545D3295D7AF5003201E1 /* LaunchScreen.storyboard */; };
 		CE4942AD296FCD2300736701 /* UploadedCourseDetailResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4942AC296FCD2300736701 /* UploadedCourseDetailResponseDto.swift */; };
@@ -266,7 +266,7 @@
 		CE4545C5295D7AF4003201E1 /* Runnect-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Runnect-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4545C8295D7AF4003201E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE4545CA295D7AF4003201E1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		CE4545CC295D7AF4003201E1 /* TaBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaBarController.swift; sourceTree = "<group>"; };
+		CE4545CC295D7AF4003201E1 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		CE4545D1295D7AF5003201E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE4545D4295D7AF5003201E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CE4545D6295D7AF5003201E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -966,7 +966,7 @@
 		CE6655AB295D7FBC00C64E12 /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
-				CE4545CC295D7AF4003201E1 /* TaBarController.swift */,
+				CE4545CC295D7AF4003201E1 /* TabBarController.swift */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -1415,7 +1415,7 @@
 				CE665602295D918000C64E12 /* JsonCoder.swift in Sources */,
 				DA97A033296E65D80086760E /* CourseUploadingRequestDto.swift in Sources */,
 				711E18212B38516D00C651CD /* GAManager.swift in Sources */,
-				CE4545CD295D7AF4003201E1 /* TaBarController.swift in Sources */,
+				CE4545CD295D7AF4003201E1 /* TabBarController.swift in Sources */,
 				A3305A97296EF58C000B1A10 /* GoalRewardInfoDto.swift in Sources */,
 				CE21C024299E5FE500F62AF5 /* UserRouter.swift in Sources */,
 				71F780502B0893D700B53253 /* MarathonMapCollectionViewCell.swift in Sources */,

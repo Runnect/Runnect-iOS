@@ -8,6 +8,9 @@
 import UIKit
 import Combine
 
+import SnapKit
+import Then
+
 protocol PrivateCourseListViewDelegate: AnyObject {
     func courseListEditButtonTapped()
     func selectCellDidTapped()
@@ -32,7 +35,7 @@ final class PrivateCourseListView: UIView {
             isEditMode ? startEditMode() : finishEditMode()
         }
     }
-   
+    
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
     final let itemSpacing: CGFloat = 10
     final let lineSpacing: CGFloat = 20
@@ -59,8 +62,8 @@ final class PrivateCourseListView: UIView {
         $0.titleLabel?.font = .b5
         $0.layer.backgroundColor = UIColor.m3.cgColor
         $0.layer.cornerRadius = 11
-//        $0.layer.borderColor = UIColor.m1.cgColor
-//        $0.layer.borderWidth = 1
+        //        $0.layer.borderColor = UIColor.m1.cgColor
+        //        $0.layer.borderWidth = 1
     }
     
     lazy var courseListCollectionView = UICollectionView(
@@ -191,19 +194,19 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return courseList.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath) as? CourseListCVC else {
             return UICollectionViewCell()
         }
-
+        
         let model = courseList[indexPath.item]
         let cellTitle = model.title
         
         cell.setCellType(type: .title)
         cell.selectCell(didSelect: collectionView.indexPathsForSelectedItems?.contains(indexPath) ?? false)
         cell.setData(imageURL: model.image, title: cellTitle, location: nil, didLike: nil, isEditMode: isEditMode)
-
+        
         return cell
     }
     

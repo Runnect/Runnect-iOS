@@ -8,6 +8,9 @@
 import UIKit
 import Combine
 
+import SnapKit
+import Then
+
 protocol ScrapCourseListViewDelegate: AnyObject {
     func likeButtonTapped(wantsTolike: Bool, publicCourseId: Int)
 }

@@ -46,7 +46,7 @@ final class NickNameSetUpVC: UIViewController {
     }
     
     private let startButton = CustomButton(title: "시작하기").setEnabled(false)
-
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {

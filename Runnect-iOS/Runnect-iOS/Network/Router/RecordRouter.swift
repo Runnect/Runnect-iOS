@@ -64,8 +64,7 @@ extension RecordRouter: TargetType {
         case .updateRecordTitle(_, let recordTitle):
             do {
                 return .requestParameters(parameters: ["title": recordTitle], encoding: JSONEncoding.default)
-            } catch {
-                fatalError("Encoding 실패")}
+            }
         }
     }
     
