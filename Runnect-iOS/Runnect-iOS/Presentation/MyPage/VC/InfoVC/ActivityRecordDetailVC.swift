@@ -207,10 +207,10 @@ extension ActivityRecordDetailVC {
         
         self.navibar.isHidden = false
         
-        middleScorollView.snp.makeConstraints { make in
-            make.top.equalTo(navibar.snp.bottom)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
+        middleScorollView.snp.makeConstraints {
+            $0.top.equalTo(navibar.snp.bottom)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
     }
@@ -344,61 +344,61 @@ extension ActivityRecordDetailVC {
         view.addSubview(navibar)
         view.addSubview(moreButton)
         
-        navibar.snp.makeConstraints {  make in
-            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
+        navibar.snp.makeConstraints {
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(48)
         }
-        moreButton.snp.makeConstraints { make in
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide)
-            make.centerY.equalTo(navibar)
+        moreButton.snp.makeConstraints {
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide)
+            $0.centerY.equalTo(navibar)
         }
     }
     
     private func setLayout() {
         view.addSubviews(middleScorollView)
         
-        middleScorollView.snp.makeConstraints { make in
-            make.top.equalTo(navibar.snp.bottom)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
+        middleScorollView.snp.makeConstraints {
+            $0.top.equalTo(navibar.snp.bottom)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
         middleScorollView.addSubviews(mapImageView, courseTitleLabel, firstHorizontalDivideLine, recordInfoStackView, secondHorizontalDivideLine)
         
-        mapImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(middleScorollView.snp.width).multipliedBy(1.13)
+        mapImageView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(middleScorollView.snp.width).multipliedBy(1.13)
         }
         
-        courseTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(mapImageView.snp.bottom).offset(31)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(16)
+        courseTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(mapImageView.snp.bottom).offset(31)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(16)
         }
         
-        firstHorizontalDivideLine.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.height.equalTo(2)
-            make.top.equalTo(courseTitleLabel.snp.bottom).offset(7)
+        firstHorizontalDivideLine.snp.makeConstraints {
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.height.equalTo(2)
+            $0.top.equalTo(courseTitleLabel.snp.bottom).offset(7)
         }
         
-        recordInfoStackView.snp.makeConstraints { make in
-            make.top.equalTo(firstHorizontalDivideLine.snp.bottom).offset(20)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+        recordInfoStackView.snp.makeConstraints {
+            $0.top.equalTo(firstHorizontalDivideLine.snp.bottom).offset(20)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
         }
         
-        firstVerticalDivideLine.snp.makeConstraints { make in
-            make.width.equalTo(1)
+        firstVerticalDivideLine.snp.makeConstraints {
+            $0.width.equalTo(1)
         }
         
-        secondVerticalDivideLine.snp.makeConstraints { make in
-            make.width.equalTo(1)
+        secondVerticalDivideLine.snp.makeConstraints {
+            $0.width.equalTo(1)
         }
         
-        secondHorizontalDivideLine.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(7)
-            make.top.equalTo(recordInfoStackView.snp.bottom).offset(36)
+        secondHorizontalDivideLine.snp.makeConstraints {
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(7)
+            $0.top.equalTo(recordInfoStackView.snp.bottom).offset(36)
         }
         
         setRecordSubInfoStackView()
@@ -411,32 +411,32 @@ extension ActivityRecordDetailVC {
         let containerViewWidth = screenWidth - 32
         let stackViewWidth = Int(containerViewWidth - 2) / 3
         
-        recordDistanceStackView.snp.makeConstraints { make in
-            make.width.equalTo(stackViewWidth)
+        recordDistanceStackView.snp.makeConstraints {
+            $0.width.equalTo(stackViewWidth)
         }
         
-        recordRunningTimeStackView.snp.makeConstraints { make in
-            make.width.equalTo(stackViewWidth)
+        recordRunningTimeStackView.snp.makeConstraints {
+            $0.width.equalTo(stackViewWidth)
         }
         
-        recordAveragePaceStackView.snp.makeConstraints { make in
-            make.width.equalTo(stackViewWidth)
+        recordAveragePaceStackView.snp.makeConstraints {
+            $0.width.equalTo(stackViewWidth)
         }
         
-        recordSubInfoStackView.snp.makeConstraints { make in
-            make.top.equalTo(secondHorizontalDivideLine.snp.bottom).offset(23)
-            make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().inset(30)
+        recordSubInfoStackView.snp.makeConstraints {
+            $0.top.equalTo(secondHorizontalDivideLine.snp.bottom).offset(23)
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(30)
         }
     }
     
     private func setEditMode() {
         self.navibar.isHidden = false // true
         
-        mapImageView.snp.remakeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(middleScorollView.snp.width)
+        mapImageView.snp.remakeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(middleScorollView.snp.width)
         }
         
         self.courseTitleLabel.isHidden = true
@@ -445,43 +445,43 @@ extension ActivityRecordDetailVC {
         
         middleScorollView.addSubview(courseTitleTextField)
         
-        courseTitleTextField.snp.makeConstraints { make in
-            make.top.equalTo(mapImageView.snp.bottom).offset(27)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(35)
+        courseTitleTextField.snp.makeConstraints {
+            $0.top.equalTo(mapImageView.snp.bottom).offset(27)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(35)
         }
         
         self.finishEditButton.isHidden = false
         
-        firstHorizontalDivideLine.snp.remakeConstraints { make in
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.height.equalTo(2)
-            make.top.equalTo(courseTitleTextField.snp.bottom).offset(5)
+        firstHorizontalDivideLine.snp.remakeConstraints {
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.height.equalTo(2)
+            $0.top.equalTo(courseTitleTextField.snp.bottom).offset(5)
         }
         
-        recordInfoStackView.snp.makeConstraints { make in
-            make.top.equalTo(firstHorizontalDivideLine.snp.bottom).offset(20)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+        recordInfoStackView.snp.makeConstraints {
+            $0.top.equalTo(firstHorizontalDivideLine.snp.bottom).offset(20)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
         }
         
-        secondHorizontalDivideLine.snp.remakeConstraints { make in
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(7)
-            make.top.equalTo(recordInfoStackView.snp.bottom).offset(24)
+        secondHorizontalDivideLine.snp.remakeConstraints {
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(7)
+            $0.top.equalTo(recordInfoStackView.snp.bottom).offset(24)
         }
         
-        recordSubInfoStackView.snp.remakeConstraints { make in
-            make.top.equalTo(secondHorizontalDivideLine.snp.bottom).offset(22)
-            make.centerX.equalToSuperview()
+        recordSubInfoStackView.snp.remakeConstraints {
+            $0.top.equalTo(secondHorizontalDivideLine.snp.bottom).offset(22)
+            $0.centerX.equalToSuperview()
         }
         
         middleScorollView.addSubview(finishEditButton)
         
-        finishEditButton.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(30)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.top.equalTo(recordSubInfoStackView.snp.bottom).offset(50)
-            make.height.equalTo(44)
+        finishEditButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(30)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.top.equalTo(recordSubInfoStackView.snp.bottom).offset(50)
+            $0.height.equalTo(44)
         }
     }
 }

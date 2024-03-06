@@ -35,7 +35,7 @@ final class GoalRewardInfoVC: UIViewController {
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("목표 보상")
-        
+    
     private lazy var stampCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -68,7 +68,7 @@ extension GoalRewardInfoVC {
         stampCollectionView.delegate = self
         stampCollectionView.dataSource = self
     }
-
+    
     private func register() {
         stampCollectionView.register(GoalRewardInfoCVC.self,
                                      forCellWithReuseIdentifier: GoalRewardInfoCVC.className)
@@ -94,9 +94,9 @@ extension GoalRewardInfoVC {
     private func setNavigationBar() {
         view.addSubview(navibar)
         
-        navibar.snp.makeConstraints { make in
-            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
+        navibar.snp.makeConstraints {
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(48)
         }
     }
     
@@ -108,10 +108,10 @@ extension GoalRewardInfoVC {
     private func setLayout() {
         view.addSubview(stampCollectionView)
         
-        stampCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(navibar.snp.bottom)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalToSuperview()
+        stampCollectionView.snp.makeConstraints {
+            $0.top.equalTo(navibar.snp.bottom)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalToSuperview()
         }
     }
 }
@@ -140,7 +140,7 @@ extension GoalRewardInfoVC: UICollectionViewDelegateFlowLayout {
         if section == 0 { return 0 }
         return stampLineSpacing
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         if section == 0 { return .zero }
         return stampInset
@@ -156,7 +156,7 @@ extension GoalRewardInfoVC: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-                
+        
         if indexPath.section == 0 {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GoalRewardTitleCVC.className, for: indexPath) as? GoalRewardTitleCVC else { return UICollectionViewCell()}
             return cell

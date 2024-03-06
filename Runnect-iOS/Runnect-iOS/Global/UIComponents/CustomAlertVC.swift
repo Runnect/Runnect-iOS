@@ -72,9 +72,9 @@ extension CustomAlertVC {
     /// 이미지 변경
     public func setImage(_ image: UIImage, size: CGSize) {
         self.alertImageView.image = image
-        self.alertImageView.snp.updateConstraints { make in
-            make.width.equalTo(size.width)
-            make.height.equalTo(size.height)
+        self.alertImageView.snp.updateConstraints {
+            $0.width.equalTo(size.width)
+            $0.height.equalTo(size.height)
         }
     }
     

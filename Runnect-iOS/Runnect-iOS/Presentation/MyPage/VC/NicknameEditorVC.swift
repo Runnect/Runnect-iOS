@@ -30,7 +30,7 @@ final class NicknameEditorVC: UIViewController {
     // MARK: - UI Components
     
     private lazy var navibar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle("닉네임 수정")
-
+    
     private lazy var nickNameTextField = UITextField().then {
         $0.resignFirstResponder()
         $0.text = self.currentNickname
@@ -64,7 +64,7 @@ final class NicknameEditorVC: UIViewController {
     }
     
     // MARK: - View Life Cycle
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         nickNameTextField.delegate = self
@@ -114,7 +114,7 @@ extension NicknameEditorVC {
     
     @objc private func textFieldTextDidChange() {
         guard let text = nickNameTextField.text else { return }
-                
+        
         if text.count > nicknameMaxLength {
             let index = text.index(text.startIndex, offsetBy: nicknameMaxLength)
             let newString = text[text.startIndex..<index]
@@ -138,33 +138,33 @@ extension NicknameEditorVC {
     private func setLayout() {
         view.addSubviews(navibar, finishNickNameLabel, personImageView, nickNameContainer)
         
-        navibar.snp.makeConstraints { make in
-            make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
+        navibar.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(48)
         }
         
-        finishNickNameLabel.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(23)
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(12)
+        finishNickNameLabel.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(23)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(12)
         }
         
-        personImageView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.width.height.equalTo(96)
-            make.top.equalTo(navibar.snp.bottom).offset(98)
+        personImageView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.width.height.equalTo(96)
+            $0.top.equalTo(navibar.snp.bottom).offset(98)
         }
         
-        nickNameContainer.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(30)
-            make.height.equalTo(44)
-            make.top.equalTo(personImageView.snp.bottom).offset(51)
+        nickNameContainer.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.height.equalTo(44)
+            $0.top.equalTo(personImageView.snp.bottom).offset(51)
         }
         
         nickNameContainer.addSubview(nickNameTextField)
         
-        nickNameTextField.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.trailing.equalToSuperview()
+        nickNameTextField.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
         }
     }
 }

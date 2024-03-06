@@ -163,31 +163,31 @@ extension SignInSocialLoginVC {
     private func setLayout() {
         view.addSubviews(backgroundImageView, logoImageView, kakaoLoginButton, appleLoginButton, visitorButton)
         
-        backgroundImageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        backgroundImageView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
         
-        logoImageView.snp.makeConstraints { make in
-            make.center.equalTo(view.safeAreaLayoutGuide)
+        logoImageView.snp.makeConstraints {
+            $0.center.equalTo(view.safeAreaLayoutGuide)
         }
         
-        visitorButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(23)
-            make.height.equalTo(38)
-            make.width.equalTo(158)
-            make.centerX.equalToSuperview()
+        visitorButton.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(23)
+            $0.height.equalTo(38)
+            $0.width.equalTo(158)
+            $0.centerX.equalToSuperview()
         }
         
-        kakaoLoginButton.snp.makeConstraints { make in
-            make.bottom.equalTo(visitorButton.snp.top).offset(-10)
-            make.height.equalTo(55)
-            make.leading.trailing.equalToSuperview().inset(15)
+        kakaoLoginButton.snp.makeConstraints {
+            $0.bottom.equalTo(visitorButton.snp.top).offset(-10)
+            $0.height.equalTo(55)
+            $0.leading.trailing.equalToSuperview().inset(15)
         }
         
-        appleLoginButton.snp.makeConstraints { make in
-            make.bottom.equalTo(kakaoLoginButton.snp.top).offset(-10)
-            make.height.equalTo(55)
-            make.leading.trailing.equalToSuperview().inset(15)
+        appleLoginButton.snp.makeConstraints {
+            $0.bottom.equalTo(kakaoLoginButton.snp.top).offset(-10)
+            $0.height.equalTo(55)
+            $0.leading.trailing.equalToSuperview().inset(15)
         }
     }
 }

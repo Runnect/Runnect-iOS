@@ -112,26 +112,26 @@ extension NickNameSetUpVC {
     private func setLayout() {
         view.addSubviews(directionLabel, personImageView, nicknameTextField, startButton)
         
-        directionLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(60)
-            make.leading.equalTo(view.safeAreaLayoutGuide).inset(24)
+        directionLabel.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(60)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(24)
         }
         
-        personImageView.snp.makeConstraints { make in
-            make.centerX.equalTo(view.safeAreaLayoutGuide)
-            make.top.equalTo(directionLabel.snp.bottom).offset(93.adjustedH)
+        personImageView.snp.makeConstraints {
+            $0.centerX.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(directionLabel.snp.bottom).offset(93.adjustedH)
         }
         
-        nicknameTextField.snp.makeConstraints { make in
-            make.top.equalTo(personImageView.snp.bottom).offset(34)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(30)
-            make.height.equalTo(44)
+        nicknameTextField.snp.makeConstraints {
+            $0.top.equalTo(personImageView.snp.bottom).offset(34)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(30)
+            $0.height.equalTo(44)
         }
         
-        startButton.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(30)
-            make.bottom.equalToSuperview().inset(34)
-            make.height.equalTo(44)
+        startButton.snp.makeConstraints {
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(30)
+            $0.bottom.equalToSuperview().inset(34)
+            $0.height.equalTo(44)
         }
     }
 }

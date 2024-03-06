@@ -150,21 +150,21 @@ extension MyPageVC {
         
         containerView.addSubviews(icStar, label, icArrowRight)
         
-        icStar.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(22)
-            make.leading.equalToSuperview().offset(17)
-            make.width.equalTo(14)
-            make.height.equalTo(14)
+        icStar.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(22)
+            $0.leading.equalToSuperview().offset(17)
+            $0.width.equalTo(14)
+            $0.height.equalTo(14)
         }
         
-        label.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(21)
-            make.leading.equalTo(icStar.snp.trailing).offset(8)
+        label.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(21)
+            $0.leading.equalTo(icStar.snp.trailing).offset(8)
         }
         
-        icArrowRight.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(18)
-            make.trailing.equalToSuperview().inset(10)
+        icArrowRight.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(18)
+            $0.trailing.equalToSuperview().inset(10)
         }
         
         return containerView

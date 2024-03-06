@@ -107,36 +107,40 @@ extension CourseSearchVC {
 }
 
 // MARK: - UI & Layout
+
 extension CourseSearchVC {
     private func setNavigationBar() {
         view.addSubview(naviBar)
-        naviBar.snp.makeConstraints { make in
-            make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
+        naviBar.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(48)
         }
     }
+    
     private func layout() {
         view.backgroundColor = .w1
         emptyDataView.isHidden = true // 데이터가 없으면 false로 설정
         view.addSubviews(dividerView, mapCollectionView)
         
-        dividerView.snp.makeConstraints { make in
-            make.top.equalTo(naviBar.snp.bottom)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(6)
+        dividerView.snp.makeConstraints {
+            $0.top.equalTo(naviBar.snp.bottom)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(6)
         }
-        mapCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(self.dividerView.snp.bottom)
-            make.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
+        
+        mapCollectionView.snp.makeConstraints {
+            $0.top.equalTo(dividerView.snp.bottom)
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
         mapCollectionView.addSubview(emptyDataView)
         
-        emptyDataView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+        emptyDataView.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
     }
 }
+
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
 extension CourseSearchVC: UICollectionViewDelegate, UICollectionViewDataSource {

@@ -66,9 +66,9 @@ extension ListEmptyView {
     
     public func setImage(_ image: UIImage, size: CGSize) {
         self.mainImageView.image = image
-        self.mainImageView.snp.updateConstraints { make in
-            make.width.equalTo(size.width)
-            make.height.equalTo(size.height)
+        self.mainImageView.snp.updateConstraints {
+            $0.width.equalTo(size.width)
+            $0.height.equalTo(size.height)
         }
     }
 }

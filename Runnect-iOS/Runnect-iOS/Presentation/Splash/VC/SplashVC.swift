@@ -90,12 +90,12 @@ extension SplashVC {
     private func setLayout() {
         view.addSubviews(backgroundImageView, logoImageView)
         
-        backgroundImageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        backgroundImageView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
         
-        logoImageView.snp.makeConstraints { make in
-            make.center.equalTo(view.safeAreaLayoutGuide)
+        logoImageView.snp.makeConstraints {
+            $0.center.equalTo(view.safeAreaLayoutGuide)
         }
     }
 }

@@ -356,20 +356,20 @@ extension RNMapView {
     private func setLayout() {
         addSubviews(map, locationButton)
         
-        map.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        map.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
         
-        locationButton.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(88+bottomPadding)
-            make.trailing.equalToSuperview().inset(12)
+        locationButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(88+bottomPadding)
+            $0.trailing.equalToSuperview().inset(12)
         }
     }
     
     private func updateSubviewsConstraints() {
         [locationButton].forEach { view in
-            view.snp.updateConstraints { make in
-                make.bottom.equalToSuperview().inset(98+bottomPadding)
+            view.snp.updateConstraints {
+                $0.bottom.equalToSuperview().inset(98+bottomPadding)
             }
         }
     }

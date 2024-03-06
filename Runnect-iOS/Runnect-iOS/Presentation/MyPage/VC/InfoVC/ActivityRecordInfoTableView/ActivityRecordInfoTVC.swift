@@ -59,7 +59,7 @@ final class ActivityRecordInfoTVC: UITableViewCell {
     private lazy var activityRecordTotalDistanceLabel = SetInfoLayout.makeGreySmailTitleLabel().then {
         $0.text = "총 거리"
     }
-
+    
     private lazy var activityRecordRunningTimeLabel = SetInfoLayout.makeGreySmailTitleLabel().then {
         $0.text = "이동 시간"
     }
@@ -189,10 +189,10 @@ extension ActivityRecordInfoTVC {
     func setLayout() {
         addSubview(activityRecordContainerView)
         
-        activityRecordContainerView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(177)
+        activityRecordContainerView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(177)
         }
         
         activityRecordContainerView.addSubviews(
@@ -202,30 +202,30 @@ extension ActivityRecordInfoTVC {
             activityRecordSubInfoStackView
         )
         
-        activityRecordMapImage.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(13)
-            make.leading.equalToSuperview().offset(20)
-            make.width.equalTo(86)
-            make.height.equalTo(85)
+        activityRecordMapImage.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(13)
+            $0.leading.equalToSuperview().offset(20)
+            $0.width.equalTo(86)
+            $0.height.equalTo(85)
         }
         
-        activityRecordMainInfoStackView.snp.makeConstraints { make in
-            make.centerY.equalTo(activityRecordMapImage.snp.centerY)
-            make.leading.equalTo(activityRecordMapImage.snp.trailing).offset(14)
+        activityRecordMainInfoStackView.snp.makeConstraints {
+            $0.centerY.equalTo(activityRecordMapImage.snp.centerY)
+            $0.leading.equalTo(activityRecordMapImage.snp.trailing).offset(14)
         }
         
-        horizontalDivideLine.snp.makeConstraints { make in
-            make.top.equalTo(activityRecordMapImage.snp.bottom).offset(8)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(1)
+        horizontalDivideLine.snp.makeConstraints {
+            $0.top.equalTo(activityRecordMapImage.snp.bottom).offset(8)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(1)
         }
         
-        firstVerticalDivideLine.snp.makeConstraints { make in
-            make.width.equalTo(1)
+        firstVerticalDivideLine.snp.makeConstraints {
+            $0.width.equalTo(1)
         }
         
-        secondVerticalDivideLine.snp.makeConstraints { make in
-            make.width.equalTo(1)
+        secondVerticalDivideLine.snp.makeConstraints {
+            $0.width.equalTo(1)
         }
         
         setActivityRecordSubInfoStackView()
@@ -236,21 +236,21 @@ extension ActivityRecordInfoTVC {
         let containerViewWidth = screenWidth - 32
         let stackViewWidth = Int(containerViewWidth - 2) / 3
         
-        activityRecordTotalDistanceStackView.snp.makeConstraints { make in
-            make.width.equalTo(stackViewWidth)
+        activityRecordTotalDistanceStackView.snp.makeConstraints {
+            $0.width.equalTo(stackViewWidth)
         }
-
-        activityRecordRunningTimeStackView.snp.makeConstraints { make in
-            make.width.equalTo(stackViewWidth)
+        
+        activityRecordRunningTimeStackView.snp.makeConstraints {
+            $0.width.equalTo(stackViewWidth)
         }
-
-        activityRecordAveragePaceStackView.snp.makeConstraints { make in
-            make.width.equalTo(stackViewWidth)
+        
+        activityRecordAveragePaceStackView.snp.makeConstraints {
+            $0.width.equalTo(stackViewWidth)
         }
-
-        activityRecordSubInfoStackView.snp.makeConstraints { make in
-            make.top.equalTo(horizontalDivideLine.snp.bottom).offset(15)
-            make.centerX.equalToSuperview()
+        
+        activityRecordSubInfoStackView.snp.makeConstraints {
+            $0.top.equalTo(horizontalDivideLine.snp.bottom).offset(15)
+            $0.centerX.equalToSuperview()
         }
     }
     

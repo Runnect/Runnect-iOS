@@ -12,7 +12,7 @@ import Then
 import SafariServices
 
 final class SettingVC: UIViewController {
-
+    
     private var email = String()
     
     // MARK: - UI Components
@@ -34,7 +34,7 @@ final class SettingVC: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.touchUpTermsOfServiceView))
         $0.addGestureRecognizer(tap)
     }
-        
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -66,14 +66,14 @@ extension SettingVC {
         
         containerView.addSubviews(label, icArrowRight)
         
-        label.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(21)
-            make.leading.equalToSuperview().offset(18)
+        label.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(21)
+            $0.leading.equalToSuperview().offset(18)
         }
         
-        icArrowRight.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(18)
-            make.trailing.equalToSuperview().inset(10)
+        icArrowRight.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(18)
+            $0.trailing.equalToSuperview().inset(10)
         }
         
         return containerView
@@ -113,15 +113,15 @@ extension SettingVC {
     private func setLayout() {
         view.addSubviews(navibar, bottomNavibarDiviedView)
         
-        navibar.snp.makeConstraints { make in
-            make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
+        navibar.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(48)
         }
         
-        bottomNavibarDiviedView.snp.makeConstraints { make in
-            make.top.equalTo(navibar.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(4)
+        bottomNavibarDiviedView.snp.makeConstraints {
+            $0.top.equalTo(navibar.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(4)
         }
         
         setPersonalInfoViewLayout()
@@ -131,32 +131,32 @@ extension SettingVC {
     private func setPersonalInfoViewLayout() {
         view.addSubviews(personalInfoView, firstDiviedView)
         
-        personalInfoView.snp.makeConstraints { make in
-            make.top.equalTo(bottomNavibarDiviedView.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(62)
+        personalInfoView.snp.makeConstraints {
+            $0.top.equalTo(bottomNavibarDiviedView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(62)
         }
         
-        firstDiviedView.snp.makeConstraints { make in
-            make.top.equalTo(personalInfoView.snp.bottom).offset(1)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(0.5)
+        firstDiviedView.snp.makeConstraints {
+            $0.top.equalTo(personalInfoView.snp.bottom).offset(1)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(0.5)
         }
     }
     
     private func setTermsOfServiceViewLayout() {
         view.addSubviews(termsOfServiceView, secondDiviedView)
         
-        termsOfServiceView.snp.makeConstraints { make in
-            make.top.equalTo(firstDiviedView.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(62)
+        termsOfServiceView.snp.makeConstraints {
+            $0.top.equalTo(firstDiviedView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(62)
         }
         
-        secondDiviedView.snp.makeConstraints { make in
-            make.top.equalTo(termsOfServiceView.snp.bottom).offset(1)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(0.5)
+        secondDiviedView.snp.makeConstraints {
+            $0.top.equalTo(termsOfServiceView.snp.bottom).offset(1)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(0.5)
         }
     }
 }

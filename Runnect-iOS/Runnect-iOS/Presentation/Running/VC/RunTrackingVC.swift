@@ -221,40 +221,40 @@ extension RunTrackingVC {
         view.addSubviews(mapView, statsView, runningCompleteButton)
         statsView.addSubviews(backButton, statsStackView, bigStarImageView, smallStarImageView)
         
-        statsView.snp.makeConstraints { make in
-            make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(100)
+        statsView.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(100)
         }
         
-        backButton.snp.makeConstraints { make in
-            make.leading.top.equalToSuperview()
-            make.width.height.equalTo(48)
+        backButton.snp.makeConstraints {
+            $0.leading.top.equalToSuperview()
+            $0.width.height.equalTo(48)
         }
         
-        statsStackView.snp.makeConstraints { make in
-            make.leading.equalTo(backButton.snp.trailing)
-            make.top.equalToSuperview().inset(15)
+        statsStackView.snp.makeConstraints {
+            $0.leading.equalTo(backButton.snp.trailing)
+            $0.top.equalToSuperview().inset(15)
         }
         
-        bigStarImageView.snp.makeConstraints { make in
-            make.centerY.equalTo(timeStatsLabel.snp.centerY)
-            make.trailing.equalToSuperview().inset(15)
+        bigStarImageView.snp.makeConstraints {
+            $0.centerY.equalTo(timeStatsLabel.snp.centerY)
+            $0.trailing.equalToSuperview().inset(15)
         }
         
-        smallStarImageView.snp.makeConstraints { make in
-            make.top.equalTo(bigStarImageView.snp.bottom).offset(2)
-            make.centerX.equalTo(bigStarImageView.snp.leading).multipliedBy(0.99)
+        smallStarImageView.snp.makeConstraints {
+            $0.top.equalTo(bigStarImageView.snp.bottom).offset(2)
+            $0.centerX.equalTo(bigStarImageView.snp.leading).multipliedBy(0.99)
         }
         
-        mapView.snp.makeConstraints { make in
-            make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalToSuperview()
+        mapView.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalToSuperview()
         }
         
-        runningCompleteButton.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.height.equalTo(44)
-            make.bottom.equalToSuperview().inset(34)
+        runningCompleteButton.snp.makeConstraints {
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.height.equalTo(44)
+            $0.bottom.equalToSuperview().inset(34)
         }
     }
 }

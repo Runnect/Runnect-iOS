@@ -89,18 +89,18 @@ extension CountDownVC {
     private func setLayout() {
         view.addSubviews(backgroundImageView, timeLabel, directionLabel)
         
-        backgroundImageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        backgroundImageView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
         
-        timeLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(view.safeAreaLayoutGuide)
-            make.centerY.equalTo(view.safeAreaLayoutGuide).multipliedBy(0.9)
+        timeLabel.snp.makeConstraints {
+            $0.centerX.equalTo(view.safeAreaLayoutGuide)
+            $0.centerY.equalTo(view.safeAreaLayoutGuide).multipliedBy(0.9)
         }
         
-        directionLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(view.safeAreaLayoutGuide)
-            make.centerY.equalTo(view.safeAreaLayoutGuide).multipliedBy(1.15)
+        directionLabel.snp.makeConstraints {
+            $0.centerX.equalTo(view.safeAreaLayoutGuide)
+            $0.centerY.equalTo(view.safeAreaLayoutGuide).multipliedBy(1.15)
         }
     }
 }

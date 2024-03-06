@@ -291,9 +291,9 @@ extension CustomBottomSheetVC {
         
         let topConst = (safeAreaHeight + bottomPadding)
         
-        bottomSheetView.snp.remakeConstraints { make in
-            make.leading.bottom.trailing.equalToSuperview()
-            make.top.equalTo(view.snp.top).offset(topConst)
+        bottomSheetView.snp.remakeConstraints {
+            $0.leading.bottom.trailing.equalToSuperview()
+            $0.top.equalTo(view.snp.top).offset(topConst)
         }
         
         UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {

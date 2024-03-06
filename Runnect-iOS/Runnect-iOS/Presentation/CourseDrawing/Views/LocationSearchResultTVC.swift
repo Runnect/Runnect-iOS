@@ -74,21 +74,21 @@ extension LocationSearchResultTVC {
     private func setLayout() {
         self.addSubviews(locationPointImageView, locationStackView, dividerView)
         
-        locationPointImageView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(24)
-            make.centerY.equalToSuperview()
+        locationPointImageView.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(24)
+            $0.centerY.equalToSuperview()
         }
         
-        locationStackView.snp.makeConstraints { make in
-            make.leading.equalTo(locationPointImageView.snp.trailing).offset(14)
-            make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().inset(24)
+        locationStackView.snp.makeConstraints {
+            $0.leading.equalTo(locationPointImageView.snp.trailing).offset(14)
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(24)
         }
         
-        dividerView.snp.makeConstraints { make in
-            make.bottom.equalToSuperview()
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(1)
+        dividerView.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(1)
         }
     }
 }

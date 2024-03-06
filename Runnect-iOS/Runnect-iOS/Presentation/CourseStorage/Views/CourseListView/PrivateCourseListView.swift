@@ -158,31 +158,32 @@ extension PrivateCourseListView {
         self.addSubviews(beforeEditTopView, courseListCollectionView)
         courseListCollectionView.addSubviews(emptyView)
         beforeEditTopView.addSubviews(totalNumOfRecordlabel, editButton)
-        beforeEditTopView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(38)
+        beforeEditTopView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(38)
         }
         
-        totalNumOfRecordlabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(16)
-            make.top.equalToSuperview().offset(10)
+        totalNumOfRecordlabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(16)
+            $0.top.equalToSuperview().offset(10)
         }
         
-        editButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(16)
-            make.width.equalTo(47)
-            make.height.equalTo(22)
-            make.top.equalToSuperview().offset(8)
+        editButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(16)
+            $0.width.equalTo(47)
+            $0.height.equalTo(22)
+            $0.top.equalToSuperview().offset(8)
         }
         
-        courseListCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(editButton.snp.bottom)
-            make.leading.bottom.trailing.equalToSuperview()
+        courseListCollectionView.snp.makeConstraints {
+            $0.top.equalTo(editButton.snp.bottom)
+            $0.leading.bottom.trailing.equalToSuperview()
         }
-        emptyView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(80)
+        
+        emptyView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(80)
         }
     }
 }

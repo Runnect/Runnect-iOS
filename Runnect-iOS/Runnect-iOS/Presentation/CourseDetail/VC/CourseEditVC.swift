@@ -16,7 +16,7 @@ class CourseEditVC: UIViewController {
     // MARK: - Properties
     
     private let PublicCourseProvider = Providers.publicCourseProvider
-
+    
     private let courseTitleMaxLength = 20
     private let activityTextMaxLength = 150
     var publicCourseId: Int?
@@ -54,7 +54,7 @@ class CourseEditVC: UIViewController {
         $0.tintColor = .m1
         $0.textContainerInset = UIEdgeInsets(top: 14, left: 12, bottom: 14, right: 12)
     }
-
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -204,7 +204,7 @@ extension CourseEditVC {
             self?.navigationController?.popViewController(animated: true)
         }, .titleWithLeftButton)
     }
-
+    
     @objc func presentToQuitEditAlertVC() {
         let quitEditAlertVC = RNAlertVC(description: "게시글 수정을 종료할까요?\n종료 시 수정 내용이 반영되지 않아요.")
         
@@ -224,9 +224,9 @@ extension CourseEditVC {
     private func setNavigationBar() {
         view.addSubview(navibar)
         
-        navibar.snp.makeConstraints { make in
-            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
+        navibar.snp.makeConstraints {
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(48)
         }
     }
     
@@ -242,15 +242,15 @@ extension CourseEditVC {
         view.bringSubviewToFront(editButton)
         buttonContainerView.addSubview(editButton)
         
-        buttonContainerView.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(86)
-            make.bottom.equalToSuperview()
+        buttonContainerView.snp.makeConstraints {
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(86)
+            $0.bottom.equalToSuperview()
         }
-        editButton.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.height.equalTo(44)
-            make.bottom.equalToSuperview().inset(34)
+        editButton.snp.makeConstraints {
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.height.equalTo(44)
+            $0.bottom.equalToSuperview().inset(34)
         }
         
         setScrollViewLayout()
@@ -273,39 +273,41 @@ extension CourseEditVC {
             $0.bottom.equalTo(editButton.snp.top).inset(-25)
         }
         
-        mapImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
-            make.height.equalTo(mapImageView.snp.width).multipliedBy(0.75)
+        mapImageView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
+            $0.height.equalTo(mapImageView.snp.width).multipliedBy(0.75)
         }
         
-        courseTitleTextField.snp.makeConstraints { make in
-            make.top.equalTo(mapImageView.snp.bottom).offset(28)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.height.equalTo(35)
-        }
-                
-        dividerView.snp.makeConstraints { make in
-            make.top.equalTo(courseTitleTextField.snp.bottom).offset(0)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.height.equalTo(2)
+        courseTitleTextField.snp.makeConstraints {
+            $0.top.equalTo(mapImageView.snp.bottom).offset(28)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.height.equalTo(35)
         }
         
-        distanceInfoView.snp.makeConstraints { make in
-            make.top.equalTo(courseTitleTextField.snp.bottom).offset(22)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.height.equalTo(16)
+        dividerView.snp.makeConstraints {
+            $0.top.equalTo(courseTitleTextField.snp.bottom).offset(0)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.height.equalTo(2)
         }
-        departureInfoView.snp.makeConstraints { make in
-            make.top.equalTo(distanceInfoView.snp.bottom).offset(6)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.height.equalTo(16)
+        
+        distanceInfoView.snp.makeConstraints {
+            $0.top.equalTo(courseTitleTextField.snp.bottom).offset(22)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.height.equalTo(16)
         }
-        activityTextView.snp.makeConstraints { make in
-            make.top.equalTo(departureInfoView.snp.bottom).offset(34)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.bottom.equalToSuperview()
-            make.height.equalTo(187)
+        
+        departureInfoView.snp.makeConstraints {
+            $0.top.equalTo(distanceInfoView.snp.bottom).offset(6)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.height.equalTo(16)
+        }
+        
+        activityTextView.snp.makeConstraints {
+            $0.top.equalTo(departureInfoView.snp.bottom).offset(34)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.bottom.equalToSuperview()
+            $0.height.equalTo(187)
         }
     }
 }
@@ -351,14 +353,14 @@ extension CourseEditVC: UITextViewDelegate {
         
         let attributedString = NSMutableAttributedString(string: textView.text)
         attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
-
+        
         textView.attributedText = attributedString
         textView.font = .b3
         textView.textColor = .g1
         
         // 커서 위치 다시 설정
         textView.selectedRange = selectedRange
-
+        
         guard let courseTitleTextFieldText = self.courseTitleTextField.text else { return }
         textDidChanged(courseTitleTextFieldText, text)
         

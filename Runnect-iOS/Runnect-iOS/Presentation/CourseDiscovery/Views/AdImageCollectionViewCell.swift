@@ -89,12 +89,13 @@ extension AdImageCollectionViewCell {
         contentView.addSubview(bannerCollectionView)
         contentView.addSubview(pageControl)
         
-        bannerCollectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        bannerCollectionView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
-        pageControl.snp.makeConstraints { make in
-            make.centerX.equalTo(self)
-            make.bottom.equalTo(bannerCollectionView.snp.bottom)
+        
+        pageControl.snp.makeConstraints {
+            $0.centerX.equalTo(self)
+            $0.bottom.equalTo(bannerCollectionView.snp.bottom)
         }
     }
 }
