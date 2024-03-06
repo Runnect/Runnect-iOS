@@ -391,7 +391,7 @@ extension CourseDetailVC {
         
         navibar.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(48)
+            $0.height.equalTo(56)
         }
         
         moreButton.snp.makeConstraints {
@@ -479,9 +479,9 @@ extension CourseDetailVC {
             $0.width.height.equalTo(37)
         }
         
-        profileNameLabel.snp.makeConstraints {
-            $0.leading.equalTo(profileImageView.snp.trailing).offset(12)
-        }
+//        profileNameLabel.snp.makeConstraints {
+//            $0.leading.equalTo(profileImageView.snp.trailing).offset(12)
+//        }
         
         firstHorizontalDivideLine.snp.makeConstraints {
             $0.top.equalTo(mapImageView.snp.bottom).offset(62)

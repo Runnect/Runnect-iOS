@@ -7,6 +7,9 @@
 
 import UIKit
 
+import SnapKit
+import Then
+
 final class CourseDetailInfoView: UIView {
     
     // MARK: - UI Components
@@ -60,20 +63,20 @@ extension CourseDetailInfoView {
     private func setLayout() {
         self.addSubviews(leftImageView, titleLabel, descriptionLabel)
         
-        leftImageView.snp.makeConstraints { make in
-            make.top.leading.bottom.equalToSuperview()
-            make.width.equalTo(leftImageView.snp.height)
+        leftImageView.snp.makeConstraints {
+            $0.top.leading.bottom.equalToSuperview()
+            $0.width.equalTo(leftImageView.snp.height)
         }
         
-        titleLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalTo(leftImageView.snp.trailing).offset(9)
+        titleLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(leftImageView.snp.trailing).offset(9)
         }
         
-        descriptionLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalTo(titleLabel.snp.leading).offset(57)
-            make.trailing.greaterThanOrEqualToSuperview()
+        descriptionLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(titleLabel.snp.leading).offset(57)
+            $0.trailing.greaterThanOrEqualToSuperview()
         }
     }
 }

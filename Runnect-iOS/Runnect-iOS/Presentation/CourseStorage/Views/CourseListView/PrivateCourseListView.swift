@@ -8,6 +8,9 @@
 import UIKit
 import Combine
 
+import SnapKit
+import Then
+
 protocol PrivateCourseListViewDelegate: AnyObject {
     func courseListEditButtonTapped()
     func selectCellDidTapped()
@@ -32,7 +35,7 @@ final class PrivateCourseListView: UIView {
             isEditMode ? startEditMode() : finishEditMode()
         }
     }
-   
+    
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
     final let itemSpacing: CGFloat = 10
     final let lineSpacing: CGFloat = 20
@@ -59,8 +62,8 @@ final class PrivateCourseListView: UIView {
         $0.titleLabel?.font = .b5
         $0.layer.backgroundColor = UIColor.m3.cgColor
         $0.layer.cornerRadius = 11
-//        $0.layer.borderColor = UIColor.m1.cgColor
-//        $0.layer.borderWidth = 1
+        //        $0.layer.borderColor = UIColor.m1.cgColor
+        //        $0.layer.borderWidth = 1
     }
     
     lazy var courseListCollectionView = UICollectionView(
@@ -155,31 +158,32 @@ extension PrivateCourseListView {
         self.addSubviews(beforeEditTopView, courseListCollectionView)
         courseListCollectionView.addSubviews(emptyView)
         beforeEditTopView.addSubviews(totalNumOfRecordlabel, editButton)
-        beforeEditTopView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(38)
+        beforeEditTopView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(38)
         }
         
-        totalNumOfRecordlabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(16)
-            make.top.equalToSuperview().offset(10)
+        totalNumOfRecordlabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(16)
+            $0.top.equalToSuperview().offset(10)
         }
         
-        editButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(16)
-            make.width.equalTo(47)
-            make.height.equalTo(22)
-            make.top.equalToSuperview().offset(8)
+        editButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(16)
+            $0.width.equalTo(47)
+            $0.height.equalTo(22)
+            $0.top.equalToSuperview().offset(8)
         }
         
-        courseListCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(editButton.snp.bottom)
-            make.leading.bottom.trailing.equalToSuperview()
+        courseListCollectionView.snp.makeConstraints {
+            $0.top.equalTo(editButton.snp.bottom)
+            $0.leading.bottom.trailing.equalToSuperview()
         }
-        emptyView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(80)
+        
+        emptyView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(80)
         }
     }
 }
@@ -191,19 +195,19 @@ extension PrivateCourseListView: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return courseList.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CourseListCVC.className, for: indexPath) as? CourseListCVC else {
             return UICollectionViewCell()
         }
-
+        
         let model = courseList[indexPath.item]
         let cellTitle = model.title
         
         cell.setCellType(type: .title)
         cell.selectCell(didSelect: collectionView.indexPathsForSelectedItems?.contains(indexPath) ?? false)
         cell.setData(imageURL: model.image, title: cellTitle, location: nil, didLike: nil, isEditMode: isEditMode)
-
+        
         return cell
     }
     

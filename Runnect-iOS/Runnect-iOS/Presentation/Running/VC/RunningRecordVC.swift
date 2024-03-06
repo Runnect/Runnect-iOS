@@ -8,6 +8,8 @@
 import UIKit
 
 import Moya
+import SnapKit
+import Then
 
 final class RunningRecordVC: UIViewController {
     
@@ -16,7 +18,7 @@ final class RunningRecordVC: UIViewController {
     private var runningModel: RunningModel?
     
     private let recordProvider = Providers.recordProvider
-
+    
     private let courseTitleMaxLength = 20
     
     // MARK: - UI Components
@@ -70,7 +72,7 @@ final class RunningRecordVC: UIViewController {
     ).then {
         $0.spacing = 25
     }
-
+    
     private let saveButton = CustomButton(title: "저장하기")
         .setEnabled(false)
     
@@ -158,10 +160,10 @@ extension RunningRecordVC {
     
     @objc private func keyboardWillShow(_ notification: Notification) {
         guard let userInfo = notification.userInfo,
-            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
-                return
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+            return
         }
-
+        
         let contentInset = UIEdgeInsets(
             top: 0.0,
             left: 0.0,
@@ -193,29 +195,29 @@ extension RunningRecordVC {
         view.addSubviews(naviBar, scrollView, saveButton)
         scrollView.addSubviews(contentView)
         
-        naviBar.snp.makeConstraints { make in
-            make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
+        naviBar.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(48)
         }
         
-        scrollView.snp.makeConstraints { make in
-            make.top.equalTo(naviBar.snp.bottom)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalTo(saveButton.snp.top)
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(naviBar.snp.bottom)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(saveButton.snp.top)
         }
         
-        contentView.snp.makeConstraints { make in
-            make.edges.equalTo(scrollView.contentLayoutGuide)
-            make.width.equalTo(scrollView.snp.width)
-            make.height.greaterThanOrEqualTo(scrollView)
+        contentView.snp.makeConstraints {
+            $0.edges.equalTo(scrollView.contentLayoutGuide)
+            $0.width.equalTo(scrollView.snp.width)
+            $0.height.greaterThanOrEqualTo(scrollView)
         }
         
         setContentViewLayout()
-    
-        saveButton.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.bottom.equalToSuperview().inset(34)
-            make.height.equalTo(44)
+        
+        saveButton.snp.makeConstraints {
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.bottom.equalToSuperview().inset(34)
+            $0.height.equalTo(44)
         }
     }
     
@@ -226,52 +228,54 @@ extension RunningRecordVC {
             dateInfoView,
             departureInfoView,
             dividerView,
+            verticalDividerView,
+            verticalDividerView2,
             statsContainerStackView
         )
         
-        courseImageView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(courseImageView.snp.width)
+        courseImageView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(courseImageView.snp.width)
         }
         
-        courseTitleTextField.snp.makeConstraints { make in
-            make.top.equalTo(courseImageView.snp.bottom).offset(27)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(35)
+        courseTitleTextField.snp.makeConstraints {
+            $0.top.equalTo(courseImageView.snp.bottom).offset(27)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(35)
         }
         
-        dateInfoView.snp.makeConstraints { make in
-            make.top.equalTo(courseTitleTextField.snp.bottom).offset(22)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(16)
+        dateInfoView.snp.makeConstraints {
+            $0.top.equalTo(courseTitleTextField.snp.bottom).offset(22)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(16)
         }
         
-        departureInfoView.snp.makeConstraints { make in
-            make.top.equalTo(dateInfoView.snp.bottom).offset(6)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(16)
+        departureInfoView.snp.makeConstraints {
+            $0.top.equalTo(dateInfoView.snp.bottom).offset(6)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(16)
         }
         
-        dividerView.snp.makeConstraints { make in
-            make.top.equalTo(departureInfoView.snp.bottom).offset(34)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(7)
+        dividerView.snp.makeConstraints {
+            $0.top.equalTo(departureInfoView.snp.bottom).offset(34)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(7)
         }
         
-        verticalDividerView.snp.makeConstraints { make in
-            make.height.equalTo(44)
-            make.width.equalTo(0.5)
+        verticalDividerView.snp.makeConstraints {
+            $0.height.equalTo(44)
+            $0.width.equalTo(0.5)
         }
         
-        verticalDividerView2.snp.makeConstraints { make in
-            make.height.equalTo(44)
-            make.width.equalTo(0.5)
+        verticalDividerView2.snp.makeConstraints {
+            $0.height.equalTo(44)
+            $0.width.equalTo(0.5)
         }
         
-        statsContainerStackView.snp.makeConstraints { make in
-            make.top.equalTo(dividerView.snp.bottom).offset(25)
-            make.centerX.equalToSuperview()
-            make.bottom.lessThanOrEqualToSuperview().inset(25)
+        statsContainerStackView.snp.makeConstraints {
+            $0.top.equalTo(dividerView.snp.bottom).offset(25)
+            $0.centerX.equalToSuperview()
+            $0.bottom.lessThanOrEqualToSuperview().inset(25)
         }
     }
     

@@ -9,6 +9,8 @@ import UIKit
 import Combine
 
 import Moya
+import SnapKit
+import Then
 
 final class CourseDrawingVC: UIViewController {
     
@@ -301,45 +303,45 @@ extension CourseDrawingVC {
         view.addSubviews(naviBarForEditing, guideView, distanceContainerView, completeButton, undoButton)
         view.sendSubviewToBack(naviBarForEditing)
         
-        naviBarForEditing.snp.makeConstraints { make in
-            make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
+        naviBarForEditing.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(48)
         }
         
-        guideView.snp.makeConstraints { make in
-            make.centerY.equalTo(naviBarForEditing.snp.centerY)
-            make.leading.equalTo(view.safeAreaLayoutGuide).inset(55)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(27)
+        guideView.snp.makeConstraints {
+            $0.centerY.equalTo(naviBarForEditing.snp.centerY)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(55)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(27)
         }
         
-        distanceContainerView.snp.makeConstraints { make in
-            make.width.equalTo(96)
-            make.height.equalTo(44)
-            make.leading.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.top.equalTo(view.snp.bottom)
+        distanceContainerView.snp.makeConstraints {
+            $0.width.equalTo(96)
+            $0.height.equalTo(44)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.top.equalTo(view.snp.bottom)
         }
         
         distanceContainerView.addSubviews(distanceStackView)
         
-        distanceStackView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+        distanceStackView.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
         
-        undoButton.snp.makeConstraints { make in
-            make.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.top.equalTo(view.snp.bottom)
+        undoButton.snp.makeConstraints {
+            $0.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(view.snp.bottom)
         }
         
-        completeButton.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.height.equalTo(44)
-            make.top.equalTo(view.snp.bottom).offset(34)
+        completeButton.snp.makeConstraints {
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.height.equalTo(44)
+            $0.top.equalTo(view.snp.bottom).offset(34)
         }
     }
     
     private func showHiddenViews(withDuration: TimeInterval = 0) {
-        [naviBarForEditing, guideView, distanceContainerView, completeButton, undoButton].forEach { subView in
-            view.bringSubviewToFront(subView)
+        [naviBarForEditing, guideView, distanceContainerView, completeButton, undoButton].forEach {
+            view.bringSubviewToFront($0)
         }
         
         UIView.animate(withDuration: withDuration) {
@@ -360,70 +362,70 @@ extension CourseDrawingVC {
     }
     
     private func setNotchCoverViewLayout() {
-        notchCoverView.snp.makeConstraints { make in
+        notchCoverView.snp.makeConstraints {
             var notchHeight = calculateTopInset()
             if notchHeight == -44 {
                 let statusBarHeight = UIApplication.shared.statusBarHeight
                 notchHeight = -statusBarHeight
             }
-            make.height.equalTo(-notchHeight)
+            $0.height.equalTo(-notchHeight)
         }
     }
     
     private func setNaviBarLayout() {
-        naviBar.snp.makeConstraints { make in
-            make.height.equalTo(56)
+        naviBar.snp.makeConstraints {
+            $0.height.equalTo(56)
         }
         
-        naviBarContainerStackView.snp.makeConstraints { make in
-            make.leading.top.trailing.equalToSuperview()
+        naviBarContainerStackView.snp.makeConstraints {
+            $0.leading.top.trailing.equalToSuperview()
         }
     }
     
     private func setMapViewLayout() {
-        mapView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        mapView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
     
     private func setStartMarkStackViewLayout() {
-        startLabelUIImage.snp.makeConstraints { make in
-            make.height.equalTo(34)
-            make.width.equalTo(58)
+        startLabelUIImage.snp.makeConstraints {
+            $0.height.equalTo(34)
+            $0.width.equalTo(58)
         }
         
-        startMarkUIImage.snp.makeConstraints { make in
-            make.height.width.equalTo(65)
+        startMarkUIImage.snp.makeConstraints {
+            $0.height.width.equalTo(65)
         }
         
-        startMarkStackView.snp.makeConstraints { make in
-            make.height.equalTo(100)
-            make.width.equalTo(65)
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(-17)
+        startMarkStackView.snp.makeConstraints {
+            $0.height.equalTo(100)
+            $0.width.equalTo(65)
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(-17)
         }
     }
     
     private func setDepartureInfoContainerViewLayout() {
-        departureInfoContainerView.snp.makeConstraints { make in
-            make.leading.bottom.trailing.equalToSuperview()
-            make.height.equalTo(172)
+        departureInfoContainerView.snp.makeConstraints {
+            $0.leading.bottom.trailing.equalToSuperview()
+            $0.height.equalTo(172)
         }
         
-        departureLocationLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(28)
-            make.leading.trailing.equalToSuperview().inset(16)
+        departureLocationLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(28)
+            $0.leading.trailing.equalToSuperview().inset(16)
         }
         
-        departureDetailLocationLabel.snp.makeConstraints { make in
-            make.top.equalTo(departureLocationLabel.snp.bottom).offset(6)
-            make.leading.trailing.equalToSuperview().inset(16)
+        departureDetailLocationLabel.snp.makeConstraints {
+            $0.top.equalTo(departureLocationLabel.snp.bottom).offset(6)
+            $0.leading.trailing.equalToSuperview().inset(16)
         }
         
-        decideDepartureButton.snp.makeConstraints { make in
-            make.top.equalTo(departureDetailLocationLabel.snp.bottom).offset(24)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(44)
+        decideDepartureButton.snp.makeConstraints {
+            $0.top.equalTo(departureDetailLocationLabel.snp.bottom).offset(24)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(44)
         }
     }
     

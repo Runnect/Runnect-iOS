@@ -8,6 +8,9 @@
 import UIKit
 import Combine
 
+import SnapKit
+import Then
+
 protocol TitleCollectionViewCellDelegate: AnyObject {
     func didTapSortButton(ordering: String)
 }

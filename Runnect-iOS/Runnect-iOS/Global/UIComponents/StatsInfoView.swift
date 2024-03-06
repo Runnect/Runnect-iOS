@@ -7,6 +7,9 @@
 
 import UIKit
 
+import SnapKit
+import Then
+
 final class StatsInfoView: UIView {
     
     // MARK: - UI Components
@@ -83,8 +86,8 @@ extension StatsInfoView {
     private func setLayout() {
         self.addSubviews(statsContainerStackView)
         
-        statsContainerStackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        statsContainerStackView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
 }

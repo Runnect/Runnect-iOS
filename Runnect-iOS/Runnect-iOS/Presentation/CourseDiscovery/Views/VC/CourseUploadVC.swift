@@ -203,9 +203,9 @@ extension CourseUploadVC {
 extension CourseUploadVC {
     private func setNavigationBar() {
         view.addSubview(navibar)
-        navibar.snp.makeConstraints { make in
-            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
+        navibar.snp.makeConstraints {
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(48)
         }
     }
     // MARK: - setUI
@@ -225,15 +225,15 @@ extension CourseUploadVC {
         view.bringSubviewToFront(uploadButton)
         buttonContainerView.addSubview(uploadButton)
         
-        buttonContainerView.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(86)
-            make.bottom.equalToSuperview()
+        buttonContainerView.snp.makeConstraints {
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(86)
+            $0.bottom.equalToSuperview()
         }
-        uploadButton.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.height.equalTo(44)
-            make.bottom.equalToSuperview().inset(34)
+        uploadButton.snp.makeConstraints {
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.height.equalTo(44)
+            $0.bottom.equalToSuperview().inset(34)
         }
         
         setScrollViewLayout()
@@ -256,39 +256,41 @@ extension CourseUploadVC {
             $0.bottom.equalTo(uploadButton.snp.top).inset(-25)
         }
         
-        mapImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
-            make.height.equalTo(mapImageView.snp.width).multipliedBy(0.75)
+        mapImageView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
+            $0.height.equalTo(mapImageView.snp.width).multipliedBy(0.75)
         }
         
-        courseTitleTextField.snp.makeConstraints { make in
-            make.top.equalTo(mapImageView.snp.bottom).offset(28)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.height.equalTo(35)
+        courseTitleTextField.snp.makeConstraints {
+            $0.top.equalTo(mapImageView.snp.bottom).offset(28)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.height.equalTo(35)
         }
         
-        dividerView.snp.makeConstraints { make in
-            make.top.equalTo(courseTitleTextField.snp.bottom).offset(0)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.height.equalTo(2)
+        dividerView.snp.makeConstraints {
+            $0.top.equalTo(courseTitleTextField.snp.bottom).offset(0)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.height.equalTo(2)
         }
         
-        distanceInfoView.snp.makeConstraints { make in
-            make.top.equalTo(courseTitleTextField.snp.bottom).offset(22)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.height.equalTo(16)
+        distanceInfoView.snp.makeConstraints {
+            $0.top.equalTo(courseTitleTextField.snp.bottom).offset(22)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.height.equalTo(16)
         }
-        departureInfoView.snp.makeConstraints { make in
-            make.top.equalTo(distanceInfoView.snp.bottom).offset(6)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.height.equalTo(16)
+        
+        departureInfoView.snp.makeConstraints {
+            $0.top.equalTo(distanceInfoView.snp.bottom).offset(6)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.height.equalTo(16)
         }
-        activityTextView.snp.makeConstraints { make in
-            make.top.equalTo(departureInfoView.snp.bottom).offset(34)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.bottom.equalToSuperview()
-            make.height.equalTo(187)
+        
+        activityTextView.snp.makeConstraints {
+            $0.top.equalTo(departureInfoView.snp.bottom).offset(34)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.bottom.equalToSuperview()
+            $0.height.equalTo(187)
         }
     }
     

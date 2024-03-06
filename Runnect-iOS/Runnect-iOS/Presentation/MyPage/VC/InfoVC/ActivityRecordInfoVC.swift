@@ -20,7 +20,7 @@ final class ActivityRecordInfoVC: UIViewController {
     private var activityRecordList = [ActivityRecord]()
     
     private var deleteRecordList = [Int]()
-        
+    
     private var isEditMode: Bool = false
     
     // MARK: - UI Components
@@ -50,8 +50,8 @@ final class ActivityRecordInfoVC: UIViewController {
         $0.titleLabel?.font = .b5
         $0.layer.backgroundColor = UIColor.m3.cgColor
         $0.layer.cornerRadius = 11
-//        $0.layer.borderColor = UIColor.m1.cgColor
-//        $0.layer.borderWidth = 1
+        //        $0.layer.borderColor = UIColor.m1.cgColor
+        //        $0.layer.borderWidth = 1
     }
     
     private lazy var deleteRecordButton = CustomButton(title: "삭제하기").then {
@@ -173,9 +173,9 @@ extension ActivityRecordInfoVC {
     private func setNavigationBar() {
         view.addSubview(navibar)
         
-        navibar.snp.makeConstraints { make in
-            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
+        navibar.snp.makeConstraints {
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(48)
         }
     }
     
@@ -189,42 +189,42 @@ extension ActivityRecordInfoVC {
         view.addSubviews(editRecordContainerView, activityRecordTableView, deleteRecordButton)
         activityRecordTableView.addSubviews(emptyView)
         
-        editRecordContainerView.snp.makeConstraints { make in
-            make.top.equalTo(navibar.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(38)
+        editRecordContainerView.snp.makeConstraints {
+            $0.top.equalTo(navibar.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(38)
         }
         
         editRecordContainerView.addSubviews(totalNumOfRecordlabel, editButton)
         
-        totalNumOfRecordlabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(16)
-            make.top.equalToSuperview().offset(10)
+        totalNumOfRecordlabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(16)
+            $0.top.equalToSuperview().offset(10)
         }
         
-        editButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(16)
-            make.width.equalTo(47)
-            make.height.equalTo(22)
-            make.top.equalToSuperview().offset(5)
+        editButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(16)
+            $0.width.equalTo(47)
+            $0.height.equalTo(22)
+            $0.top.equalToSuperview().offset(5)
         }
         
-        activityRecordTableView.snp.makeConstraints { make in
-            make.top.equalTo(editRecordContainerView.snp.bottom)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalToSuperview()
+        activityRecordTableView.snp.makeConstraints {
+            $0.top.equalTo(editRecordContainerView.snp.bottom)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalToSuperview()
         }
         
-        deleteRecordButton.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(32)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(44)
+        deleteRecordButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(32)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(44)
         }
         
-        emptyView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalTo(view.safeAreaLayoutGuide)
-            make.leading.trailing.equalToSuperview().inset(80)
+        emptyView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview().inset(80)
         }
     }
 }
@@ -239,7 +239,7 @@ extension ActivityRecordInfoVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? ActivityRecordInfoTVC else { return }
         guard let selectedRecords = tableView.indexPathsForSelectedRows else { return }
-            
+        
         if isEditMode {
             self.deleteRecordButton.isEnabled = true
             let countSelectedRows = selectedRecords.count

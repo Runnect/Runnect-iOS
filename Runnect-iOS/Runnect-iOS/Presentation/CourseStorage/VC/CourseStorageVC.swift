@@ -9,6 +9,8 @@ import UIKit
 import Combine
 
 import Moya
+import SnapKit
+import Then
 
 final class CourseStorageVC: UIViewController {
     
@@ -209,9 +211,9 @@ extension CourseStorageVC {
     private func setLayout() {
         view.addSubviews(naviBar)
         
-        naviBar.snp.makeConstraints { make in
-            make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(56)
+        naviBar.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(56)
         }
         
         guard UserManager.shared.userType != .visitor else {
@@ -222,15 +224,15 @@ extension CourseStorageVC {
         
         view.addSubviews(viewPager, deleteCourseButton)
         
-        viewPager.snp.makeConstraints { make in
-            make.top.equalTo(naviBar.snp.bottom)
-            make.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
+        viewPager.snp.makeConstraints {
+            $0.top.equalTo(naviBar.snp.bottom)
+            $0.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
         }
         
-        deleteCourseButton.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(44)
+        deleteCourseButton.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(44)
         }
     }
 }

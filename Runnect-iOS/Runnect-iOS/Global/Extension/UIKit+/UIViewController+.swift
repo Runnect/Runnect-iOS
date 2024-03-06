@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SnapKit
+
 extension UIViewController {
     
     /**
@@ -74,9 +76,9 @@ extension UIViewController {
         
         self.view.addSubview(emptyView)
         
-        emptyView.snp.makeConstraints { make in
-            make.center.equalTo(view.safeAreaLayoutGuide)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(80)
+        emptyView.snp.makeConstraints {
+            $0.center.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(80)
         }
     }
     

@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SnapKit
+
 final class PageCVC: UICollectionViewCell {
     
     // MARK: - UI Components
@@ -35,8 +37,8 @@ final class PageCVC: UICollectionViewCell {
         
         self.contentView.addSubview(view)
         
-        view.snp.makeConstraints { make in
-            make.edges.equalTo(contentView)
+        view.snp.makeConstraints {
+            $0.edges.equalTo(contentView)
         }
     }
 }

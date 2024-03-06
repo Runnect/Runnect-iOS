@@ -61,22 +61,22 @@ extension GuideView {
         self.addSubviews(logoImageView, titleContainerView)
         titleContainerView.addSubviews(titleLabel)
         
-        self.snp.makeConstraints { make in
-            make.width.greaterThanOrEqualTo(200)
+        self.snp.makeConstraints {
+            $0.width.greaterThanOrEqualTo(200)
         }
         
-        logoImageView.snp.makeConstraints { make in
-            make.leading.top.bottom.equalToSuperview()
-            make.width.height.equalTo(44)
+        logoImageView.snp.makeConstraints {
+            $0.leading.top.bottom.equalToSuperview()
+            $0.width.height.equalTo(44)
         }
         
-        titleContainerView.snp.makeConstraints { make in
-            make.leading.equalTo(logoImageView.snp.centerX)
-            make.top.bottom.trailing.equalToSuperview()
+        titleContainerView.snp.makeConstraints {
+            $0.leading.equalTo(logoImageView.snp.centerX)
+            $0.top.bottom.trailing.equalToSuperview()
         }
         
-        titleLabel.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+        titleLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
     }
     

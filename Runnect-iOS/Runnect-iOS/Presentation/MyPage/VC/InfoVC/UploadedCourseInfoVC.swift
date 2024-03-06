@@ -193,9 +193,9 @@ extension UploadedCourseInfoVC {
     private func setNavigationBar() {
         view.addSubview(navibar)
         
-        navibar.snp.makeConstraints { make in
-            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
+        navibar.snp.makeConstraints {
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(48)
         }
     }
     
@@ -212,38 +212,40 @@ extension UploadedCourseInfoVC {
         UploadedCourseInfoCollectionView.addSubview(emptyView)
         
         beforeEditTopView.addSubviews(totalNumOfRecordlabel, editButton)
-        beforeEditTopView.snp.makeConstraints { make in
-            make.top.equalTo(navibar.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(38)
+        
+        beforeEditTopView.snp.makeConstraints {
+            $0.top.equalTo(navibar.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(38)
         }
         
-        totalNumOfRecordlabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(16)
-            make.top.equalToSuperview().offset(10)
+        totalNumOfRecordlabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(16)
+            $0.top.equalToSuperview().offset(10)
         }
         
-        editButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(16)
-            make.width.equalTo(47)
-            make.height.equalTo(22)
-            make.top.equalToSuperview().offset(5)
+        editButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(16)
+            $0.width.equalTo(47)
+            $0.height.equalTo(22)
+            $0.top.equalToSuperview().offset(5)
         }
         
-        deleteCourseButton.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(32)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(44)
+        deleteCourseButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(32)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(44)
         }
         
-        UploadedCourseInfoCollectionView.snp.makeConstraints {  make in
-            make.top.equalTo(editButton.snp.bottom)
-            make.leading.bottom.trailing.equalToSuperview()
+        UploadedCourseInfoCollectionView.snp.makeConstraints {
+            $0.top.equalTo(editButton.snp.bottom)
+            $0.leading.bottom.trailing.equalToSuperview()
         }
-        emptyView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalTo(view.safeAreaLayoutGuide)
-            make.leading.trailing.equalToSuperview().inset(80)
+        
+        emptyView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview().inset(80)
         }
     }
 }

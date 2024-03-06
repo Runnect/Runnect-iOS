@@ -55,14 +55,14 @@ extension GoalRewardInfoCVC {
     private func setLayout() {
         contentView.addSubviews(stampImageView, stampStandardLabel)
         
-        stampImageView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(contentView.snp.width)
+        stampImageView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(contentView.snp.width)
         }
         
-        stampStandardLabel.snp.makeConstraints { make in
-            make.top.equalTo(stampImageView.snp.bottom).offset(8)
-            make.centerX.equalToSuperview()
+        stampStandardLabel.snp.makeConstraints {
+            $0.top.equalTo(stampImageView.snp.bottom).offset(8)
+            $0.centerX.equalToSuperview()
         }
     }
 }

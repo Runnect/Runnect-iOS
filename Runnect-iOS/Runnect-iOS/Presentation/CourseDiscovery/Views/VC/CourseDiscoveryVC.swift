@@ -189,13 +189,13 @@ extension CourseDiscoveryVC {
         view.addSubview(naviBar)
         view.addSubview(searchButton)
         
-        naviBar.snp.makeConstraints { make in
-            make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(56)
+        naviBar.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(56)
         }
-        searchButton.snp.makeConstraints { make in
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(16)
-            make.centerY.equalTo(naviBar)
+        searchButton.snp.makeConstraints {
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(16)
+            $0.centerY.equalTo(naviBar)
         }
     }
     
@@ -210,21 +210,21 @@ extension CourseDiscoveryVC {
             $0.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
         }
         
-        uploadButton.snp.makeConstraints { make in
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(21)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(20)
-            make.height.equalTo(40)
-            make.width.equalTo(92)
+        uploadButton.snp.makeConstraints {
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(21)
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(20)
+            $0.height.equalTo(40)
+            $0.width.equalTo(92)
         }
         
-        miniUploadButton.snp.makeConstraints { make in
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(22)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(20)
+        miniUploadButton.snp.makeConstraints {
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(22)
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(20)
         }
         
-        emptyView.snp.makeConstraints { make in
-            make.top.equalTo(naviBar.snp.bottom).offset(300)
-            make.centerX.equalTo(naviBar)
+        emptyView.snp.makeConstraints {
+            $0.top.equalTo(naviBar.snp.bottom).offset(300)
+            $0.centerX.equalTo(naviBar)
         }
         
         self.view.bringSubviewToFront(uploadButton)
@@ -429,7 +429,7 @@ extension CourseDiscoveryVC: UIScrollViewDelegate {
 
 // MARK: - CourseListCVCDelegate
 
-extension CourseDiscoveryVC: CourseListCVCDeleagte {
+extension CourseDiscoveryVC: CourseListCVCDelegate {
     func likeButtonTapped(wantsTolike: Bool, index: Int) {
         guard UserManager.shared.userType != .visitor else {
             showToastOnWindow(text: "러넥트에 가입하면 코스를 스크랩할 수 있어요")

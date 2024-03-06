@@ -118,36 +118,35 @@ extension RNAlertVC {
     private func setLayout() {
         view.addSubviews(containerView)
         
-        containerView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(30)
-            //            make.height.equalTo(126)
+        containerView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(30)
         }
         
         containerView.addSubviews(descriptionLabel, yesButton, noButton)
         
-        descriptionLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(26)
+        descriptionLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().offset(26)
         }
         
-        noButton.snp.makeConstraints { make in
-            make.top.equalTo(descriptionLabel.snp.bottom).offset(20)
-            make.leading.equalToSuperview().offset(16)
-            make.trailing.equalTo(containerView.snp.centerX).offset(-4)
-            make.height.equalTo(44)
-            make.width.equalTo(145)
-            make.bottom.equalToSuperview().inset(16)
+        noButton.snp.makeConstraints {
+            $0.top.equalTo(descriptionLabel.snp.bottom).offset(20)
+            $0.leading.equalToSuperview().offset(16)
+            $0.trailing.equalTo(containerView.snp.centerX).offset(-4)
+            $0.height.equalTo(44)
+            $0.width.equalTo(145)
+            $0.bottom.equalToSuperview().inset(16)
         }
         
-        yesButton.snp.makeConstraints { make in
-            make.top.equalTo(noButton.snp.top)
-            make.trailing.equalToSuperview().inset(16)
-            make.leading.equalTo(containerView.snp.centerX).offset(4)
-            make.height.equalTo(44)
-            make.width.equalTo(145)
-            make.bottom.equalToSuperview().inset(16)
+        yesButton.snp.makeConstraints {
+            $0.top.equalTo(noButton.snp.top)
+            $0.trailing.equalToSuperview().inset(16)
+            $0.leading.equalTo(containerView.snp.centerX).offset(4)
+            $0.height.equalTo(44)
+            $0.width.equalTo(145)
+            $0.bottom.equalToSuperview().inset(16)
         }
     }
 }

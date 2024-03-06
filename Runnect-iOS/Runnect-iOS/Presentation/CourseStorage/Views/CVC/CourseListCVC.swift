@@ -7,7 +7,10 @@
 
 import UIKit
 
-protocol CourseListCVCDeleagte: AnyObject {
+import SnapKit
+import Then
+
+protocol CourseListCVCDelegate: AnyObject {
     func likeButtonTapped(wantsTolike: Bool, index: Int)
 }
 
@@ -29,10 +32,10 @@ enum CourseListCVCType {
 }
 
 final class CourseListCVC: UICollectionViewCell {
-
+    
     // MARK: - Properties
     
-    weak var delegate: CourseListCVCDeleagte?
+    weak var delegate: CourseListCVCDelegate?
     
     private var indexPath: Int?
     
@@ -64,7 +67,10 @@ final class CourseListCVC: UICollectionViewCell {
     }
     
     private lazy var labelStackView = UIStackView(
-        arrangedSubviews: [titleLabel, locationLabel]
+        arrangedSubviews: [
+            titleLabel,
+            locationLabel
+        ]
     ).then {
         $0.axis = .vertical
         $0.alignment = .leading
@@ -156,35 +162,33 @@ extension CourseListCVC {
     
     private func setLayout() {
         self.contentView.addSubviews(courseImageView, imageCoverView, labelStackView, likeButton, selectIndicatorButton)
-    
-        courseImageView.snp.makeConstraints { make in
-            make.leading.top.trailing.equalToSuperview()
+        
+        courseImageView.snp.makeConstraints {
+            $0.leading.top.trailing.equalToSuperview()
             let imageHeight = contentView.frame.width * (124/174)
-            make.height.equalTo(imageHeight)
+            $0.height.equalTo(imageHeight)
         }
         
-        imageCoverView.snp.makeConstraints { make in
-            make.edges.equalTo(courseImageView)
+        imageCoverView.snp.makeConstraints {
+            $0.edges.equalTo(courseImageView)
         }
         
-        likeButton.snp.makeConstraints { make in
-            make.top.equalTo(courseImageView.snp.bottom).offset(4)
-            make.trailing.equalToSuperview()
-            make.width.equalTo(22)
-            make.height.equalTo(20)
+        likeButton.snp.makeConstraints {
+            $0.top.equalTo(courseImageView.snp.bottom).offset(4)
+            $0.trailing.equalToSuperview()
+            $0.width.equalTo(22)
+            $0.height.equalTo(20)
         }
         
-        selectIndicatorButton.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview().inset(8)
-            make.leading.equalToSuperview().offset(8)
-            make.width.equalTo(20)
-            make.height.equalTo(20)
+        selectIndicatorButton.snp.makeConstraints {
+            $0.top.leading.equalToSuperview().inset(8)
+            $0.width.height.equalTo(20)
         }
         
-        labelStackView.snp.makeConstraints { make in
-            make.top.equalTo(courseImageView.snp.bottom).offset(4)
-            make.leading.equalToSuperview()
-            make.width.equalTo(courseImageView.snp.width).multipliedBy(0.7)
+        labelStackView.snp.makeConstraints {
+            $0.top.equalTo(courseImageView.snp.bottom).offset(4)
+            $0.leading.equalToSuperview()
+            $0.width.equalTo(courseImageView.snp.width).multipliedBy(0.7)
         }
     }
     

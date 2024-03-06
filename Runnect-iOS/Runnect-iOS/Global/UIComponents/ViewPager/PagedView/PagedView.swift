@@ -60,8 +60,8 @@ final class PagedView: UIView {
     private func setLayout() {
         self.addSubview(collectionView)
         
-        collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        collectionView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
     

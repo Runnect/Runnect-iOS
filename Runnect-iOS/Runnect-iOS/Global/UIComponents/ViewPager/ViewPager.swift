@@ -8,6 +8,9 @@
 import UIKit
 import Combine
 
+import SnapKit
+import Then
+
 class ViewPager: UIView {
     
     // MARK: - Properties
@@ -81,8 +84,8 @@ extension ViewPager {
         leadingConstant += (buttonWidth * CGFloat(index))
         
         UIView.animate(withDuration: 0.4, delay: 0, options: [.curveLinear]) {
-            self.barView.snp.updateConstraints { make in
-                make.leading.equalToSuperview().offset(leadingConstant)
+            self.barView.snp.updateConstraints {
+                $0.leading.equalToSuperview().offset(leadingConstant)
             }
             self.barBackgroundView.layoutIfNeeded()
         }
@@ -118,8 +121,8 @@ extension ViewPager {
         pagedView.percent.sink { [weak self] percent in
             guard let self = self, !self.tappedButton else { return }
             let leadingContraints = self.barBackgroundView.frame.width * percent
-            self.barView.snp.updateConstraints { make in
-                make.leading.equalToSuperview().offset(leadingContraints)
+            self.barView.snp.updateConstraints {
+                $0.leading.equalToSuperview().offset(leadingContraints)
             }
         }.store(in: cancelBag)
         
@@ -143,35 +146,35 @@ extension ViewPager {
         self.addSubviews(buttonStackView, barBackgroundView, pagedView)
         barBackgroundView.addSubviews(bottomBorderView, barView)
         
-        buttonStackView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(38)
+        buttonStackView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(38)
         }
-        
-        barBackgroundView.snp.makeConstraints { make in
-            make.height.equalTo(2)
-            make.bottom.equalTo(buttonStackView.snp.bottom)
-            make.leading.trailing.equalToSuperview().inset(16)
+
+        barBackgroundView.snp.makeConstraints {
+            $0.height.equalTo(2)
+            $0.bottom.equalTo(buttonStackView.snp.bottom)
+            $0.leading.trailing.equalToSuperview().inset(16)
         }
-        
-        bottomBorderView.snp.makeConstraints { make in
-            make.top.equalTo(barBackgroundView.snp.bottom).inset(1)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(1)
+
+        bottomBorderView.snp.makeConstraints {
+            $0.top.equalTo(barBackgroundView.snp.bottom).inset(1)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(1)
         }
-        
+
         guard let button = buttonStackView.arrangedSubviews.first as? UIButton else { return }
-        
-        barView.snp.makeConstraints { make in
-            make.leading.top.bottom.equalToSuperview()
-            make.width.equalTo(button.snp.width)
+
+        barView.snp.makeConstraints {
+            $0.leading.top.bottom.equalToSuperview()
+            $0.width.equalTo(button.snp.width)
         }
-        
-        pagedView.snp.makeConstraints { make in
-            make.top.equalTo(barBackgroundView.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
+
+        pagedView.snp.makeConstraints {
+            $0.top.equalTo(barBackgroundView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
     }
 }

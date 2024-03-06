@@ -9,6 +9,9 @@ import UIKit
 import Combine
 import CombineCocoa
 
+import SnapKit
+import Then
+
 @frozen
 enum SheetType {
     case image // 가운에 이미지가 있는 시트
@@ -135,8 +138,9 @@ final class CustomBottomSheetVC: UIViewController {
 extension CustomBottomSheetVC {
     private func setUI() {
         view.addSubview(backgroundView)
-        backgroundView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        
+        backgroundView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
     
@@ -153,27 +157,27 @@ extension CustomBottomSheetVC {
         view.addSubviews(bottomSheetView)
         bottomSheetView.addSubviews(contentsLabel, mainImageView, completeButton)
         
-        bottomSheetView.snp.makeConstraints { make in
-            make.leading.bottom.trailing.equalToSuperview()
-            make.height.equalTo(330)
+        bottomSheetView.snp.makeConstraints {
+            $0.leading.bottom.trailing.equalToSuperview()
+            $0.height.equalTo(330)
         }
         
-        contentsLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(30)
+        contentsLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().inset(30)
         }
         
-        mainImageView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(contentsLabel.snp.bottom).offset(24)
-            make.width.equalTo(267)
-            make.height.equalTo(158)
+        mainImageView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(contentsLabel.snp.bottom).offset(24)
+            $0.width.equalTo(267)
+            $0.height.equalTo(158)
         }
         
-        completeButton.snp.makeConstraints { make in
-            make.top.equalTo(mainImageView.snp.bottom).offset(20)
-            make.height.equalTo(44)
-            make.leading.trailing.equalToSuperview().inset(16)
+        completeButton.snp.makeConstraints {
+            $0.top.equalTo(mainImageView.snp.bottom).offset(20)
+            $0.height.equalTo(44)
+            $0.leading.trailing.equalToSuperview().inset(16)
         }
     }
     
@@ -184,33 +188,33 @@ extension CustomBottomSheetVC {
         
         bottomSheetView.addSubviews(contentsLabel, bottomSheetTextField, dismissIndicatorView, completeButton)
         
-        bottomSheetView.snp.makeConstraints { make in
-            make.leading.bottom.trailing.equalToSuperview()
-            make.top.equalTo(view.snp.top).offset(topConst)
+        bottomSheetView.snp.makeConstraints {
+            $0.leading.bottom.trailing.equalToSuperview()
+            $0.top.equalTo(view.snp.top).offset(topConst)
         }
         
-        dismissIndicatorView.snp.makeConstraints { make in
-            make.width.equalTo(42)
-            make.height.equalTo(4)
-            make.top.equalTo(bottomSheetView.snp.top).inset(16)
-            make.centerX.equalToSuperview()
+        dismissIndicatorView.snp.makeConstraints {
+            $0.width.equalTo(42)
+            $0.height.equalTo(4)
+            $0.top.equalTo(bottomSheetView.snp.top).inset(16)
+            $0.centerX.equalToSuperview()
         }
         
-        contentsLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(34)
+        contentsLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().inset(34)
         }
         
-        bottomSheetTextField.snp.makeConstraints { make in
-            make.top.equalTo(contentsLabel.snp.bottom).offset(19)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(44)
+        bottomSheetTextField.snp.makeConstraints {
+            $0.top.equalTo(contentsLabel.snp.bottom).offset(19)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(44)
         }
         
-        completeButton.snp.makeConstraints { make in
-            make.top.equalTo(bottomSheetTextField.snp.bottom).offset(10)
-            make.height.equalTo(44)
-            make.leading.trailing.equalToSuperview().inset(16)
+        completeButton.snp.makeConstraints {
+            $0.top.equalTo(bottomSheetTextField.snp.bottom).offset(10)
+            $0.height.equalTo(44)
+            $0.leading.trailing.equalToSuperview().inset(16)
         }
     }
     
@@ -228,9 +232,9 @@ extension CustomBottomSheetVC {
         
         let topConst = (safeAreaHeight + bottomPadding) - bottomHeight
         
-        bottomSheetView.snp.remakeConstraints { make in
-            make.leading.bottom.trailing.equalToSuperview()
-            make.top.equalTo(view.snp.top).offset(topConst)
+        bottomSheetView.snp.remakeConstraints {
+            $0.leading.bottom.trailing.equalToSuperview()
+            $0.top.equalTo(view.snp.top).offset(topConst)
         }
         
         UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
@@ -287,9 +291,9 @@ extension CustomBottomSheetVC {
         
         let topConst = (safeAreaHeight + bottomPadding)
         
-        bottomSheetView.snp.remakeConstraints { make in
-            make.leading.bottom.trailing.equalToSuperview()
-            make.top.equalTo(view.snp.top).offset(topConst)
+        bottomSheetView.snp.remakeConstraints {
+            $0.leading.bottom.trailing.equalToSuperview()
+            $0.top.equalTo(view.snp.top).offset(topConst)
         }
         
         UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {

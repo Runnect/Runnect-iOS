@@ -7,8 +7,9 @@
 
 import UIKit
 
-import Then
 import Moya
+import SnapKit
+import Then
 
 protocol UploadStateDelegate: AnyObject {
     func didUploadCourse()
@@ -45,7 +46,7 @@ class MyCourseSelectVC: UIViewController {
     private lazy var selectButton = CustomButton(title: "선택하기").setEnabled(false).then {
         $0.isHidden = true
     }
-        
+    
     private lazy var mapCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -62,7 +63,7 @@ class MyCourseSelectVC: UIViewController {
                                                buttonTitle: "코스 그리기").then {
         $0.setImage(ImageLiterals.imgPaper, size: CGSize(width: 189, height: 169))
     }
-        
+    
     // MARK: - Constants
     
     final let collectionViewInset = UIEdgeInsets(top: 28, left: 16, bottom: 28, right: 16)
@@ -99,7 +100,7 @@ extension MyCourseSelectVC {
         self.guidelineLabel.isHidden = courseList.isEmpty
         self.selectButton.isHidden = courseList.isEmpty
     }
-
+    
     private func setDelegate() {
         mapCollectionView.delegate = self
         mapCollectionView.dataSource = self
@@ -140,9 +141,9 @@ extension MyCourseSelectVC: UploadStateDelegate {
 extension MyCourseSelectVC {
     private func setNavigationBar() {
         view.addSubview(navibar)
-        navibar.snp.makeConstraints { make in
-            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
+        navibar.snp.makeConstraints {
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(48)
         }
     }
     
@@ -152,47 +153,47 @@ extension MyCourseSelectVC {
         self.emptyView.isHidden = true
         firstDivideView.backgroundColor = .g4
     }
-        
+    
     private func setLayout() {
         view.addSubviews(firstDivideView, guidelineView, guidelineLabel, selectButton, mapCollectionView)
         self.view.bringSubviewToFront(selectButton)
         mapCollectionView.addSubview(emptyView)
         
-        selectButton.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.height.equalTo(44)
-            make.bottom.equalToSuperview().inset(34)
+        selectButton.snp.makeConstraints {
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.height.equalTo(44)
+            $0.bottom.equalToSuperview().inset(34)
         }
         
-        firstDivideView.snp.makeConstraints { make in
-            make.top.equalTo(navibar.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(1)
+        firstDivideView.snp.makeConstraints {
+            $0.top.equalTo(navibar.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(1)
         }
         
-        guidelineView.snp.makeConstraints { make in
-            make.top.equalTo(firstDivideView.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(36)
+        guidelineView.snp.makeConstraints {
+            $0.top.equalTo(firstDivideView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(36)
         }
         
-        guidelineLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(guidelineView)
-            make.top.equalTo(guidelineView.snp.top).offset(8)
+        guidelineLabel.snp.makeConstraints {
+            $0.centerX.equalTo(guidelineView)
+            $0.top.equalTo(guidelineView.snp.top).offset(8)
         }
         
-        mapCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(guidelineView.snp.bottom)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalTo(selectButton.snp.top).inset(-25)
+        mapCollectionView.snp.makeConstraints {
+            $0.top.equalTo(guidelineView.snp.bottom)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(selectButton.snp.top).inset(-25)
         }
         
-        emptyView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalTo(view.safeAreaLayoutGuide)
+        emptyView.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
         }
     }
 }
+
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
 extension MyCourseSelectVC: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -231,7 +232,7 @@ extension MyCourseSelectVC: UICollectionViewDelegate, UICollectionViewDataSource
         if let town = model.departure.town {
             title += " \(town)"
         }
-
+        
         cell.setData(imageURL: model.image, title: title, location: nil, didLike: nil)
         
         return cell

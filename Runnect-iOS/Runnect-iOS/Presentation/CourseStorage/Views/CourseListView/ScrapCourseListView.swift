@@ -8,6 +8,9 @@
 import UIKit
 import Combine
 
+import SnapKit
+import Then
+
 protocol ScrapCourseListViewDelegate: AnyObject {
     func likeButtonTapped(wantsTolike: Bool, publicCourseId: Int)
 }
@@ -91,14 +94,14 @@ extension ScrapCourseListView {
         self.addSubviews(courseListCollectionView)
         courseListCollectionView.addSubviews(emptyView)
         
-        courseListCollectionView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.bottom.trailing.equalToSuperview()
+        courseListCollectionView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.bottom.trailing.equalToSuperview()
         }
         
-        emptyView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(80)
+        emptyView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(80)
         }
     }
 }
@@ -162,7 +165,7 @@ extension ScrapCourseListView: ListEmptyViewDelegate {
     }
 }
 
-extension ScrapCourseListView: CourseListCVCDeleagte {
+extension ScrapCourseListView: CourseListCVCDelegate {
     func likeButtonTapped(wantsTolike: Bool, index: Int) {
         let publicCourseId = courseList[index].publicCourseId
         delegate?.likeButtonTapped(wantsTolike: wantsTolike, publicCourseId: publicCourseId)

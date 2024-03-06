@@ -150,21 +150,21 @@ extension MyPageVC {
         
         containerView.addSubviews(icStar, label, icArrowRight)
         
-        icStar.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(22)
-            make.leading.equalToSuperview().offset(17)
-            make.width.equalTo(14)
-            make.height.equalTo(14)
+        icStar.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(22)
+            $0.leading.equalToSuperview().offset(17)
+            $0.width.equalTo(14)
+            $0.height.equalTo(14)
         }
         
-        label.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(21)
-            make.leading.equalTo(icStar.snp.trailing).offset(8)
+        label.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(21)
+            $0.leading.equalTo(icStar.snp.trailing).offset(8)
         }
         
-        icArrowRight.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(18)
-            make.trailing.equalToSuperview().inset(10)
+        icArrowRight.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(18)
+            $0.trailing.equalToSuperview().inset(10)
         }
         
         return containerView
@@ -272,9 +272,9 @@ extension MyPageVC {
     private func setNavigationBar() {
         view.addSubview(navibar)
         
-        navibar.snp.makeConstraints { make in
-            make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
+        navibar.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(56)
         }
     }
     
@@ -301,10 +301,10 @@ extension MyPageVC {
                          activityRecordInfoView, secondDivideView, goalRewardInfoView,
                          thirdDivideView, uploadedCourseInfoView, fourthDivideView, settingView, fifthDivideView, kakaoChannelAsk)
         
-        myProfileView.snp.makeConstraints { make in
-            make.top.equalTo(navibar.snp.bottom).offset(6)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(84)
+        myProfileView.snp.makeConstraints {
+            $0.top.equalTo(navibar.snp.bottom).offset(6)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(84)
         }
         
         setMyProfileLayout()

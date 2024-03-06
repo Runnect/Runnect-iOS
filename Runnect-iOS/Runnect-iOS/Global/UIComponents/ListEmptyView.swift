@@ -12,7 +12,7 @@ protocol ListEmptyViewDelegate: AnyObject {
 }
 
 final class ListEmptyView: UIView {
-
+    
     // MARK: - Properties
     
     weak var delegate: ListEmptyViewDelegate?
@@ -42,7 +42,7 @@ final class ListEmptyView: UIView {
         $0.alignment = .center
         $0.spacing = 24
     }
-
+    
     // MARK: - initialization
     
     init(description: String, buttonTitle: String) {
@@ -66,9 +66,9 @@ extension ListEmptyView {
     
     public func setImage(_ image: UIImage, size: CGSize) {
         self.mainImageView.image = image
-        self.mainImageView.snp.updateConstraints { make in
-            make.width.equalTo(size.width)
-            make.height.equalTo(size.height)
+        self.mainImageView.snp.updateConstraints {
+            $0.width.equalTo(size.width)
+            $0.height.equalTo(size.height)
         }
     }
 }
@@ -95,17 +95,17 @@ extension ListEmptyView {
     private func setLayout() {
         self.addSubviews(containerStackView)
         
-        bottomButton.snp.makeConstraints { make in
-            make.height.equalTo(40)
-            make.leading.trailing.equalToSuperview()
+        bottomButton.snp.makeConstraints {
+            $0.height.equalTo(40)
+            $0.leading.trailing.equalToSuperview()
         }
         
-        mainImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(148)
+        mainImageView.snp.makeConstraints {
+            $0.width.height.equalTo(148)
         }
         
-        containerStackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        containerStackView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
 }

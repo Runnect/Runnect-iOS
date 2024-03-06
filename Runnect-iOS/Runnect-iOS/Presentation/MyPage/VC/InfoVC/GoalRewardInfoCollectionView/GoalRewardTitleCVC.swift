@@ -51,17 +51,17 @@ extension GoalRewardTitleCVC {
     private func setLayout() {
         contentView.addSubviews(stampImage, stampExcourageLabel)
         
-        stampImage.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(18)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(139)
-            make.height.equalTo(126)
+        stampImage.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(18)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(139)
+            $0.height.equalTo(126)
         }
         
-        stampExcourageLabel.snp.makeConstraints { make in
-            make.top.equalTo(stampImage.snp.bottom).offset(32)
-            make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().inset(37)
+        stampExcourageLabel.snp.makeConstraints {
+            $0.top.equalTo(stampImage.snp.bottom).offset(32)
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(37)
         }
     }
 }

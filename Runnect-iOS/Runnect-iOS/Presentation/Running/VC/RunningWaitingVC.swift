@@ -7,9 +7,11 @@
 
 import UIKit
 
+import DropDown
 import NMapsMap
 import Moya
-import DropDown
+import SnapKit
+import Then
 
 final class RunningWaitingVC: UIViewController {
     
@@ -173,51 +175,51 @@ extension RunningWaitingVC {
                          distanceContainerView,
                          startButton)
         
-        naviBar.snp.makeConstraints { make in
-            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
+        naviBar.snp.makeConstraints {
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(48)
         }
         
         view.bringSubviewToFront(naviBar)
         
-        moreButton.snp.makeConstraints { make in
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide)
-            make.centerY.equalTo(naviBar)
+        moreButton.snp.makeConstraints {
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide)
+            $0.centerY.equalTo(naviBar)
         }
         view.bringSubviewToFront(moreButton)
         
-        mapView.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
-            make.top.equalTo(naviBar.snp.bottom)
-            make.bottom.equalToSuperview()
+        mapView.snp.makeConstraints {
+            $0.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
+            $0.top.equalTo(naviBar.snp.bottom)
+            $0.bottom.equalToSuperview()
         }
         
-        distanceContainerView.snp.makeConstraints { make in
-            make.width.equalTo(96)
-            make.height.equalTo(44)
-            make.leading.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.top.equalTo(view.snp.bottom)
+        distanceContainerView.snp.makeConstraints {
+            $0.width.equalTo(96)
+            $0.height.equalTo(44)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.top.equalTo(view.snp.bottom)
         }
         
         distanceContainerView.addSubviews(distanceStackView)
         
-        distanceStackView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+        distanceStackView.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
         
-        startButton.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.height.equalTo(44)
-            make.top.equalTo(view.snp.bottom).offset(24)
+        startButton.snp.makeConstraints {
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.height.equalTo(44)
+            $0.top.equalTo(view.snp.bottom).offset(24)
         }
     }
     
-    private func showHiddenViews(withDuration: TimeInterval = 0) {
+    private func showHiddenViews(withDuration duration: TimeInterval = 0) {
         [distanceContainerView, startButton].forEach { subView in
             view.bringSubviewToFront(subView)
         }
         
-        UIView.animate(withDuration: withDuration) {
+        UIView.animate(withDuration: duration) {
             self.distanceContainerView.transform = CGAffineTransform(translationX: 0, y: -151)
             self.startButton.transform = CGAffineTransform(translationX: 0, y: -112)
         }
