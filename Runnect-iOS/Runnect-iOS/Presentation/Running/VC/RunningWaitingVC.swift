@@ -30,6 +30,11 @@ final class RunningWaitingVC: UIViewController {
     
     private lazy var naviBar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle(courseTitle ?? "Test Code")
     
+    private let shareButton = UIButton(type: .system).then {
+        $0.setImage(ImageLiterals.icShareButton, for: .normal)
+        $0.tintColor = .g1
+    }
+    
     private let moreButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icMore, for: .normal)
         $0.tintColor = .g1
@@ -171,6 +176,7 @@ extension RunningWaitingVC {
     private func setLayout() {
         view.addSubviews(naviBar,
                          moreButton,
+                         shareButton,
                          mapView,
                          distanceContainerView,
                          startButton)
@@ -182,10 +188,17 @@ extension RunningWaitingVC {
         
         view.bringSubviewToFront(naviBar)
         
+        shareButton.snp.makeConstraints {
+            $0.trailing.equalTo(moreButton.snp.leading)
+            $0.centerY.equalTo(naviBar)
+        }
+        
         moreButton.snp.makeConstraints {
             $0.trailing.equalTo(self.view.safeAreaLayoutGuide)
             $0.centerY.equalTo(naviBar)
         }
+        
+        view.bringSubviewToFront(shareButton)
         view.bringSubviewToFront(moreButton)
         
         mapView.snp.makeConstraints {
