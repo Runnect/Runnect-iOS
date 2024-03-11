@@ -1,10 +1,10 @@
 git_url("https://github.com/thingineeer/fastlane-match-runnect")
-# git_branch("Runnect") 수정 금지
+git_branch("master")
 storage_mode("git")
 
 type("development") # The default type, can be: appstore, adhoc, enterprise or development
 
-# app_identifier("com.runnect.Runnect-iOS")
+app_identifier("com.runnect.Runnect-iOS")
 # username("user@fastlane.tools") # Your Apple Developer Portal username
 
 # For all available options run `fastlane match --help`
