@@ -92,16 +92,17 @@ extension RunningWaitingVC {
         self.courseId = courseId
         self.publicCourseId = publicCourseId
         
-        self.isMyCourse()
         getCourseDetail(courseId: courseId)
     }
     
     private func setCourseData(courseModel: Course) {
         self.courseModel = courseModel
         
-        // 코스 모델에서 타이틀을 가져와 UI에 설정합니다.
+        guard let isMyCourse = courseModel.isNowUser else { return }
+        self.isMyCourse(courseOwner: isMyCourse)
+        
         self.courseTitle = courseModel.title
-        self.naviBar.setTitle(self.courseTitle ?? "Test Code")
+        self.naviBar.setTitle(self.courseTitle ?? "타이틀 없음")
         
         guard let path = courseModel.path, let distance = courseModel.distance else { return }
         let locations = path.map { NMGLatLng(lat: $0[0], lng: $0[1]) }
@@ -119,14 +120,10 @@ extension RunningWaitingVC {
         self.shareButton.addTarget(self, action: #selector(shareButtonDidTap), for: .touchUpInside)
     }
     
-    private func isMyCourse() {
-        guard let isMyCourse = courseModel?.isNowUser else { return }
-        
-        // 자기 코스가 아니라면 <공유, 더보기 버튼> 히든 처리
-        if !isMyCourse {
-            self.shareButton.isHidden = true
-            self.moreButton.isHidden = true
-        }
+    private func isMyCourse(courseOwner: Bool) {
+        print("💪💪💪💪💪💪💪💪💪💪💪💪💪💪💪💪💪💪")
+        self.shareButton.isHidden = !courseOwner
+        self.moreButton.isHidden = !courseOwner
     }
 }
 
