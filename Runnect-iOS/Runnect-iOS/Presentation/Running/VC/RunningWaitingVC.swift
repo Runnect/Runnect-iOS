@@ -122,7 +122,7 @@ extension RunningWaitingVC {
     private func isMyCourse() {
         guard let isMyCourse = courseModel?.isNowUser else { return }
         
-        // If it's not my course, hide the buttons.
+        // 자기 코스가 아니라면 <공유, 더보기 버튼> 히든 처리
         if !isMyCourse {
             self.shareButton.isHidden = true
             self.moreButton.isHidden = true
@@ -153,61 +153,20 @@ extension RunningWaitingVC {
         guard let model = self.courseModel else {
             return
         }
-        
         analyze(buttonName: GAEvent.Button.clickShare)
         
-        let title = model.title
-        let privateCourseId = model.id // primaryKey
-        let courseImage = model.image
-        
-        let dynamicLinksDomainURIPrefix = "https://rnnt.page.link"
-        guard let link = URL(string: "\(dynamicLinksDomainURIPrefix)/?privateCourseId=\(privateCourseId)") else {
-            return
-        }
-        
-        print("‼️link= \(link)")
-        
-        guard let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: dynamicLinksDomainURIPrefix) else {
-            return
-        }
-        
-        linkBuilder.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.runnect.Runnect-iOS")
-        linkBuilder.iOSParameters?.appStoreID = "1663884202"
-        linkBuilder.iOSParameters?.minimumAppVersion = "2.0.1"
-        
-        linkBuilder.androidParameters = DynamicLinkAndroidParameters(packageName: "com.runnect.runnect")
-        
-        linkBuilder.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
-        linkBuilder.socialMetaTagParameters?.imageURL = URL(string: courseImage)
-        linkBuilder.socialMetaTagParameters?.title = title
-        linkBuilder.socialMetaTagParameters?.descriptionText = "이 코스는 링크로만 들어올 수 있어요!"
-        
-        guard let longDynamicLink = linkBuilder.url else {
-            return
-        }
-        print("The long URL is: \(longDynamicLink)")
-        
-        /// 짧은 Dynamic Link로 변환하는 부분 입니다.
-        linkBuilder.shorten { [weak self] url, _, error in // warning 파라미터 와일드 카드
-            guard let shortDynamicLink = url?.absoluteString else {
-                if let error = error {
-                    print("❌Error shortening dynamic link: \(error)")
-                }
-                return
-            }
-            
-            print("🔥The short URL is: \(shortDynamicLink)")
-            
-            DispatchQueue.main.async {
-                let activityVC = UIActivityViewController(activityItems: [shortDynamicLink], applicationActivities: nil)
-                activityVC.popoverPresentationController?.sourceView = self?.view
-                self?.present(activityVC, animated: true, completion: nil)
-            }
-        }
+        self.shareCourse(
+            courseTitle: model.title,
+            courseId: model.id,
+            courseImageURL: model.image,
+            minimumAppVersion: "2.0.1",
+            descriptionText: "이 코스는 링크로만 들어올 수 있어요!",
+            parameter: "privateCourseId"
+        )
     }
     
     @objc private func moreButtonDidTap() {
-        guard let courseModel = self.courseModel else {return}
+        guard let courseModel = self.courseModel else { return }
         
         let items = ["수정하기", "삭제하기"]
         let imageArray: [UIImage] = [ImageLiterals.icModify, ImageLiterals.icRemove]
