@@ -13,6 +13,8 @@ import Moya
 import SnapKit
 import Then
 
+import FirebaseDynamicLinks
+
 final class RunningWaitingVC: UIViewController {
     
     // MARK: - Properties
@@ -28,7 +30,7 @@ final class RunningWaitingVC: UIViewController {
     
     // MARK: - UI Components
     
-    private lazy var naviBar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle(courseTitle ?? "Test Code")
+    private lazy var naviBar = CustomNavigationBar(self, type: .titleWithLeftButton)
     
     private let shareButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icShareButton, for: .normal)
@@ -86,21 +88,25 @@ final class RunningWaitingVC: UIViewController {
 // MARK: - Methods
 
 extension RunningWaitingVC {
-    func setData(courseId: Int, publicCourseId: Int?, courseTitle: String) {
+    func setData(courseId: Int, publicCourseId: Int?) {
         self.courseId = courseId
         self.publicCourseId = publicCourseId
-        self.courseTitle = courseTitle
         
+        self.isMyCourse()
         getCourseDetail(courseId: courseId)
     }
     
     private func setCourseData(courseModel: Course) {
         self.courseModel = courseModel
         
+        // 코스 모델에서 타이틀을 가져와 UI에 설정합니다.
+        self.courseTitle = courseModel.title
+        self.naviBar.setTitle(self.courseTitle ?? "Test Code")
+        
         guard let path = courseModel.path, let distance = courseModel.distance else { return }
         let locations = path.map { NMGLatLng(lat: $0[0], lng: $0[1]) }
         self.makePath(locations: locations)
-        self.distanceLabel.text = String(distance)
+        self.distanceLabel.text = String(format: "%.1f", distance)
     }
     
     private func makePath(locations: [NMGLatLng]) {
@@ -110,6 +116,17 @@ extension RunningWaitingVC {
     private func setAddTarget() {
         self.startButton.addTarget(self, action: #selector(startButtonDidTap), for: .touchUpInside)
         moreButton.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
+        self.shareButton.addTarget(self, action: #selector(shareButtonDidTap), for: .touchUpInside)
+    }
+    
+    private func isMyCourse() {
+        guard let isMyCourse = courseModel?.isNowUser else { return }
+        
+        // If it's not my course, hide the buttons.
+        if !isMyCourse {
+            self.shareButton.isHidden = true
+            self.moreButton.isHidden = true
+        }
     }
 }
 
@@ -130,6 +147,63 @@ extension RunningWaitingVC {
         
         countDownVC.setData(runningModel: runningModel)
         self.navigationController?.pushViewController(countDownVC, animated: true)
+    }
+    
+    @objc private func shareButtonDidTap() {
+        guard let model = self.courseModel else {
+            return
+        }
+        
+        analyze(buttonName: GAEvent.Button.clickShare)
+        
+        let title = model.title
+        let privateCourseId = model.id // primaryKey
+        let courseImage = model.image
+        
+        let dynamicLinksDomainURIPrefix = "https://rnnt.page.link"
+        guard let link = URL(string: "\(dynamicLinksDomainURIPrefix)/?privateCourseId=\(privateCourseId)") else {
+            return
+        }
+        
+        print("‼️link= \(link)")
+        
+        guard let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: dynamicLinksDomainURIPrefix) else {
+            return
+        }
+        
+        linkBuilder.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.runnect.Runnect-iOS")
+        linkBuilder.iOSParameters?.appStoreID = "1663884202"
+        linkBuilder.iOSParameters?.minimumAppVersion = "2.0.1"
+        
+        linkBuilder.androidParameters = DynamicLinkAndroidParameters(packageName: "com.runnect.runnect")
+        
+        linkBuilder.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
+        linkBuilder.socialMetaTagParameters?.imageURL = URL(string: courseImage)
+        linkBuilder.socialMetaTagParameters?.title = title
+        linkBuilder.socialMetaTagParameters?.descriptionText = "이 코스는 링크로만 들어올 수 있어요!"
+        
+        guard let longDynamicLink = linkBuilder.url else {
+            return
+        }
+        print("The long URL is: \(longDynamicLink)")
+        
+        /// 짧은 Dynamic Link로 변환하는 부분 입니다.
+        linkBuilder.shorten { [weak self] url, _, error in // warning 파라미터 와일드 카드
+            guard let shortDynamicLink = url?.absoluteString else {
+                if let error = error {
+                    print("❌Error shortening dynamic link: \(error)")
+                }
+                return
+            }
+            
+            print("🔥The short URL is: \(shortDynamicLink)")
+            
+            DispatchQueue.main.async {
+                let activityVC = UIActivityViewController(activityItems: [shortDynamicLink], applicationActivities: nil)
+                activityVC.popoverPresentationController?.sourceView = self?.view
+                self?.present(activityVC, animated: true, completion: nil)
+            }
+        }
     }
     
     @objc private func moreButtonDidTap() {
