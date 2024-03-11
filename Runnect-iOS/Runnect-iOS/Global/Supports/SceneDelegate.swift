@@ -12,10 +12,14 @@ import FirebaseDynamicLinks
 import FirebaseCore
 import FirebaseCoreInternal
 
+// 들어온 링크가 공유된 코스인지, 개인 보관함에 있는 코스인지 나타내기 위한 타입입니다.
+enum CourseType {
+    case publicCourse, privateCourse
+}
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
-    
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
@@ -39,30 +43,33 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
         
         if let incomingURL = userActivity.webpageURL {
-            let linkHandled = DynamicLinks.dynamicLinks()
+            DynamicLinks.dynamicLinks()
                 .handleUniversalLink(incomingURL) { dynamicLink, error in
                     
-                    if let courseId = self.handleDynamicLink(dynamicLink) {
-                        guard let _ = (scene as? UIWindowScene) else { return }
+                    if let (courseType, courseId) = self.handleDynamicLink(dynamicLink) {
+                        guard let windowScene = scene as? UIWindowScene else { return }
+                        let window = UIWindow(windowScene: windowScene)
+                        let navigationController = UINavigationController()
                         
-                        if let windowScene = scene as? UIWindowScene {
-                            let window = UIWindow(windowScene: windowScene)
-                            
+                        switch courseType {
+                        case .publicCourse:
                             let courseDetailVC = CourseDetailVC()
-                            courseDetailVC.getUploadedCourseDetail(courseId: Int(courseId))
-                            
-                            let tabBarController = TabBarController()
-                            let navigationController = UINavigationController(rootViewController: tabBarController)
-                            navigationController.navigationBar.isHidden = true
+                            courseDetailVC.getUploadedCourseDetail(courseId: courseId)
                             navigationController.pushViewController(courseDetailVC, animated: false)
-                            
-                            // 코스 발견 view 로 이동
-                            tabBarController.selectedIndex = 2
-                            window.rootViewController = navigationController
-                            window.makeKeyAndVisible()
-                            self.window = window
-                            
+                        case .privateCourse:
+                            let privateCourseDetailVC = RunningWaitingVC()
+                            privateCourseDetailVC.setData(courseId: courseId, publicCourseId: nil)
+                            navigationController.pushViewController(privateCourseDetailVC, animated: false)
                         }
+                        
+                        let tabBarController = TabBarController()
+                        navigationController.navigationBar.isHidden = true
+                        navigationController.viewControllers = [tabBarController, navigationController.viewControllers.last].compactMap { $0 }
+                        
+                        tabBarController.selectedIndex = 2
+                        window.rootViewController = navigationController
+                        window.makeKeyAndVisible()
+                        self.window = window
                     }
                 }
         }
@@ -106,16 +113,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
     
-    func handleDynamicLink(_ dynamicLink: DynamicLink?) -> String? {
+    func handleDynamicLink(_ dynamicLink: DynamicLink?) -> (courseType: CourseType, courseId: Int)? {
         if let dynamicLink = dynamicLink, let url = dynamicLink.url,
            let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
            let queryItems = components.queryItems {
+            var courseId: Int?
+            var courseType: CourseType?
+            
             for item in queryItems {
-                if item.name == "courseId", let courseId = item.value {
-                    // 동적링크 핸들링 하여 courseId 추출
-                    
-                    return courseId
+                if item.name == "courseId", let id = item.value, let idInt = Int(id) {
+                    courseId = idInt
+                    courseType = .publicCourse
+                } else if item.name == "privateCourseId", let id = item.value, let idInt = Int(id) {
+                    courseId = idInt
+                    courseType = .privateCourse
                 }
+            }
+            
+            if let courseId = courseId, let courseType = courseType {
+                return (courseType, courseId)
             }
         }
         return nil

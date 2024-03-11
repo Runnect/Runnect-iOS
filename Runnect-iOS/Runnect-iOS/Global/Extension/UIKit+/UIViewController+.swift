@@ -8,6 +8,7 @@
 import UIKit
 
 import SnapKit
+import FirebaseDynamicLinks
 
 extension UIViewController {
     
@@ -89,10 +90,84 @@ extension UIViewController {
 }
 
 extension UIViewController {
+    
+    /**
+     ### Description: 공유 기능에 해당하는 정보를 넣어줍니다.
+        2025년 8월 25일에 동적링크는 만기 됩니다.
+     
+     - courseTitle : 타이틀 이름
+     - courseId : 코스 아이디
+     - courseImageURL : 코스 사진
+     - minimumAppVersion : 공유 기능을 사용할 수 있는 최소 버전
+     - descriptionText : 내용
+     - parameter : 공유 기능에 필요한 파라미터
+     */
+    /// 공유 기능 메서드
+    ///
+    func shareCourse(
+        courseTitle: String,
+        courseId: Int,
+        courseImageURL: String,
+        minimumAppVersion: String,
+        descriptionText: String? = nil,
+        parameter: String
+    ) {
+        let dynamicLinksDomainURIPrefix = "https://rnnt.page.link"
+        let courseParameter = parameter
+        guard let link = URL(string: "\(dynamicLinksDomainURIPrefix)/?\(courseParameter)=\(courseId)") else {
+            print("Invalid link.")
+            return
+        }
+        
+        guard let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: dynamicLinksDomainURIPrefix) else {
+            print("Failed to create link builder.")
+            return
+        }
+        
+        linkBuilder.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.runnect.Runnect-iOS")
+        linkBuilder.iOSParameters?.appStoreID = "1663884202"
+        linkBuilder.iOSParameters?.minimumAppVersion = minimumAppVersion
+        
+        linkBuilder.androidParameters = DynamicLinkAndroidParameters(packageName: "com.runnect.runnect")
+        
+        linkBuilder.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
+        linkBuilder.socialMetaTagParameters?.imageURL = URL(string: courseImageURL)
+        linkBuilder.socialMetaTagParameters?.title = courseTitle
+        linkBuilder.socialMetaTagParameters?.descriptionText = descriptionText ?? ""
+        
+        linkBuilder.shorten { [weak self] url, _, error in
+            guard let shortDynamicLink = url?.absoluteString else {
+                if let error = error {
+                    print("Error shortening dynamic link: \(error)")
+                }
+                return
+            }
+            
+            print("Short URL is: \(shortDynamicLink)")
+            DispatchQueue.main.async {
+                self?.presentShareActivity(with: shortDynamicLink)
+            }
+        }
+    }
+    
+    private func presentShareActivity(with url: String) {
+        let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        activityVC.popoverPresentationController?.sourceView = self.view
+        self.present(activityVC, animated: true, completion: nil)
+    }
+}
+
+extension UIViewController {
+    /**
+     - Description: 뷰컨에서 GA(구글 애널리틱스) 스크린 , 버튼 이벤트 사용 사는 메서드 입니다.
+     */
+    
+    /// 스크린 이벤트
     func analyze(screenName: String) {
         GAManager.shared.logEvent(eventType: .screen(screenName: screenName))
     }
     
+    /// 버튼 이벤트
     func analyze(buttonName: String) {
         GAManager.shared.logEvent(eventType: .button(buttonName: buttonName))
     }

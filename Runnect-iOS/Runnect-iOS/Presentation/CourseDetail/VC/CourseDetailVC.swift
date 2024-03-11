@@ -2,7 +2,7 @@
 //  CourseDetailVC.swift
 //  Runnect-iOS
 //
-//  Created by 몽이 누나 on 2023/01/05.
+//  Created by 이명진 on 2023/10/09.
 //
 
 import UIKit
@@ -13,9 +13,6 @@ import NMapsMap
 import Moya
 import SafariServices
 import KakaoSDKCommon
-import FirebaseCore
-import FirebaseDynamicLinks
-import KakaoSDKShare
 import KakaoSDKTemplate
 import DropDown
 
@@ -167,9 +164,7 @@ extension CourseDetailVC {
         
         scrapCourse(scrapTF: !sender.isSelected)
         delegate?.didUpdateScrapState(publicCourseId: publicCourseId, isScrapped: !sender.isSelected)       /// 코스 발견 UI Update 부분
-        marathonDelegate?.didUpdateMarathonScrapState(publicCourseId: publicCourseId, isScrapped: !sender.isSelected) // 마라톤 코스 UI Update 부분
-        
-        /// print("CourseDetailVC 스크랩 탭🔥publicCourseId=\(publicCourseId), isScrapped은 \(!sender.isSelected) 요렇게 변경 ")
+        marathonDelegate?.didUpdateMarathonScrapState(publicCourseId: publicCourseId, isScrapped: !sender.isSelected) // 마라톤 코스 UI
     }
     
     @objc private func shareButtonTapped() {
@@ -177,58 +172,18 @@ extension CourseDetailVC {
             return
         }
         
+        let publicCourse = model.publicCourse
+        
         analyze(buttonName: GAEvent.Button.clickShare)
         
-        let publicCourse = model.publicCourse
-        let title = publicCourse.title
-        let courseId = publicCourse.id // primaryKey
-        let description = publicCourse.description
-        let courseImage = publicCourse.image
-        
-        let dynamicLinksDomainURIPrefix = "https://rnnt.page.link"
-        guard let link = URL(string: "\(dynamicLinksDomainURIPrefix)/?courseId=\(courseId)") else {
-            return
-        }
-        
-        print("‼️link= \(link)")
-        
-        guard let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: dynamicLinksDomainURIPrefix) else {
-            return
-        }
-        
-        linkBuilder.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.runnect.Runnect-iOS")
-        linkBuilder.iOSParameters?.appStoreID = "1663884202"
-        linkBuilder.iOSParameters?.minimumAppVersion = "1.0.4"
-        
-        linkBuilder.androidParameters = DynamicLinkAndroidParameters(packageName: "com.runnect.runnect")
-        
-        linkBuilder.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
-        linkBuilder.socialMetaTagParameters?.imageURL = URL(string: courseImage)
-        linkBuilder.socialMetaTagParameters?.title = title
-        linkBuilder.socialMetaTagParameters?.descriptionText = description
-        
-        guard let longDynamicLink = linkBuilder.url else {
-            return
-        }
-        print("The long URL is: \(longDynamicLink)")
-        
-        /// 짧은 Dynamic Link로 변환하는 부분 입니다.
-        linkBuilder.shorten { [weak self] url, _, error in // warning 파라미터 와일드 카드
-            guard let shortDynamicLink = url?.absoluteString else {
-                if let error = error {
-                    print("❌Error shortening dynamic link: \(error)")
-                }
-                return
-            }
-            
-            print("🔥The short URL is: \(shortDynamicLink)")
-            
-            DispatchQueue.main.async {
-                let activityVC = UIActivityViewController(activityItems: [shortDynamicLink], applicationActivities: nil)
-                activityVC.popoverPresentationController?.sourceView = self?.view
-                self?.present(activityVC, animated: true, completion: nil)
-            }
-        }
+        self.shareCourse(
+            courseTitle: publicCourse.title,
+            courseId: publicCourse.id,
+            courseImageURL: publicCourse.image,
+            minimumAppVersion: "1.0.4",
+            descriptionText: publicCourse.description,
+            parameter: "courseId"
+        )
     }
     
     @objc private func pushToUserProfileVC() {
@@ -478,10 +433,6 @@ extension CourseDetailVC {
         profileImageView.snp.makeConstraints {
             $0.width.height.equalTo(37)
         }
-        
-//        profileNameLabel.snp.makeConstraints {
-//            $0.leading.equalTo(profileImageView.snp.trailing).offset(12)
-//        }
         
         firstHorizontalDivideLine.snp.makeConstraints {
             $0.top.equalTo(mapImageView.snp.bottom).offset(62)

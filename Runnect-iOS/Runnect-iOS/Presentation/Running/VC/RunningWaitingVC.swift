@@ -13,6 +13,8 @@ import Moya
 import SnapKit
 import Then
 
+import FirebaseDynamicLinks
+
 final class RunningWaitingVC: UIViewController {
     
     // MARK: - Properties
@@ -28,7 +30,12 @@ final class RunningWaitingVC: UIViewController {
     
     // MARK: - UI Components
     
-    private lazy var naviBar = CustomNavigationBar(self, type: .titleWithLeftButton).setTitle(courseTitle ?? "Test Code")
+    private lazy var naviBar = CustomNavigationBar(self, type: .titleWithLeftButton)
+    
+    private let shareButton = UIButton(type: .system).then {
+        $0.setImage(ImageLiterals.icShareButton, for: .normal)
+        $0.tintColor = .g1
+    }
     
     private let moreButton = UIButton(type: .system).then {
         $0.setImage(ImageLiterals.icMore, for: .normal)
@@ -81,10 +88,9 @@ final class RunningWaitingVC: UIViewController {
 // MARK: - Methods
 
 extension RunningWaitingVC {
-    func setData(courseId: Int, publicCourseId: Int?, courseTitle: String) {
+    func setData(courseId: Int, publicCourseId: Int?) {
         self.courseId = courseId
         self.publicCourseId = publicCourseId
-        self.courseTitle = courseTitle
         
         getCourseDetail(courseId: courseId)
     }
@@ -92,10 +98,16 @@ extension RunningWaitingVC {
     private func setCourseData(courseModel: Course) {
         self.courseModel = courseModel
         
+        guard let isMyCourse = courseModel.isNowUser else { return }
+        self.isMyCourse(courseOwner: isMyCourse)
+        
+        self.courseTitle = courseModel.title
+        self.naviBar.setTitle(self.courseTitle ?? "타이틀 없음")
+        
         guard let path = courseModel.path, let distance = courseModel.distance else { return }
         let locations = path.map { NMGLatLng(lat: $0[0], lng: $0[1]) }
         self.makePath(locations: locations)
-        self.distanceLabel.text = String(distance)
+        self.distanceLabel.text = String(format: "%.1f", distance)
     }
     
     private func makePath(locations: [NMGLatLng]) {
@@ -104,7 +116,14 @@ extension RunningWaitingVC {
     
     private func setAddTarget() {
         self.startButton.addTarget(self, action: #selector(startButtonDidTap), for: .touchUpInside)
-        moreButton.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
+        self.moreButton.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
+        self.shareButton.addTarget(self, action: #selector(shareButtonDidTap), for: .touchUpInside)
+    }
+    
+    private func isMyCourse(courseOwner: Bool) {
+        print("💪💪💪💪💪💪💪💪💪💪💪💪💪💪💪💪💪💪")
+        self.shareButton.isHidden = !courseOwner
+        self.moreButton.isHidden = !courseOwner
     }
 }
 
@@ -127,8 +146,24 @@ extension RunningWaitingVC {
         self.navigationController?.pushViewController(countDownVC, animated: true)
     }
     
+    @objc private func shareButtonDidTap() {
+        guard let model = self.courseModel else {
+            return
+        }
+        analyze(buttonName: GAEvent.Button.clickShare)
+        
+        self.shareCourse(
+            courseTitle: model.title,
+            courseId: model.id,
+            courseImageURL: model.image,
+            minimumAppVersion: "2.0.1",
+            descriptionText: "이 코스는 링크로만 들어올 수 있어요!",
+            parameter: "privateCourseId"
+        )
+    }
+    
     @objc private func moreButtonDidTap() {
-        guard let courseModel = self.courseModel else {return}
+        guard let courseModel = self.courseModel else { return }
         
         let items = ["수정하기", "삭제하기"]
         let imageArray: [UIImage] = [ImageLiterals.icModify, ImageLiterals.icRemove]
@@ -171,6 +206,7 @@ extension RunningWaitingVC {
     private func setLayout() {
         view.addSubviews(naviBar,
                          moreButton,
+                         shareButton,
                          mapView,
                          distanceContainerView,
                          startButton)
@@ -182,10 +218,17 @@ extension RunningWaitingVC {
         
         view.bringSubviewToFront(naviBar)
         
+        shareButton.snp.makeConstraints {
+            $0.trailing.equalTo(moreButton.snp.leading)
+            $0.centerY.equalTo(naviBar)
+        }
+        
         moreButton.snp.makeConstraints {
             $0.trailing.equalTo(self.view.safeAreaLayoutGuide)
             $0.centerY.equalTo(naviBar)
         }
+        
+        view.bringSubviewToFront(shareButton)
         view.bringSubviewToFront(moreButton)
         
         mapView.snp.makeConstraints {
