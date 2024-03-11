@@ -115,7 +115,7 @@ extension RunningWaitingVC {
     
     private func setAddTarget() {
         self.startButton.addTarget(self, action: #selector(startButtonDidTap), for: .touchUpInside)
-        moreButton.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
+        self.moreButton.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
         self.shareButton.addTarget(self, action: #selector(shareButtonDidTap), for: .touchUpInside)
     }
     

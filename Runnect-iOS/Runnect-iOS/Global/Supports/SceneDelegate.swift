@@ -12,6 +12,7 @@ import FirebaseDynamicLinks
 import FirebaseCore
 import FirebaseCoreInternal
 
+// 들어온 링크가 공유된 코스인지, 개인 보관함에 있는 코스인지 나타내기 위한 타입입니다.
 enum CourseType {
     case publicCourse, privateCourse
 }
@@ -19,7 +20,6 @@ enum CourseType {
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
-    
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
@@ -54,11 +54,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         switch courseType {
                         case .publicCourse:
                             let courseDetailVC = CourseDetailVC()
-                            courseDetailVC.getUploadedCourseDetail(courseId: courseId) // Now it's already Int
+                            courseDetailVC.getUploadedCourseDetail(courseId: courseId)
                             navigationController.pushViewController(courseDetailVC, animated: false)
                         case .privateCourse:
                             let privateCourseDetailVC = RunningWaitingVC()
-                            privateCourseDetailVC.setData(courseId: courseId, publicCourseId: nil) // Adjusted for Int
+                            privateCourseDetailVC.setData(courseId: courseId, publicCourseId: nil)
                             navigationController.pushViewController(privateCourseDetailVC, animated: false)
                         }
                         
