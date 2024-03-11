@@ -107,9 +107,8 @@ extension CourseStorageVC {
             guard let self = self else { return }
             analyze(buttonName: GAEvent.Button.clickScrapPageStartCourse) // 코스 발견_스크랩코스 상세페이지 시작하기 Event
             
-            let title = self.privateCourseList[index].title
             let runningWaitingVC = RunningWaitingVC()
-            runningWaitingVC.setData(courseId: self.privateCourseList[index].id, publicCourseId: nil, courseTitle: title)
+            runningWaitingVC.setData(courseId: self.privateCourseList[index].id, publicCourseId: nil)
             
             /// 코스 이름을 여기서 가져오는 로직
             runningWaitingVC.hidesBottomBarWhenPushed = true
