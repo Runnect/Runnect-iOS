@@ -286,9 +286,17 @@ extension CourseDrawingVC {
     
     private func setLayout() {
         setHiddenViewsLayout()
-        self.view.addSubviews(naviBarContainerStackView, mapView, departureInfoContainerView)
+        self.view.addSubviews(
+            naviBarContainerStackView,
+            mapView,
+            departureInfoContainerView
+        )
         self.view.addSubview(startMarkStackView)
-        self.departureInfoContainerView.addSubviews(departureLocationLabel, departureDetailLocationLabel, decideDepartureButton)
+        self.departureInfoContainerView.addSubviews(
+            departureLocationLabel,
+            departureDetailLocationLabel,
+            decideDepartureButton
+        )
         view.bringSubviewToFront(naviBarContainerStackView)
         
         setNotchCoverViewLayout()
@@ -300,7 +308,13 @@ extension CourseDrawingVC {
     }
     
     private func setHiddenViewsLayout() {
-        view.addSubviews(naviBarForEditing, guideView, distanceContainerView, completeButton, undoButton)
+        view.addSubviews(
+            naviBarForEditing,
+            guideView,
+            distanceContainerView,
+            completeButton,
+            undoButton
+        )
         view.sendSubviewToBack(naviBarForEditing)
         
         naviBarForEditing.snp.makeConstraints {
@@ -483,8 +497,17 @@ extension CourseDrawingVC {
     }
     
     private func searchLocationTmapAddress(latitude: Double, longitude: Double) {
-        departureSearchingProvider.request(target: .getLocationTmapAddress(latitude: latitude, longitude: longitude), instance: TmapAddressSearchingResponseDto.self, vc: self) { data in
-            self.updateData(model: data.toDepartureLocationModel(latitude: latitude, longitude: longitude))
+        departureSearchingProvider.request(
+            target: .getLocationTmapAddress(latitude: latitude, longitude: longitude),
+            instance: TmapAddressSearchingResponseDto.self,
+            vc: self
+        ) { data in
+            self.updateData(
+                model: data.toDepartureLocationModel(
+                    latitude: latitude,
+                    longitude: longitude
+                )
+            )
         }
     }
 }
