@@ -14,5 +14,6 @@ excluded:
   # AppDelegate, SceneDelegate file 무시
   - Runnect-iOS/Global/Supports/AppDelegate.swift
   - Runnect-iOS/Global/Supports/SceneDelegate.swift
+  - Runnect-iOS/Global/UIComponents/MapView/RNMapView.swift
 
 force_cast: warning
