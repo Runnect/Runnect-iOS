@@ -25,7 +25,7 @@ final class RNMapView: UIView {
     private let screenHeight = UIScreen.main.bounds.height
     
     let pathImage = PassthroughSubject<UIImage?, Never>()
-    private var cancelBag = Set<AnyCancellable>()
+    private var cancelBag = CancelBag()
     
     private let locationManager = CLLocationManager()
     private var isDrawMode: Bool = false
@@ -40,7 +40,8 @@ final class RNMapView: UIView {
         [self.startMarker.position] + self.markers.map { $0.position }
     }
     private var bottomPadding: CGFloat = 0
-    private let locationOverlayIcon = NMFOverlayImage(image: ImageLiterals.icLocationOverlay)
+    private let locationOverlayIconDirection = NMFOverlayImage(image: ImageLiterals.icLocationOverlayDirection)
+    private let locationOverlayIconNormal = NMFOverlayImage(image: ImageLiterals.icLocationOverlayNormal)
     
     // MARK: - UI Components
     
@@ -59,16 +60,17 @@ final class RNMapView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.mapInit()
-        setLocationOverlay()
     }
     
     private func mapInit() {
         setUI()
         setLayout()
+        setBind()
         setDelegate()
         setMap()
         getLocationAuth()
         setPathOverlay()
+        observePositionModeChanges()
     }
     
     required init?(coder: NSCoder) {
@@ -90,7 +92,12 @@ extension RNMapView {
     @discardableResult
     func setPositionMode(mode: NMFMyPositionMode) -> Self {
         map.mapView.positionMode = mode
-        setLocationOverlay()
+        switch mode {
+        case .direction:
+            setDirectionModeLocationOverlay()
+        default:
+            setNormalModeLocationOverLay()
+        }
         return self
     }
     
@@ -152,26 +159,6 @@ extension RNMapView {
             makeMarker(at: location)
         }
         return self
-    }
-    
-    /// 캡처를 위한 좌표 설정 및 카메라 이동
-    func makeCameraMoveForCapture(at locations: [NMGLatLng]) {
-        map.mapView.contentInset = UIEdgeInsets(top: screenHeight/4, left: 0, bottom: screenHeight/4, right: 0)
-        let bounds = makeMBR(at: locations)
-        let cameraUpdate = NMFCameraUpdate(fit: bounds, padding: 100)
-        cameraUpdate.animation = .none
-        LoadingIndicator.showLoading()
-        map.mapView.moveCamera(cameraUpdate) { isCancelled in
-            if isCancelled {
-                print("카메라 이동 취소")
-                LoadingIndicator.hideLoading()
-            } else {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.makePathImage()
-                    LoadingIndicator.hideLoading()
-                }
-            }
-        }
     }
     
     /// 사용자 위치로 카메라 이동
@@ -285,6 +272,26 @@ extension RNMapView {
         }
     }
     
+    /// 캡처를 위한 좌표 설정 및 카메라 이동
+    private func makeCameraMoveForCapture(at locations: [NMGLatLng]) {
+        map.mapView.contentInset = UIEdgeInsets(top: screenHeight/4, left: 0, bottom: screenHeight/4, right: 0)
+        let bounds = makeMBR(at: locations)
+        let cameraUpdate = NMFCameraUpdate(fit: bounds, padding: 100)
+        cameraUpdate.animation = .none
+        LoadingIndicator.showLoading()
+        map.mapView.moveCamera(cameraUpdate) { isCancelled in
+            if isCancelled {
+                print("카메라 이동 취소")
+                LoadingIndicator.hideLoading()
+            } else {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.makePathImage()
+                    LoadingIndicator.hideLoading()
+                }
+            }
+        }
+    }
+    
     // 두 지점 사이의 거리(m) 추가
     private func addDistance(with newLocation: NMGLatLng) {
         let lastCLLoc = markersLatLngs.last?.toCLLocation()
@@ -331,29 +338,62 @@ extension RNMapView {
         map.mapView.touchDelegate = self
     }
     
-    private func setPathOverlay() {
+    private func setPathOverlay() { // 코스 path UI 설정
         pathOverlay.width = 4
         pathOverlay.outlineWidth = 0
         pathOverlay.color = .m1
     }
     
-    private func setLocationOverlay() {
+    private func setDirectionModeLocationOverlay() {
         let locationOverlay = map.mapView.locationOverlay
-        locationOverlay.icon = locationOverlayIcon
+        locationOverlay.icon = locationOverlayIconDirection
+    }
+    
+    private func setNormalModeLocationOverLay() {
+        let locationOverlay = map.mapView.locationOverlay
+        locationOverlay.icon = locationOverlayIconNormal
+    }
+    
+    private func observePositionModeChanges() {
+        map.mapView.addObserver(self, forKeyPath: "positionMode", options: [.new, .old], context: nil)
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
+        // positionMode가 변경될 때 호출됩니다.
+        if keyPath == "positionMode", object is NMFMapView {
+            DispatchQueue.main.async { [weak self] in
+                self?.updateStateName()
+            }
+        }
+    }
+    
+    private func updateStateName() {
+        let stateStr: String
+        switch map.mapView.positionMode {
+        case .normal:
+            stateStr = "NoFollow"
+            setNormalModeLocationOverLay()
+        case .direction:
+            stateStr = "Follow"
+            setDirectionModeLocationOverlay()
+        default:
+            stateStr = "otherAction"
+        }
+        
+        print("Position Mode: \(stateStr)")
     }
 }
 
 // MARK: - UI & Layout
 
 extension RNMapView {
-    private func setUI() {
+    private func setUI() { // 현재 위치를 찍는 아이콘의 UI 구현
         self.backgroundColor = .white
         self.locationButton.setImage(ImageLiterals.icMapLocation, for: .normal)
         self.locationButton.isHidden = true
-        self.locationButton.addTarget(self, action: #selector(locationButtonDidTap), for: .touchUpInside)
     }
     
-    private func setLayout() {
+    private func setLayout() { // 지도와 현재위치 이동 버튼 의 레이아웃 구성
         addSubviews(map, locationButton)
         
         map.snp.makeConstraints {
@@ -373,13 +413,11 @@ extension RNMapView {
             }
         }
     }
-}
-
-// MARK: - @objc Function
-
-extension RNMapView {
-    @objc func locationButtonDidTap() {
-        self.setPositionMode(mode: .direction)
+    
+    private func setBind() {
+        locationButton.tapPublisher.sink { [weak self] _ in
+            self?.setPositionMode(mode: .direction)
+        }.store(in: cancelBag)
     }
 }
 
@@ -388,11 +426,9 @@ extension RNMapView {
 extension RNMapView: NMFMapViewCameraDelegate, NMFMapViewTouchDelegate {
     // 지도 탭 이벤트
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        guard isDrawMode && markers.count < 19 else { return }
+        guard isDrawMode && markers.count < 25 else { return }
         self.makeMarker(at: latlng)
-    }
-    
-    func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
+        
     }
     
     // 지도 이동 멈췄을 때 호출되는 메서드
