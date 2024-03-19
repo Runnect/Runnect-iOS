@@ -92,6 +92,12 @@ extension RNMapView {
     @discardableResult
     func setPositionMode(mode: NMFMyPositionMode) -> Self {
         map.mapView.positionMode = mode
+        switch mode {
+        case .direction:
+            setDirectionModeLocationOverlay()
+        default:
+            setNormalModeLocationOverLay()
+        }
         return self
     }
     
