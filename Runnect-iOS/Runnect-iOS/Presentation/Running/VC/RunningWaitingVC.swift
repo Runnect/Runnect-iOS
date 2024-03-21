@@ -389,6 +389,7 @@ extension RunningWaitingVC {
     private func ModifyCourseTitle() {
         let bottomSheetVC = CustomBottomSheetVC(type: .textField)
         bottomSheetVC.modalPresentationStyle = .overFullScreen
+        bottomSheetVC.courseName = self.courseTitle
         bottomSheetVC.completeButtonTapAction = { [weak self] text in
             guard let self = self else { return }
             guard handleVisitor() else { return }
