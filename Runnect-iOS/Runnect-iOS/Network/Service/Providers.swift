@@ -20,6 +20,17 @@ struct Providers {
   static let stampProvider = MoyaProvider<StampRouter>(withAuth: true)
 }
 
+struct Provider {
+    static let departureSearchingProvider = NetworkProvider<DepartureSearchingRouter>(withAuth: false)
+    static let authProvider = NetworkProvider<AuthRouter>(withAuth: true)
+    static let userProvider = NetworkProvider<UserRouter>(withAuth: true)
+    static let courseProvider = NetworkProvider<CourseRouter>(withAuth: true)
+    static let publicCourseProvider = NetworkProvider<PublicCourseRouter>(withAuth: true)
+    static let recordProvider = NetworkProvider<RecordRouter>(withAuth: true)
+    static let scrapProvider = NetworkProvider<ScrapRouter>(withAuth: true)
+    static let stampProvider = NetworkProvider<StampRouter>(withAuth: true)
+}
+
 extension MoyaProvider {
   convenience init(withAuth: Bool) {
     if withAuth {

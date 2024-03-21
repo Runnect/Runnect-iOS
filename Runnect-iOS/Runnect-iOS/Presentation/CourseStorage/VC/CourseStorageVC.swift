@@ -15,9 +15,9 @@ import Then
 final class CourseStorageVC: UIViewController {
     
     // MARK: - Properties
-    private let courseProvider = Providers.courseProvider
+    private let courseProvider = Provider.courseProvider
     
-    private let scrapProvider = Providers.scrapProvider
+    private let scrapProvider = Provider.scrapProvider
     
     private let cancelBag = CancelBag()
     
@@ -270,105 +270,45 @@ extension CourseStorageVC: PrivateCourseListViewDelegate {
 extension CourseStorageVC {
     private func getPrivateCourseList() {
         LoadingIndicator.showLoading()
-        courseProvider.request(.getAllPrivateCourse) { [weak self] response in
-            guard let self = self else { return }
+        
+        courseProvider.request(target: .getAllPrivateCourse, instance: BaseResponse<PrivateCourseResponseDto>.self, vc: self) { response in
             LoadingIndicator.hideLoading()
-            switch response {
-            case .success(let result):
-                let status = result.statusCode
-                if 200..<300 ~= status {
-                    do {
-                        let responseDto = try result.map(BaseResponse<PrivateCourseResponseDto>.self)
-                        guard let data = responseDto.data else { return }
-                        self.setPrivateCourseData(courseList: data.courses)
-                    } catch {
-                        print(error.localizedDescription)
-                    }
-                }
-                if status >= 400 {
-                    print("400 error")
-                    self.showNetworkFailureToast()
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-                self.showNetworkFailureToast()
-            }
+            
+            guard let data = response.data else { return }
+            self.setPrivateCourseData(courseList: data.courses)
         }
     }
     
     private func getScrapCourseList() {
         LoadingIndicator.showLoading()
-        scrapProvider.request(.getScrapCourse) { [weak self] response in
-            guard let self = self else { return }
+        
+        scrapProvider.request(target: .getScrapCourse, instance: BaseResponse<ScrapCourseResponseDto>.self, vc: self) { response in
             LoadingIndicator.hideLoading()
-            switch response {
-            case .success(let result):
-                let status = result.statusCode
-                if 200..<300 ~= status {
-                    do {
-                        let responseDto = try result.map(BaseResponse<ScrapCourseResponseDto>.self)
-                        guard let data = responseDto.data else { return }
-                        self.setScrapCourseData(courseList: data.scraps)
-                    } catch {
-                        print(error.localizedDescription)
-                    }
-                }
-                if status >= 400 {
-                    print("400 error")
-                    self.showNetworkFailureToast()
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-                self.showNetworkFailureToast()
-            }
+            
+            guard let data = response.data else { return }
+            self.setScrapCourseData(courseList: data.scraps)
         }
     }
     
     private func scrapCourse(publicCourseId: Int, scrapTF: Bool) {
         LoadingIndicator.showLoading()
-        scrapProvider.request(.createAndDeleteScrap(publicCourseId: publicCourseId, scrapTF: scrapTF)) { [weak self] response in
+        
+        scrapProvider.request(target: .createAndDeleteScrap(publicCourseId: publicCourseId, scrapTF: scrapTF), instance: BaseResponse<BlankData>.self, vc: self) { response in
             LoadingIndicator.hideLoading()
-            guard let self = self else { return }
-            switch response {
-            case .success(let result):
-                let status = result.statusCode
-                if 200..<300 ~= status {
-                    self.getScrapCourseList()
-                }
-                if status >= 400 {
-                    print("400 error")
-                    self.showNetworkFailureToast()
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-                self.showNetworkFailureToast()
-            }
+            
+            self.getScrapCourseList()
         }
     }
     
     private func deleteCourse(courseIdList: [Int]) {
         LoadingIndicator.showLoading()
-        courseProvider.request(.deleteCourse(courseIdList: courseIdList)) { [weak self] response in
+        
+        courseProvider.request(target: .deleteCourse(courseIdList: courseIdList), instance: BaseResponse<BlankData>.self, vc: self) { response in
             LoadingIndicator.hideLoading()
-            guard let self = self else { return }
+            
             self.privateCourseListView.isEditMode = false
-            switch response {
-            case .success(let result):
-                print("리절트", result)
-                let status = result.statusCode
-                if 200..<300 ~= status {
-                    print("삭제 성공")
-                    self.getPrivateCourseList()
-                    self.finishEditMode(withDuration: 0.7)
-                }
-                if status >= 400 {
-                    print("400 error")
-                    self.showNetworkFailureToast()
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-                self.showNetworkFailureToast()
-            }
+            self.getPrivateCourseList()
+            self.finishEditMode(withDuration: 0.7)
         }
     }
 }
