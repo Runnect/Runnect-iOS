@@ -120,8 +120,8 @@ extension RunningWaitingVC {
         self.shareButton.addTarget(self, action: #selector(shareButtonDidTap), for: .touchUpInside)
     }
     
+    // 내 코스인지 아닌지 구별하는 함수입니다.
     private func isMyCourse(courseOwner: Bool) {
-        print("💪💪💪💪💪💪💪💪💪💪💪💪💪💪💪💪💪💪")
         self.shareButton.isHidden = !courseOwner
         self.moreButton.isHidden = !courseOwner
     }

@@ -40,7 +40,8 @@ enum ImageLiterals {
     static var icTime: UIImage { .load(named: "ic_time") }
     static var icLocationPoint: UIImage { .load(named: "ic_location_point") }
     static var icAlert: UIImage { .load(named: "ic_alert") }
-    static var icLocationOverlay: UIImage { .load(named: "ic_location_overlay") }
+    static var icLocationOverlayDirection: UIImage { .load(named: "ic_location_overlay_direction") }
+    static var icLocationOverlayNormal: UIImage { .load(named: "ic_location_overlay_normal") }
     static var icLogoCircle: UIImage { .load(named: "ic_logo_circle") }
     static var icMore: UIImage { .load(named: "ic_more") }
     static var icPlus: UIImage { .load(named: "ic_plus") }

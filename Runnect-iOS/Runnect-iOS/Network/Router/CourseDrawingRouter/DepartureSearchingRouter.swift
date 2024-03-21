@@ -69,7 +69,7 @@ extension DepartureSearchingRouter: TargetType {
         switch self {
         case .getAddress(let keyword):
             return .requestParameters(parameters: ["query": keyword], encoding: URLEncoding.default)
-        case .getLocationAddress(let latitude, let longitude):
+        case .getLocationAddress(let latitude, let longitude): // 사용하지 않습니다.
             return .requestParameters(parameters: ["x": longitude, "y": latitude], encoding: URLEncoding.default)
         case .getLocationTmapAddress(let latitude, let longitude):
             return .requestParameters(parameters: ["lat": latitude, "lon": longitude, "addressType": "A04", "appKey": Config.tmapAPIKey], encoding: URLEncoding.default)
