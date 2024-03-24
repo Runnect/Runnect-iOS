@@ -271,7 +271,11 @@ extension CourseStorageVC {
     private func getPrivateCourseList() {
         LoadingIndicator.showLoading()
         
-        courseProvider.request(target: .getAllPrivateCourse, instance: BaseResponse<PrivateCourseResponseDto>.self, vc: self) { response in
+        courseProvider.request(
+            target: .getAllPrivateCourse,
+            instance: BaseResponse<PrivateCourseResponseDto>.self,
+            vc: self
+        ) { response in
             LoadingIndicator.hideLoading()
             
             guard let data = response.data else { return }
@@ -282,7 +286,11 @@ extension CourseStorageVC {
     private func getScrapCourseList() {
         LoadingIndicator.showLoading()
         
-        scrapProvider.request(target: .getScrapCourse, instance: BaseResponse<ScrapCourseResponseDto>.self, vc: self) { response in
+        scrapProvider.request(
+            target: .getScrapCourse, 
+            instance: BaseResponse<ScrapCourseResponseDto>.self,
+            vc: self
+        ) { response in
             LoadingIndicator.hideLoading()
             
             guard let data = response.data else { return }
@@ -293,7 +301,11 @@ extension CourseStorageVC {
     private func scrapCourse(publicCourseId: Int, scrapTF: Bool) {
         LoadingIndicator.showLoading()
         
-        scrapProvider.request(target: .createAndDeleteScrap(publicCourseId: publicCourseId, scrapTF: scrapTF), instance: BaseResponse<BlankData>.self, vc: self) { response in
+        scrapProvider.request(
+            target: .createAndDeleteScrap(publicCourseId: publicCourseId, scrapTF: scrapTF),
+            instance: BaseResponse<BlankData>.self,
+            vc: self
+        ) { response in
             LoadingIndicator.hideLoading()
             
             self.getScrapCourseList()
@@ -303,7 +315,11 @@ extension CourseStorageVC {
     private func deleteCourse(courseIdList: [Int]) {
         LoadingIndicator.showLoading()
         
-        courseProvider.request(target: .deleteCourse(courseIdList: courseIdList), instance: BaseResponse<BlankData>.self, vc: self) { response in
+        courseProvider.request(
+            target: .deleteCourse(courseIdList: courseIdList),
+            instance: BaseResponse<BlankData>.self,
+            vc: self
+        ) { response in
             LoadingIndicator.hideLoading()
             
             self.privateCourseListView.isEditMode = false
