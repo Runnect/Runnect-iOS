@@ -23,6 +23,7 @@ final class CustomBottomSheetVC: UIViewController {
     
     var backgroundTapAction: (() -> Void)?
     var completeButtonTapAction: ((String) -> Void)?
+    var courseName: String?
     
     private let titleNameMaxLength = 20
     private let bottomHeight: CGFloat = 206
@@ -141,6 +142,12 @@ extension CustomBottomSheetVC {
         
         backgroundView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+        
+        if let courseName = self.courseName {
+            self.bottomSheetTextField.text = courseName
+            self.completeButton.isEnabled = true
+            self.changeTextFieldLayerColor(true)
         }
     }
     

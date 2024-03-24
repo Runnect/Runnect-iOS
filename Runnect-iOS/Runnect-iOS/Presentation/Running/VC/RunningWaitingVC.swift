@@ -316,6 +316,7 @@ extension RunningWaitingVC {
                 let status = result.statusCode
                 if 200..<300 ~= status {
                     print("삭제 성공")
+                    self.navigationController?.popViewController(animated: true)
                 }
                 if status >= 400 {
                     print("400 error")
@@ -377,7 +378,6 @@ extension RunningWaitingVC {
                 deleteAlertVC.rightButtonTapAction = {
                     deleteAlertVC.dismiss(animated: false)
                     self.deleteCourse()
-                    self.navigationController?.popViewController(animated: true)
                 }
                 self.present(deleteAlertVC, animated: false)
             default:
@@ -389,6 +389,7 @@ extension RunningWaitingVC {
     private func ModifyCourseTitle() {
         let bottomSheetVC = CustomBottomSheetVC(type: .textField)
         bottomSheetVC.modalPresentationStyle = .overFullScreen
+        bottomSheetVC.courseName = self.courseTitle
         bottomSheetVC.completeButtonTapAction = { [weak self] text in
             guard let self = self else { return }
             guard handleVisitor() else { return }
