@@ -5,7 +5,6 @@
 
 ### 앱스토어 링크: [Appstore](https://apps.apple.com/kr/app/runnect-%EC%BD%94%EC%8A%A4%EB%A5%BC-%EA%B7%B8%EB%A6%AC%EA%B3%A0-%EA%B3%B5%EC%9C%A0%ED%95%98%EB%8A%94-%EB%8D%B0%EC%9D%BC%EB%A6%AC-%EB%9F%AC%EB%8B%9D%EC%95%B1/id1663884202)
 
-### 배포 전 테스트 서버: [TestFlight](https://testflight.apple.com/join/hbkXfMrK)
 ![1](https://github.com/thingineeer/Runnect-iOS/assets/88179341/937f9e65-61e5-4298-b703-bc2cf5022bf6)
 ![2](https://github.com/thingineeer/Runnect-iOS/assets/88179341/ad913367-65f2-4839-9658-e538bccf2d6c)
 
